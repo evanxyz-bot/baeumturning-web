@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <path fill="#1a1a1a" fill-rule="evenodd"
+    d="M14 100 A86 86 0 0 1 186 100 A86 86 0 0 1 14 100 Z M134 119.63 L100 139.26 L66 119.63 L66 80.37 L100 60.74 L134 80.37 Z"/>
+  <g stroke="#3f3f3f" stroke-width="5.5" fill="none" stroke-linecap="round">
+    <path d="M134 119.63 L144.74 166.32"/>
+    <path d="M100 139.26 L64.93 171.90"/>
+    <path d="M66 119.63 L20.20 105.58"/>
+    <path d="M66 80.37 L55.26 33.68"/>
+    <path d="M100 60.74 L135.07 28.10"/>
+    <path d="M134 80.37 L179.80 94.42"/>
+  </g>
+</svg>

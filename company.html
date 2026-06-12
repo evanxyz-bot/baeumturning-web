@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회사 소개 — 아웃포커스 OutFocus</title>
+<meta name="description" content="교육 사각지대를 밝히는 솔루션 컴퍼니 아웃포커스. 비전, 연혁, 협력사, 공지사항, Q&A를 소개합니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="회사 소개 — 아웃포커스 OutFocus">
+<meta property="og:description" content="배움의 출발선이 어디든, 도착선은 같아야 합니다. 아웃포커스를 소개합니다.">
+<meta property="og:locale" content="ko_KR">
+<meta name="theme-color" content="#0b7a6a">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f3f7f6; --surface-2:#eef4f2; --surface-3:#e3ece9;
+  --border:#e6eeeb; --border-strong:#c9d8d3;
+  --text:#15181d; --text-2:#4b5260; --text-3:#8b91a0; --text-4:#b0b6c2;
+  --accent:#0b7a6a; --accent-soft:#e6f4f1; --accent-strong:#075c50; --accent-mid:#9ad7cd;
+  --accent-grad:linear-gradient(135deg,#17937e 0%,#0b7a6a 55%,#086050 100%);
+  --p-teal:#e6f4f1;   --s-teal:#2f9183;
+  --p-coral:#fbeeec;  --s-coral:#c5826e;
+  --p-blue:#eef1f8;   --s-blue:#5878a0;
+  --p-amber:#f8f2ea;  --s-amber:#af9069;
+  --p-purple:#f2f0f8; --s-purple:#8f7faa;
+  --matte:#1a1a1a; --matte-blade:#3f3f3f;
+  --r-md:10px; --r-lg:14px; --r-xl:18px;
+  --shadow-xs:0 1px 2px rgba(13,38,33,.05);
+  --shadow-sm:0 1px 2px rgba(13,38,33,.04),0 2px 10px rgba(13,38,33,.05);
+  --shadow-md:0 2px 4px rgba(13,38,33,.04),0 8px 24px rgba(13,38,33,.08);
+  --shadow-accent:0 4px 16px rgba(11,122,106,.24);
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+  --ease-spring:cubic-bezier(0.2,0.8,0.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,-apple-system,sans-serif;
+  color:var(--text);background:#fbfdfd;-webkit-font-smoothing:antialiased;line-height:1.62;letter-spacing:-0.01em;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(42% 34% at 12% 14%, rgba(154,215,205,.2), transparent 70%),
+  radial-gradient(36% 28% at 88% 8%,  rgba(243,191,183,.16), transparent 70%),
+  radial-gradient(34% 30% at 86% 72%, rgba(182,196,224,.16), transparent 70%),
+  radial-gradient(30% 26% at 8% 82%,  rgba(232,216,188,.14), transparent 70%)}
+a{color:inherit;text-decoration:none}
+.tnum{font-variant-numeric:tabular-nums}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+section{scroll-margin-top:150px}
+
+.sec-focus{opacity:0;transform:translateY(54px);filter:blur(7px);
+  transition:opacity .85s var(--ease-out),transform .85s var(--ease-out),filter .85s var(--ease-out)}
+.sec-focus.on{opacity:1;transform:none;filter:none}
+.reveal{opacity:0;transform:translateY(24px) scale(.974)}
+.reveal.in{opacity:1;transform:none;transition:opacity .72s var(--ease-out),transform .72s var(--ease-out)}
+
+.brand-wm{display:inline-flex;align-items:baseline;font-family:'Outfit','Pretendard Variable',system-ui,sans-serif;
+  font-weight:600;letter-spacing:-.022em;white-space:nowrap;color:var(--matte)}
+.ap{display:inline-block;line-height:0;width:.96em;height:.96em;position:relative;top:.13em;margin-right:-.06em}
+.ap svg{width:100%;height:100%;display:block;transition:transform .7s var(--ease-spring)}
+a:hover .brand-wm .ap svg{transform:rotate(120deg)}
+@keyframes navLogoIn{from{opacity:0;transform:translateY(-12px) scale(.92)}to{opacity:1;transform:none}}
+.brand-wm{animation:navLogoIn .7s .05s both;transition:transform .22s var(--ease-spring)}
+a:hover .brand-wm{transform:scale(1.03)}
+
+.eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--accent);
+  background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:18px}
+h2.h{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
+.lead{font-size:17px;color:var(--text-2);line-height:1.7;margin-top:16px;max-width:620px}
+.sec-head{text-align:center;max-width:660px;margin:0 auto 50px}
+.sec-head .lead{margin:16px auto 0}
+
+/* ── NAV (메인과 동일) ── */
+.nav{position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+  border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
+.nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
+.nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1160px;margin:0 auto;padding:0 24px}
+.nav-top .login{position:absolute;right:24px;font-size:14.5px;font-weight:600;color:var(--text-2);cursor:pointer;
+  padding:7px 14px;border-radius:var(--r-md);transition:color .15s,background .15s}
+.nav-top .login:hover{color:var(--text);background:var(--surface-2)}
+.nav-bot{border-top:1px solid var(--border);height:46px;display:flex;align-items:center;justify-content:center}
+.navlinks{position:relative;display:flex;gap:4px;font-size:14.5px;font-weight:500}
+.navlinks a{position:relative;z-index:1;color:var(--text-3);padding:7px 15px;border-radius:var(--r-md);
+  transition:color .18s,transform .18s var(--ease-spring)}
+.navlinks a:hover{color:var(--text);transform:translateY(-1px)}
+.navlinks a.active{color:var(--accent-strong);font-weight:700}
+.navlinks a::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
+  width:0;height:3px;background:var(--accent-grad);border-radius:999px;transition:width .3s var(--ease-spring)}
+.navlinks a.active::after{width:calc(100% - 26px)}
+.nav-drop{position:relative;display:flex}
+.nav-drop>a .chev{display:inline-block;margin-left:4px;transition:transform .25s var(--ease-spring);font-size:9px;vertical-align:1px}
+.nav-drop:hover>a .chev{transform:rotate(180deg)}
+.drop-menu{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(6px);
+  min-width:152px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-md);
+  padding:7px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;z-index:60;
+  transition:opacity .22s,transform .25s var(--ease-spring),visibility .22s}
+.nav-drop:hover .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.drop-menu a{display:block;padding:8px 14px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--text-2);
+  transition:background .15s,color .15s}
+.drop-menu a:hover{background:var(--accent-soft);color:var(--accent-strong)}
+.drop-menu a::after{display:none}
+
+/* ── PAGE HEAD ── */
+.page-head{padding:72px 0 56px;text-align:center;background:
+  radial-gradient(700px 360px at 50% 0%, rgba(230,244,241,.8), transparent 70%)}
+.page-head h1{font-size:44px;font-weight:700;letter-spacing:-0.035em;line-height:1.15}
+.page-head h1 .g{background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.page-head .lead{margin:18px auto 0}
+.crumb{font-size:13px;color:var(--text-4);margin-bottom:18px}
+.crumb a:hover{color:var(--text-2)}
+.crumb b{color:var(--accent-strong);font-weight:600}
+
+/* ── INTRO ── */
+.intro{padding:72px 0}
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:56px}
+.vcard{background:#fff;border:1px solid var(--border);border-radius:20px;padding:30px 26px;box-shadow:var(--shadow-sm);
+  text-align:center;transition:transform .25s var(--ease-spring),box-shadow .25s,background .25s,border-color .25s}
+.vcard:hover{transform:translateY(-5px);box-shadow:0 16px 44px rgba(143,127,170,.2);background:var(--p-purple);border-color:#cdc4e5}
+.vcard .vic{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;margin:0 auto 16px}
+.vcard h3{font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:9px}
+.vcard p{font-size:14px;color:var(--text-2);line-height:1.7}
+.ceo-card{max-width:760px;margin:0 auto;background:linear-gradient(150deg,#0e6b5c 0%,#0b7a6a 55%,#08544a 100%);color:#fff;border-radius:24px;
+  padding:38px 36px;box-shadow:0 18px 48px rgba(11,122,106,.32);position:relative;overflow:hidden}
+.ceo-card::before{content:'';position:absolute;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);top:-70px;right:-60px}
+.ceo-card .qm{font-family:Georgia,serif;font-size:64px;line-height:.6;opacity:.3;display:block;margin-bottom:14px}
+.ceo-card .qt{font-size:22px;font-weight:700;line-height:1.5;letter-spacing:-0.02em}
+.ceo-card .who{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:13.5px}
+.ceo-card .who .avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-weight:700;font-size:14px}
+.ceo-card .who span{opacity:.75}
+.ceo-card .sub{font-size:13.5px;line-height:1.7;opacity:.85;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18)}
+
+/* ── HISTORY ── */
+.history{padding:72px 0;background:linear-gradient(180deg,rgba(238,241,248,.55),rgba(242,240,248,.4))}
+.tl-card{max-width:680px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:22px;padding:30px 30px 22px;box-shadow:var(--shadow-md)}
+.tl{position:relative;padding-left:30px}
+.tl::before{content:'';position:absolute;left:8px;top:8px;bottom:14px;width:2px;
+  background:linear-gradient(180deg,var(--accent),var(--accent-mid))}
+.tl-item{position:relative;padding-bottom:20px}
+.tl-item:last-child{padding-bottom:4px}
+.tl-item::before{content:'';position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;
+  background:#fff;border:3px solid var(--accent-mid)}
+.tl-item.now::before{border-color:var(--accent);background:var(--accent);box-shadow:0 0 0 5px rgba(11,122,106,.14)}
+.tl-date{font-size:12.5px;font-weight:800;color:var(--accent-strong);font-variant-numeric:tabular-nums}
+.tl-item h4{font-size:16px;font-weight:700;letter-spacing:-0.01em;margin:2px 0 3px}
+.tl-item p{font-size:13px;color:var(--text-3);line-height:1.55}
+.tl-note{text-align:center;font-size:13px;color:var(--text-3);margin-top:20px}
+
+/* ── PARTNERS ── */
+.partners{padding:72px 0}
+.partner-empty{max-width:680px;margin:0 auto;text-align:center;background:#fff;border:1.5px dashed var(--border-strong);
+  border-radius:22px;padding:48px 32px;box-shadow:var(--shadow-xs)}
+.partner-empty .pic{width:64px;height:64px;border-radius:18px;background:var(--p-blue);display:grid;place-items:center;margin:0 auto 18px}
+.partner-empty b{display:block;font-size:19px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
+.partner-empty p{font-size:14.5px;color:var(--text-2);line-height:1.7;max-width:440px;margin:0 auto 22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;
+  border:0;border-radius:var(--r-lg);font-size:15px;font-weight:600;cursor:pointer;
+  background:var(--accent-grad);color:#fff;box-shadow:var(--shadow-accent);
+  transition:transform .16s var(--ease-spring),box-shadow .18s,filter .18s}
+.btn:hover{filter:brightness(1.06);box-shadow:0 6px 22px rgba(11,122,106,.32);transform:translateY(-1px)}
+.btn:active{transform:scale(.97)}
+
+/* ── NOTICE ── */
+.notice{padding:72px 0;background:radial-gradient(600px 320px at 85% 40%, rgba(248,242,234,.8), transparent 70%)}
+.notice-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.notice-item{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:var(--shadow-xs);
+  display:flex;align-items:center;gap:14px;transition:transform .2s var(--ease-spring),box-shadow .2s}
+.notice-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.notice-item .tag{flex-shrink:0;font-size:11px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);
+  padding:4px 10px;border-radius:8px}
+.notice-item b{flex:1;font-size:14.5px;font-weight:600;letter-spacing:-0.01em}
+.notice-item span{font-size:12.5px;color:var(--text-4);font-variant-numeric:tabular-nums}
+.notice-empty{text-align:center;font-size:13px;color:var(--text-3);margin-top:18px}
+
+/* ── QnA ── */
+.qna{padding:72px 0 96px}
+.qna-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+details.q{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-xs);overflow:hidden;
+  transition:box-shadow .2s,border-color .2s}
+details.q:hover{box-shadow:var(--shadow-sm)}
+details.q[open]{border-color:var(--accent-mid);box-shadow:var(--shadow-sm)}
+details.q summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:18px 22px;
+  font-size:15px;font-weight:600;letter-spacing:-0.01em}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary .qmark{flex-shrink:0;width:28px;height:28px;border-radius:9px;background:var(--accent-soft);color:var(--accent-strong);
+  display:grid;place-items:center;font-weight:800;font-size:13px}
+details.q summary .arrow{margin-left:auto;color:var(--text-4);transition:transform .25s var(--ease-spring)}
+details.q[open] summary .arrow{transform:rotate(180deg)}
+details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-height:1.7}
+
+/* ── FOOTER ── */
+.foot{border-top:1px solid var(--border);padding:56px 0 36px;background:var(--surface-2);position:relative}
+.foot::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--s-teal),var(--s-blue),var(--s-purple),var(--s-coral),var(--s-amber))}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+.foot .desc{font-size:13.5px;color:var(--text-3);line-height:1.65;max-width:300px;margin-top:14px}
+.foot h4{font-size:13px;font-weight:700;color:var(--text-2);margin-bottom:14px}
+.foot ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot ul a{font-size:13.5px;color:var(--text-3);transition:color .15s}
+.foot ul a:hover{color:var(--text)}
+.biz-info{margin-top:44px;padding-top:22px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-3);line-height:1.9}
+.biz-info b{color:var(--text-2);font-weight:600}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:18px;
+  font-size:12.5px;color:var(--text-4);flex-wrap:wrap;gap:10px}
+
+@media (max-width:920px){
+  h2.h{font-size:30px}
+  .page-head h1{font-size:34px}
+  .vgrid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .nav-top{height:72px}
+  .nav-top .login{right:18px}
+  .nav-top .brand-wm{font-size:42px!important}
+  .navlinks{gap:0;font-size:13px}
+  .navlinks a{padding:7px 8px}
+  .wrap{padding:0 18px}
+  .page-head h1{font-size:29px}
+  h2.h{font-size:25px}
+  .foot-grid{grid-template-columns:1fr}
+  details.q .a{padding-left:22px}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="aperture" viewBox="0 0 200 200">
+    <path fill="#1a1a1a" fill-rule="evenodd"
+      d="M14 100 A86 86 0 0 1 186 100 A86 86 0 0 1 14 100 Z M134 119.63 L100 139.26 L66 119.63 L66 80.37 L100 60.74 L134 80.37 Z"/>
+    <g stroke="#3f3f3f" stroke-width="5.5" fill="none" stroke-linecap="round">
+      <path d="M134 119.63 L144.74 166.32"/>
+      <path d="M100 139.26 L64.93 171.90"/>
+      <path d="M66 119.63 L20.20 105.58"/>
+      <path d="M66 80.37 L55.26 33.68"/>
+      <path d="M100 60.74 L135.07 28.10"/>
+      <path d="M134 80.37 L179.80 94.42"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav" id="nav">
+  <div class="nav-top">
+    <a href="index.html" aria-label="OutFocus 홈">
+      <span class="brand-wm" style="font-size:72px">
+        <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus
+      </span>
+    </a>
+    <span class="login">로그인</span>
+  </div>
+  <div class="nav-bot">
+    <div class="navlinks">
+      <a href="index.html#services">서비스</a>
+      <a href="index.html#service">배움터닝</a>
+      <a href="index.html#analysis">AI 분석</a>
+      <a href="index.html#mission">미션</a>
+      <div class="nav-drop">
+        <a href="company.html" class="active">회사<span class="chev">▾</span></a>
+        <div class="drop-menu">
+          <a href="#intro">회사 소개</a>
+          <a href="#history">연혁</a>
+          <a href="#partners">협력사</a>
+          <a href="#notice">공지사항</a>
+          <a href="#qna">Q&amp;A</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== PAGE HEAD ===================== -->
+<header class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">홈</a> · <b>회사</b></div>
+    <h1>교육 사각지대를 밝히는 회사,<br><span class="g">아웃포커스</span>입니다</h1>
+    <p class="lead">배움의 기회가 누구에게나 공평해질 때까지 — 아웃포커스는 기술로 교육의 사각지대를 밝힙니다.</p>
+  </div>
+</header>
+
+<!-- ===================== 회사 소개 ===================== -->
+<section class="intro sec-focus" id="intro">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">회사 소개</span>
+      <h2 class="h">아웃포커스가 믿는 것</h2>
+      <p class="lead">학교 밖에서 배움을 이어가는 사람들이 있습니다. 우리는 그들의 곁에서 데이터로 길을 비추는 동반자가 되고자 합니다.</p>
+    </div>
+    <div class="vgrid">
+      <div class="vcard reveal">
+        <span class="vic" style="background:var(--p-teal)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2f9183" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
+        <h3>모두를 위한 배움</h3>
+        <p>배움의 출발선이 어디든, 도착선은 같아야 합니다. 학교 밖 학습자에게도 체계적인 학습 환경을 제공합니다.</p>
+      </div>
+      <div class="vcard reveal">
+        <span class="vic" style="background:var(--p-blue)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m6 15 4-5 3 3 5-7"/></svg></span>
+        <h3>데이터라는 공정한 선생님</h3>
+        <p>감이 아닌 데이터로 약점을 진단하고 학습 순서를 설계합니다. 비용 부담 없이, 누구나 컨설팅받는 것처럼.</p>
+      </div>
+      <div class="vcard reveal">
+        <span class="vic" style="background:var(--p-purple)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <h3>기술의 가장 따뜻한 쓰임</h3>
+        <p>검정고시 학습관리를 시작으로 진학, 연결까지. 기술이 사회에 기여하는 가장 따뜻한 방법을 고민합니다.</p>
+      </div>
+    </div>
+    <div class="ceo-card reveal">
+      <span class="qm">&ldquo;</span>
+      <p class="qt">배움의 출발선이 어디든,<br>도착선은 같아야 합니다.</p>
+      <div class="who">
+        <span class="avatar">양</span>
+        <div><b>양승환</b> <span>· 아웃포커스 대표</span></div>
+      </div>
+      <p class="sub">교육 사각지대의 학습자들이 데이터라는 가장 공정한 선생님을 만날 수 있도록 — 아웃포커스는 기술이 사회에 기여하는 가장 따뜻한 방법을 고민합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 연혁 ===================== -->
+<section class="history sec-focus" id="history">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" style="color:var(--s-purple);background:var(--p-purple)">연혁</span>
+      <h2 class="h">아웃포커스의 발걸음</h2>
+    </div>
+    <div class="tl-card reveal">
+      <div class="tl">
+        <div class="tl-item now">
+          <div class="tl-date">2026. 07</div>
+          <h4>아웃포커스 설립</h4>
+          <p>대표 양승환 · '모두를 위한 배움' 미션으로 창립, 검정고시 AI 학습관리 앱 '배움터닝' 개발 시작</p>
+        </div>
+      </div>
+    </div>
+    <p class="tl-note">앞으로의 발걸음을 이곳에 하나씩 기록해 가겠습니다.</p>
+  </div>
+</section>
+
+<!-- ===================== 협력사 ===================== -->
+<section class="partners sec-focus" id="partners">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" style="color:var(--s-blue);background:var(--p-blue)">협력사</span>
+      <h2 class="h">함께 사각지대를 밝힐<br>파트너를 찾습니다</h2>
+    </div>
+    <div class="partner-empty reveal">
+      <span class="pic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span>
+      <b>협력사 모집 중</b>
+      <p>교육기관, 검정고시 학원, 청소년 지원기관, 콘텐츠 제작사 등 교육 사각지대 해소에 함께할 파트너를 기다리고 있습니다.</p>
+      <a class="btn" href="mailto:baeumturning@gmail.com?subject=[제휴 문의] 아웃포커스 파트너십">제휴 문의하기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 공지사항 ===================== -->
+<section class="notice sec-focus" id="notice">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" style="color:var(--s-amber);background:var(--p-amber)">공지사항</span>
+      <h2 class="h">아웃포커스 소식</h2>
+    </div>
+    <div class="notice-list reveal">
+      <div class="notice-item">
+        <span class="tag">안내</span>
+        <b>아웃포커스 홈페이지가 문을 열었습니다</b>
+        <span class="tnum">2026. 06. 12</span>
+      </div>
+    </div>
+    <p class="notice-empty">배움터닝 출시 소식 등 새로운 소식을 이곳에서 알려드릴게요.</p>
+  </div>
+</section>
+
+<!-- ===================== Q&A ===================== -->
+<section class="qna sec-focus" id="qna">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" style="color:var(--s-coral);background:var(--p-coral)">Q&amp;A</span>
+      <h2 class="h">자주 묻는 질문</h2>
+    </div>
+    <div class="qna-list reveal">
+      <details class="q">
+        <summary><span class="qmark">Q</span>배움터닝은 어떤 서비스인가요?<span class="arrow">▾</span></summary>
+        <div class="a">검정고시 최초의 AI 학습 솔루션입니다. 오답 데이터로 약점을 진단하고, 우선순위에 따라 '오늘 무엇을 공부할지'를 자동으로 설계해 드립니다. 성적 추이 분석, 자동채점, 망각곡선 복습, 시험 일정 관리까지 하나의 앱에서 해결할 수 있습니다.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qmark">Q</span>이용 요금은 어떻게 되나요?<span class="arrow">▾</span></summary>
+        <div class="a">핵심 기능은 무료로 시작할 수 있습니다. 학원·컨설팅 비용이 부담스러운 학습자도 데이터 기반 학습 전략을 누릴 수 있도록 하는 것이 배움터닝의 목표입니다. 자세한 요금제는 출시와 함께 안내드릴 예정입니다.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qmark">Q</span>언제부터 사용할 수 있나요?<span class="arrow">▾</span></summary>
+        <div class="a">현재 출시를 준비하고 있습니다. 구체적인 일정이 확정되는 대로 공지사항과 메일로 안내드릴 예정이에요. 소식을 받아보시려면 baeumturning@gmail.com으로 메일 주소를 남겨주세요.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qmark">Q</span>제휴·협력 문의는 어디로 하나요?<span class="arrow">▾</span></summary>
+        <div class="a">baeumturning@gmail.com으로 보내주시면 확인 후 회신드리겠습니다. 교육기관, 학원, 청소년 지원기관 등 교육 사각지대 해소에 함께할 모든 파트너를 환영합니다.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="brand-wm" style="font-size:20px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus</span>
+        <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 AI 학습관리 서비스 '배움터닝'을 만듭니다.</p>
+      </div>
+      <div><h4>서비스</h4><ul>
+        <li><a href="index.html#service">배움터닝</a></li>
+        <li><a href="index.html#platform">대입 정보 플랫폼</a></li>
+        <li><a href="index.html#network">배움 네트워크</a></li>
+        <li><a href="index.html#analysis">AI 분석 매커니즘</a></li>
+      </ul></div>
+      <div><h4>회사</h4><ul>
+        <li><a href="#intro">회사 소개</a></li>
+        <li><a href="#history">연혁</a></li>
+        <li><a href="#partners">협력사</a></li>
+        <li><a href="mailto:baeumturning@gmail.com">문의하기</a></li>
+      </ul></div>
+      <div><h4>고객지원</h4><ul>
+        <li><a href="#notice">공지사항</a></li>
+        <li><a href="#qna">Q&amp;A</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+        <li><a href="#">이용약관</a></li>
+      </ul></div>
+    </div>
+    <div class="biz-info">
+      <b>아웃포커스 (OutFocus)</b> · 대표 양승환 · 설립 2026년 7월<br>
+      이메일 <a href="mailto:baeumturning@gmail.com" style="color:var(--accent-strong)">baeumturning@gmail.com</a> · 소재지 서울특별시 · 사업자등록 준비 중
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 아웃포커스 (OutFocus). All rights reserved.</span>
+      <span>Bringing focus into view</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// nav scrolled
+var nav=document.getElementById('nav');
+function onScroll(){ if(window.scrollY>12) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }
+window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+// 섹션 집중 리빌
+if('IntersectionObserver' in window){
+  var secIO=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('on');secIO.unobserve(e.target);} });
+  },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.sec-focus').forEach(function(el){secIO.observe(el)});
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  },{threshold:.08,rootMargin:'0px 0px -32px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+}else{
+  document.querySelectorAll('.sec-focus').forEach(function(el){el.classList.add('on')});
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});
+}
+
+// in-page smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var id=a.getAttribute('href'); if(!id||id==='#') return;
+    var t=document.querySelector(id);
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
