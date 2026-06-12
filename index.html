@@ -45,6 +45,13 @@
   --ease-spring:cubic-bezier(0.2,0.8,0.2,1);
 }
 html{scroll-behavior:smooth}
+/* 헤드라인 전용 폰트 — 지마켓 산스 (무료 상업적 이용 가능, G마켓 배포) */
+@font-face{font-family:'GmarketSans';font-weight:300;font-display:swap;
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff')}
+@font-face{font-family:'GmarketSans';font-weight:500;font-display:swap;
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff')}
+@font-face{font-family:'GmarketSans';font-weight:700;font-display:swap;
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff')}
 body{font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,-apple-system,sans-serif;
   color:var(--text);background:#fbfdfd;-webkit-font-smoothing:antialiased;line-height:1.62;letter-spacing:-0.01em;
   text-rendering:optimizeLegibility;overflow-x:hidden}
@@ -163,13 +170,13 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .stage{position:relative;z-index:1;display:flex;justify-content:center}
 .glow{position:absolute;width:400px;height:400px;border-radius:50%;
   background:radial-gradient(circle,rgba(11,122,106,.16),rgba(11,122,106,0) 70%);top:16%;left:50%;transform:translateX(-50%);z-index:0}
-.scene{position:relative;z-index:1;height:600px;width:100%;display:flex;align-items:center;justify-content:center;perspective:1300px}
+.scene{position:relative;z-index:1;height:680px;width:100%;display:flex;align-items:center;justify-content:center;perspective:1300px}
 .s3d-scale{transform-style:preserve-3d}
 .s3d{position:relative;transform-style:preserve-3d;transform:rotateX(5deg) rotateY(-12deg)}
 .ph3d{position:relative;width:280px;background:#fff;border:1px solid var(--border);border-radius:34px;
   box-shadow:28px 44px 90px rgba(13,38,33,.2),0 4px 12px rgba(13,38,33,.06);padding:9px;
   transform-style:preserve-3d;animation:phoneIn 1s var(--ease-out) both}
-.screen{background:#fff;border-radius:26px;overflow:hidden;height:474px;display:flex;flex-direction:column}
+.screen{background:#fff;border-radius:26px;overflow:hidden;height:560px;display:flex;flex-direction:column}
 .ph3d .scr-body{flex:1}
 .layer{position:absolute;transform-style:preserve-3d;z-index:3}
 .lf{will-change:transform;position:relative;transition:opacity .35s,filter .35s}
@@ -185,19 +192,20 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .s3d:has(.layer:hover) .layer:not(:hover) .lf{opacity:.42;filter:saturate(.6)}
 .s3d:has(.layer:hover) .ph3d{filter:brightness(.93) saturate(.8)}
 .ph3d{transition:filter .35s}
-.l-review{top:-18px;left:-72px;transform:translateZ(95px)}
-.l-review .review-card{width:auto;white-space:nowrap;padding:13px 16px}
+/* 오늘의 복습 — 점수그래프와 학습플랜 사이 */
+.l-review{top:342px;left:50%;transform:translateX(-50%) translateZ(105px)}
+.l-review .review-card{width:auto;white-space:nowrap;padding:12px 16px;box-shadow:0 20px 46px rgba(11,90,76,.32)}
 .l-review .review-card .t{font-size:14px}
 .l-review .lf{animation:layerIn .7s var(--ease-spring) .75s both,lfloat 6.5s ease-in-out 2.1s infinite}
-/* 점수 추이그래프 — 폰 중앙에서 튀어나온 메인 레이어 */
-.l-chart{top:92px;left:50%;transform:translateX(-50%) translateZ(115px)}
+/* 점수 추이그래프 — 폰 중앙에서 튀어나온 메인 레이어 (D-day 바 바로 아래) */
+.l-chart{top:108px;left:50%;transform:translateX(-50%) translateZ(115px)}
 .l-chart .mini-card{width:252px;box-shadow:0 24px 52px rgba(13,38,33,.2)}
 .l-chart .lf{animation:layerIn .7s var(--ease-spring) .95s both,lfloat 6.5s ease-in-out 2.9s infinite}
 /* 과목별 점수 — 우측 하단 원위치 */
-.l-bars{bottom:-8px;right:-118px;transform:translateZ(70px)}
+.l-bars{bottom:-8px;right:-188px;transform:translateZ(70px)}
 .l-bars .mini-card{width:238px;box-shadow:0 18px 40px rgba(13,38,33,.16)}
 .l-bars .lf{animation:layerIn .7s var(--ease-spring) 1.05s both,lfloat 6.5s ease-in-out 3.3s infinite}
-.l-weak{bottom:52px;left:-70px;transform:translateZ(55px)}
+.l-weak{bottom:52px;left:-100px;transform:translateZ(55px)}
 .l-weak .float-chip{position:static;animation:none;box-shadow:0 16px 36px rgba(13,38,33,.16)}
 .l-weak .lf{animation:layerIn .7s var(--ease-spring) 1.15s both,lfloat 6.5s ease-in-out 3.7s infinite}
 .l-dock{bottom:-30px;left:50%;transform:translateX(-50%) translateZ(135px)}
@@ -236,7 +244,11 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .legend span{font-size:9px;font-weight:600;color:#fff;padding:2px 7px;border-radius:999px;letter-spacing:-0.02em}
 .legend span.off{background:#fff!important;color:#b0b6c2;border:1px dashed #c9d8d3}
 .ln-off{stroke-opacity:.2;stroke-dasharray:3 4;stroke-width:1.1;animation:heroFade 1s 1.7s both}
-.review-card{background:var(--accent-grad);border-radius:var(--r-lg);box-shadow:var(--shadow-accent);padding:14px 15px;display:flex;align-items:center;gap:11px;color:#fff}
+.review-card{background:var(--accent-grad);border-radius:var(--r-lg);box-shadow:var(--shadow-accent);padding:14px 15px;color:#fff}
+.review-card .rc-main{display:flex;align-items:center;gap:11px}
+.review-card .rc-sub{margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.22);
+  font-size:11.5px;font-weight:600;color:rgba(255,255,255,.86);display:flex;align-items:center;gap:6px}
+.review-card .rc-sub::before{content:'';width:5px;height:5px;border-radius:50%;background:#aee6d9}
 .review-card .ic{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.16);display:grid;place-items:center;flex-shrink:0}
 .review-card .t{font-size:15px;font-weight:700;letter-spacing:-0.02em;flex:1}
 .review-card .ch{opacity:.8;font-size:16px}
@@ -310,38 +322,70 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   padding:8px 14px;font-size:12.5px;font-weight:600;transition:transform .16s var(--ease-spring),filter .18s}
 .store-pill:hover{filter:brightness(1.2);transform:translateY(-1px)}
 
+/* 헤드라인은 지마켓 산스 — 본문 Pretendard와 대비를 줘 단조로움 해소 */
+h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif}
+
 /* ============ FEATURES ============ */
 .features{padding:96px 0;background:radial-gradient(700px 400px at 50% 0%, rgba(230,244,241,.55), transparent 70%)}
-.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px 34px;padding:0 26px}
 .fcard{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);padding:26px 24px;box-shadow:var(--shadow-sm);
-  border-left:3px solid transparent;transition:transform .25s var(--ease-spring),box-shadow .25s,border-color .2s}
-.fcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-left-color:var(--card-accent,var(--accent))}
-.fic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin-bottom:18px;transition:transform .2s var(--ease-spring)}
-.fcard:hover .fic{transform:scale(1.1)}
-.fcard h3{font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:9px}
-.fcard p{font-size:14.5px;color:var(--text-2);line-height:1.66}
+  transition:transform .25s var(--ease-spring),box-shadow .25s,border-color .25s,background .25s}
+.fcard:hover{transform:translateY(-4px);background:#f6f3fb;border-color:#b9aed1;
+  box-shadow:0 0 0 1.5px #c8bde0,0 14px 36px rgba(143,127,170,.2)}
+.fhead{display:flex;align-items:center;gap:13px;margin-bottom:13px}
+.fic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;flex-shrink:0;transition:transform .2s var(--ease-spring)}
+.fcard:hover .fic{transform:scale(1.08)}
+.fcard h3{font-size:20px;font-weight:700;letter-spacing:-0.02em}
+.fcard p{font-size:15.5px;color:var(--text-2);line-height:1.68}
 
 /* ============ ANALYSIS (AI 매커니즘) ============ */
 .analysis{padding:96px 0;background:linear-gradient(135deg,#fef7f5 0%,#f3f7f6 60%,#eef1f8 100%)}
-.an-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.an-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative;z-index:0}
+/* 분석 기법 칩 ↔ 파레토 카드 점선 거미줄 (JS가 경로 계산) */
+.an-web{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:visible}
+.an-web path{stroke:#0b7a6a;stroke-opacity:.32;stroke-width:1.3;fill:none;stroke-dasharray:3 7;stroke-linecap:round;animation:dashMove 26s linear infinite}
+.an-web circle{fill:var(--accent);animation:nodePulse 3.2s ease-in-out infinite}
 .pipe{margin-top:26px;display:flex;flex-direction:column;position:relative}
-.pipe::before{content:'';position:absolute;left:17px;top:18px;bottom:18px;width:2px;
+.pipe::before{content:'';position:absolute;left:21px;top:20px;bottom:20px;width:2px;
   background:linear-gradient(180deg,var(--accent-mid),var(--border))}
-.pstep{position:relative;display:flex;gap:16px;padding:9px 0;align-items:flex-start}
-.pnum{position:relative;z-index:1;width:36px;height:36px;border-radius:50%;background:#fff;border:2px solid var(--accent-mid);
-  display:grid;place-items:center;font-size:11.5px;font-weight:800;color:var(--accent-strong);flex-shrink:0;
-  font-family:'Outfit',monospace;letter-spacing:.02em;box-shadow:var(--shadow-xs)}
-.pstep:last-child .pnum{background:var(--accent-grad);border-color:transparent;color:#fff;box-shadow:var(--shadow-accent)}
-.pstep b{display:block;font-size:15px;font-weight:700;letter-spacing:-0.01em}
-.pstep span{font-size:13px;color:var(--text-3);line-height:1.55}
-.mchips{display:flex;flex-wrap:wrap;gap:7px;margin-top:24px}
-.mchips span{font-size:12px;font-weight:600;color:var(--text-2);background:#fff;border:1px solid var(--border-strong);
-  padding:5px 12px;border-radius:999px;transition:transform .16s var(--ease-spring),border-color .16s,color .16s}
+.pstep{position:relative;display:flex;gap:18px;padding:17px 0;align-items:flex-start}
+.pnum{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:#fff;border:2px solid var(--accent-mid);
+  display:grid;place-items:center;font-size:14px;font-weight:800;color:var(--accent-strong);flex-shrink:0;
+  font-family:'Outfit',monospace;letter-spacing:.02em;box-shadow:var(--shadow-xs);
+  transition:background .25s,color .25s,border-color .25s,box-shadow .3s}
+.pstep:hover .pnum{background:var(--accent-grad);border-color:transparent;color:#fff;
+  animation:pnumGlow 1.6s ease-in-out infinite}
+/* 호버 시 다음 단계로 향하는 네온 화살표 (숫자 원 사이, 아래 방향) */
+.pstep::before{content:'❯';position:absolute;left:22px;bottom:-13px;z-index:2;
+  font-size:21px;font-weight:800;color:#14c2a3;opacity:0;pointer-events:none;line-height:1;
+  transform:translateX(-50%) rotate(90deg) translateX(-9px);
+  text-shadow:0 0 8px rgba(20,194,163,.95),0 0 20px rgba(20,194,163,.55),0 0 36px rgba(20,194,163,.3);
+  transition:opacity .25s,transform .3s var(--ease-spring)}
+.pstep:hover::before{opacity:1;transform:translateX(-50%) rotate(90deg) translateX(0)}
+.pstep:last-child::before{display:none}
+@keyframes pnumGlow{
+  0%,100%{box-shadow:0 0 0 5px rgba(11,122,106,.13),0 0 18px rgba(11,122,106,.45)}
+  50%{box-shadow:0 0 0 9px rgba(11,122,106,.08),0 0 32px rgba(11,122,106,.68)}
+}
+.pstep b{display:block;font-size:17px;font-weight:700;letter-spacing:-0.01em;margin-bottom:2px}
+.pstep span{font-size:14.5px;color:var(--text-3);line-height:1.55}
+/* 기법 칩 — 파레토 카드를 마인드맵처럼 둘러쌈 (좌측·하단만, 우측·상단 여백 유지) */
+.mchips{position:absolute;inset:0;pointer-events:none;z-index:1}
+.mchips span{position:absolute;white-space:nowrap;pointer-events:auto;
+  font-size:12px;font-weight:600;color:var(--text-2);background:#fff;border:1px solid var(--border-strong);
+  padding:5px 12px;border-radius:999px;box-shadow:var(--shadow-sm);transition:transform .16s var(--ease-spring),border-color .16s,color .16s}
 .mchips span:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--accent-strong)}
+.mchips span:nth-child(1){left:-150px;top:13%}
+.mchips span:nth-child(2){left:-184px;top:35%}
+.mchips span:nth-child(3){left:-154px;top:57%}
+.mchips span:nth-child(4){left:-178px;top:79%}
+.mchips span:nth-child(5){left:-26px;bottom:-60px}
+.mchips span:nth-child(6){left:150px;bottom:-48px}
+.mchips span:nth-child(7){left:300px;bottom:-64px}
 .an-note{font-size:12px;color:var(--text-4);margin-top:18px}
 
 /* 3D 적층 파레토 카드 + 오답 막대 채움 애니메이션 */
-.spot-3d{perspective:1100px}
+.spot-3d{perspective:1100px;position:relative}
 .mock-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);
   box-shadow:32px 44px 80px rgba(13,38,33,.16),0 2px 8px rgba(13,38,33,.05);padding:22px;
   border-top:3px solid var(--s-coral);transform-style:preserve-3d;
@@ -351,7 +395,10 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .mock-card .ms{font-size:12.5px;color:var(--text-3);margin-bottom:28px;line-height:1.5}
 .mock-card .ms b{color:var(--coral)}
 .mock-card .prow{background:#fff;border:1px solid var(--border);border-radius:12px;padding:9px 12px;margin-bottom:11px;
-  transform:translateZ(calc(var(--pz,0)*1px));box-shadow:0 14px 26px rgba(13,38,33,.12)}
+  transform:translateZ(calc(var(--pz,0)*1px));box-shadow:0 14px 26px rgba(13,38,33,.12);
+  transition:background .25s,border-color .25s,box-shadow .25s}
+.mock-card .prow:hover{background:#fdf0ec;border-color:#edb6a7;
+  box-shadow:0 0 0 1.5px rgba(224,147,127,.5),0 14px 32px rgba(196,88,74,.22)}
 .prow .pt{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
 .prow .pt .nm{font-weight:600}.prow .pt .nm i{color:var(--text-3);font-style:normal;font-weight:500}
 .prow .pt .vl{color:var(--coral);font-weight:700;opacity:0;transform:translateX(-8px);transition:opacity .5s,transform .5s var(--ease-spring)}
@@ -374,17 +421,17 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .spot-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 .spot.rev .spot-grid{direction:rtl}
 .spot.rev .spot-grid>*{direction:ltr}
-.hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.hubitem{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-xs);padding:15px;
+.hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hubitem{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-xs);padding:19px 18px;
   transition:transform .22s var(--ease-spring),box-shadow .22s}
 .hubitem:hover{transform:translateY(-3px)}
-.hubitem .hi{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;margin-bottom:11px}
-.hubitem b{display:block;font-size:14px;font-weight:700;letter-spacing:-0.02em}
-.hubitem span{font-size:11.5px;color:var(--text-3)}
+.hubitem .hi{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-bottom:13px}
+.hubitem b{display:block;font-size:16.5px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
+.hubitem span{font-size:13px;color:var(--text-3);line-height:1.6}
 
 /* ============ PRICING (비용 비교) ============ */
 .pricing{padding:96px 0;background:linear-gradient(160deg,#f8f2ea 0%,#fbfdfd 45%,#e9f3f0 100%)}
-.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:stretch}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
 .pcard{background:#fff;border:1px solid var(--border);border-radius:18px;padding:26px 22px;box-shadow:var(--shadow-sm);
   display:flex;flex-direction:column;gap:6px;transition:transform .22s var(--ease-spring),box-shadow .22s}
 .pcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
@@ -397,6 +444,21 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);top:-50px;right:-40px}
 .pcard.hl .pn,.pcard.hl .pd{color:rgba(255,255,255,.85)}
 .pcard.hl .pv{color:#fff}
+/* 배움터닝 임팩트 배너 — 비싼 가격들 아래에 깔리는 한 방 */
+.price-banner{margin-top:16px;position:relative;overflow:hidden;background:var(--accent-grad);border-radius:18px;
+  box-shadow:0 18px 48px rgba(11,122,106,.34);padding:28px 32px;color:#fff;
+  display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+.price-banner::after{content:'';position:absolute;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);top:-90px;right:-40px;pointer-events:none}
+.price-banner .pb-name{font-size:15px;font-weight:800;letter-spacing:-0.01em;display:flex;align-items:center;gap:8px}
+.price-banner .best{background:rgba(255,255,255,.18);font-size:10px;font-weight:800;letter-spacing:.08em;
+  padding:4px 9px;border-radius:999px}
+.price-banner .pb-price{display:flex;align-items:baseline;gap:7px}
+.price-banner .pb-price b{font-size:38px;font-weight:800;letter-spacing:-0.04em}
+.price-banner .pb-price small{font-size:14px;font-weight:600;color:rgba(255,255,255,.82)}
+.price-banner .free-chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);
+  padding:7px 14px;border-radius:999px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.price-banner .pd{font-size:13.5px;color:rgba(255,255,255,.9);line-height:1.6;margin-left:auto;max-width:320px}
 .pcard.hl .best{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.18);font-size:10px;font-weight:800;
   letter-spacing:.08em;padding:4px 9px;border-radius:7px}
 .price-note{text-align:center;font-size:12px;color:var(--text-4);margin-top:22px}
@@ -557,8 +619,12 @@ a:hover .brand-wm{transform:scale(1.03)}
   .hero h1{font-size:38px}
   .hero-grid,.spot-grid,.spot.rev .spot-grid,.mission-grid,.an-grid,.co-grid,.up-grid,.upcoming.alt .up-grid{grid-template-columns:1fr;gap:40px;direction:ltr}
   .stage{order:-1}
-  .scene{height:580px}
+  .scene{height:660px}
   .fgrid,.price-grid{grid-template-columns:1fr 1fr}
+  .fgrid{gap:20px;padding:0}
+  .an-web{display:none}
+  .mchips{position:static;display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;pointer-events:auto}
+  .mchips span{position:static}
   .svc-grid{grid-template-columns:1fr}
   .strip-grid{grid-template-columns:1fr 1fr;gap:26px}
   .foot-grid{grid-template-columns:1fr 1fr}
@@ -577,9 +643,8 @@ a:hover .brand-wm{transform:scale(1.03)}
   h2.h{font-size:26px}
   .app-title{font-size:46px}
   .btn-dl{width:100%;font-size:16px;height:54px}
-  .scene{height:500px}
+  .scene{height:560px}
   .s3d-scale{transform:scale(.78)}
-  .l-review{left:-48px}
   .l-bars{right:-66px}
   .l-weak{left:-40px}
 }
@@ -618,11 +683,12 @@ a:hover .brand-wm{transform:scale(1.03)}
       <a href="#services" data-sec="services">서비스</a>
       <a href="#service" data-sec="service">배움터닝</a>
       <a href="#analysis" data-sec="analysis">AI 분석</a>
-      <a href="#mission" data-sec="mission">미션</a>
+      <a href="#pricing" data-sec="pricing">가격</a>
       <div class="nav-drop">
         <a href="company.html" data-sec="company">회사<span class="chev">▾</span></a>
         <div class="drop-menu">
           <a href="company.html#intro">회사 소개</a>
+          <a href="company.html#mission">미션</a>
           <a href="company.html#history">연혁</a>
           <a href="company.html#partners">협력사</a>
           <a href="company.html#notice">공지사항</a>
@@ -668,15 +734,15 @@ a:hover .brand-wm{transform:scale(1.03)}
               <path class="wl" d="M330 336 Q400 380 466 462"/>
               <path class="wl" d="M330 336 Q262 430 215 480"/>
               <path class="wl" d="M330 336 Q330 480 330 595"/>
-              <path class="wl" d="M330 336 Q430 230 520 140"/>
+              <path class="wl" d="M452 204 Q492 174 520 140"/>
               <path class="wl" d="M330 336 Q200 312 78 300"/>
-              <path class="wl" d="M330 336 Q180 470 66 560"/>
+              <path class="wl" d="M330 336 Q180 490 72 598"/>
               <circle class="wn" cx="520" cy="140" r="5"/>
               <circle class="wn" cx="78" cy="300" r="5" style="animation-delay:.9s"/>
-              <circle class="wn" cx="66" cy="560" r="5" style="animation-delay:1.7s"/>
-              <text x="532" y="147">시험 일정</text>
-              <text x="14" y="282">AI 스케줄링</text>
-              <text x="78" y="567">맞춤 알림</text>
+              <circle class="wn" cx="72" cy="598" r="5" style="animation-delay:1.7s"/>
+              <text x="528" y="147">AI 성적 분석</text>
+              <text x="14" y="272"><tspan x="14">AI 스케줄링 및</tspan><tspan x="14" dy="21">학습 분석</tspan></text>
+              <text x="84" y="605">맞춤 알림</text>
             </svg>
 
             <!-- tilted phone base -->
@@ -694,11 +760,14 @@ a:hover .brand-wm{transform:scale(1.03)}
               </div>
             </div>
 
-            <!-- floating layer: 오늘의 복습 -->
+            <!-- floating layer: 오늘의 복습 (점수그래프 아래) -->
             <div class="layer l-review"><div class="lf">
               <div class="review-card">
-                <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
-                <span class="t">오늘의 복습 30문제</span><span class="ch">›</span>
+                <div class="rc-main">
+                  <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+                  <span class="t">오늘의 복습 30문제</span><span class="ch">›</span>
+                </div>
+                <div class="rc-sub">데이터 분석 추천 문제</div>
               </div>
             </div></div>
 
@@ -765,6 +834,8 @@ a:hover .brand-wm{transform:scale(1.03)}
                 <div class="fh"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#075c50" stroke-width="2.4"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg> 우선 공략 단원</div>
                 <div class="fr"><span>영어 · 문법/어휘</span><b class="tnum">12%<small>-72점</small></b></div>
                 <div class="fbar"><i style="width:100%"></i></div>
+                <div class="fr" style="margin-top:8px"><span>수학 · 도형의 방정식</span><b class="tnum">9%<small>-50점</small></b></div>
+                <div class="fbar"><i style="width:70%;animation-delay:1.9s"></i></div>
               </div>
             </div></div>
 
@@ -883,33 +954,27 @@ a:hover .brand-wm{transform:scale(1.03)}
     </div>
     <div class="fgrid">
       <div class="fcard reveal" style="--card-accent:var(--s-teal)">
-        <span class="fic" style="background:var(--p-teal)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M18.4 5.6l-2.1 2.1M21 12h-3M5.6 5.6l2.1 2.1M3 12h3M12 21a6 6 0 0 0 6-6c0-3.3-2.7-4.5-6-9-3.3 4.5-6 5.7-6 9a6 6 0 0 0 6 6z"/></svg></span>
-        <h3>AI 학습 스케줄링</h3>
+        <div class="fhead"><span class="fic" style="background:var(--p-teal)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M18.4 5.6l-2.1 2.1M21 12h-3M5.6 5.6l2.1 2.1M3 12h3M12 21a6 6 0 0 0 6-6c0-3.3-2.7-4.5-6-9-3.3 4.5-6 5.7-6 9a6 6 0 0 0 6 6z"/></svg></span><h3>AI 학습 스케줄링</h3></div>
         <p>약점 진단 결과로 '오늘 무엇을 풀지'를 자동 설계합니다. 점수가 가장 크게 오를 단원이 가장 먼저.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-coral)">
-        <span class="fic" style="background:var(--p-coral)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5826e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
-        <h3>근거기반 성적 분석</h3>
+        <div class="fhead"><span class="fic" style="background:var(--p-coral)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5826e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><h3>근거기반 성적 분석</h3></div>
         <p>파레토 실점 집중도·합격 예측·오답 패턴 등 7가지 기법으로 약점을 숫자로 정량화합니다.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-purple)">
-        <span class="fic" style="background:var(--p-purple)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
-        <h3>취약단원 진단</h3>
+        <div class="fhead"><span class="fic" style="background:var(--p-purple)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><h3>취약단원 진단</h3></div>
         <p>자주 틀리는 단원을 자동으로 수집해 막연한 불안 대신 정확한 보완 지점을 짚어줍니다.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-blue)">
-        <span class="fic" style="background:var(--p-blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg></span>
-        <h3>문제풀이 자동채점</h3>
+        <div class="fhead"><span class="fic" style="background:var(--p-blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg></span><h3>문제풀이 자동채점</h3></div>
         <p>문제를 앱에서 풀고 OMR로 즉시 채점. 어떤 문항을 왜 틀렸는지까지 데이터로 기록됩니다.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-amber)">
-        <span class="fic" style="background:var(--p-amber)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#af9069" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg></span>
-        <h3>망각곡선 복습</h3>
+        <div class="fhead"><span class="fic" style="background:var(--p-amber)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#af9069" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg></span><h3>망각곡선 복습</h3></div>
         <p>잊을 때쯤 다시. 에빙하우스 곡선 기반 간격 반복으로 오늘 복습할 문제만 골라드립니다.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-olive)">
-        <span class="fic" style="background:var(--p-olive)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9aa674" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
-        <h3>시험 일정 관리</h3>
+        <div class="fhead"><span class="fic" style="background:var(--p-olive)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9aa674" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><h3>시험 일정 관리</h3></div>
         <p>접수일·시험일 D-day와 나만의 학습 일정을 한 캘린더에. 중요한 날을 자동 알림으로.</p>
       </div>
     </div>
@@ -918,7 +983,8 @@ a:hover .brand-wm{transform:scale(1.03)}
 
 <!-- ===================== AI ANALYSIS ===================== -->
 <section class="analysis sec-focus" id="analysis">
-  <div class="wrap an-grid">
+  <div class="wrap an-grid" id="anGrid">
+    <svg class="an-web" id="anWeb" aria-hidden="true"></svg>
     <div class="reveal">
       <span class="eyebrow" style="color:var(--s-coral);background:var(--p-coral)">AI 분석 매커니즘</span>
       <h2 class="h">감이 아니라 데이터로<br>공부할 순서를 정합니다</h2>
@@ -930,13 +996,13 @@ a:hover .brand-wm{transform:scale(1.03)}
         <div class="pstep"><span class="pnum">04</span><div><b>복습 주기 계산</b><span>망각곡선 기반으로 과목별 최적 복습 시점 산출</span></div></div>
         <div class="pstep"><span class="pnum">05</span><div><b>일일 플랜 자동 생성</b><span>오늘 풀 문제를 자동 배치 — AI 스케줄링</span></div></div>
       </div>
+      <p class="an-note">* 파레토 법칙·에빙하우스 망각곡선 등 검증된 학습과학 방법론에 기반합니다.</p>
+    </div>
+    <div class="spot-3d re-anim">
       <div class="mchips">
         <span>파레토 실점 분석</span><span>합격 예측 모델</span><span>오답 패턴 분석</span>
         <span>우선순위 매트릭스</span><span>망각곡선 주기</span><span>추세 분석</span><span>학습량 보정</span>
       </div>
-      <p class="an-note">* 파레토 법칙·에빙하우스 망각곡선 등 검증된 학습과학 방법론에 기반합니다.</p>
-    </div>
-    <div class="spot-3d re-anim">
       <div class="mock-card">
         <div class="mh">성적 분석 · 파레토</div>
         <div class="ms">전체 실점 <b>577점</b> 중 핵심 약점 <b>18개</b>를 먼저 공략하세요.</div>
@@ -960,11 +1026,11 @@ a:hover .brand-wm{transform:scale(1.03)}
     </div>
     <div class="reveal">
       <div class="hubgrid">
-        <div class="hubitem" style="border-top:2px solid var(--s-teal)"><span class="hi" style="background:var(--p-teal)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2f9183" stroke-width="2"><path d="M9 18V5l12-2v13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><b>성적분석</b><span>약점·합격예측 분석</span></div>
-        <div class="hubitem" style="border-top:2px solid var(--s-coral)"><span class="hi" style="background:var(--p-coral)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c5826e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span><b>문제 풀이</b><span>CBT·실전 연습</span></div>
-        <div class="hubitem" style="border-top:2px solid var(--s-blue)"><span class="hi" style="background:var(--p-blue)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></span><b>문제은행</b><span>단원별 문제 풀이</span></div>
-        <div class="hubitem" style="border-top:2px solid var(--s-amber)"><span class="hi" style="background:var(--p-amber)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#af9069" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg></span><b>시험 기록</b><span>성적·OMR 응시기록</span></div>
-        <div class="hubitem" style="grid-column:span 2;border-top:2px solid var(--s-purple)"><span class="hi" style="background:var(--p-purple)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg></span><b>취약단원 분석</b><span>틀린 단원 집중 보완</span></div>
+        <div class="hubitem" style="border-top:2px solid var(--s-teal)"><span class="hi" style="background:var(--p-teal)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2f9183" stroke-width="2"><path d="M9 18V5l12-2v13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><b>성적분석</b><span>파레토·합격 예측 등 7가지 기법으로 내 점수를 입체적으로 분석</span></div>
+        <div class="hubitem" style="border-top:2px solid var(--s-coral)"><span class="hi" style="background:var(--p-coral)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c5826e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span><b>문제 풀이</b><span>실전과 같은 CBT 모드로 풀고 OMR로 즉시 채점·기록</span></div>
+        <div class="hubitem" style="border-top:2px solid var(--s-blue)"><span class="hi" style="background:var(--p-blue)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></span><b>문제은행</b><span>단원·유형 태그로 골라 푸는 기출 문제 저장소</span></div>
+        <div class="hubitem" style="border-top:2px solid var(--s-amber)"><span class="hi" style="background:var(--p-amber)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#af9069" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg></span><b>시험 기록</b><span>회차별 성적과 OMR 응시 기록을 한눈에 아카이브</span></div>
+        <div class="hubitem" style="grid-column:span 2;border-top:2px solid var(--s-purple)"><span class="hi" style="background:var(--p-purple)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg></span><b>취약단원 분석</b><span>자주 틀리는 단원을 자동 수집해 집중 보완 포인트를 짚어드립니다</span></div>
       </div>
     </div>
   </div>
@@ -994,12 +1060,12 @@ a:hover .brand-wm{transform:scale(1.03)}
         <span class="pv tnum">40~80<small>만원/년</small></span>
         <span class="pd">강의는 많지만, 무엇부터 볼지는 스스로 정해야 합니다.</span>
       </div>
-      <div class="pcard hl reveal">
-        <span class="best">BEST</span>
-        <span class="pn">배움터닝</span>
-        <span class="pv">₩0<small style="color:rgba(255,255,255,.8)">부터 시작</small></span>
-        <span class="pd">약점 진단부터 오늘의 플랜까지. 매일 갱신되는 나만의 학습 전략.</span>
-      </div>
+    </div>
+    <div class="price-banner reveal">
+      <span class="pb-name">배움터닝 <span class="best">BEST</span></span>
+      <span class="pb-price"><b>월 7,900원</b></span>
+      <span class="free-chip">무료 체험 — AI 분석 시스템 3회 이용</span>
+      <span class="pd">약점 진단부터 오늘의 플랜까지, 매일 갱신되는 나만의 학습 전략. 위 비용의 수십분의 일로.</span>
     </div>
     <p class="price-punch">진단은 데이터가, 계획은 자동으로 — <b>비용 부담 없이 컨설팅받는 것처럼.</b></p>
     <p class="price-note">* 2025년 주요 업체 공개 가격 기준 참고치이며, 실제 가격은 업체별로 다를 수 있습니다.</p>
@@ -1049,33 +1115,6 @@ a:hover .brand-wm{transform:scale(1.03)}
         <div class="skel" style="width:78%"></div>
         <div class="skel" style="width:88%"></div>
         <div class="skel" style="width:64%"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== MISSION ===================== -->
-<section class="mission sec-focus" id="mission">
-  <div class="wrap mission-grid">
-    <div class="reveal">
-      <span class="eyebrow">아웃포커스가 만드는 이유</span>
-      <h2 class="h">모두에게 공평한<br>배움의 기회를</h2>
-      <p class="lead">한 해 수만 명이 학교 밖에서 검정고시에 도전합니다. 그러나 이들에게 주어진 선택지는 비싼 사교육뿐 — 정보와 비용의 격차가 곧 기회의 격차가 됩니다.</p>
-      <div class="feat-list">
-        <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)">1</span><div><b>학습관리 인프라의 공백</b> <span>— 학교 밖 학습자는 진단·계획·피드백을 스스로 해야 합니다</span></div></div>
-        <div class="fl"><span class="dot" style="background:var(--p-coral);color:var(--s-coral)">2</span><div><b>비용 장벽</b> <span>— 컨설팅·학원은 월 수십만 원, 부담은 고스란히 학습자에게</span></div></div>
-        <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">3</span><div><b>데이터로 격차 해소</b> <span>— 배움터닝은 데이터 기반 자기주도 학습으로 그 공백을 채웁니다</span></div></div>
-      </div>
-    </div>
-    <div class="reveal">
-      <div class="ceo-card">
-        <span class="qm">“</span>
-        <p class="qt">배움의 출발선이 어디든,<br>도착선은 같아야 합니다.</p>
-        <div class="who">
-          <span class="avatar">양</span>
-          <div><b>양승환</b> <span>· 아웃포커스 대표</span></div>
-        </div>
-        <p class="sub">교육 사각지대의 학습자들이 데이터라는 가장 공정한 선생님을 만날 수 있도록 — 아웃포커스는 기술이 사회에 기여하는 가장 따뜻한 방법을 고민합니다.</p>
       </div>
     </div>
   </div>
@@ -1143,7 +1182,7 @@ navLinks.forEach(function(l){
 document.getElementById('navlinks').addEventListener('mouseleave',function(){movePill(currentActive());});
 function updateActive(){
   var scrollY=window.scrollY+160;
-  var ids=['services','service','analysis','mission'];
+  var ids=['services','service','analysis','pricing'];
   var active=null;
   ids.forEach(function(id){
     var el=document.getElementById(id);
@@ -1219,8 +1258,8 @@ if(s3d&&sceneBox){
   });
 }
 
-// ── Feature card 3D tilt ──
-document.querySelectorAll('.fcard,.pcard').forEach(function(card){
+// ── Pricing card 3D tilt (fcard는 기울기 없이 컬러 호버만) ──
+document.querySelectorAll('.pcard').forEach(function(card){
   card.addEventListener('mouseenter',function(){card.style.transition='transform .12s, box-shadow .18s, border-color .18s';});
   card.addEventListener('mouseleave',function(){
     card.style.transition='transform .45s cubic-bezier(0.2,0.8,0.2,1), box-shadow .25s, border-color .2s';
@@ -1232,6 +1271,36 @@ document.querySelectorAll('.fcard,.pcard').forEach(function(card){
     var dy=(e.clientY-r.top)/r.height-.5;
     card.style.transform='perspective(700px) rotateY('+(dx*9)+'deg) rotateX('+(-dy*7)+'deg) translateY(-4px) scale(1.012)';
   });
+});
+
+// ── 분석 기법 칩 ↔ 파레토 카드 점선 거미줄 ──
+function drawAnWeb(){
+  var grid=document.getElementById('anGrid'),svg=document.getElementById('anWeb');
+  if(!grid||!svg) return;
+  var card=grid.querySelector('.mock-card');
+  if(!card||getComputedStyle(svg).display==='none'){svg.innerHTML='';return}
+  var g=grid.getBoundingClientRect(),c=card.getBoundingClientRect();
+  svg.setAttribute('viewBox','0 0 '+Math.round(g.width)+' '+Math.round(g.height));
+  var chips=grid.querySelectorAll('.mchips span'),html='';
+  chips.forEach(function(ch,i){
+    var r=ch.getBoundingClientRect();
+    var x1=r.left+r.width/2-g.left, y1=r.top+r.height/2-g.top;
+    var L=c.left-g.left+14,T=c.top-g.top+14,R=c.right-g.left-14,B=c.bottom-g.top-14;
+    var x2=Math.max(L,Math.min(x1,R)), y2=Math.max(T,Math.min(y1,B));
+    var dx=x2-x1,dy=y2-y1;
+    var mx=(x1+x2)/2-dy*.14, my=(y1+y2)/2+dx*.14;
+    html+='<path d="M'+x1+' '+y1+' Q'+mx+' '+my+' '+x2+' '+y2+'"/>'
+        +'<circle cx="'+x1+'" cy="'+y1+'" r="3.2" style="animation-delay:'+(i*.45)+'s"/>';
+  });
+  svg.innerHTML=html;
+}
+window.addEventListener('resize',drawAnWeb);
+window.addEventListener('load',drawAnWeb);
+drawAnWeb();
+setTimeout(drawAnWeb,600);setTimeout(drawAnWeb,1500);setTimeout(drawAnWeb,3000);
+// 섹션 등장 애니메이션(transform)이 끝난 뒤 최종 위치로 재계산
+document.querySelectorAll('#analysis, #anGrid .reveal').forEach(function(el){
+  el.addEventListener('transitionend',function(e){if(e.propertyName==='transform')drawAnWeb()});
 });
 
 // ── Hub item hover glow ──

@@ -40,6 +40,13 @@
   --ease-spring:cubic-bezier(0.2,0.8,0.2,1);
 }
 html{scroll-behavior:smooth}
+/* 헤드라인 전용 폰트 — 지마켓 산스 (무료 상업적 이용 가능, G마켓 배포) */
+@font-face{font-family:'GmarketSans';font-weight:300;font-display:swap;
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff')}
+@font-face{font-family:'GmarketSans';font-weight:500;font-display:swap;
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff')}
+@font-face{font-family:'GmarketSans';font-weight:700;font-display:swap;
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff')}
 body{font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,-apple-system,sans-serif;
   color:var(--text);background:#fbfdfd;-webkit-font-smoothing:antialiased;line-height:1.62;letter-spacing:-0.01em;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:
@@ -135,6 +142,20 @@ h2.h{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .ceo-card .who span{opacity:.75}
 .ceo-card .sub{font-size:13.5px;line-height:1.7;opacity:.85;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18)}
 
+/* ── MISSION ── */
+.mission{padding:72px 0;background:radial-gradient(640px 400px at 85% 75%, rgba(251,238,236,.75), transparent 70%)}
+.mission-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.mission .ceo-card{max-width:none;margin:0}
+.feat-list{margin-top:20px;display:flex;flex-direction:column;gap:14px}
+.feat-list .fl{display:flex;gap:12px;align-items:flex-start}
+.feat-list .fl .dot{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;flex-shrink:0;margin-top:1px;font-size:12px;font-weight:700}
+.feat-list .fl b{font-weight:600}
+.feat-list .fl span{color:var(--text-2)}
+.feat-list .fl div{font-size:14.5px;line-height:1.6}
+
+/* 헤드라인은 지마켓 산스 — 본문 Pretendard와 대비 */
+h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif}
+
 /* ── HISTORY ── */
 .history{padding:72px 0;background:linear-gradient(180deg,rgba(238,241,248,.55),rgba(242,240,248,.4))}
 .tl-card{max-width:680px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:22px;padding:30px 30px 22px;box-shadow:var(--shadow-md)}
@@ -212,6 +233,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
   h2.h{font-size:30px}
   .page-head h1{font-size:34px}
   .vgrid{grid-template-columns:1fr}
+  .mission-grid{grid-template-columns:1fr;gap:40px}
   .foot-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:560px){
@@ -260,11 +282,12 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
       <a href="index.html#services">서비스</a>
       <a href="index.html#service">배움터닝</a>
       <a href="index.html#analysis">AI 분석</a>
-      <a href="index.html#mission">미션</a>
+      <a href="index.html#pricing">가격</a>
       <div class="nav-drop">
         <a href="company.html" class="active">회사<span class="chev">▾</span></a>
         <div class="drop-menu">
           <a href="#intro">회사 소개</a>
+          <a href="#mission">미션</a>
           <a href="#history">연혁</a>
           <a href="#partners">협력사</a>
           <a href="#notice">공지사항</a>
@@ -309,14 +332,32 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
         <p>검정고시 학습관리를 시작으로 진학, 연결까지. 기술이 사회에 기여하는 가장 따뜻한 방법을 고민합니다.</p>
       </div>
     </div>
-    <div class="ceo-card reveal">
-      <span class="qm">&ldquo;</span>
-      <p class="qt">배움의 출발선이 어디든,<br>도착선은 같아야 합니다.</p>
-      <div class="who">
-        <span class="avatar">양</span>
-        <div><b>양승환</b> <span>· 아웃포커스 대표</span></div>
+  </div>
+</section>
+
+<!-- ===================== 미션 ===================== -->
+<section class="mission sec-focus" id="mission">
+  <div class="wrap mission-grid">
+    <div class="reveal">
+      <span class="eyebrow" style="color:var(--s-coral);background:var(--p-coral)">미션</span>
+      <h2 class="h">모두에게 공평한<br>배움의 기회를</h2>
+      <p class="lead">한 해 수만 명이 학교 밖에서 검정고시에 도전합니다. 그러나 이들에게 주어진 선택지는 비싼 사교육뿐 — 정보와 비용의 격차가 곧 기회의 격차가 됩니다.</p>
+      <div class="feat-list">
+        <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)">1</span><div><b>학습관리 인프라의 공백</b> <span>— 학교 밖 학습자는 진단·계획·피드백을 스스로 해야 합니다</span></div></div>
+        <div class="fl"><span class="dot" style="background:var(--p-coral);color:var(--s-coral)">2</span><div><b>비용 장벽</b> <span>— 컨설팅·학원은 월 수십만 원, 부담은 고스란히 학습자에게</span></div></div>
+        <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">3</span><div><b>데이터로 격차 해소</b> <span>— 배움터닝은 데이터 기반 자기주도 학습으로 그 공백을 채웁니다</span></div></div>
       </div>
-      <p class="sub">교육 사각지대의 학습자들이 데이터라는 가장 공정한 선생님을 만날 수 있도록 — 아웃포커스는 기술이 사회에 기여하는 가장 따뜻한 방법을 고민합니다.</p>
+    </div>
+    <div class="reveal">
+      <div class="ceo-card">
+        <span class="qm">&ldquo;</span>
+        <p class="qt">배움의 출발선이 어디든,<br>도착선은 같아야 합니다.</p>
+        <div class="who">
+          <span class="avatar">양</span>
+          <div><b>양승환</b> <span>· 아웃포커스 대표</span></div>
+        </div>
+        <p class="sub">교육 사각지대의 학습자들이 데이터라는 가장 공정한 선생님을 만날 수 있도록 — 아웃포커스는 기술이 사회에 기여하는 가장 따뜻한 방법을 고민합니다.</p>
+      </div>
     </div>
   </div>
 </section>
