@@ -112,12 +112,12 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .nav-top .login{position:absolute;right:24px;font-size:14.5px;font-weight:600;color:var(--text-2);cursor:pointer;
   padding:7px 14px;border-radius:var(--r-md);transition:color .15s,background .15s}
 .nav-top .login:hover{color:var(--text);background:var(--surface-2)}
-.nav-bot{border-top:1px solid var(--border);height:46px;display:flex;align-items:center;justify-content:center}
-.navlinks{position:relative;display:flex;gap:4px;font-size:14.5px;font-weight:500}
-.nav-pill{position:absolute;top:50%;transform:translateY(-50%);height:34px;border-radius:10px;
+.nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
+.navlinks{position:relative;display:flex;gap:8px;font-size:16px;font-weight:600}
+.nav-pill{position:absolute;top:50%;transform:translateY(-50%);height:38px;border-radius:11px;
   background:var(--accent-soft);opacity:0;
   transition:left .32s var(--ease-spring),width .32s var(--ease-spring),opacity .25s}
-.navlinks a{position:relative;z-index:1;color:var(--text-3);padding:7px 15px;border-radius:var(--r-md);
+.navlinks a{position:relative;z-index:1;color:var(--text-3);padding:9px 19px;border-radius:var(--r-md);
   transition:color .18s,transform .18s var(--ease-spring)}
 .navlinks a:hover{color:var(--text);transform:translateY(-1px)}
 .navlinks a.active{color:var(--accent-strong);font-weight:700}
@@ -314,8 +314,10 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .svc h3{font-size:21px;font-weight:700;letter-spacing:-0.02em;margin-bottom:5px}
 .svc .st{font-size:12px;font-weight:700;color:var(--text-3);margin-bottom:12px}
 .svc .st.live{color:var(--accent-strong)}
-.svc p{font-size:14px;color:var(--text-2);line-height:1.7;flex:1;max-width:300px;margin:0 auto}
-.svc .fts{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:16px 0 16px}
+/* 호버로 카드가 넓어져도 텍스트 줄바꿈/배열이 바뀌지 않게 콘텐츠 폭 고정 (가운데 정렬 유지) */
+.svc h3,.svc .st,.svc p,.svc .fts,.svc .stores-mini,.svc .go{width:100%;max-width:280px;margin-left:auto;margin-right:auto}
+.svc p{font-size:14px;color:var(--text-2);line-height:1.7;flex:1}
+.svc .fts{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:16px auto 16px}
 .svc .fts span{font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px}
 .svc .stores-mini{display:flex;justify-content:center;gap:8px}
 .store-pill{display:inline-flex;align-items:center;gap:6px;background:#15181d;color:#fff;border-radius:10px;
@@ -340,24 +342,24 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 
 /* ============ ANALYSIS (AI 매커니즘) ============ */
 .analysis{padding:96px 0;background:linear-gradient(135deg,#fef7f5 0%,#f3f7f6 60%,#eef1f8 100%)}
-.an-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative;z-index:0}
+.an-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:44px;align-items:center;position:relative;z-index:0}
 /* 분석 기법 칩 ↔ 파레토 카드 점선 거미줄 (JS가 경로 계산) */
 .an-web{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:visible}
 .an-web path{stroke:#0b7a6a;stroke-opacity:.32;stroke-width:1.3;fill:none;stroke-dasharray:3 7;stroke-linecap:round;animation:dashMove 26s linear infinite}
 .an-web circle{fill:var(--accent);animation:nodePulse 3.2s ease-in-out infinite}
 /* align-items:flex-start — 각 행 호버 영역을 콘텐츠 폭으로 제한 (파레토 구역과 분리) */
-.pipe{margin-top:26px;display:flex;flex-direction:column;align-items:flex-start;position:relative}
-.pipe::before{content:'';position:absolute;left:21px;top:20px;bottom:20px;width:2px;
+.pipe{margin-top:30px;display:flex;flex-direction:column;align-items:flex-start;position:relative}
+.pipe::before{content:'';position:absolute;left:27px;top:24px;bottom:24px;width:2px;
   background:linear-gradient(180deg,var(--accent-mid),var(--border))}
-.pstep{position:relative;display:flex;gap:18px;padding:17px 14px 17px 0;align-items:flex-start}
-.pnum{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:#fff;border:2px solid var(--accent-mid);
-  display:grid;place-items:center;font-size:14px;font-weight:800;color:var(--accent-strong);flex-shrink:0;
-  font-family:'Outfit',monospace;letter-spacing:.02em;box-shadow:var(--shadow-xs);
+.pstep{position:relative;display:flex;gap:20px;padding:18px 14px 18px 0;align-items:flex-start}
+.pnum{position:relative;z-index:1;width:56px;height:56px;border-radius:50%;background:#fff;border:2.5px solid var(--accent-mid);
+  display:grid;place-items:center;font-size:18px;font-weight:800;color:var(--accent-strong);flex-shrink:0;
+  font-family:'Outfit',monospace;letter-spacing:.02em;box-shadow:var(--shadow-sm);
   transition:background .25s,color .25s,border-color .25s,box-shadow .3s}
 .pstep:hover .pnum{background:var(--accent-grad);border-color:transparent;color:#fff;
   animation:pnumGlow 1.6s ease-in-out infinite}
 /* 호버 시 다음 단계로 향하는 네온 화살표 (숫자 원 사이, 아래 방향) */
-.pstep::before{content:'❯';position:absolute;left:22px;bottom:-13px;z-index:2;
+.pstep::before{content:'❯';position:absolute;left:28px;bottom:-13px;z-index:2;
   font-size:21px;font-weight:800;color:#14c2a3;opacity:0;pointer-events:none;line-height:1;
   transform:translateX(-50%) rotate(90deg) translateX(-9px);
   text-shadow:0 0 8px rgba(20,194,163,.95),0 0 20px rgba(20,194,163,.55),0 0 36px rgba(20,194,163,.3);
@@ -368,26 +370,31 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
   0%,100%{box-shadow:0 0 0 5px rgba(11,122,106,.13),0 0 18px rgba(11,122,106,.45)}
   50%{box-shadow:0 0 0 9px rgba(11,122,106,.08),0 0 32px rgba(11,122,106,.68)}
 }
-.pstep b{display:block;font-size:17px;font-weight:700;letter-spacing:-0.01em;margin-bottom:2px}
-.pstep span{font-size:14.5px;color:var(--text-3);line-height:1.55}
+.pstep b{display:block;font-size:18.5px;font-weight:700;letter-spacing:-0.01em;margin-bottom:3px}
+.pstep span{font-size:15px;color:var(--text-3);line-height:1.55}
 /* 기법 칩 — 파레토 카드를 마인드맵처럼 둘러쌈 (좌측·하단만, 우측·상단 여백 유지) */
-.mchips{position:absolute;inset:0;pointer-events:none;z-index:1}
-.mchips span{position:absolute;white-space:nowrap;pointer-events:auto;
-  font-size:12px;font-weight:600;color:var(--text-2);background:#fff;border:1px solid var(--border-strong);
-  padding:5px 12px;border-radius:999px;box-shadow:var(--shadow-sm);transition:transform .16s var(--ease-spring),border-color .16s,color .16s}
-.mchips span:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--accent-strong)}
-.mchips span:nth-child(1){left:-150px;top:13%}
-.mchips span:nth-child(2){left:-184px;top:35%}
-.mchips span:nth-child(3){left:-154px;top:57%}
-.mchips span:nth-child(4){left:-178px;top:79%}
-.mchips span:nth-child(5){left:-26px;bottom:-60px}
-.mchips span:nth-child(6){left:150px;bottom:-48px}
-.mchips span:nth-child(7){left:300px;bottom:-64px}
+/* 분석 기법 — 세로로 묶어 3D 분석 카드(엔진)로 쏙 들어가는 번들 */
+.feed{position:relative;z-index:1;display:flex;flex-direction:column;gap:7px;
+  transform:rotateY(15deg);transform-origin:right center;margin-right:-30px}
+.feed-cap{align-self:flex-start;font-size:11.5px;font-weight:800;letter-spacing:.03em;color:var(--accent-strong);
+  background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:6px;
+  display:flex;align-items:center;gap:6px}
+.feed-cap b{font-family:'Outfit',sans-serif;font-size:13px}
+.mchips{display:flex;flex-direction:column;gap:7px}
+.mchips span{display:block;white-space:nowrap;width:fit-content;font-size:12.5px;font-weight:600;color:var(--text-2);
+  background:#fff;border:1px solid var(--border-strong);padding:7px 15px;border-radius:999px;
+  box-shadow:0 4px 14px rgba(13,38,33,.08);transition:transform .18s var(--ease-spring),border-color .18s,color .18s}
+.mchips span:hover{transform:translateX(-5px);border-color:var(--accent);color:var(--accent-strong)}
+/* 아래쪽(카드에 가까운) 칩일수록 살짝 더 안쪽으로 — 빨려드는 결 */
+.mchips span:nth-child(5){margin-left:8px}
+.mchips span:nth-child(6){margin-left:16px}
+.mchips span:nth-child(7){margin-left:24px}
 .an-note{font-size:12px;color:var(--text-4);margin-top:18px}
 
 /* 3D 적층 파레토 카드 + 오답 막대 채움 애니메이션 */
-.spot-3d{perspective:1100px;position:relative}
-.mock-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);
+.spot-3d{perspective:1100px;position:relative;display:flex;align-items:center;justify-content:flex-end;gap:0}
+.mock-card{position:relative;z-index:3;flex-shrink:0;max-width:330px;
+  background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);
   box-shadow:32px 44px 80px rgba(13,38,33,.16),0 2px 8px rgba(13,38,33,.05);padding:22px;
   border-top:3px solid var(--s-coral);transform-style:preserve-3d;
   transform:rotateX(13deg) rotateY(-15deg);transition:transform .55s var(--ease-spring),box-shadow .4s}
@@ -420,6 +427,14 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 /* ============ HUB ============ */
 .spot{padding:88px 0;background:radial-gradient(600px 380px at 15% 30%, rgba(238,241,248,.8), transparent 70%)}
 .spot-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.hub-em{color:var(--accent-strong);position:relative;white-space:nowrap}
+.hub-em::after{content:'';position:absolute;left:-2px;right:-2px;bottom:4px;height:9px;
+  background:var(--accent-soft);z-index:-1;border-radius:3px}
+.hub-stats{display:flex;gap:12px;margin-top:28px}
+.hub-stats>div{flex:1;background:#fff;border:1px solid var(--border);border-radius:14px;
+  padding:15px 10px;text-align:center;box-shadow:var(--shadow-xs)}
+.hub-stats b{display:block;font-family:'Outfit',sans-serif;font-size:31px;font-weight:700;color:var(--accent-strong);line-height:1}
+.hub-stats span{display:block;font-size:12px;color:var(--text-3);margin-top:6px;font-weight:600}
 .spot.rev .spot-grid{direction:rtl}
 .spot.rev .spot-grid>*{direction:ltr}
 .hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -465,6 +480,36 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 .price-note{text-align:center;font-size:12px;color:var(--text-4);margin-top:22px}
 .price-punch{text-align:center;font-size:16.5px;font-weight:600;color:var(--text-2);margin-top:34px}
 .price-punch b{color:var(--accent-strong)}
+
+/* 비용 비교 — 막대 그래프 + 금지선(취소선) 임팩트 */
+.cost-compare{background:#fff;border:1px solid var(--border);border-radius:20px;padding:22px 26px;
+  box-shadow:var(--shadow-md);max-width:780px;margin:0 auto}
+.cc-row{display:grid;grid-template-columns:104px 1fr 128px;align-items:center;gap:18px;
+  padding:13px 0;border-bottom:1px dashed var(--border)}
+.cc-row:last-child{border-bottom:0}
+.cc-name{font-size:14.5px;font-weight:700;color:var(--text-2)}
+.cc-bar{height:15px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+.cc-bar i{display:block;height:100%;border-radius:999px;
+  background:linear-gradient(90deg,#dca093,#c46a5e);transform:scaleX(0);transform-origin:left;
+  transition:transform 1s var(--ease-spring)}
+.cost-compare.in .cc-bar i{transform:scaleX(1)}
+.cost-compare.in .cc-row:nth-child(2) .cc-bar i{transition-delay:.1s}
+.cost-compare.in .cc-row:nth-child(3) .cc-bar i{transition-delay:.2s}
+.cost-compare.in .cc-row:nth-child(4) .cc-bar i{transition-delay:.3s}
+.cost-compare.in .cc-row:nth-child(5) .cc-bar i{transition-delay:.42s}
+.cc-cost{text-align:right;font-size:14.5px;font-weight:700;color:var(--text-3);white-space:nowrap}
+.cc-cost s{text-decoration-color:var(--s-coral);text-decoration-thickness:2px}
+.cc-cost em{font-style:normal;font-size:11.5px;color:var(--text-4);margin-left:3px}
+.cc-row.best{padding:15px 0 5px}
+.cc-row.best .cc-name{color:var(--accent-strong);font-size:15.5px}
+.cc-row.best .cc-bar{height:17px}
+.cc-row.best .cc-bar i{background:var(--accent-grad);transition-delay:.55s}
+.cc-row.best .cc-cost b{font-family:'Outfit',sans-serif;font-size:20px;color:var(--accent-strong)}
+.cc-summary{text-align:center;margin-top:30px}
+.ccs-big{font-family:'GmarketSans','Pretendard Variable',sans-serif;font-size:27px;font-weight:700;letter-spacing:-0.02em;color:var(--text);line-height:1.35}
+.ccs-big b{color:var(--accent-strong)}
+.ccs-sub{font-size:14.5px;color:var(--text-2);margin-top:10px}
+.ccs-sub b{color:var(--accent-strong);font-weight:700}
 
 /* ============ UPCOMING (준비중 서비스) ============ */
 .upcoming{padding:84px 0;background:radial-gradient(620px 380px at 88% 30%, rgba(238,241,248,.85), transparent 70%)}
@@ -538,16 +583,13 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 .foot{border-top:1px solid var(--border);padding:56px 0 36px;background:var(--surface-2);position:relative}
 .foot::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--s-teal),var(--s-blue),var(--s-purple),var(--s-coral),var(--s-amber))}
-.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
-.foot .desc{font-size:13.5px;color:var(--text-3);line-height:1.65;max-width:300px;margin-top:14px}
-.foot h4{font-size:13px;font-weight:700;color:var(--text-2);margin-bottom:14px}
-.foot ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.foot ul a{font-size:13.5px;color:var(--text-3);transition:color .15s}
-.foot ul a:hover{color:var(--text)}
-.biz-info{margin-top:44px;padding-top:22px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-3);line-height:1.9}
+.foot-top .desc{font-size:13.5px;color:var(--text-3);line-height:1.65;max-width:420px;margin-top:14px}
+.biz-info{margin-top:32px;padding-top:22px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-3);line-height:1.9}
 .biz-info b{color:var(--text-2);font-weight:600}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:18px;
   font-size:12.5px;color:var(--text-4);flex-wrap:wrap;gap:10px}
+.foot-terms{color:var(--text-3);font-weight:600;transition:color .15s}
+.foot-terms:hover{color:var(--text)}
 
 /* ============ ANIMATIONS ============ */
 @keyframes heroUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
@@ -623,9 +665,12 @@ a:hover .brand-wm{transform:scale(1.03)}
   .scene{height:660px}
   .fgrid,.price-grid{grid-template-columns:1fr 1fr}
   .fgrid{gap:20px;padding:0}
-  .an-web{display:none}
-  .mchips{position:static;display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;pointer-events:auto}
-  .mchips span{position:static}
+  /* 분석 번들 — 모바일은 카드 위에 가로 칩으로 펼침 */
+  .spot-3d{flex-direction:column;align-items:stretch}
+  .feed{transform:none;margin-right:0;margin-bottom:18px}
+  .mchips{flex-direction:row;flex-wrap:wrap;gap:8px}
+  .mchips span{width:auto;margin-left:0!important}
+  .mock-card{max-width:none}
   .svc-grid{grid-template-columns:1fr}
   .strip-grid{grid-template-columns:1fr 1fr;gap:26px}
   .foot-grid{grid-template-columns:1fr 1fr}
@@ -635,8 +680,12 @@ a:hover .brand-wm{transform:scale(1.03)}
   .nav-top{height:72px}
   .nav-top .login{right:18px}
   .nav-top .brand-wm{font-size:42px!important}
-  .navlinks{gap:0;font-size:13px}
-  .navlinks a{padding:7px 9px}
+  /* 네비 6항목 — 좁은 화면에 맞게 압축(넘치면 가로 스크롤) */
+  .nav-bot{justify-content:flex-start;overflow-x:auto}
+  .nav-bot::-webkit-scrollbar{display:none}
+  .navlinks{gap:0;font-size:12px;margin:0 auto}
+  .navlinks a{padding:7px 7px;white-space:nowrap}
+  .nav-drop>a .chev{margin-left:2px}
   .hero h1{font-size:31px}
   .hero p.sub{font-size:15.5px}
   .fgrid,.price-grid,.foot-grid,.co-info{grid-template-columns:1fr}
@@ -663,6 +712,15 @@ a:hover .brand-wm{transform:scale(1.03)}
   .pstep b{font-size:16px}
   .pstep span{font-size:13.5px}
   .pstep{padding-right:0}
+  /* 비용 비교 표 — 좁은 화면 보정 */
+  .cost-compare{padding:18px 16px}
+  .cc-row{grid-template-columns:64px 1fr 88px;gap:10px}
+  .cc-name{font-size:12.5px}
+  .cc-cost{font-size:12.5px}
+  .cc-row.best .cc-cost b{font-size:16px}
+  .ccs-big{font-size:21px}
+  /* 허브 통계 */
+  .hub-stats b{font-size:26px}
 }
 </style>
 </head>
@@ -704,11 +762,17 @@ a:hover .brand-wm{transform:scale(1.03)}
         <a href="company.html" data-sec="company">회사<span class="chev">▾</span></a>
         <div class="drop-menu">
           <a href="company.html#intro">회사 소개</a>
-          <a href="company.html#mission">미션</a>
           <a href="company.html#history">연혁</a>
           <a href="company.html#partners">협력사</a>
+        </div>
+      </div>
+      <div class="nav-drop">
+        <a href="company.html#notice">고객지원<span class="chev">▾</span></a>
+        <div class="drop-menu">
           <a href="company.html#notice">공지사항</a>
           <a href="company.html#qna">Q&amp;A</a>
+          <a href="#">개인정보처리방침</a>
+          <a href="mailto:baeumturning@gmail.com?subject=[배움터닝] 문의">문의하기</a>
         </div>
       </div>
     </div>
@@ -783,7 +847,7 @@ a:hover .brand-wm{transform:scale(1.03)}
                   <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
                   <span class="t">오늘의 복습 30문제</span><span class="ch">›</span>
                 </div>
-                <div class="rc-sub">데이터 분석 추천 문제</div>
+                <div class="rc-sub">AI 분석 기반 추천 문제</div>
               </div>
             </div></div>
 
@@ -928,7 +992,7 @@ a:hover .brand-wm{transform:scale(1.03)}
         <span class="sic" style="background:var(--p-teal)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
         <h3>배움터닝</h3>
         <div class="st live">검정고시 최초 AI 학습 솔루션 · 2026.08 베타</div>
-        <p>오답 데이터로 약점을 진단하고, 우선순위에 따라 오늘의 학습 플랜을 자동으로 설계하는 <b>국내 유일</b> 검정고시 특화 AI 성적분석·스케줄링 서비스.</p>
+        <p>오답 데이터로 약점을 진단하고, 오늘 무엇부터 풀면 좋을지 정해주는 검정고시 AI 성적분석·스케줄링 앱입니다.</p>
         <div class="fts">
           <span style="background:var(--p-teal);color:var(--s-teal)">AI 스케줄링</span>
           <span style="background:var(--p-coral);color:var(--s-coral)">7기법 성적분석</span>
@@ -966,7 +1030,7 @@ a:hover .brand-wm{transform:scale(1.03)}
       <span class="eyebrow">MAIN SERVICE</span>
       <div class="app-title">배움터닝</div>
       <h2 class="h" style="font-size:28px;margin-top:8px">검정고시 준비, 이 앱 하나로 끝</h2>
-      <p class="lead">배움터닝은 <b style="color:var(--accent-strong)">오답 데이터로 약점을 진단</b>하고, 우선순위에 따라 <b style="color:var(--accent-strong)">오늘의 학습을 자동 설계</b>하는 국내 유일 검정고시 AI 학습 매니저입니다.</p>
+      <p class="lead">배움터닝은 <b style="color:var(--accent-strong)">오답 데이터로 약점을 진단</b>하고, <b style="color:var(--accent-strong)">오늘 무엇부터 풀지</b> 정해주는 검정고시 학습 앱입니다. 풀이 기록이 쌓일수록 추천은 더 정확해집니다.</p>
     </div>
     <div class="fgrid">
       <div class="fcard reveal" style="--card-accent:var(--s-teal)">
@@ -1000,7 +1064,6 @@ a:hover .brand-wm{transform:scale(1.03)}
 <!-- ===================== AI ANALYSIS ===================== -->
 <section class="analysis sec-focus" id="analysis">
   <div class="wrap an-grid" id="anGrid">
-    <svg class="an-web" id="anWeb" aria-hidden="true"></svg>
     <div class="reveal">
       <span class="eyebrow" style="color:var(--s-coral);background:var(--p-coral)">AI 분석 매커니즘</span>
       <h2 class="h">감이 아니라 데이터로<br>공부할 순서를 정합니다</h2>
@@ -1015,9 +1078,12 @@ a:hover .brand-wm{transform:scale(1.03)}
       <p class="an-note">* 파레토 법칙·에빙하우스 망각곡선 등 검증된 학습과학 방법론에 기반합니다.</p>
     </div>
     <div class="spot-3d re-anim">
-      <div class="mchips">
-        <span>파레토 실점 분석</span><span>합격 예측 모델</span><span>오답 패턴 분석</span>
-        <span>우선순위 매트릭스</span><span>망각곡선 주기</span><span>추세 분석</span><span>학습량 보정</span>
+      <div class="feed">
+        <div class="feed-cap">분석 기법 <b>7</b></div>
+        <div class="mchips">
+          <span>파레토 실점 분석</span><span>합격 예측 모델</span><span>오답 패턴 분석</span>
+          <span>우선순위 매트릭스</span><span>망각곡선 주기</span><span>추세 분석</span><span>학습량 보정</span>
+        </div>
       </div>
       <div class="mock-card">
         <div class="mh">성적 분석 · 파레토</div>
@@ -1037,8 +1103,13 @@ a:hover .brand-wm{transform:scale(1.03)}
   <div class="wrap spot-grid">
     <div class="reveal">
       <span class="eyebrow" style="color:var(--s-blue);background:var(--p-blue)">배움터 허브</span>
-      <h2 class="h">필요한 도구가<br>전부 한 곳에</h2>
-      <p class="lead">성적분석, 문제 풀이, 시험기록, 취약단원까지. 화면을 옮겨다닐 필요 없이 학습의 모든 흐름이 이어집니다.</p>
+      <h2 class="h">흩어진 학습 도구를<br><span class="hub-em">하나의 배움터</span>로</h2>
+      <p class="lead">성적분석·문제 풀이·시험기록·취약단원까지. 앱을 넘나들 필요 없이, 학습의 모든 흐름이 한 화면에서 이어집니다.</p>
+      <div class="hub-stats">
+        <div><b>5</b><span>학습 도구</span></div>
+        <div><b>1</b><span>배움터</span></div>
+        <div><b>0</b><span>화면 이동</span></div>
+      </div>
     </div>
     <div class="reveal">
       <div class="hubgrid">
@@ -1060,31 +1131,38 @@ a:hover .brand-wm{transform:scale(1.03)}
       <h2 class="h">컨설팅 한 번 비용으로,<br>일 년의 학습 전략을</h2>
       <p class="lead">컨설턴트가 하는 약점 진단 → 우선순위 설계 → 학습 플랜. 배움터닝은 같은 과정을 데이터로 24시간 자동으로 해냅니다.</p>
     </div>
-    <div class="price-grid">
-      <div class="pcard reveal">
-        <span class="pn">입시 컨설팅</span>
-        <span class="pv tnum">30~50<small>만원/회</small></span>
-        <span class="pd">1회 상담 기준. 진단·플랜은 상담 시점에 멈춰 있습니다.</span>
+    <div class="cost-compare reveal">
+      <div class="cc-row">
+        <span class="cc-name">입시 컨설팅</span>
+        <div class="cc-bar"><i style="width:90%"></i></div>
+        <span class="cc-cost"><s>30~50만원</s><em>/회</em></span>
       </div>
-      <div class="pcard reveal">
-        <span class="pn">검정고시 학원</span>
-        <span class="pv tnum">30~60<small>만원/월</small></span>
-        <span class="pd">이동 시간·고정 시간표. 내 약점과 무관한 진도.</span>
+      <div class="cc-row">
+        <span class="cc-name">검정고시 학원</span>
+        <div class="cc-bar"><i style="width:100%"></i></div>
+        <span class="cc-cost"><s>30~60만원</s><em>/월</em></span>
       </div>
-      <div class="pcard reveal">
-        <span class="pn">인강 패스</span>
-        <span class="pv tnum">40~80<small>만원/년</small></span>
-        <span class="pd">강의는 많지만, 무엇부터 볼지는 스스로 정해야 합니다.</span>
+      <div class="cc-row">
+        <span class="cc-name">검정고시 인강</span>
+        <div class="cc-bar"><i style="width:38%"></i></div>
+        <span class="cc-cost"><s>40~80만원</s><em>/년</em></span>
+      </div>
+      <div class="cc-row">
+        <span class="cc-name">교재·문제집</span>
+        <div class="cc-bar"><i style="width:20%"></i></div>
+        <span class="cc-cost"><s>5~10만원</s><em>/권</em></span>
+      </div>
+      <div class="cc-row best">
+        <span class="cc-name">배움터닝</span>
+        <div class="cc-bar"><i style="width:3%"></i></div>
+        <span class="cc-cost"><b>월 7,900원</b></span>
       </div>
     </div>
-    <div class="price-banner reveal">
-      <span class="pb-name">배움터닝 <span class="best">BEST</span></span>
-      <span class="pb-price"><b>월 7,900원</b></span>
-      <span class="free-chip">무료 체험 — AI 분석 시스템 3회 이용</span>
-      <span class="pd">약점 진단부터 오늘의 플랜까지, 매일 갱신되는 나만의 학습 전략. 위 비용의 수십분의 일로.</span>
+    <div class="cc-summary reveal">
+      <div class="ccs-big">학원비의 <b>약 1.8%</b>로,<br>매일 갱신되는 나만의 학습 전략을</div>
+      <div class="ccs-sub">월 환산 기준 최대 <b>98% 절감</b> · 무료 체험으로 AI 분석 3회 제공</div>
     </div>
-    <p class="price-punch">진단은 데이터가, 계획은 자동으로 — <b>비용 부담 없이 컨설팅받는 것처럼.</b></p>
-    <p class="price-note">* 2025년 주요 업체 공개 가격 기준 참고치이며, 실제 가격은 업체별로 다를 수 있습니다.</p>
+    <p class="price-note">* 2025년 주요 업체 공개 가격 기준 참고치이며(월 환산 비교), 실제 가격은 업체별로 다를 수 있습니다.</p>
   </div>
 </section>
 
@@ -1139,29 +1217,9 @@ a:hover .brand-wm{transform:scale(1.03)}
 <!-- ===================== FOOTER ===================== -->
 <footer class="foot" id="contact">
   <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <span class="brand-wm" style="font-size:20px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus</span>
-        <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 AI 학습관리 서비스 '배움터닝'을 만듭니다.</p>
-      </div>
-      <div><h4>서비스</h4><ul>
-        <li><a href="#service">배움터닝</a></li>
-        <li><a href="#platform">대입 정보 플랫폼</a></li>
-        <li><a href="#network">배움 네트워크</a></li>
-        <li><a href="#analysis">AI 분석 매커니즘</a></li>
-      </ul></div>
-      <div><h4>회사</h4><ul>
-        <li><a href="company.html#intro">회사 소개</a></li>
-        <li><a href="company.html#history">연혁</a></li>
-        <li><a href="company.html#partners">협력사</a></li>
-        <li><a href="mailto:baeumturning@gmail.com">문의하기</a></li>
-      </ul></div>
-      <div><h4>고객지원</h4><ul>
-        <li><a href="company.html#notice">공지사항</a></li>
-        <li><a href="company.html#qna">Q&amp;A</a></li>
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">이용약관</a></li>
-      </ul></div>
+    <div class="foot-top">
+      <span class="brand-wm" style="font-size:20px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus</span>
+      <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
     </div>
     <div class="biz-info">
       <b>아웃포커스 (OutFocus)</b> · 대표 양승환 · 설립 2026년 7월<br>
@@ -1169,7 +1227,7 @@ a:hover .brand-wm{transform:scale(1.03)}
     </div>
     <div class="foot-bottom">
       <span>© 2026 아웃포커스 (OutFocus). All rights reserved.</span>
-      <span>Bringing focus into view</span>
+      <a href="#" class="foot-terms">이용약관</a>
     </div>
   </div>
 </footer>
@@ -1287,36 +1345,6 @@ document.querySelectorAll('.pcard').forEach(function(card){
     var dy=(e.clientY-r.top)/r.height-.5;
     card.style.transform='perspective(700px) rotateY('+(dx*9)+'deg) rotateX('+(-dy*7)+'deg) translateY(-4px) scale(1.012)';
   });
-});
-
-// ── 분석 기법 칩 ↔ 파레토 카드 점선 거미줄 ──
-function drawAnWeb(){
-  var grid=document.getElementById('anGrid'),svg=document.getElementById('anWeb');
-  if(!grid||!svg) return;
-  var card=grid.querySelector('.mock-card');
-  if(!card||getComputedStyle(svg).display==='none'){svg.innerHTML='';return}
-  var g=grid.getBoundingClientRect(),c=card.getBoundingClientRect();
-  svg.setAttribute('viewBox','0 0 '+Math.round(g.width)+' '+Math.round(g.height));
-  var chips=grid.querySelectorAll('.mchips span'),html='';
-  chips.forEach(function(ch,i){
-    var r=ch.getBoundingClientRect();
-    var x1=r.left+r.width/2-g.left, y1=r.top+r.height/2-g.top;
-    var L=c.left-g.left+14,T=c.top-g.top+14,R=c.right-g.left-14,B=c.bottom-g.top-14;
-    var x2=Math.max(L,Math.min(x1,R)), y2=Math.max(T,Math.min(y1,B));
-    var dx=x2-x1,dy=y2-y1;
-    var mx=(x1+x2)/2-dy*.14, my=(y1+y2)/2+dx*.14;
-    html+='<path d="M'+x1+' '+y1+' Q'+mx+' '+my+' '+x2+' '+y2+'"/>'
-        +'<circle cx="'+x1+'" cy="'+y1+'" r="3.2" style="animation-delay:'+(i*.45)+'s"/>';
-  });
-  svg.innerHTML=html;
-}
-window.addEventListener('resize',drawAnWeb);
-window.addEventListener('load',drawAnWeb);
-drawAnWeb();
-setTimeout(drawAnWeb,600);setTimeout(drawAnWeb,1500);setTimeout(drawAnWeb,3000);
-// 섹션 등장 애니메이션(transform)이 끝난 뒤 최종 위치로 재계산
-document.querySelectorAll('#analysis, #anGrid .reveal').forEach(function(el){
-  el.addEventListener('transitionend',function(e){if(e.propertyName==='transform')drawAnWeb()});
 });
 
 // ── Hub item hover glow ──
