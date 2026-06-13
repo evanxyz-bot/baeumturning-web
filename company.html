@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>회사 소개 — 아웃포커스 OutFocus</title>
-<meta name="description" content="교육 사각지대를 밝히는 솔루션 컴퍼니 아웃포커스. 비전, 연혁, 협력사, 공지사항, Q&A를 소개합니다.">
+<title>회사 소개 — 인포커스 INFOCUS</title>
+<meta name="description" content="교육 사각지대를 밝히는 솔루션 컴퍼니 인포커스. 비전, 연혁, 협력사, 공지사항, Q&A를 소개합니다.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="회사 소개 — 아웃포커스 OutFocus">
-<meta property="og:description" content="배움의 출발선이 어디든, 도착선은 같아야 합니다. 아웃포커스를 소개합니다.">
+<meta property="og:title" content="회사 소개 — 인포커스 INFOCUS">
+<meta property="og:description" content="배움의 출발선이 어디든, 도착선은 같아야 합니다. 인포커스를 소개합니다.">
 <meta property="og:locale" content="ko_KR">
 <meta name="theme-color" content="#0b7a6a">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -65,9 +65,9 @@ section{scroll-margin-top:150px}
 .reveal{opacity:0;transform:translateY(24px) scale(.974)}
 .reveal.in{opacity:1;transform:none;transition:opacity .72s var(--ease-out),transform .72s var(--ease-out)}
 
-.brand-wm{display:inline-flex;align-items:baseline;font-family:'Outfit','Pretendard Variable',system-ui,sans-serif;
-  font-weight:600;letter-spacing:-.022em;white-space:nowrap;color:var(--matte)}
-.ap{display:inline-block;line-height:0;width:.96em;height:.96em;position:relative;top:.13em;margin-right:-.06em}
+.brand-wm{display:inline-flex;align-items:center;font-family:'Outfit','Pretendard Variable',system-ui,sans-serif;
+  font-weight:700;letter-spacing:.01em;white-space:nowrap;color:var(--matte)}
+.ap{display:inline-block;line-height:0;width:.92em;height:.92em;position:relative;top:-.01em;margin:0 -.012em;color:var(--accent)}
 .ap svg{width:100%;height:100%;display:block;transition:transform .7s var(--ease-spring)}
 a:hover .brand-wm .ap svg{transform:rotate(120deg)}
 @keyframes navLogoIn{from{opacity:0;transform:translateY(-12px) scale(.92)}to{opacity:1;transform:none}}
@@ -237,8 +237,12 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
   .nav-top{height:72px}
   .nav-top .login{right:18px}
   .nav-top .brand-wm{font-size:42px!important}
-  .navlinks{gap:0;font-size:13px}
-  .navlinks a{padding:7px 8px}
+  /* 네비 6항목 — 좁은 화면에 맞게 압축(넘치면 가로 스크롤) */
+  .nav-bot{justify-content:flex-start;overflow-x:auto}
+  .nav-bot::-webkit-scrollbar{display:none}
+  .navlinks{gap:0;font-size:12px;margin:0 auto}
+  .navlinks a{padding:7px 7px;white-space:nowrap}
+  .nav-drop>a .chev{margin-left:2px}
   .wrap{padding:0 18px}
   .page-head h1{font-size:29px}
   h2.h{font-size:25px}
@@ -251,9 +255,9 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="aperture" viewBox="0 0 200 200">
-    <path fill="#1a1a1a" fill-rule="evenodd"
+    <path fill="currentColor" fill-rule="evenodd"
       d="M14 100 A86 86 0 0 1 186 100 A86 86 0 0 1 14 100 Z M134 119.63 L100 139.26 L66 119.63 L66 80.37 L100 60.74 L134 80.37 Z"/>
-    <g stroke="#3f3f3f" stroke-width="5.5" fill="none" stroke-linecap="round">
+    <g stroke="currentColor" stroke-opacity=".42" stroke-width="5.5" fill="none" stroke-linecap="round">
       <path d="M134 119.63 L144.74 166.32"/>
       <path d="M100 139.26 L64.93 171.90"/>
       <path d="M66 119.63 L20.20 105.58"/>
@@ -267,9 +271,9 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
 <!-- ===================== NAV ===================== -->
 <nav class="nav" id="nav">
   <div class="nav-top">
-    <a href="index.html" aria-label="OutFocus 홈">
-      <span class="brand-wm" style="font-size:72px">
-        <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus
+    <a href="index.html" aria-label="INFOCUS 홈">
+      <span class="brand-wm" style="font-size:64px">
+        INF<span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>CUS
       </span>
     </a>
     <span class="login">로그인</span>
@@ -305,8 +309,8 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
 <header class="page-head">
   <div class="wrap">
     <div class="crumb"><a href="index.html">홈</a> · <b>회사</b></div>
-    <h1>교육 사각지대를 밝히는 회사,<br><span class="g">아웃포커스</span>입니다</h1>
-    <p class="lead">배움의 기회가 누구에게나 공평해질 때까지 — 아웃포커스는 기술로 교육의 사각지대를 밝힙니다.</p>
+    <h1>교육 사각지대를 밝히는 회사,<br><span class="g">인포커스</span>입니다</h1>
+    <p class="lead">배움의 기회가 누구에게나 공평해질 때까지 — 인포커스는 기술로 교육의 사각지대를 밝힙니다.</p>
   </div>
 </header>
 
@@ -315,7 +319,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">회사 소개</span>
-      <h2 class="h">아웃포커스가 믿는 것</h2>
+      <h2 class="h">인포커스가 믿는 것</h2>
       <p class="lead">학교 밖에서 배움을 이어가는 사람들이 있습니다. 우리는 그들의 곁에서 데이터로 길을 비추는 동반자가 되고자 합니다.</p>
     </div>
     <div class="vgrid">
@@ -357,9 +361,9 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
         <p class="qt">배움의 출발선이 어디든,<br>도착선은 같아야 합니다.</p>
         <div class="who">
           <span class="avatar">양</span>
-          <div><b>양승환</b> <span>· 아웃포커스 대표</span></div>
+          <div><b>양승환</b> <span>· 인포커스 대표</span></div>
         </div>
-        <p class="sub">교육 사각지대의 학습자들이 데이터라는 가장 공정한 선생님을 만날 수 있도록 — 아웃포커스는 기술이 사회에 기여하는 가장 따뜻한 방법을 고민합니다.</p>
+        <p class="sub">교육 사각지대의 학습자들이 데이터라는 가장 공정한 선생님을 만날 수 있도록 — 인포커스는 기술이 사회에 기여하는 가장 따뜻한 방법을 고민합니다.</p>
       </div>
     </div>
   </div>
@@ -370,13 +374,13 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow" style="color:var(--s-purple);background:var(--p-purple)">연혁</span>
-      <h2 class="h">아웃포커스의 발걸음</h2>
+      <h2 class="h">인포커스의 발걸음</h2>
     </div>
     <div class="tl-card reveal">
       <div class="tl">
         <div class="tl-item now">
           <div class="tl-date">2026. 07</div>
-          <h4>아웃포커스 설립</h4>
+          <h4>인포커스 설립</h4>
           <p>대표 양승환 · '모두를 위한 배움' 미션으로 창립, 검정고시 AI 학습관리 앱 '배움터닝' 개발 시작</p>
         </div>
       </div>
@@ -396,7 +400,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
       <span class="pic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span>
       <b>협력사 모집 중</b>
       <p>교육기관, 검정고시 학원, 청소년 지원기관, 콘텐츠 제작사 등 교육 사각지대 해소에 함께할 파트너를 기다리고 있습니다.</p>
-      <a class="btn" href="mailto:baeumturning@gmail.com?subject=[제휴 문의] 아웃포커스 파트너십">제휴 문의하기</a>
+      <a class="btn" href="mailto:baeumturning@gmail.com?subject=[제휴 문의] 인포커스 파트너십">제휴 문의하기</a>
     </div>
   </div>
 </section>
@@ -406,12 +410,12 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow" style="color:var(--s-amber);background:var(--p-amber)">공지사항</span>
-      <h2 class="h">아웃포커스 소식</h2>
+      <h2 class="h">인포커스 소식</h2>
     </div>
     <div class="notice-list reveal">
       <div class="notice-item">
         <span class="tag">안내</span>
-        <b>아웃포커스 홈페이지가 문을 열었습니다</b>
+        <b>인포커스 홈페이지가 문을 열었습니다</b>
         <span class="tnum">2026. 06. 12</span>
       </div>
     </div>
@@ -451,15 +455,15 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
 <footer class="foot">
   <div class="wrap">
     <div class="foot-top">
-      <span class="brand-wm" style="font-size:20px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus</span>
+      <span class="brand-wm" style="font-size:22px">INF<span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>CUS</span>
       <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
     </div>
     <div class="biz-info">
-      <b>아웃포커스 (OutFocus)</b> · 대표 양승환 · 설립 2026년 7월<br>
+      <b>인포커스 (INFOCUS)</b> · 대표 양승환 · 설립 2026년 7월<br>
       이메일 <a href="mailto:baeumturning@gmail.com" style="color:var(--accent-strong)">baeumturning@gmail.com</a> · 소재지 서울특별시 · 사업자등록 준비 중
     </div>
     <div class="foot-bottom">
-      <span>© 2026 아웃포커스 (OutFocus). All rights reserved.</span>
+      <span>© 2026 인포커스 (INFOCUS). All rights reserved.</span>
       <a href="#" class="foot-terms">이용약관</a>
     </div>
   </div>
