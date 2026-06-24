@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=1200">
 <title>인포커스 INFOCUS — 배움터닝 · 검정고시 AI 성적분석·스케줄링</title>
 <meta name="description" content="교육 사각지대를 해소하는 솔루션 컴퍼니 인포커스. 국내 유일 검정고시 AI 성적분석·스케줄링 앱 '배움터닝' — 약점 진단부터 오늘의 학습 플랜까지 자동으로.">
 <meta property="og:type" content="website">
@@ -90,6 +90,11 @@ a:hover .brand-wm .ap svg{transform:rotate(120deg)}
 .btn-dl{height:60px;padding:0 36px;font-size:18px;border-radius:var(--r-xl);
   box-shadow:0 6px 24px rgba(11,122,106,.3)}
 .btn-dl:hover{transform:translateY(-1px)}
+/* 보조 CTA — 다운로드와 같은 크기, 다른 색(흰 배경 + teal 보더) */
+.btn-ghost{background:#fff!important;color:var(--accent-strong)!important;border:2px solid var(--accent-mid);
+  box-shadow:0 4px 16px rgba(13,38,33,.08)!important;animation:heroUp .6s .55s both!important}
+.btn-ghost::after{display:none!important}
+.btn-ghost:hover{background:var(--accent-soft)!important;border-color:var(--accent);filter:none;transform:translateY(-1px)}
 
 .eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--accent);
   background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:18px;
@@ -162,7 +167,10 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .uniq .first{background:var(--accent-grad);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.04em;
   padding:3px 9px;border-radius:999px}
 .uniq .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:nodePulse 2.4s ease-in-out infinite}
-.cta-zone{display:flex;flex-direction:column;align-items:center;margin-top:44px;max-width:520px}
+.cta-zone{display:flex;flex-direction:column;align-items:center;margin-top:40px;max-width:600px}
+.cta-row{display:flex;gap:14px;align-items:stretch;justify-content:center;flex-wrap:wrap;width:100%}
+/* 좌측 히어로 텍스트를 위쪽으로 정렬 (가운데 → 상단) */
+.hero-grid>div:first-child{align-self:start}
 .store-hint{font-size:13px;color:var(--text-3);margin-top:12px;display:flex;align-items:center;gap:8px}
 .store-hint::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent-mid)}
 
@@ -171,7 +179,7 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .glow{position:absolute;width:400px;height:400px;border-radius:50%;
   background:radial-gradient(circle,rgba(11,122,106,.16),rgba(11,122,106,0) 70%);top:16%;left:50%;transform:translateX(-50%);z-index:0}
 .scene{position:relative;z-index:1;height:680px;width:100%;display:flex;align-items:center;justify-content:center;perspective:1300px}
-.s3d-scale{transform-style:preserve-3d}
+.s3d-scale{transform-style:preserve-3d;transform:scale(1.16)}
 .s3d{position:relative;transform-style:preserve-3d;transform:rotateX(5deg) rotateY(-12deg)}
 .ph3d{position:relative;width:280px;background:#fff;border:1px solid var(--border);border-radius:34px;
   box-shadow:28px 44px 90px rgba(13,38,33,.2),0 4px 12px rgba(13,38,33,.06);padding:9px;
@@ -276,6 +284,12 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .dock-item .di-ic{width:26px;height:26px;display:grid;place-items:center;border-radius:50%;color:#2a2f38}
 .dock-item.active{color:var(--accent-strong);font-weight:700}
 .dock-item.active .di-ic{width:30px;height:30px;background:var(--accent-grad);color:#fff;box-shadow:0 5px 12px rgba(11,122,106,.4)}
+/* 폰 내부 하단 탭바(독) — 띄우지 않고 화면에 일치 */
+.dock.screen-dock{width:100%;border:none;border-top:1px solid var(--border);border-radius:0;box-shadow:none;
+  background:#fff;justify-content:space-between;gap:0;padding:7px 6px 9px}
+.screen-dock .dock-item{flex:1;padding:2px 1px;gap:2px;font-size:7.5px}
+.screen-dock .dock-item .di-ic{width:22px;height:22px}
+.screen-dock .dock-item.active .di-ic{width:25px;height:25px}
 
 /* ============ STRIP ============ */
 .strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);
@@ -390,6 +404,19 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 .mchips span:nth-child(6){margin-left:16px}
 .mchips span:nth-child(7){margin-left:24px}
 .an-note{font-size:12px;color:var(--text-4);margin-top:18px}
+/* 근거(evidence) 카드 — 검증된 학문 + AI 어필 */
+.evidence{margin-top:24px;background:linear-gradient(#fff,#fff) padding-box,var(--accent-grad) border-box;
+  border:2px solid transparent;border-radius:16px;padding:22px 24px;box-shadow:0 12px 34px rgba(11,122,106,.16)}
+.ev-head{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:800;letter-spacing:-0.025em;color:var(--text);margin-bottom:16px}
+.ev-badge{font-size:11.5px;font-weight:800;letter-spacing:.02em;color:#fff;background:var(--accent-grad);padding:4px 11px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.ev-grid{display:flex;flex-direction:column;gap:14px}
+.ev-item{position:relative;padding-left:15px}
+.ev-item::before{content:'';position:absolute;left:0;top:5px;bottom:5px;width:3px;border-radius:2px;background:var(--accent-grad)}
+.ev-item.alt::before{background:linear-gradient(180deg,#5878a0,#8f7faa)}
+.ev-item b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-0.01em;color:var(--accent-strong);margin-bottom:2px}
+.ev-item.alt b{color:var(--s-blue)}
+.ev-item span{font-size:14px;color:var(--text-2);line-height:1.62}
+.ev-note{font-size:12px;color:var(--text-4);margin-top:14px}
 
 /* 3D 적층 파레토 카드 + 오답 막대 채움 애니메이션 */
 .spot-3d{perspective:1100px;position:relative;display:flex;align-items:center;justify-content:flex-end;gap:0}
@@ -722,6 +749,88 @@ a:hover .brand-wm{transform:scale(1.03)}
   /* 허브 통계 */
   .hub-stats b{font-size:26px}
 }
+
+/* ===== 폰 카테고리 카루셀 + 흡수(suction) 애니메이션 ===== */
+.cat-stage{position:relative;flex:1;overflow:hidden;background:var(--bg)}
+.cat-slide{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;
+  transform:translateX(44px) scale(.97);transition:opacity .6s var(--ease-out),transform .6s var(--ease-spring);
+  pointer-events:none;will-change:transform,opacity}
+.cat-slide.on{opacity:1;transform:none;pointer-events:auto}
+.cat-slide.prev{transform:translateX(-44px) scale(.97)}
+.cat-body{flex:1;padding:11px 12px 6px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+.cat-head{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:800;color:var(--text-2);letter-spacing:-0.02em}
+.cat-head .ci{width:21px;height:21px;border-radius:7px;display:grid;place-items:center;color:#fff;flex-shrink:0}
+.ddaybar.alt{background:linear-gradient(90deg,rgba(23,147,126,.13),rgba(88,120,160,.13))}
+.dchip.ai{background:linear-gradient(135deg,#17937e,#5878a0)}
+.pass-card{display:flex;align-items:center;gap:14px}
+.pgauge{width:72px;height:72px;flex-shrink:0;position:relative}
+.pgauge .pv{position:absolute;inset:0;display:grid;place-items:center;font-size:17px;font-weight:800;color:var(--accent-strong)}
+.cat-slide.on .pgauge .pring{animation:gaugeSweep 1.2s var(--ease-out) both}
+.pass-card .pinfo{font-size:10.5px;color:var(--text-3);line-height:1.5}
+.pass-card .pinfo b{font-size:12.5px;color:var(--text-2);font-weight:700}
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.wk .wd{font-size:9px;color:var(--text-3);font-weight:700}
+.wk .wc{font-size:10.5px;font-weight:700;color:var(--text-2);padding:5px 0;border-radius:7px;background:#fff;border:1px solid var(--border)}
+.wk .wc.tod{background:var(--accent);color:#fff;border-color:var(--accent)}
+.ai-place{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--accent-strong);font-weight:700}
+.ai-place .sp{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:nodePulse 1.4s infinite;flex-shrink:0}
+.sched{display:flex;flex-direction:column;gap:6px}
+.sblock{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:var(--text-2);
+  background:#fff;border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:7px 9px;
+  opacity:0;transform:translateY(9px)}
+.sblock .sd{width:7px;height:7px;border-radius:3px;flex-shrink:0}
+.sblock b{margin-left:auto;font-size:9.5px;color:var(--text-3);font-weight:700}
+.cat-slide.on .sblock{animation:blockIn .5s var(--ease-spring) both}
+.cat-slide.on .sblock:nth-child(2){animation-delay:.22s}
+.cat-slide.on .sblock:nth-child(3){animation-delay:.44s}
+.cat-slide.on .sblock:nth-child(4){animation-delay:.66s}
+.weak-list{display:flex;flex-direction:column;gap:10px}
+.weak-row .wt{display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);font-weight:600;margin-bottom:4px}
+.weak-row .wt b{color:var(--coral);font-weight:800}
+.weak-row .wbar{height:6px;background:var(--surface-3);border-radius:999px;overflow:hidden}
+.weak-row .wbar i{display:block;height:100%;width:0;background:var(--coral);border-radius:999px}
+.cat-slide.on .weak-row .wbar i{animation:barGrow 1s var(--ease-out) forwards}
+.cat-slide.on .weak-row:nth-child(2) .wbar i{animation-delay:.25s}
+.ai-sum{background:linear-gradient(135deg,rgba(23,147,126,.1),rgba(88,120,160,.1));border:1px solid var(--border);
+  border-radius:10px;padding:9px 11px;font-size:10.5px;color:var(--text-2);line-height:1.55}
+.ai-sum .ah{display:flex;align-items:center;gap:6px;font-weight:800;color:var(--accent-strong);margin-bottom:4px;font-size:11px}
+.ai-sum b{color:var(--accent-strong)}
+.cat-dots{display:flex;gap:5px;justify-content:center;padding:7px 0 9px;background:var(--bg)}
+.cat-dots i{width:6px;height:6px;border-radius:50%;background:var(--border-strong);transition:.35s var(--ease-spring);cursor:pointer}
+.cat-dots i.on{background:var(--accent);width:17px;border-radius:3px}
+.absorb-ghost{position:absolute;left:50%;top:43%;z-index:6;pointer-events:none;font-size:11px;font-weight:800;color:#fff;
+  background:var(--accent-grad);padding:8px 14px;border-radius:999px;box-shadow:0 10px 30px rgba(11,90,76,.42);
+  white-space:nowrap;opacity:0;transform:translate(-50%,-50%) scale(.9)}
+.absorb-ghost.go{animation:ghostSuck .72s var(--ease-out) both}
+.s3d.inhale .lf{opacity:.4;filter:saturate(.6) blur(.5px)}
+.s3d.inhale .ph3d{filter:brightness(1.04);
+  box-shadow:28px 44px 90px rgba(13,38,33,.2),0 0 0 3px rgba(23,147,126,.28),0 0 42px 7px rgba(23,147,126,.32)}
+/* 떠있는 기능 카드가 화면 중앙으로 쏙쏙 빨려 들어감(흡수) + 중앙 그라데이션 소용돌이 */
+.layer.suck .lf{animation:none!important;transform-origin:center;
+  transition:transform 1.4s cubic-bezier(.4,0,.2,1),opacity 1.4s ease,filter 1.4s ease;
+  opacity:0;filter:blur(3px) saturate(1.25)}
+.l-chart.suck .lf{transform:translate(0,150px) scale(.12)}
+.l-review.suck .lf{transform:translate(0,-58px) scale(.12)}
+.l-bars.suck .lf{transform:translate(-150px,-140px) scale(.12)}
+.l-weak.suck .lf{transform:translate(118px,-78px) scale(.12)}
+.suction-core{position:absolute;left:50%;top:44%;width:132px;height:132px;border-radius:50%;z-index:5;pointer-events:none;
+  transform:translate(-50%,-50%) scale(.2);opacity:0;
+  background:radial-gradient(circle,rgba(23,147,126,.55),rgba(88,120,160,.28) 46%,rgba(88,120,160,0) 72%)}
+.s3d.inhale .suction-core{animation:coreSwirl 2.1s ease-out}
+@keyframes coreSwirl{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}
+  45%{opacity:.6;transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(.72)}}
+@keyframes ghostSuck{0%{opacity:0;transform:translate(calc(-50% + var(--gx,0px)),calc(-50% + var(--gy,0px))) scale(.95)}
+  22%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(.08)}}
+@keyframes gaugeSweep{from{stroke-dashoffset:201}}
+@keyframes blockIn{to{opacity:1;transform:none}}
+@keyframes barGrow{to{width:var(--w,60%)}}
+@media(prefers-reduced-motion:reduce){
+  .cat-slide{transition:opacity .35s}.cat-slide.on .sblock{animation:none;opacity:1;transform:none}
+  .cat-slide.on .weak-row .wbar i{animation:none;width:var(--w,60%)}
+  .absorb-ghost{display:none}.s3d.inhale .lf{opacity:1;filter:none}
+  .s3d.inhale .ph3d{filter:none;box-shadow:28px 44px 90px rgba(13,38,33,.2),0 4px 12px rgba(13,38,33,.06)}
+}
 </style>
 </head>
 <body>
@@ -790,12 +899,20 @@ a:hover .brand-wm{transform:scale(1.03)}
       <h1>배움, 마침표가 아닌<br><span class="g">터닝포인트</span>로</h1>
       <p class="sub">인포커스는 교육 사각지대를 해소하는 솔루션을 만듭니다. <b>배움터닝</b>은 검정고시 <b>최초로 AI 학습 솔루션을 도입</b> — 오답 데이터로 약점을 진단하고, 오늘 공부할 우선순위까지 자동 설계합니다.</p>
       <div class="cta-zone">
-        <a href="#services" class="btn btn-primary btn-dl">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          앱 다운로드
-        </a>
+        <div class="cta-row">
+          <a href="https://play.google.com/store/apps/details?id=com.baeumturning.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-dl">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            앱 다운로드
+          </a>
+          <a href="#service" class="btn btn-dl btn-ghost">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/>
+            </svg>
+            앱 자세히 보기
+          </a>
+        </div>
         <p class="store-hint">App Store · Google Play</p>
       </div>
     </div>
@@ -805,6 +922,9 @@ a:hover .brand-wm{transform:scale(1.03)}
       <div class="scene">
         <div class="s3d-scale">
           <div class="s3d" id="scene3d">
+
+            <div class="suction-core"></div>
+            <div class="absorb-ghost" id="absorbGhost"></div>
 
             <!-- all-in-one web threads -->
             <svg class="web3d" viewBox="0 0 660 700" aria-hidden="true">
@@ -829,12 +949,134 @@ a:hover .brand-wm{transform:scale(1.03)}
             <div class="ph3d">
               <div class="screen">
                 <div class="statusbar"><span class="tnum">9:41</span><span class="dots"><i></i><i></i><i></i></span></div>
-                <div class="ddaybar">다음 시험 <b>26년 2회차</b> (8월 1일) <span class="dchip">D-52</span></div>
-                <div class="scr-body">
-                  <div class="mini-card" style="margin-top:auto">
-                    <div class="mc-title">오늘의 학습 플랜<span class="ai-tag">AI</span></div>
-                    <div class="plan-row done"><i>✓</i><span>영어 · 문법 12문제</span><b>완료</b></div>
-                    <div class="plan-row"><i></i><span>수학 · 도형의 방정식 8문제</span><b>25분</b></div>
+                <div class="cat-stage" id="catStage">
+
+                  <!-- 카테고리 1: 대시보드 -->
+                  <div class="cat-slide on" data-cat="dash">
+                    <div class="ddaybar">다음 시험 <b>26년 2회차</b> (8월 1일) <span class="dchip">D-52</span></div>
+                    <div class="cat-body">
+                      <div class="cat-head"><span class="ci" style="background:#2f9183"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>대시보드</div>
+                      <div class="mini-card pass-card">
+                        <div class="pgauge">
+                          <svg width="72" height="72" viewBox="0 0 72 72" style="transform:rotate(-90deg)">
+                            <circle cx="36" cy="36" r="32" fill="none" stroke="#e6eeeb" stroke-width="7"/>
+                            <circle class="pring" cx="36" cy="36" r="32" fill="none" stroke="#2f9183" stroke-width="7" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="44"/>
+                          </svg>
+                          <span class="pv">78%</span>
+                        </div>
+                        <div class="pinfo"><b>합격 가능성 <span class="ai-tag">AI</span></b>평균 60점 기준<br>약점 보완 시 <b style="color:#17937e;display:inline">+12%p</b></div>
+                      </div>
+                      <div class="mini-card">
+                        <div class="mc-title">오늘의 학습 플랜<span class="ai-tag">AI</span></div>
+                        <div class="plan-row done"><i>✓</i><span>영어 · 문법 12문제</span><b>완료</b></div>
+                        <div class="plan-row"><i></i><span>수학 · 도형의 방정식 8문제</span><b>25분</b></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 카테고리 2: 학습달력 · AI 스케줄링 -->
+                  <div class="cat-slide" data-cat="cal">
+                    <div class="ddaybar alt">학습달력 <b>8월 1주</b> <span class="dchip ai">AI 스케줄링</span></div>
+                    <div class="cat-body">
+                      <div class="cat-head"><span class="ci" style="background:#5878a0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>학습달력</div>
+                      <div class="wk">
+                        <div class="wd">월</div><div class="wd">화</div><div class="wd">수</div><div class="wd">목</div><div class="wd">금</div><div class="wd">토</div><div class="wd">일</div>
+                        <div class="wc">28</div><div class="wc tod">29</div><div class="wc">30</div><div class="wc">31</div><div class="wc">1</div><div class="wc">2</div><div class="wc">3</div>
+                      </div>
+                      <div class="ai-place"><span class="sp"></span>AI가 오늘 할 일을 자동 배치했어요</div>
+                      <div class="sched">
+                        <div class="sblock"><span class="sd" style="background:#2f9183"></span>국어 · 비문학 독해<b>09:00</b></div>
+                        <div class="sblock"><span class="sd" style="background:#c5826e"></span>영어 · 문법/어휘<b>11:00</b></div>
+                        <div class="sblock"><span class="sd" style="background:#5878a0"></span>수학 · 도형의 방정식<b>14:00</b></div>
+                        <div class="sblock"><span class="sd" style="background:#af9069"></span>복습 30문제<b>20:00</b></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 카테고리 3: 배움터 · 약점/AI 분석 -->
+                  <div class="cat-slide" data-cat="learn">
+                    <div class="ddaybar"><b>배움터</b> · 약점 진단 <span class="dchip ai">AI 분석</span></div>
+                    <div class="cat-body">
+                      <div class="cat-head"><span class="ci" style="background:#c5826e"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>배움터 · 약점 분석</div>
+                      <div class="mini-card">
+                        <div class="mc-title">우선 공략 단원<span class="ai-tag">AI</span></div>
+                        <div class="weak-list">
+                          <div class="weak-row"><div class="wt"><span>영어 · 문법/어휘</span><b>오답 72%</b></div><div class="wbar"><i style="--w:88%"></i></div></div>
+                          <div class="weak-row"><div class="wt"><span>수학 · 도형의 방정식</span><b>오답 61%</b></div><div class="wbar"><i style="--w:64%"></i></div></div>
+                        </div>
+                      </div>
+                      <div class="ai-sum"><div class="ah"><span class="sp" style="width:6px;height:6px;border-radius:50%;background:#17937e;display:inline-block"></span>AI 분석 요약</div>최근 3회차 오답 패턴을 분석한 결과 <b>문법·어휘</b>에 실점이 집중됐어요. 이 단원부터 잡으면 합격선까지 가장 빠릅니다.</div>
+                    </div>
+                  </div>
+
+                  <!-- 카테고리 4: 대입·진로 -->
+                  <div class="cat-slide" data-cat="path">
+                    <div class="ddaybar alt">대입·진로 <b>맞춤 로드맵</b> <span class="dchip ai">AI 추천</span></div>
+                    <div class="cat-body">
+                      <div class="cat-head"><span class="ci" style="background:#17937e"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5 15.5 8.5"/></svg></span>대입·진로</div>
+                      <div class="mini-card">
+                        <div class="mc-title">검정고시 → 대입 로드맵<span class="ai-tag">AI</span></div>
+                        <div class="plan-row done"><i>✓</i><span>고졸 검정고시 합격</span><b>완료</b></div>
+                        <div class="plan-row"><i></i><span>수능 응시 자격 확보</span><b>8월</b></div>
+                        <div class="plan-row"><i></i><span>수시 6장 · 정시 3장 설계</span><b>9월</b></div>
+                      </div>
+                      <div class="ai-sum"><div class="ah"><span class="sp" style="width:6px;height:6px;border-radius:50%;background:#17937e;display:inline-block"></span>진로 가이드</div>검정고시 출신도 <b>수능·수시 모두 지원</b> 가능해요. 성적대에 맞는 학과를 자동으로 추천합니다.</div>
+                    </div>
+                  </div>
+
+                  <!-- 카테고리 5: 공지사항 -->
+                  <div class="cat-slide" data-cat="notice">
+                    <div class="ddaybar">공지사항 <b>인포커스</b> <span class="dchip" style="background:#c5826e">NEW</span></div>
+                    <div class="cat-body">
+                      <div class="cat-head"><span class="ci" style="background:#af9069"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>공지사항</div>
+                      <div class="sched">
+                        <div class="sblock" style="border-left-color:#c5826e"><span class="sd" style="background:#c5826e"></span>26년 2회차 원서접수<b>D-7</b></div>
+                        <div class="sblock" style="border-left-color:#2f9183"><span class="sd" style="background:#2f9183"></span>AI 합격예측 정확도 개선<b>업데이트</b></div>
+                        <div class="sblock" style="border-left-color:#5878a0"><span class="sd" style="background:#5878a0"></span>8월 모의고사 일정 안내<b>안내</b></div>
+                        <div class="sblock" style="border-left-color:#af9069"><span class="sd" style="background:#af9069"></span>장학 혜택 신청 오픈<b>이벤트</b></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 카테고리 6: 설정 -->
+                  <div class="cat-slide" data-cat="settings">
+                    <div class="ddaybar alt">설정 <b>내 학습 환경</b> <span class="dchip" style="background:#82a3b0">계정</span></div>
+                    <div class="cat-body">
+                      <div class="cat-head"><span class="ci" style="background:#82a3b0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>설정</div>
+                      <div class="sched">
+                        <div class="sblock" style="border-left-color:#2f9183"><span class="sd" style="background:#2f9183"></span>학습 알림 시간<b>21:00</b></div>
+                        <div class="sblock" style="border-left-color:#5878a0"><span class="sd" style="background:#5878a0"></span>목표 검정고시<b>고졸</b></div>
+                        <div class="sblock" style="border-left-color:#af9069"><span class="sd" style="background:#af9069"></span>화면 테마<b>자동</b></div>
+                        <div class="sblock" style="border-left-color:#c5826e"><span class="sd" style="background:#c5826e"></span>계정 · 로그인 관리<b>Google</b></div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="dock screen-dock">
+                  <div class="dock-item active">
+                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+                    <span>대시보드</span>
+                  </div>
+                  <div class="dock-item">
+                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+                    <span>학습달력</span>
+                  </div>
+                  <div class="dock-item">
+                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+                    <span>배움터</span>
+                  </div>
+                  <div class="dock-item">
+                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5 15.5 8.5"/></svg></span>
+                    <span>대입·진로</span>
+                  </div>
+                  <div class="dock-item">
+                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+                    <span>공지사항</span>
+                  </div>
+                  <div class="dock-item">
+                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                    <span>설정</span>
                   </div>
                 </div>
               </div>
@@ -919,35 +1161,6 @@ a:hover .brand-wm{transform:scale(1.03)}
               </div>
             </div></div>
 
-            <!-- floating layer: pill dock -->
-            <div class="layer l-dock"><div class="lf">
-              <div class="dock">
-                <div class="dock-item active">
-                  <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
-                  <span>대시보드</span>
-                </div>
-                <div class="dock-item">
-                  <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
-                  <span>학습달력</span>
-                </div>
-                <div class="dock-item">
-                  <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
-                  <span>배움터</span>
-                </div>
-                <div class="dock-item">
-                  <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5 15.5 8.5"/></svg></span>
-                  <span>대입·진로</span>
-                </div>
-                <div class="dock-item">
-                  <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
-                  <span>공지사항</span>
-                </div>
-                <div class="dock-item">
-                  <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
-                  <span>설정</span>
-                </div>
-              </div>
-            </div></div>
 
           </div>
         </div>
@@ -1065,9 +1278,9 @@ a:hover .brand-wm{transform:scale(1.03)}
 <section class="analysis sec-focus" id="analysis">
   <div class="wrap an-grid" id="anGrid">
     <div class="reveal">
-      <span class="eyebrow" style="color:var(--s-coral);background:var(--p-coral)">AI 분석 매커니즘</span>
-      <h2 class="h">감이 아니라 데이터로<br>공부할 순서를 정합니다</h2>
-      <p class="lead">컨설턴트의 진단 과정을 데이터 파이프라인으로 옮겼습니다. 풀이 기록이 쌓일수록 플랜은 더 정교해집니다.</p>
+      <span class="eyebrow" style="color:var(--s-coral);background:var(--p-coral)">근거기반 분석 시스템</span>
+      <h2 class="h">감이 아니라,<br>검증된 학문으로 분석합니다</h2>
+      <p class="lead">배움터닝의 성적분석은 <b>통계학·교육통계학의 검증된 논문과 학습법</b>에 근거한 분석 시스템에 <b>AI 분석 도구</b>를 결합했습니다. 추측이 아니라 학계가 검증한 방법으로 약점을 진단하고, 공부할 순서를 정합니다.</p>
       <div class="pipe">
         <div class="pstep"><span class="pnum">01</span><div><b>오답 데이터 수집</b><span>풀이 기록·OMR 채점 결과를 문항 단위로 축적</span></div></div>
         <div class="pstep"><span class="pnum">02</span><div><b>실점 정량화</b><span>파레토 분석으로 단원별 실점 집중도를 계산</span></div></div>
@@ -1075,7 +1288,15 @@ a:hover .brand-wm{transform:scale(1.03)}
         <div class="pstep"><span class="pnum">04</span><div><b>복습 주기 계산</b><span>망각곡선 기반으로 과목별 최적 복습 시점 산출</span></div></div>
         <div class="pstep"><span class="pnum">05</span><div><b>일일 플랜 자동 생성</b><span>오늘 풀 문제를 자동 배치 — AI 스케줄링</span></div></div>
       </div>
-      <p class="an-note">* 파레토 법칙·에빙하우스 망각곡선 등 검증된 학습과학 방법론에 기반합니다.</p>
+      <div class="evidence reveal">
+        <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석의 근거 <span class="ev-badge">검증된 학문 + AI</span></div>
+        <div class="ev-grid">
+          <div class="ev-item"><b>통계학 · 교육통계학</b><span>Wilson 신뢰구간·베이지안 추정 등 학계에서 검증된 통계 기법으로 점수와 오답을 해석합니다.</span></div>
+          <div class="ev-item"><b>검증된 학습과학 논문 · 학습법</b><span>파레토 법칙, 에빙하우스 망각곡선, 베이지안 지식추적(BKT) 등 효과가 입증된 학습 이론에 근거합니다.</span></div>
+          <div class="ev-item alt"><b>+ AI 분석 도구</b><span>축적된 풀이·오답 데이터를 실시간으로 해석해, 매일 나에게 맞는 학습 플랜으로 갱신합니다.</span></div>
+        </div>
+        <p class="ev-note">* 외부의 막연한 추측이 아니라, 공개·검증된 방법론을 자체 구현해 적용합니다.</p>
+      </div>
     </div>
     <div class="spot-3d re-anim">
       <div class="feed">
@@ -1359,6 +1580,56 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     item.style.boxShadow='';
   });
 });
+</script>
+<script>
+(function(){
+  var scene=document.getElementById('scene3d');
+  if(!scene) return;
+  var slides=[].slice.call(scene.querySelectorAll('.cat-slide'));
+  var dots=[].slice.call(scene.querySelectorAll('.cat-dots i'));
+  var dockItems=[].slice.call(scene.querySelectorAll('.dock-item'));
+  var ghost=document.getElementById('absorbGhost');
+  if(slides.length<2) return;
+  var meta=[
+    {dock:0,label:'오늘의 학습 플랜',gx:'4px',gy:'-150px'},
+    {dock:1,label:'AI 스케줄링',gx:'-150px',gy:'46px'},
+    {dock:2,label:'약점 분석',gx:'150px',gy:'88px'},
+    {dock:3,label:'대입·진로',gx:'150px',gy:'-44px'},
+    {dock:4,label:'공지사항',gx:'-150px',gy:'-66px'},
+    {dock:5,label:'설정',gx:'150px',gy:'-150px'}
+  ];
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var i=0,timer=null;
+  function go(n,fx){
+    var prev=i; i=(n+slides.length)%slides.length;
+    slides.forEach(function(s,k){s.classList.remove('on','prev'); if(k===i)s.classList.add('on'); else if(k===prev)s.classList.add('prev');});
+    dots.forEach(function(d,k){d.classList.toggle('on',k===i);});
+    var m=meta[i]||meta[0];
+    dockItems.forEach(function(d,k){d.classList.toggle('active',k===m.dock);});
+    if(fx&&!reduce&&ghost){
+      ghost.textContent=m.label;
+      ghost.style.setProperty('--gx',m.gx); ghost.style.setProperty('--gy',m.gy);
+      ghost.classList.remove('go'); void ghost.offsetWidth; ghost.classList.add('go');
+      scene.classList.add('inhale'); setTimeout(function(){scene.classList.remove('inhale');},640);
+    }
+  }
+  var sucked=[].slice.call(scene.querySelectorAll('.l-chart,.l-review,.l-bars,.l-weak'));
+  function absorb(done){
+    sucked.forEach(function(l,k){ setTimeout(function(){l.classList.add('suck');}, k*180); });
+    scene.classList.add('inhale');
+    setTimeout(function(){ scene.classList.remove('inhale'); sucked.forEach(function(l){l.style.display='none';}); done&&done(); }, 2100);
+  }
+  function slideLoop(){ if(timer)clearInterval(timer); timer=setInterval(function(){ go(i+1,false); }, 3600); }
+  /* 하단 독 카테고리 클릭 → 해당 화면으로 수동 이동(페이지 위치만), 이후 자동 슬라이딩 재개 */
+  dockItems.forEach(function(d,k){ if(k<slides.length){ d.style.cursor='pointer'; d.addEventListener('click',function(){ go(k,false); slideLoop(); }); } });
+  go(0,false);                                         /* 대시보드 준비 (기능 카드는 위에 펼쳐진 채) */
+  if(reduce){ sucked.forEach(function(l){l.style.display='none';}); slideLoop(); }
+  else {
+    setTimeout(function(){            /* ① 처음 펼쳐진 기능들만 1회 — 천천히 중앙으로 모이며 흡수 */
+      absorb(function(){ slideLoop(); });   /* ② 이후엔 초록효과 없이 자연스러운 슬라이딩만 */
+    }, 4200);
+  }
+})();
 </script>
 </body>
 </html>
