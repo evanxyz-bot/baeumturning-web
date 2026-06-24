@@ -70,6 +70,9 @@ section{scroll-margin-top:150px}
 .ap{display:inline-block;line-height:0;width:.92em;height:.92em;position:relative;top:-.01em;margin:0 -.012em;color:var(--accent)}
 .ap svg{width:100%;height:100%;display:block;transition:transform .7s var(--ease-spring)}
 a:hover .brand-wm .ap svg{transform:rotate(120deg)}
+/* Out of Focus 워드마크 — of는 아주 작게, 우측 한글은 아래첨자 크기 */
+.brand-wm .wm-of{font-size:.3em;font-weight:700;margin:0 .16em;position:relative;top:-.05em;letter-spacing:-0.01em}
+.brand-wm .wm-ko{font-size:.24em;font-weight:700;color:var(--text-3);margin-left:.3em;align-self:flex-end;margin-bottom:.16em;letter-spacing:-0.02em}
 @keyframes navLogoIn{from{opacity:0;transform:translateY(-12px) scale(.92)}to{opacity:1;transform:none}}
 .brand-wm{animation:navLogoIn .7s .05s both;transition:transform .22s var(--ease-spring)}
 a:hover .brand-wm{transform:scale(1.03)}
@@ -91,8 +94,8 @@ h2.h{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   padding:7px 14px;border-radius:var(--r-md);transition:color .15s,background .15s}
 .nav-top .login:hover{color:var(--text);background:var(--surface-2)}
 .nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
-.navlinks{position:relative;display:flex;gap:8px;font-size:16px;font-weight:600}
-.navlinks a{position:relative;z-index:1;color:var(--text-3);padding:9px 19px;border-radius:var(--r-md);
+.navlinks{position:relative;display:flex;gap:15px;font-size:18px;font-weight:700}
+.navlinks a{position:relative;z-index:1;color:var(--text-2);padding:10px 22px;border-radius:var(--r-md);
   transition:color .18s,transform .18s var(--ease-spring)}
 .navlinks a:hover{color:var(--text);transform:translateY(-1px)}
 .navlinks a.active{color:var(--accent-strong);font-weight:700}
@@ -257,7 +260,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
   <symbol id="aperture" viewBox="0 0 200 200">
     <path fill="currentColor" fill-rule="evenodd"
       d="M14 100 A86 86 0 0 1 186 100 A86 86 0 0 1 14 100 Z M134 119.63 L100 139.26 L66 119.63 L66 80.37 L100 60.74 L134 80.37 Z"/>
-    <g stroke="currentColor" stroke-opacity=".42" stroke-width="5.5" fill="none" stroke-linecap="round">
+    <g stroke="currentColor" stroke-opacity=".9" stroke-width="7" fill="none" stroke-linecap="round">
       <path d="M134 119.63 L144.74 166.32"/>
       <path d="M100 139.26 L64.93 171.90"/>
       <path d="M66 119.63 L20.20 105.58"/>
@@ -272,8 +275,8 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
 <nav class="nav" id="nav">
   <div class="nav-top">
     <a href="index.html" aria-label="INFOCUS 홈">
-      <span class="brand-wm" style="font-size:64px">
-        INF<span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>CUS
+      <span class="brand-wm" style="font-size:48px">
+        <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>ut<span class="wm-of">of</span>Focus<span class="wm-ko">아웃포커스</span>
       </span>
     </a>
     <span class="login">로그인</span>
@@ -455,7 +458,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
 <footer class="foot">
   <div class="wrap">
     <div class="foot-top">
-      <span class="brand-wm" style="font-size:22px">INF<span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>CUS</span>
+      <span class="brand-wm" style="font-size:22px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>ut<span class="wm-of">of</span>Focus<span class="wm-ko">아웃포커스</span></span>
       <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
     </div>
     <div class="biz-info">
