@@ -357,6 +357,11 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 .fcard:hover .fic{transform:scale(1.08)}
 .fcard h3{font-size:20px;font-weight:700;letter-spacing:-0.02em}
 .fcard p{font-size:15.5px;color:var(--text-2);line-height:1.68}
+/* AI 강조 배지 — 기능 카드·허브에 AI 어필 */
+.ai-pill{display:inline-block;vertical-align:middle;margin-left:7px;background:linear-gradient(135deg,#17937e,#5878a0);
+  color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.04em;padding:2px 9px;border-radius:7px;
+  box-shadow:0 2px 8px rgba(23,147,126,.28)}
+.ai-pill.sm{font-size:10px;padding:1px 7px;margin-left:5px;vertical-align:2px}
 
 /* ============ ANALYSIS (AI 매커니즘) ============ */
 .analysis{padding:96px 0;background:linear-gradient(135deg,#fef7f5 0%,#f3f7f6 60%,#eef1f8 100%)}
@@ -1261,20 +1266,20 @@ a:hover .brand-wm{transform:scale(1.03)}
       <span class="eyebrow">MAIN SERVICE</span>
       <div class="app-title">배움터닝</div>
       <h2 class="h" style="font-size:28px;margin-top:8px">검정고시 준비, 이 앱 하나로 끝</h2>
-      <p class="lead">배움터닝은 <b style="color:var(--accent-strong)">오답 데이터로 약점을 진단</b>하고, <b style="color:var(--accent-strong)">오늘 무엇부터 풀지</b> 정해주는 검정고시 학습 앱입니다. 풀이 기록이 쌓일수록 추천은 더 정확해집니다.</p>
+      <p class="lead">배움터닝은 <b style="color:var(--accent-strong)">오답 데이터로 약점을 진단</b>하고, <b style="color:var(--accent-strong)">오늘 무엇부터 풀지</b> 정해주는 검정고시 <b style="color:var(--accent-strong)">AI 학습 앱</b>입니다. 통계·교육통계학 기반 분석에 AI를 더해, 풀이 기록이 쌓일수록 추천은 더 정확해집니다.</p>
     </div>
     <div class="fgrid">
       <div class="fcard reveal" style="--card-accent:var(--s-teal)">
         <div class="fhead"><span class="fic" style="background:var(--p-teal)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M18.4 5.6l-2.1 2.1M21 12h-3M5.6 5.6l2.1 2.1M3 12h3M12 21a6 6 0 0 0 6-6c0-3.3-2.7-4.5-6-9-3.3 4.5-6 5.7-6 9a6 6 0 0 0 6 6z"/></svg></span><h3>AI 학습 스케줄링</h3></div>
-        <p>약점 진단 결과로 '오늘 무엇을 풀지'를 자동 설계합니다. 점수가 가장 크게 오를 단원이 가장 먼저.</p>
+        <p>AI가 약점 진단 결과로 '오늘 무엇을 풀지'를 자동 설계합니다. 점수가 가장 크게 오를 단원이 가장 먼저.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-coral)">
-        <div class="fhead"><span class="fic" style="background:var(--p-coral)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5826e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><h3>근거기반 성적 분석</h3></div>
-        <p>파레토 실점 집중도·합격 예측·오답 패턴 등 7가지 기법으로 약점을 숫자로 정량화합니다.</p>
+        <div class="fhead"><span class="fic" style="background:var(--p-coral)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5826e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><h3>근거기반 성적 분석<span class="ai-pill sm">AI</span></h3></div>
+        <p><b>통계학·교육통계학의 검증된 논문·학습법</b>에 <b>AI 분석 도구</b>를 결합했습니다. 파레토 실점 집중도·합격 예측·오답 패턴 등 7가지 기법으로 약점을 숫자로 정량화합니다.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-purple)">
-        <div class="fhead"><span class="fic" style="background:var(--p-purple)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><h3>취약단원 진단</h3></div>
-        <p>자주 틀리는 단원을 자동으로 수집해 막연한 불안 대신 정확한 보완 지점을 짚어줍니다.</p>
+        <div class="fhead"><span class="fic" style="background:var(--p-purple)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><h3>취약단원 진단<span class="ai-pill sm">AI</span></h3></div>
+        <p>AI가 자주 틀리는 단원을 자동으로 수집해, 막연한 불안 대신 정확한 보완 지점을 짚어줍니다.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-blue)">
         <div class="fhead"><span class="fic" style="background:var(--p-blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg></span><h3>문제풀이 자동채점</h3></div>
@@ -1352,11 +1357,11 @@ a:hover .brand-wm{transform:scale(1.03)}
     </div>
     <div class="reveal">
       <div class="hubgrid">
-        <div class="hubitem" style="border-top:2px solid var(--s-teal)"><span class="hi" style="background:var(--p-teal)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2f9183" stroke-width="2"><path d="M9 18V5l12-2v13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><b>성적분석</b><span>파레토·합격 예측 등 7가지 기법으로 내 점수를 입체적으로 분석</span></div>
+        <div class="hubitem" style="border-top:2px solid var(--s-teal)"><span class="hi" style="background:var(--p-teal)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2f9183" stroke-width="2"><path d="M9 18V5l12-2v13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><b>성적분석<span class="ai-pill sm">AI</span></b><span>통계·교육통계학 기반 7가지 기법 + AI로 내 점수를 입체적으로 분석</span></div>
         <div class="hubitem" style="border-top:2px solid var(--s-coral)"><span class="hi" style="background:var(--p-coral)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c5826e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span><b>문제 풀이</b><span>실전과 같은 CBT 모드로 풀고 OMR로 즉시 채점·기록</span></div>
         <div class="hubitem" style="border-top:2px solid var(--s-blue)"><span class="hi" style="background:var(--p-blue)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></span><b>문제은행</b><span>단원·유형 태그로 골라 푸는 기출 문제 저장소</span></div>
         <div class="hubitem" style="border-top:2px solid var(--s-amber)"><span class="hi" style="background:var(--p-amber)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#af9069" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg></span><b>시험 기록</b><span>회차별 성적과 OMR 응시 기록을 한눈에 아카이브</span></div>
-        <div class="hubitem" style="grid-column:span 2;border-top:2px solid var(--s-purple)"><span class="hi" style="background:var(--p-purple)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg></span><b>취약단원 분석</b><span>자주 틀리는 단원을 자동 수집해 집중 보완 포인트를 짚어드립니다</span></div>
+        <div class="hubitem" style="grid-column:span 2;border-top:2px solid var(--s-purple)"><span class="hi" style="background:var(--p-purple)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg></span><b>취약단원 분석<span class="ai-pill sm">AI</span></b><span>AI가 자주 틀리는 단원을 자동 수집해 집중 보완 포인트를 짚어드립니다</span></div>
       </div>
     </div>
   </div>
