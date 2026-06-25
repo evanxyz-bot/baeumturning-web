@@ -1617,21 +1617,36 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     }
   }
   var sucked=[].slice.call(scene.querySelectorAll('.l-chart,.l-review,.l-bars,.l-weak'));
-  function hideCards(){ sucked.forEach(function(l){ l.classList.remove('suck'); l.style.display='none'; }); }
-  function absorb(){                 /* 디스플레이 중앙으로 모이며 점진적·천천히 사라짐 */
-    sucked.forEach(function(l,k){ setTimeout(function(){ l.classList.add('suck'); }, k*260); });
+  function resetCard(lf){ if(lf){ lf.style.transition='none'; lf.style.transform=''; lf.style.opacity=''; lf.style.filter=''; lf.style.animation=''; } }
+  function hideCards(){ sucked.forEach(function(l){ resetCard(l.querySelector('.lf')); l.style.display='none'; }); }
+  function absorb(){                 /* 디스플레이 중앙으로 천천히 모여들며 흡수 */
+    var ph=scene.querySelector('.ph3d').getBoundingClientRect();
+    var cx=ph.left+ph.width/2, cy=ph.top+ph.height*0.40;   /* 폰 화면 중앙(살짝 위) */
     scene.classList.add('inhale');
-    setTimeout(function(){ scene.classList.remove('inhale'); sucked.forEach(function(l){ l.style.display='none'; }); }, 3200);
+    sucked.forEach(function(l,k){
+      setTimeout(function(){
+        var lf=l.querySelector('.lf'); if(!lf) return;
+        var b=lf.getBoundingClientRect();
+        var cur=getComputedStyle(lf).transform;
+        lf.style.animation='none'; lf.style.transition='none';
+        lf.style.transform=(cur&&cur!=='none')?cur:'none'; lf.style.opacity='1'; lf.style.filter='none';
+        void lf.offsetWidth;                               /* 시작 상태 고정 → 스냅 방지 */
+        var dx=cx-(b.left+b.width/2), dy=cy-(b.top+b.height/2);
+        lf.style.transition='transform 2.4s cubic-bezier(.45,0,.12,1),opacity 2.4s ease,filter 2.4s ease';
+        lf.style.transform='translate('+dx+'px,'+dy+'px) scale(.07)';
+        lf.style.opacity='0'; lf.style.filter='blur(2px)';
+      }, k*300);
+    });
+    setTimeout(function(){ scene.classList.remove('inhale'); sucked.forEach(function(l){ l.style.display='none'; }); }, 3700);
   }
   function showCardsOnDash(){        /* 대시보드 진입: 기능 카드 펼침 → 5초 후 흡수 */
-    sucked.forEach(function(l){ l.style.display=''; });
+    sucked.forEach(function(l){ resetCard(l.querySelector('.lf')); l.style.display=''; });
     void scene.offsetWidth;
-    sucked.forEach(function(l){ l.classList.remove('suck'); });
     cardTimer=setTimeout(absorb, SHOW_MS);
   }
   function scheduleNext(){           /* 자동 슬라이드 — 대시보드는 기능 쇼케이스 동안 길게 머무름 */
     if(timer) clearTimeout(timer);
-    timer=setTimeout(function(){ go(i+1,false); scheduleNext(); }, (i===0&&!reduce) ? (SHOW_MS+3600) : 3600);
+    timer=setTimeout(function(){ go(i+1,false); scheduleNext(); }, (i===0&&!reduce) ? (SHOW_MS+4000) : 3600);
   }
   /* 하단 독 카테고리 클릭 → 해당 화면 이동, 이후 자동 슬라이딩 재개 */
   dockItems.forEach(function(d,k){ if(k<slides.length){ d.style.cursor='pointer'; d.addEventListener('click',function(){ go(k,false); scheduleNext(); }); } });
