@@ -396,7 +396,7 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 .pstep span{font-size:15px;color:var(--text-3);line-height:1.55}
 /* 기법 칩 — 파레토 카드를 마인드맵처럼 둘러쌈 (좌측·하단만, 우측·상단 여백 유지) */
 /* 분석 기법 — 세로로 묶어 3D 분석 카드(엔진)로 쏙 들어가는 번들 */
-.feed{position:relative;z-index:1;display:flex;flex-direction:column;gap:9px;flex-shrink:0}
+.feed{position:relative;z-index:1;display:flex;flex-direction:column;gap:9px;flex-shrink:0;order:2}
 .feed-cap{align-self:flex-start;font-size:11.5px;font-weight:800;letter-spacing:.03em;color:var(--accent-strong);
   background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:6px;
   display:flex;align-items:center;gap:6px}
@@ -423,17 +423,18 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 .ev-note{font-size:12px;color:var(--text-4);margin-top:14px}
 
 /* 3D 적층 파레토 카드 + 오답 막대 채움 애니메이션 */
-.spot-3d{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:20px}
-.mock-card{position:relative;z-index:3;flex-shrink:1;max-width:320px;width:100%;
+.spot-3d{position:relative;display:flex;align-items:center;justify-content:flex-start;gap:24px;perspective:1300px}
+.mock-card{position:relative;z-index:3;order:1;flex-shrink:1;max-width:320px;width:100%;margin-left:-12px;
   background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);
-  box-shadow:0 14px 40px rgba(13,38,33,.1),0 2px 8px rgba(13,38,33,.05);padding:22px;
-  border-top:3px solid var(--s-coral);transition:box-shadow .4s,transform .3s var(--ease-spring)}
-.spot-3d:hover .mock-card{transform:translateY(-3px);box-shadow:0 18px 48px rgba(13,38,33,.14),0 2px 8px rgba(13,38,33,.05)}
+  box-shadow:24px 30px 60px rgba(13,38,33,.14),0 2px 8px rgba(13,38,33,.05);padding:22px;
+  border-top:3px solid var(--s-coral);transform-style:preserve-3d;
+  transform:rotateY(9deg) rotateX(3deg);transition:transform .5s var(--ease-spring),box-shadow .4s}
+.spot-3d:hover .mock-card{transform:rotateY(3deg) rotateX(1deg) translateY(-2px);box-shadow:16px 22px 50px rgba(13,38,33,.14),0 2px 8px rgba(13,38,33,.05)}
 .mock-card .mh{font-size:14px;font-weight:700;margin-bottom:3px;letter-spacing:-0.02em}
 .mock-card .ms{font-size:12.5px;color:var(--text-3);margin-bottom:28px;line-height:1.5}
 .mock-card .ms b{color:var(--coral)}
-.mock-card .prow{background:#fff;border:1px solid var(--border);border-radius:12px;padding:9px 12px;margin-bottom:9px;
-  box-shadow:0 2px 8px rgba(13,38,33,.06);
+.mock-card .prow{background:#fff;border:1px solid var(--border);border-radius:12px;padding:9px 12px;margin-bottom:10px;
+  transform:translateZ(calc(var(--pz,0)*0.5px));box-shadow:0 8px 18px rgba(13,38,33,.1);
   transition:background .25s,border-color .25s,box-shadow .25s}
 .mock-card .prow:hover{background:#fdf0ec;border-color:#edb6a7;
   box-shadow:0 0 0 1.5px rgba(224,147,127,.5),0 14px 32px rgba(196,88,74,.22)}
@@ -700,7 +701,7 @@ a:hover .brand-wm{transform:scale(1.03)}
   .feed{transform:none;margin-right:0;margin-bottom:18px}
   .mchips{flex-direction:row;flex-wrap:wrap;gap:8px}
   .mchips span{width:auto;margin-left:0!important}
-  .mock-card{max-width:none}
+  .mock-card{max-width:none;transform:none;margin-left:0}
   .svc-grid{grid-template-columns:1fr}
   .strip-grid{grid-template-columns:1fr 1fr;gap:26px}
   .foot-grid{grid-template-columns:1fr 1fr}
@@ -1636,6 +1637,14 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     scene.classList.add('inhale');
     setTimeout(function(){ scene.classList.remove('inhale'); sucked.forEach(function(l){l.style.display='none';}); done&&done(); }, 2100);
   }
+  function expandCards(){            /* 흡수됐던 기능 카드를 다시 펼침(재등장) */
+    sucked.forEach(function(l){ l.style.display=''; });
+    void scene.offsetWidth;
+    sucked.forEach(function(l){ l.classList.remove('suck'); });
+  }
+  function absorbLoop(){             /* 기능 카드가 주기적으로 다시 나타났다가 폰으로 쏙 흡수 (반복) */
+    setInterval(function(){ expandCards(); setTimeout(absorb, 3400); }, 13000);
+  }
   function slideLoop(){ if(timer)clearInterval(timer); timer=setInterval(function(){ go(i+1,false); }, 3600); }
   /* 하단 독 카테고리 클릭 → 해당 화면으로 수동 이동(페이지 위치만), 이후 자동 슬라이딩 재개 */
   dockItems.forEach(function(d,k){ if(k<slides.length){ d.style.cursor='pointer'; d.addEventListener('click',function(){ go(k,false); slideLoop(); }); } });
@@ -1643,7 +1652,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   if(reduce){ sucked.forEach(function(l){l.style.display='none';}); slideLoop(); }
   else {
     setTimeout(function(){            /* ① 처음 펼쳐진 기능들만 1회 — 천천히 중앙으로 모이며 흡수 */
-      absorb(function(){ slideLoop(); });   /* ② 이후엔 초록효과 없이 자연스러운 슬라이딩만 */
+      absorb(function(){ slideLoop(); absorbLoop(); });   /* ② 슬라이딩 + 기능 흡수 반복 */
     }, 4200);
   }
 })();
