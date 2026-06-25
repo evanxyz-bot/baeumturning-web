@@ -815,7 +815,7 @@ a:hover .brand-wm{transform:scale(1.03)}
   box-shadow:28px 44px 90px rgba(13,38,33,.2),0 0 0 3px rgba(23,147,126,.28),0 0 42px 7px rgba(23,147,126,.32)}
 /* 떠있는 기능 카드가 화면 중앙으로 쏙쏙 빨려 들어감(흡수) + 중앙 그라데이션 소용돌이 */
 .layer.suck .lf{animation:none!important;transform-origin:center;
-  transition:transform 1.4s cubic-bezier(.4,0,.2,1),opacity 1.4s ease,filter 1.4s ease;
+  transition:transform 2.2s cubic-bezier(.4,0,.2,1),opacity 2.2s ease,filter 2.2s ease;
   opacity:0;filter:blur(3px) saturate(1.25)}
 .l-chart.suck .lf{transform:translate(0,150px) scale(.12)}
 .l-review.suck .lf{transform:translate(0,-58px) scale(.12)}
@@ -1598,7 +1598,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     {dock:5,label:'설정',gx:'150px',gy:'-150px'}
   ];
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  var i=0,timer=null;
+  var i=0,timer=null,cardTimer=null;var SHOW_MS=5000;   /* 대시보드 플로팅 기능 노출 시간 */
   function go(n,fx){
     var prev=i; i=(n+slides.length)%slides.length;
     slides.forEach(function(s,k){s.classList.remove('on','prev'); if(k===i)s.classList.add('on'); else if(k===prev)s.classList.add('prev');});
@@ -1611,31 +1611,33 @@ document.querySelectorAll('.hubitem').forEach(function(item){
       ghost.classList.remove('go'); void ghost.offsetWidth; ghost.classList.add('go');
       scene.classList.add('inhale'); setTimeout(function(){scene.classList.remove('inhale');},640);
     }
+    if(!reduce){                       /* 플로팅 기능 카드는 대시보드(0)에서만 노출 */
+      if(cardTimer){clearTimeout(cardTimer);cardTimer=null;}
+      if(i===0) showCardsOnDash(); else hideCards();
+    }
   }
   var sucked=[].slice.call(scene.querySelectorAll('.l-chart,.l-review,.l-bars,.l-weak'));
-  function absorb(done){
-    sucked.forEach(function(l,k){ setTimeout(function(){l.classList.add('suck');}, k*180); });
+  function hideCards(){ sucked.forEach(function(l){ l.classList.remove('suck'); l.style.display='none'; }); }
+  function absorb(){                 /* 디스플레이 중앙으로 모이며 점진적·천천히 사라짐 */
+    sucked.forEach(function(l,k){ setTimeout(function(){ l.classList.add('suck'); }, k*260); });
     scene.classList.add('inhale');
-    setTimeout(function(){ scene.classList.remove('inhale'); sucked.forEach(function(l){l.style.display='none';}); done&&done(); }, 2100);
+    setTimeout(function(){ scene.classList.remove('inhale'); sucked.forEach(function(l){ l.style.display='none'; }); }, 3200);
   }
-  function expandCards(){            /* 흡수됐던 기능 카드를 다시 펼침(재등장) */
+  function showCardsOnDash(){        /* 대시보드 진입: 기능 카드 펼침 → 5초 후 흡수 */
     sucked.forEach(function(l){ l.style.display=''; });
     void scene.offsetWidth;
     sucked.forEach(function(l){ l.classList.remove('suck'); });
+    cardTimer=setTimeout(absorb, SHOW_MS);
   }
-  function absorbLoop(){             /* 기능 카드가 주기적으로 다시 나타났다가 폰으로 쏙 흡수 (반복) */
-    setInterval(function(){ expandCards(); setTimeout(absorb, 3400); }, 13000);
+  function scheduleNext(){           /* 자동 슬라이드 — 대시보드는 기능 쇼케이스 동안 길게 머무름 */
+    if(timer) clearTimeout(timer);
+    timer=setTimeout(function(){ go(i+1,false); scheduleNext(); }, (i===0&&!reduce) ? (SHOW_MS+3600) : 3600);
   }
-  function slideLoop(){ if(timer)clearInterval(timer); timer=setInterval(function(){ go(i+1,false); }, 3600); }
-  /* 하단 독 카테고리 클릭 → 해당 화면으로 수동 이동(페이지 위치만), 이후 자동 슬라이딩 재개 */
-  dockItems.forEach(function(d,k){ if(k<slides.length){ d.style.cursor='pointer'; d.addEventListener('click',function(){ go(k,false); slideLoop(); }); } });
-  go(0,false);                                         /* 대시보드 준비 (기능 카드는 위에 펼쳐진 채) */
-  if(reduce){ sucked.forEach(function(l){l.style.display='none';}); slideLoop(); }
-  else {
-    setTimeout(function(){            /* ① 처음 펼쳐진 기능들만 1회 — 천천히 중앙으로 모이며 흡수 */
-      absorb(function(){ slideLoop(); absorbLoop(); });   /* ② 슬라이딩 + 기능 흡수 반복 */
-    }, 4200);
-  }
+  /* 하단 독 카테고리 클릭 → 해당 화면 이동, 이후 자동 슬라이딩 재개 */
+  dockItems.forEach(function(d,k){ if(k<slides.length){ d.style.cursor='pointer'; d.addEventListener('click',function(){ go(k,false); scheduleNext(); }); } });
+  go(0,false);                       /* 대시보드 + 플로팅 기능 노출 시작 */
+  if(reduce){ hideCards(); }
+  scheduleNext();
 })();
 </script>
 
