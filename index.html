@@ -1648,8 +1648,28 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     if(timer) clearTimeout(timer);
     timer=setTimeout(function(){ go(i+1,false); scheduleNext(); }, (i===0&&!reduce) ? (SHOW_MS+4000) : 3600);
   }
-  /* 하단 독 카테고리 클릭 → 해당 화면 이동, 이후 자동 슬라이딩 재개 */
-  dockItems.forEach(function(d,k){ if(k<slides.length){ d.style.cursor='pointer'; d.addEventListener('click',function(){ go(k,false); scheduleNext(); }); } });
+  /* 하단 독 카테고리 클릭 → 해당 화면 이동, 이후 자동 슬라이딩 재개.
+     폰이 rotateY(-12°)로 기울고 마우스 틸트까지 더해지면 좌측 아이콘의 시각적
+     사각형이 뒤로 돌아가, 네이티브 히트테스트가 빗나가 s3d-scale 배경에 클릭이
+     꽂힌다(좌측 카테고리가 안 눌리던 원인). 기울기와 무관하게 동작하도록 변형이
+     적용되지 않은 .scene에서 클릭을 받아 X좌표가 가장 가까운 독 아이템으로 매핑한다. */
+  dockItems.forEach(function(d,k){ if(k<slides.length) d.style.cursor='pointer'; });
+  var sceneHit=document.querySelector('.scene');
+  if(sceneHit){
+    sceneHit.addEventListener('click',function(e){
+      var top=Infinity,bot=-Infinity,best=null,bestDist=Infinity;
+      dockItems.forEach(function(d,k){
+        if(k>=slides.length) return;
+        var r=d.getBoundingClientRect();
+        if(r.top<top)top=r.top; if(r.bottom>bot)bot=r.bottom;
+        var dist=Math.abs(e.clientX-(r.left+r.width/2));
+        if(dist<bestDist){bestDist=dist;best=k;}
+      });
+      if(best===null) return;
+      if(e.clientY<top-10||e.clientY>bot+10) return;   /* 독 세로 밴드 밖 클릭은 무시 */
+      go(best,false); scheduleNext();
+    });
+  }
   go(0,false);                       /* 대시보드 + 플로팅 기능 노출 시작 */
   if(reduce){ hideCards(); }
   scheduleNext();
