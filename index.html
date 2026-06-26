@@ -283,7 +283,8 @@ h2.h{font-size:40px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   padding:7px 12px;box-shadow:0 18px 44px rgba(13,38,33,.2),0 2px 8px rgba(13,38,33,.08)}
 .dock-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 4px;
   font-size:8.5px;font-weight:600;color:var(--text-2);cursor:pointer;white-space:nowrap;transition:transform .16s var(--ease-spring)}
-.dock-item:hover{transform:translateY(-2px)}
+.dock-item:hover,.dock-item.hover{transform:translateY(-2px)}
+.dock-item:hover .di-ic,.dock-item.hover .di-ic{background:#eef5f3;color:var(--accent-strong)}
 .dock-item .di-ic{width:26px;height:26px;display:grid;place-items:center;border-radius:50%;color:#2a2f38}
 .dock-item.active{color:var(--accent-strong);font-weight:700}
 .dock-item.active .di-ic{width:30px;height:30px;background:var(--accent-grad);color:#fff;box-shadow:0 5px 12px rgba(11,122,106,.4)}
@@ -1669,8 +1670,17 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   }
   if(sceneHit){
     sceneHit.addEventListener('click',function(e){ var k=dockIndexAt(e.clientX,e.clientY); if(k!==null){ go(k,false); scheduleNext(); } });
-    /* 독 밴드 위에서는 손모양 커서(cursor는 상속되므로 .scene에 토글) */
-    sceneHit.addEventListener('mousemove',function(e){ sceneHit.style.cursor=(dockIndexAt(e.clientX,e.clientY)!==null)?'pointer':''; });
+    /* 독 밴드 위에서 손모양 커서 + 해당 아이템 호버 반응(좌측 아이템은 호버도
+       배경에 꽂혀 :hover가 안 먹으므로 .hover 클래스를 좌표로 직접 토글) */
+    sceneHit.addEventListener('mousemove',function(e){
+      var k=dockIndexAt(e.clientX,e.clientY);
+      sceneHit.style.cursor=(k!==null)?'pointer':'';
+      dockItems.forEach(function(d,j){ d.classList.toggle('hover', j===k); });
+    });
+    sceneHit.addEventListener('mouseleave',function(){
+      sceneHit.style.cursor='';
+      dockItems.forEach(function(d){ d.classList.remove('hover'); });
+    });
   }
   go(0,false);                       /* 대시보드 + 플로팅 기능 노출 시작 */
   if(reduce){ hideCards(); }
