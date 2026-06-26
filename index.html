@@ -220,17 +220,9 @@ h2.h{font-size:44.8px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .l-weak{bottom:52px;left:-100px;transform:translateZ(55px)}
 .l-weak .float-chip{position:static;animation:none;box-shadow:0 16px 36px rgba(13,38,33,.16)}
 .l-weak .lf{animation:layerIn .7s var(--ease-spring) 1.15s both,lfloat 6.5s ease-in-out 3.7s infinite}
-/* 합격 가능성 — 우측 공백 (콤팩트 플로팅) */
-.l-pass{top:118px;right:-176px;transform:translateZ(95px)}
-.l-pass .pass-chip{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--border);
-  border-radius:16px;padding:12px 14px;width:188px;box-shadow:0 20px 46px rgba(11,90,76,.28)}
-.l-pass .pgauge{width:56px;height:56px;flex-shrink:0;position:relative}
-.l-pass .pgauge svg{width:56px;height:56px}
-.l-pass .pgauge .pv{position:absolute;inset:0;display:grid;place-items:center;font-size:17px;font-weight:800;color:var(--accent-strong)}
-.l-pass .pc-txt{display:flex;flex-direction:column;gap:3px;line-height:1.3}
-.l-pass .pc-txt b{font-size:14px;color:var(--text-2);font-weight:700}
-.l-pass .pc-txt .pc-sub{font-size:11.5px;color:var(--text-3)}
-.l-pass .pc-txt em{font-style:normal;font-weight:800;color:#17937e}
+/* 합격 가능성 — 우측 공백 (대시보드 카드 풀버전) */
+.l-pass{top:26px;right:-172px;transform:translateZ(95px)}
+.l-pass .mini-card{width:226px;box-shadow:0 20px 46px rgba(11,90,76,.28)}
 .l-pass .lf{animation:layerIn .7s var(--ease-spring) .85s both,lfloat 6.5s ease-in-out 2.5s infinite}
 .l-dock{bottom:-30px;left:50%;transform:translateX(-50%) translateZ(135px)}
 .l-dock .lf{animation:layerIn .7s var(--ease-spring) .55s both,lfloat 6.5s ease-in-out 1.4s infinite}
@@ -1199,20 +1191,17 @@ a:hover .brand-wm{transform:scale(1.03)}
               </div>
             </div></div>
 
-            <!-- floating layer: 합격 가능성 (우측 공백) -->
+            <!-- floating layer: 합격 가능성 (우측 공백, 대시보드 풀카드) -->
             <div class="layer l-pass"><div class="lf">
-              <div class="pass-chip">
+              <div class="mini-card pass-card">
                 <div class="pgauge">
-                  <svg viewBox="0 0 72 72" style="transform:rotate(-90deg)">
+                  <svg width="72" height="72" viewBox="0 0 72 72" style="transform:rotate(-90deg)">
                     <circle cx="36" cy="36" r="32" fill="none" stroke="#e6eeeb" stroke-width="7"/>
                     <circle class="pring" cx="36" cy="36" r="32" fill="none" stroke="#2f9183" stroke-width="7" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="44"/>
                   </svg>
                   <span class="pv">78%</span>
                 </div>
-                <div class="pc-txt">
-                  <b>합격 가능성 <span class="ai-tag">AI</span></b>
-                  <span class="pc-sub">약점 보완 시 <em>+12%p</em></span>
-                </div>
+                <div class="pinfo"><b>합격 가능성 <span class="ai-tag">AI</span></b>평균 60점 기준<br>약점 보완 시 <b style="color:#17937e;display:inline">+12%p</b></div>
               </div>
             </div></div>
 
