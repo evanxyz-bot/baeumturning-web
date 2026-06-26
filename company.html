@@ -48,7 +48,7 @@ html{scroll-behavior:smooth}
 @font-face{font-family:'GmarketSans';font-weight:700;font-display:swap;
   src:url('fonts/GmarketSansBold.woff') format('woff')}
 body{font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,-apple-system,sans-serif;
-  color:var(--text);background:#fbfdfd;-webkit-font-smoothing:antialiased;line-height:1.62;letter-spacing:-0.01em;overflow-x:hidden}
+  color:var(--text);background:#fbfdfd;-webkit-font-smoothing:antialiased;line-height:1.62;letter-spacing:-0.01em;overflow-x:hidden;word-break:keep-all}
 body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:
   radial-gradient(42% 34% at 12% 14%, rgba(154,215,205,.2), transparent 70%),
   radial-gradient(36% 28% at 88% 8%,  rgba(243,191,183,.16), transparent 70%),
@@ -76,10 +76,10 @@ a:hover .brand-wm .ap svg{transform:rotate(120deg)}
 .brand-wm{animation:navLogoIn .7s .05s both;transition:transform .22s var(--ease-spring)}
 a:hover .brand-wm{transform:scale(1.03)}
 
-.eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--accent);
+.eyebrow{display:inline-block;font-size:14.6px;font-weight:600;letter-spacing:.02em;color:var(--accent);
   background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:18px}
-h2.h{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
-.lead{font-size:17px;color:var(--text-2);line-height:1.7;margin-top:16px;max-width:620px}
+h2.h{font-size:42.6px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
+.lead{font-size:19px;color:var(--text-2);line-height:1.7;margin-top:16px;max-width:620px}
 .sec-head{text-align:center;max-width:660px;margin:0 auto 50px}
 .sec-head .lead{margin:16px auto 0}
 
@@ -89,11 +89,11 @@ h2.h{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
 .nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1160px;margin:0 auto;padding:0 24px}
-.nav-top .login{position:absolute;right:24px;font-size:14.5px;font-weight:600;color:var(--text-2);cursor:pointer;
+.nav-top .login{position:absolute;right:24px;font-size:16.2px;font-weight:600;color:var(--text-2);cursor:pointer;
   padding:7px 14px;border-radius:var(--r-md);transition:color .15s,background .15s}
 .nav-top .login:hover{color:var(--text);background:var(--surface-2)}
 .nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
-.navlinks{position:relative;display:flex;gap:15px;font-size:22px;font-weight:700}
+.navlinks{position:relative;display:flex;gap:15px;font-size:24.6px;font-weight:700}
 .navlinks a{position:relative;z-index:1;color:var(--text-2);padding:10px 22px;border-radius:var(--r-md);
   transition:color .18s,transform .18s var(--ease-spring)}
 .navlinks a:hover{color:var(--text);transform:translateY(-1px)}
@@ -102,14 +102,14 @@ h2.h{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   width:0;height:3px;background:var(--accent-grad);border-radius:999px;transition:width .3s var(--ease-spring)}
 .navlinks a.active::after{width:calc(100% - 26px)}
 .nav-drop{position:relative;display:flex}
-.nav-drop>a .chev{display:inline-block;margin-left:4px;transition:transform .25s var(--ease-spring);font-size:9px;vertical-align:1px}
+.nav-drop>a .chev{display:inline-block;margin-left:4px;transition:transform .25s var(--ease-spring);font-size:10.1px;vertical-align:1px}
 .nav-drop:hover>a .chev{transform:rotate(180deg)}
 .drop-menu{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(6px);
   min-width:152px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-md);
   padding:7px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;z-index:60;
   transition:opacity .22s,transform .25s var(--ease-spring),visibility .22s}
 .nav-drop:hover .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
-.drop-menu a{display:block;padding:8px 14px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--text-2);
+.drop-menu a{display:block;padding:8px 14px;border-radius:9px;font-size:15.1px;font-weight:600;color:var(--text-2);
   transition:background .15s,color .15s}
 .drop-menu a:hover{background:var(--accent-soft);color:var(--accent-strong)}
 .drop-menu a::after{display:none}
@@ -117,10 +117,10 @@ h2.h{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 /* ── PAGE HEAD ── */
 .page-head{padding:72px 0 56px;text-align:center;background:
   radial-gradient(700px 360px at 50% 0%, rgba(230,244,241,.8), transparent 70%)}
-.page-head h1{font-size:44px;font-weight:700;letter-spacing:-0.035em;line-height:1.15}
+.page-head h1{font-size:49.3px;font-weight:700;letter-spacing:-0.035em;line-height:1.15}
 .page-head h1 .g{background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .page-head .lead{margin:18px auto 0}
-.crumb{font-size:13px;color:var(--text-4);margin-bottom:18px}
+.crumb{font-size:14.6px;color:var(--text-4);margin-bottom:18px}
 .crumb a:hover{color:var(--text-2)}
 .crumb b{color:var(--accent-strong);font-weight:600}
 
@@ -131,18 +131,18 @@ h2.h{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   text-align:center;transition:transform .25s var(--ease-spring),box-shadow .25s,background .25s,border-color .25s}
 .vcard:hover{transform:translateY(-5px);box-shadow:0 16px 44px rgba(143,127,170,.2);background:var(--p-purple);border-color:#cdc4e5}
 .vcard .vic{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;margin:0 auto 16px}
-.vcard h3{font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:9px}
-.vcard p{font-size:14px;color:var(--text-2);line-height:1.7}
+.vcard h3{font-size:20.2px;font-weight:700;letter-spacing:-0.02em;margin-bottom:9px}
+.vcard p{font-size:15.7px;color:var(--text-2);line-height:1.7}
 .ceo-card{max-width:760px;margin:0 auto;background:linear-gradient(150deg,#0e6b5c 0%,#0b7a6a 55%,#08544a 100%);color:#fff;border-radius:24px;
   padding:38px 36px;box-shadow:0 18px 48px rgba(11,122,106,.32);position:relative;overflow:hidden}
 .ceo-card::before{content:'';position:absolute;width:240px;height:240px;border-radius:50%;
   background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);top:-70px;right:-60px}
-.ceo-card .qm{font-family:Georgia,serif;font-size:64px;line-height:.6;opacity:.3;display:block;margin-bottom:14px}
-.ceo-card .qt{font-size:22px;font-weight:700;line-height:1.5;letter-spacing:-0.02em}
-.ceo-card .who{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:13.5px}
-.ceo-card .who .avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-weight:700;font-size:14px}
+.ceo-card .qm{font-family:Georgia,serif;font-size:71.7px;line-height:.6;opacity:.3;display:block;margin-bottom:14px}
+.ceo-card .qt{font-size:24.6px;font-weight:700;line-height:1.5;letter-spacing:-0.02em}
+.ceo-card .who{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:15.1px}
+.ceo-card .who .avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-weight:700;font-size:15.7px}
 .ceo-card .who span{opacity:.75}
-.ceo-card .sub{font-size:13.5px;line-height:1.7;opacity:.85;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18)}
+.ceo-card .sub{font-size:15.1px;line-height:1.7;opacity:.85;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18)}
 
 /* ── MISSION ── */
 .mission{padding:72px 0;background:radial-gradient(640px 400px at 85% 75%, rgba(251,238,236,.75), transparent 70%)}
@@ -150,10 +150,10 @@ h2.h{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .mission .ceo-card{max-width:none;margin:0}
 .feat-list{margin-top:20px;display:flex;flex-direction:column;gap:14px}
 .feat-list .fl{display:flex;gap:12px;align-items:flex-start}
-.feat-list .fl .dot{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;flex-shrink:0;margin-top:1px;font-size:12px;font-weight:700}
+.feat-list .fl .dot{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;flex-shrink:0;margin-top:1px;font-size:13.4px;font-weight:700}
 .feat-list .fl b{font-weight:600}
 .feat-list .fl span{color:var(--text-2)}
-.feat-list .fl div{font-size:14.5px;line-height:1.6}
+.feat-list .fl div{font-size:16.2px;line-height:1.6}
 
 /* 헤드라인은 지마켓 산스 — 본문 Pretendard와 대비 */
 h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif}
@@ -169,20 +169,20 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 .tl-item::before{content:'';position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;
   background:#fff;border:3px solid var(--accent-mid)}
 .tl-item.now::before{border-color:var(--accent);background:var(--accent);box-shadow:0 0 0 5px rgba(11,122,106,.14)}
-.tl-date{font-size:12.5px;font-weight:800;color:var(--accent-strong);font-variant-numeric:tabular-nums}
-.tl-item h4{font-size:16px;font-weight:700;letter-spacing:-0.01em;margin:2px 0 3px}
-.tl-item p{font-size:13px;color:var(--text-3);line-height:1.55}
-.tl-note{text-align:center;font-size:13px;color:var(--text-3);margin-top:20px}
+.tl-date{font-size:14px;font-weight:800;color:var(--accent-strong);font-variant-numeric:tabular-nums}
+.tl-item h4{font-size:17.9px;font-weight:700;letter-spacing:-0.01em;margin:2px 0 3px}
+.tl-item p{font-size:14.6px;color:var(--text-3);line-height:1.55}
+.tl-note{text-align:center;font-size:14.6px;color:var(--text-3);margin-top:20px}
 
 /* ── PARTNERS ── */
 .partners{padding:72px 0}
 .partner-empty{max-width:680px;margin:0 auto;text-align:center;background:#fff;border:1.5px dashed var(--border-strong);
   border-radius:22px;padding:48px 32px;box-shadow:var(--shadow-xs)}
 .partner-empty .pic{width:64px;height:64px;border-radius:18px;background:var(--p-blue);display:grid;place-items:center;margin:0 auto 18px}
-.partner-empty b{display:block;font-size:19px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
-.partner-empty p{font-size:14.5px;color:var(--text-2);line-height:1.7;max-width:440px;margin:0 auto 22px}
+.partner-empty b{display:block;font-size:21.3px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
+.partner-empty p{font-size:16.2px;color:var(--text-2);line-height:1.7;max-width:440px;margin:0 auto 22px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;
-  border:0;border-radius:var(--r-lg);font-size:15px;font-weight:600;cursor:pointer;
+  border:0;border-radius:var(--r-lg);font-size:16.8px;font-weight:600;cursor:pointer;
   background:var(--accent-grad);color:#fff;box-shadow:var(--shadow-accent);
   transition:transform .16s var(--ease-spring),box-shadow .18s,filter .18s}
 .btn:hover{filter:brightness(1.06);box-shadow:0 6px 22px rgba(11,122,106,.32);transform:translateY(-1px)}
@@ -194,11 +194,11 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 .notice-item{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:var(--shadow-xs);
   display:flex;align-items:center;gap:14px;transition:transform .2s var(--ease-spring),box-shadow .2s}
 .notice-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm)}
-.notice-item .tag{flex-shrink:0;font-size:11px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);
+.notice-item .tag{flex-shrink:0;font-size:12.3px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);
   padding:4px 10px;border-radius:8px}
-.notice-item b{flex:1;font-size:14.5px;font-weight:600;letter-spacing:-0.01em}
-.notice-item span{font-size:12.5px;color:var(--text-4);font-variant-numeric:tabular-nums}
-.notice-empty{text-align:center;font-size:13px;color:var(--text-3);margin-top:18px}
+.notice-item b{flex:1;font-size:16.2px;font-weight:600;letter-spacing:-0.01em}
+.notice-item span{font-size:14px;color:var(--text-4);font-variant-numeric:tabular-nums}
+.notice-empty{text-align:center;font-size:14.6px;color:var(--text-3);margin-top:18px}
 
 /* ── QnA ── */
 .qna{padding:72px 0 96px}
@@ -208,29 +208,29 @@ details.q{background:#fff;border:1px solid var(--border);border-radius:16px;box-
 details.q:hover{box-shadow:var(--shadow-sm)}
 details.q[open]{border-color:var(--accent-mid);box-shadow:var(--shadow-sm)}
 details.q summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:18px 22px;
-  font-size:15px;font-weight:600;letter-spacing:-0.01em}
+  font-size:16.8px;font-weight:600;letter-spacing:-0.01em}
 details.q summary::-webkit-details-marker{display:none}
 details.q summary .qmark{flex-shrink:0;width:28px;height:28px;border-radius:9px;background:var(--accent-soft);color:var(--accent-strong);
-  display:grid;place-items:center;font-weight:800;font-size:13px}
+  display:grid;place-items:center;font-weight:800;font-size:14.6px}
 details.q summary .arrow{margin-left:auto;color:var(--text-4);transition:transform .25s var(--ease-spring)}
 details.q[open] summary .arrow{transform:rotate(180deg)}
-details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-height:1.7}
+details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-height:1.7}
 
 /* ── FOOTER ── */
 .foot{border-top:1px solid var(--border);padding:56px 0 36px;background:var(--surface-2);position:relative}
 .foot::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--s-teal),var(--s-blue),var(--s-purple),var(--s-coral),var(--s-amber))}
-.foot-top .desc{font-size:13.5px;color:var(--text-3);line-height:1.65;max-width:420px;margin-top:14px}
-.biz-info{margin-top:32px;padding-top:22px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-3);line-height:1.9}
+.foot-top .desc{font-size:15.1px;color:var(--text-3);line-height:1.65;max-width:420px;margin-top:14px}
+.biz-info{margin-top:32px;padding-top:22px;border-top:1px solid var(--border);font-size:14px;color:var(--text-3);line-height:1.9}
 .biz-info b{color:var(--text-2);font-weight:600}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:18px;
-  font-size:12.5px;color:var(--text-4);flex-wrap:wrap;gap:10px}
+  font-size:14px;color:var(--text-4);flex-wrap:wrap;gap:10px}
 .foot-terms{color:var(--text-3);font-weight:600;transition:color .15s}
 .foot-terms:hover{color:var(--text)}
 
 @media (max-width:920px){
-  h2.h{font-size:30px}
-  .page-head h1{font-size:34px}
+  h2.h{font-size:33.6px}
+  .page-head h1{font-size:38.1px}
   .vgrid{grid-template-columns:1fr}
   .mission-grid{grid-template-columns:1fr;gap:40px}
   .foot-grid{grid-template-columns:1fr 1fr}
@@ -238,16 +238,16 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
 @media (max-width:560px){
   .nav-top{height:72px}
   .nav-top .login{right:18px}
-  .nav-top .brand-wm{font-size:42px!important}
+  .nav-top .brand-wm{font-size:47px!important}
   /* 네비 6항목 — 좁은 화면에 맞게 압축(넘치면 가로 스크롤) */
   .nav-bot{justify-content:flex-start;overflow-x:auto}
   .nav-bot::-webkit-scrollbar{display:none}
-  .navlinks{gap:0;font-size:12px;margin:0 auto}
+  .navlinks{gap:0;font-size:13.4px;margin:0 auto}
   .navlinks a{padding:7px 7px;white-space:nowrap}
   .nav-drop>a .chev{margin-left:2px}
   .wrap{padding:0 18px}
-  .page-head h1{font-size:29px}
-  h2.h{font-size:25px}
+  .page-head h1{font-size:32.5px}
+  h2.h{font-size:28px}
   .foot-grid{grid-template-columns:1fr}
   details.q .a{padding-left:22px}
 }
@@ -274,7 +274,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
 <nav class="nav" id="nav">
   <div class="nav-top">
     <a href="index.html" aria-label="OutFocus 홈">
-      <span class="brand-wm" style="font-size:58px">
+      <span class="brand-wm" style="font-size:65px">
         <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus<span class="wm-ko">아웃포커스</span>
       </span>
     </a>
@@ -457,7 +457,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:14px;color:var(--text-2);line-he
 <footer class="foot">
   <div class="wrap">
     <div class="foot-top">
-      <span class="brand-wm" style="font-size:22px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus<span class="wm-ko">아웃포커스</span></span>
+      <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus<span class="wm-ko">아웃포커스</span></span>
       <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
     </div>
     <div class="biz-info">
