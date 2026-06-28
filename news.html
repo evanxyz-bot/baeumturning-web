@@ -273,6 +273,9 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .news-row.active{border-color:var(--accent);background:var(--accent-soft)}
 .news-row .r-top{display:flex;align-items:center;gap:8px;margin-bottom:4px}
 .news-row .r-tag{font-size:11px;font-weight:600;color:var(--accent-strong);background:var(--accent-soft);padding:2px 8px;border-radius:999px}
+.news-row .r-pin{font-size:11px;font-weight:700;color:#fff;background:var(--s-coral);padding:2px 8px;border-radius:999px}
+.news-pane .p-pin{font-size:12px;font-weight:700;color:#fff;background:var(--s-coral);padding:3px 11px;border-radius:999px}
+.news-row.pinned{border-color:var(--s-coral)}
 .news-row.active .r-tag{background:#fff}
 .news-row .r-date{font-size:12px;color:var(--text-3)}
 .news-row .r-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.4;word-break:keep-all}
@@ -386,15 +389,18 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 <script>
 (function(){
   var NEWS=[
-    { date:'2026-06-28', tag:'검정고시', title:'2026년 검정고시 시행 일정 — 제1회 4월·제2회 8월',
+    { date:'2026-06-28', tag:'검정고시', pinned:true, title:'2026년 제2회 검정고시(8월) — 원서접수·시험 요강·접수처 안내',
       sum:[
-        '검정고시는 <b>연 2회</b> 시행되며 고졸·중졸·초졸 모두 응시할 수 있습니다. 출제는 한국교육과정평가원, 시행·공고는 각 <b>시·도교육청</b>이 담당합니다.',
-        '<b>제1회</b> — 시험 4월 13일(토) · 원서접수 2월 19일~23일 · 합격자 발표 5월 15일(금)',
-        '<b>제2회</b> — 시험 8월 10일(토) · 원서접수 6월 17일~21일 · 합격자 발표 8월 30일(금)',
-        '위 날짜는 <b>잠정 일정</b>입니다. 실제 일정·접수처는 거주지 시·도교육청 공식 공고문(보통 시험 약 2개월 전 게시)으로 반드시 확인하세요.'
+        '<b>대상</b> — 2026년 제2회 검정고시(고졸·중졸·초졸). 출제는 한국교육과정평가원, 시행·공고·접수는 각 <b>시·도교육청</b>이 담당합니다.',
+        '<b>시험일</b> — 8월 10일(토) 예정(잠정). 정확한 일자는 거주지 시·도교육청 공고로 확정됩니다.',
+        '<b>원서접수</b> — 6월 중순경(예: 6/17~21, 잠정). <b>접수처</b>는 거주지 관할 시·도교육청이며 방문 또는 온라인(검정고시 접수시스템)으로 받습니다 — 교육청별 기간·방법이 다르니 공고를 꼭 확인하세요.',
+        '<b>시험 과목(고졸)</b> — 국어·수학·영어·사회·과학·한국사(필수 6) + 선택 1과목(도덕·기술가정·체육·음악·미술 중 1).',
+        '<b>합격 기준</b> — 전 과목 평균 60점 이상이면 합격(과목별 과락 없음). 60점 이상 과목은 <b>과목합격</b>으로 다음 회차 면제 신청이 가능합니다.',
+        '<b>준비물</b> — 응시원서·증명사진·신분증 등(면제·경력 서류는 해당자만). 정확한 요강·구비서류는 교육청 공고문에서 확인하세요.',
+        '※ 위 일정은 잠정입니다. <b>거주지 시·도교육청 또는 검정고시지원센터 공고</b>에서 최종 확인하세요.'
       ],
-      src:'국가평생교육진흥원 / 한국교육과정평가원',
-      links:[{t:'검정고시지원센터 응시일정',u:'https://www.gumsi.or.kr/ged/usr/info/examdateList.do'},{t:'국가평생교육진흥원 검정고시',u:'https://www.gumsi.or.kr'}]
+      src:'국가평생교육진흥원 / 한국교육과정평가원 / 시·도교육청',
+      links:[{t:'검정고시지원센터 응시일정·접수',u:'https://www.gumsi.or.kr/ged/usr/info/examdateList.do'},{t:'국가평생교육진흥원 검정고시',u:'https://www.gumsi.or.kr'}]
     },
     { date:'2026-06-28', tag:'학교 밖 청소년', title:"학교 밖 청소년 검정고시·학습 지원 — '꿈드림' 2026",
       sum:[
@@ -406,7 +412,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
       links:[{t:'여성가족부 학교밖청소년 지원',u:'https://www.mogef.go.kr/cs/opf/cs_opf_f941.do'},{t:'e청소년 안내',u:'https://www.youth.go.kr/youth/youth/contents/schulExtrlSportForm.yt?curMenuSn=348'}]
     }
   ];
-  NEWS.sort(function(a,b){ return a.date<b.date?1:(a.date>b.date?-1:0); });
+  NEWS.sort(function(a,b){ var p=(b.pinned?1:0)-(a.pinned?1:0); if(p) return p; return a.date<b.date?1:(a.date>b.date?-1:0); });
   var rows=document.getElementById('nrows'), pane=document.getElementById('npane');
   var q=document.getElementById('nq'), from=document.getElementById('nfrom'), to=document.getElementById('nto'), reset=document.getElementById('nreset');
   var selKey=null;
@@ -426,7 +432,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
     if(!n){ pane.innerHTML='<div class="news-empty">선택한 소식이 없습니다.</div>'; return; }
     var sum=n.sum.map(function(s){ return '<li>'+s+'</li>'; }).join('');
     var lk=n.links.map(function(l){ return '<a href="'+l.u+'" target="_blank" rel="noopener">'+l.t+'</a>'; }).join('');
-    pane.innerHTML='<div class="p-top"><span class="p-tag">'+n.tag+'</span><span class="p-date">'+fmtK(n.date)+'</span></div>'
+    pane.innerHTML='<div class="p-top">'+(n.pinned?'<span class="p-pin">고정 공지</span>':'')+'<span class="p-tag">'+n.tag+'</span><span class="p-date">'+fmtK(n.date)+'</span></div>'
       +'<h2>'+n.title+'</h2><ul class="p-sum">'+sum+'</ul>'
       +'<div class="p-src">출처 · '+n.src+'</div><div class="news-links">'+lk+'</div>';
   }
@@ -436,7 +442,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
     if(!list.some(function(n){return key(n)===selKey;})) selKey=key(list[0]);
     rows.innerHTML=list.map(function(n){
       var act=key(n)===selKey?' active':'';
-      return '<button class="news-row'+act+'" data-k="'+key(n)+'"><div class="r-top"><span class="r-tag">'+n.tag+'</span><span class="r-date">'+fmtK(n.date)+'</span></div><div class="r-title">'+n.title+'</div></button>';
+      return '<button class="news-row'+act+(n.pinned?' pinned':'')+'" data-k="'+key(n)+'"><div class="r-top">'+(n.pinned?'<span class="r-pin">고정</span>':'')+'<span class="r-tag">'+n.tag+'</span><span class="r-date">'+fmtK(n.date)+'</span></div><div class="r-title">'+n.title+'</div></button>';
     }).join('');
     [].forEach.call(rows.querySelectorAll('.news-row'),function(b){
       b.addEventListener('click',function(){
