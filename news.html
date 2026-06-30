@@ -267,7 +267,9 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .news-reset{height:40px;padding:0 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);color:var(--text-2);font-size:13.5px;cursor:pointer;font-family:inherit}
 .news-reset:hover{background:var(--surface-3)}
 .news-split{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:18px;max-width:1100px;margin:0 auto;align-items:start}
-.news-rows{display:flex;flex-direction:column;gap:8px;max-height:600px;overflow-y:auto;padding-right:2px}
+.news-listcol{display:flex;flex-direction:column;gap:10px;min-width:0}
+.news-listbar{display:flex;align-items:center;justify-content:flex-start;margin-bottom:2px}
+.news-rows{display:flex;flex-direction:column;gap:8px}
 .news-row{text-align:left;width:100%;background:#fff;border:1px solid var(--border);border-radius:12px;padding:11px 14px;cursor:pointer;transition:border-color .15s,background .15s;font-family:inherit}
 .news-row:hover{border-color:var(--accent-mid)}
 .news-row.active{border-color:var(--accent);background:var(--accent-soft)}
@@ -279,7 +281,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .news-row.active .r-tag{background:#fff}
 .news-row .r-date{font-size:12px;color:var(--text-3)}
 .news-row .r-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.4;word-break:keep-all}
-.news-pane{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px 30px;min-height:320px;box-shadow:0 2px 12px rgba(20,30,40,.04)}
+.news-pane{position:sticky;top:90px;align-self:start;background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px 30px;min-height:320px;box-shadow:0 2px 12px rgba(20,30,40,.04)}
 .news-pane .p-top{display:flex;align-items:center;gap:9px;margin-bottom:12px}
 .news-pane .p-tag{font-size:12px;font-weight:600;color:var(--accent-strong);background:var(--accent-soft);padding:3px 11px;border-radius:999px}
 .news-pane .p-date{font-size:13.5px;font-weight:600;color:var(--text-2)}
@@ -296,14 +298,14 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .news-links a::after{content:'↗';font-size:12px;opacity:.65}
 .news-perpage{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-3)}
 .news-perpage select{height:40px;padding:0 30px 0 10px;border:1px solid var(--border-strong);border-radius:10px;font-size:13.5px;background:#fff;color:var(--text-2);font-family:inherit;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b91a0' stroke-width='2.5' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 10px center}
-.news-pager{display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;max-width:1100px;margin:18px auto 0}
+.news-pager{display:flex;justify-content:flex-start;align-items:center;gap:6px;flex-wrap:wrap;margin:4px 0 0}
 .news-pager button{min-width:36px;height:36px;padding:0 11px;border:1px solid var(--border);border-radius:9px;background:#fff;color:var(--text-2);font-size:13.5px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s,color .15s}
 .news-pager button:hover:not(:disabled){border-color:var(--accent-mid)}
 .news-pager button.cur{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
 .news-pager button:disabled{opacity:.4;cursor:default}
 .news-pager .pg-info{margin:0 6px;font-size:12.5px;color:var(--text-4)}
 .news-note{max-width:1100px;margin:22px auto 0;font-size:12.5px;color:var(--text-4);text-align:center;line-height:1.6}
-@media(max-width:760px){.news-split{grid-template-columns:1fr}.news-rows{max-height:300px}.news-pane{padding:22px 20px}.news-pane h2{font-size:20px}.news-toolbar{flex-direction:column;align-items:stretch}.news-dates{justify-content:space-between}.news-perpage{justify-content:space-between}}
+@media(max-width:760px){.news-split{grid-template-columns:1fr}.news-pane{position:static;padding:22px 20px}.news-pane h2{font-size:20px}.news-toolbar{flex-direction:column;align-items:stretch}.news-dates{justify-content:space-between}.news-perpage{justify-content:space-between}}
 </style>
 </head>
 <body>
@@ -385,13 +387,15 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
         <input id="nto" type="date" aria-label="종료일">
       </div>
       <button id="nreset" class="news-reset" type="button">초기화</button>
-      <div class="news-perpage"><label for="nper">페이지당</label><select id="nper"><option value="10">10개</option><option value="20" selected>20개</option><option value="30">30개</option></select></div>
     </div>
     <div class="news-split">
-      <div class="news-rows" id="nrows"></div>
+      <div class="news-listcol">
+        <div class="news-listbar"><div class="news-perpage"><label for="nper">페이지당</label><select id="nper"><option value="10">10개</option><option value="20" selected>20개</option><option value="30">30개</option></select></div></div>
+        <div class="news-rows" id="nrows"></div>
+        <div class="news-pager" id="npager"></div>
+      </div>
       <div class="news-pane" id="npane"></div>
     </div>
-    <div class="news-pager" id="npager"></div>
     <p class="news-note">본 페이지는 공식 기관 자료를 요약·정리한 것입니다. 정확한 내용·일정은 각 기관 원문을 확인하세요.</p>
   </div>
 </section>
