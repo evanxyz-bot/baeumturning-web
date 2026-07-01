@@ -257,14 +257,19 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="aperture" viewBox="0 0 200 200">
-    <g fill="currentColor">
-      <path d="M131.5 121.25 L143.0 174.48 A86.0 86.0 0 0 1 67.78 179.74 L102.65 137.91 Z"/>
-      <path d="M97.35 137.91 L57.0 174.48 A86.0 86.0 0 0 1 14.84 111.97 L68.5 121.25 Z"/>
-      <path d="M65.85 116.66 L14.0 100.0 A86.0 86.0 0 0 1 47.05 32.23 L65.85 83.34 Z"/>
-      <path d="M68.5 78.75 L57.0 25.52 A86.0 86.0 0 0 1 132.22 20.26 L97.35 62.09 Z"/>
-      <path d="M102.65 62.09 L143.0 25.52 A86.0 86.0 0 0 1 185.16 88.03 L131.5 78.75 Z"/>
-      <path d="M134.15 83.34 L186.0 100.0 A86.0 86.0 0 0 1 152.95 167.77 L134.15 116.66 Z"/>
-    </g>
+    <mask id="apm" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+      <circle cx="100" cy="100" r="88" fill="#fff"/>
+      <circle cx="100" cy="100" r="30" fill="#000"/>
+      <g stroke="#000" stroke-width="6.5" stroke-linecap="butt">
+        <line x1="130.00" y1="96.00" x2="130.00" y2="190.73"/>
+        <line x1="118.46" y1="123.98" x2="36.43" y2="171.34"/>
+        <line x1="88.46" y1="127.98" x2="6.43" y2="80.62"/>
+        <line x1="70.00" y1="104.00" x2="70.00" y2="9.27"/>
+        <line x1="81.54" y1="76.02" x2="163.57" y2="28.66"/>
+        <line x1="111.54" y1="72.02" x2="193.57" y2="119.38"/>
+      </g>
+    </mask>
+    <circle cx="100" cy="100" r="88" fill="currentColor" mask="url(#apm)"/>
   </symbol>
 </svg>
 

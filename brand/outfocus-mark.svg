@@ -1,0 +1,15 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs><mask id="apm" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+    <circle cx="100" cy="100" r="88.0" fill="#fff"/>
+    <circle cx="100" cy="100" r="30.0" fill="#000"/>
+    <g stroke="#000" stroke-width="6.5" stroke-linecap="butt">
+      <line x1="130.00" y1="96.00" x2="130.00" y2="190.73"/>
+      <line x1="118.46" y1="123.98" x2="36.43" y2="171.34"/>
+      <line x1="88.46" y1="127.98" x2="6.43" y2="80.62"/>
+      <line x1="70.00" y1="104.00" x2="70.00" y2="9.27"/>
+      <line x1="81.54" y1="76.02" x2="163.57" y2="28.66"/>
+      <line x1="111.54" y1="72.02" x2="193.57" y2="119.38"/>
+    </g>
+  </mask></defs>
+  <circle cx="100" cy="100" r="88.0" fill="#0b7a6a" mask="url(#apm)"/>
+</svg>
