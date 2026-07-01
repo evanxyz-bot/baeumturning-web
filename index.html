@@ -85,13 +85,18 @@ a:hover .brand-wm .ap svg{transform:rotate(120deg)}
 .ap-disk,.ap-blades{transform-box:fill-box;transform-origin:center}
 .ap-disk{opacity:0}
 .ap-blades{opacity:1}
-@keyframes apRoll{0%{transform:translateX(-180px) rotate(-900deg)}100%{transform:translateX(0) rotate(0)}}
-@keyframes apDiskOut{0%,62%{opacity:1}86%,100%{opacity:0}}
-@keyframes apBladesIn{0%,60%{opacity:0;transform:scale(.7)}88%,100%{opacity:1;transform:scale(1)}}
-.ap-roll{animation:apRoll 1.35s var(--ease-out) both}
-/* 크로스페이드는 linear — 검정 원이 u 옆까지 굴러온 뒤 마지막에 초록 조리개로 열림 */
-.ap-roll .ap-disk{animation:apDiskOut 1.35s linear both}
-.ap-roll .ap-blades{animation:apBladesIn 1.35s linear both}
+/* 0~55%: 멀리서 바퀴처럼 굴러와 u 옆에 감속 도착 → 55~100%: 제자리에서 한 바퀴 더 회전(+개방) */
+@keyframes apRoll{
+  0%{transform:translateX(-340px) rotate(-1440deg);animation-timing-function:cubic-bezier(.15,.85,.3,1)}
+  55%{transform:translateX(0) rotate(0deg);animation-timing-function:cubic-bezier(.45,0,.35,1)}
+  100%{transform:translateX(0) rotate(360deg)}
+}
+@keyframes apDiskOut{0%,55%{opacity:1}82%,100%{opacity:0}}
+@keyframes apBladesIn{0%,58%{opacity:0;transform:scale(.82)}86%,100%{opacity:1;transform:scale(1)}}
+/* base linear — 키프레임 %가 시간에 선형 대응(구간별 easing은 apRoll 내부에서) */
+.ap-roll{animation:apRoll 1.7s linear both}
+.ap-roll .ap-disk{animation:apDiskOut 1.7s linear both}
+.ap-roll .ap-blades{animation:apBladesIn 1.7s linear both}
 @media(prefers-reduced-motion:reduce){.ap-roll{animation:none}.ap-roll .ap-disk{display:none}.ap-roll .ap-blades{animation:none;opacity:1;transform:none}}
 /* OutFocus 워드마크 — 우측 한글은 아래첨자 크기 */
 .brand-wm .wm-ko{font-size:.24em;font-weight:700;color:var(--text-3);margin-left:.3em;align-self:flex-end;margin-bottom:.62em;letter-spacing:-0.02em}
