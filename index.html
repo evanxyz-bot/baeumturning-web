@@ -85,18 +85,26 @@ a:hover .brand-wm .ap svg{transform:rotate(120deg)}
 .ap-disk,.ap-blades{transform-box:fill-box;transform-origin:center}
 .ap-disk{opacity:0}
 .ap-blades{opacity:1}
-/* 0~55%: 멀리서 바퀴처럼 굴러와 u 옆에 감속 도착 → 55~100%: 제자리에서 한 바퀴 더 회전(+개방) */
+/* 작은 검정 원이 같은 y축(가로 baseline)을 따라 천천히 굴러와(0~60%) 좌표 도착 →
+   회전 조리개링으로 변하며 '작아졌다 커지는' 팝(60~100%). 모든 변형은 중심 기준(translateX/rotate/scale-around-center)이라 y 고정 */
 @keyframes apRoll{
-  0%{transform:translateX(-340px) rotate(-1440deg);animation-timing-function:cubic-bezier(.15,.85,.3,1)}
-  55%{transform:translateX(0) rotate(0deg);animation-timing-function:cubic-bezier(.45,0,.35,1)}
+  0%{transform:translateX(-360px) rotate(-1080deg);animation-timing-function:cubic-bezier(.3,.5,.4,1)}
+  60%{transform:translateX(0) rotate(0deg);animation-timing-function:cubic-bezier(.4,0,.3,1)}
   100%{transform:translateX(0) rotate(360deg)}
 }
-@keyframes apDiskOut{0%,55%{opacity:1}82%,100%{opacity:0}}
-@keyframes apBladesIn{0%,58%{opacity:0;transform:scale(.82)}86%,100%{opacity:1;transform:scale(1)}}
-/* base linear — 키프레임 %가 시간에 선형 대응(구간별 easing은 apRoll 내부에서) */
-.ap-roll{animation:apRoll 1.7s linear both}
-.ap-roll .ap-disk{animation:apDiskOut 1.7s linear both}
-.ap-roll .ap-blades{animation:apBladesIn 1.7s linear both}
+/* 작은 원: 도착 시 작아지며 사라짐 */
+@keyframes apDiskOut{0%,52%{opacity:1;transform:scale(1)}70%,100%{opacity:0;transform:scale(.3)}}
+/* 조리개: 작았다가(0.35) 살짝 오버슈트(1.12)로 커지고 튕겨(0.94) 안착(1) */
+@keyframes apBladesIn{
+  0%,56%{opacity:0;transform:scale(.35)}
+  72%{opacity:1;transform:scale(1.12)}
+  85%{transform:scale(.94)}
+  100%{opacity:1;transform:scale(1)}
+}
+/* base linear — 키프레임 %가 시간에 선형 대응(구간별 easing은 apRoll 내부에서). 2.6s = 천천히 */
+.ap-roll{animation:apRoll 2.6s linear both}
+.ap-roll .ap-disk{animation:apDiskOut 2.6s linear both}
+.ap-roll .ap-blades{animation:apBladesIn 2.6s linear both}
 @media(prefers-reduced-motion:reduce){.ap-roll{animation:none}.ap-roll .ap-disk{display:none}.ap-roll .ap-blades{animation:none;opacity:1;transform:none}}
 /* OutFocus 워드마크 — 우측 한글은 아래첨자 크기 */
 .brand-wm .wm-ko{font-size:.24em;font-weight:700;color:var(--text-3);margin-left:.3em;align-self:flex-end;margin-bottom:.62em;letter-spacing:-0.02em}
@@ -914,7 +922,7 @@ a:hover .brand-wm{transform:scale(1.03)}
   <div class="nav-top">
     <a href="#top" aria-label="OutFocus 홈">
       <span class="brand-wm" style="font-size:65px">
-        <span class="ap ap-roll"><svg viewBox="0 0 200 200"><circle class="ap-disk" cx="100" cy="100" r="90" fill="#141414"/><g class="ap-blades"><use href="#aperture"/></g></svg></span>utFocus<span class="wm-ko">아웃포커스</span>
+        <span class="ap ap-roll"><svg viewBox="0 0 200 200"><circle class="ap-disk" cx="100" cy="100" r="55" fill="#141414"/><g class="ap-blades"><use href="#aperture"/></g></svg></span>utFocus<span class="wm-ko">아웃포커스</span>
       </span>
     </a>
     <span class="login">로그인</span>
