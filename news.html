@@ -259,7 +259,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .news-updated{max-width:1500px;margin:0 auto 14px;font-size:13.5px;color:var(--text-3)}
 .news-updated b{color:var(--text-2);font-weight:600}
 .news-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;max-width:1500px;margin:0 auto 16px}
-.news-search{position:relative;flex:1;min-width:200px}
+.news-search{position:relative;flex:0 1 240px;max-width:240px;min-width:150px}
 .news-search input{width:100%;height:40px;padding:0 14px 0 38px;border:1px solid var(--border-strong);border-radius:10px;font-size:14.5px;background:#fff;color:var(--text);font-family:inherit}
 .news-search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .news-search svg{position:absolute;left:13px;top:12px;width:16px;height:16px;color:var(--text-4)}
@@ -299,17 +299,19 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .news-links a::after{content:'↗';font-size:12px;opacity:.65}
 .news-perpage{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-3)}
 .news-perpage select{height:40px;padding:0 30px 0 10px;border:1px solid var(--border-strong);border-radius:10px;font-size:13.5px;background:#fff;color:var(--text-2);font-family:inherit;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b91a0' stroke-width='2.5' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 10px center}
-.news-pager{display:flex;justify-content:flex-start;align-items:center;gap:6px;flex-wrap:wrap;margin:4px 0 0}
-.news-pager button{min-width:36px;height:36px;padding:0 11px;border:1px solid var(--border);border-radius:9px;background:#fff;color:var(--text-2);font-size:13.5px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s,color .15s}
-.news-pager button:hover:not(:disabled){border-color:var(--accent-mid)}
-.news-pager button.cur{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
-.news-pager button:disabled{opacity:.4;cursor:default}
-.news-pager .pg-info{margin:0 6px;font-size:12.5px;color:var(--text-4)}
+.news-pager{display:flex;flex-direction:column;gap:8px;margin:6px 0 0}
+.news-pager .pg-count{font-size:12.5px;color:var(--text-4)}
+.news-pager .pg-btns{display:flex;gap:6px;align-items:center}
+.news-pager .pg-btns button{flex:1 1 0;min-width:0;height:36px;padding:0 4px;border:1px solid var(--border);border-radius:9px;background:#fff;color:var(--text-2);font-size:13.5px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s,color .15s;font-variant-numeric:tabular-nums}
+.news-pager .pg-btns button:hover:not(:disabled){border-color:var(--accent-mid)}
+.news-pager .pg-btns button.cur{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.news-pager .pg-btns button.nav{flex:0 0 46px;color:var(--text-3)}
+.news-pager .pg-btns button:disabled{opacity:.4;cursor:default}
 .news-note{max-width:1500px;margin:22px auto 0;font-size:12.5px;color:var(--text-4);text-align:center;line-height:1.6}
 @media(max-width:1400px){.news-split{grid-template-columns:minmax(0,500px) minmax(0,1fr)}}
 @media(max-width:1180px){.news-split{grid-template-columns:minmax(0,420px) minmax(0,1fr)}}
 @media(max-width:980px){.news-split{grid-template-columns:minmax(0,360px) minmax(0,1fr)}}
-@media(max-width:760px){.news-split{grid-template-columns:1fr}.news-pane{position:static;max-height:none;overflow:visible;padding:22px 20px}.news-pane h2{font-size:20px}.news-toolbar{flex-direction:column;align-items:stretch}.news-dates{justify-content:space-between}.news-perpage{justify-content:space-between}}
+@media(max-width:760px){.news-split{grid-template-columns:1fr}.news-pane{position:static;max-height:none;overflow:visible;padding:22px 20px}.news-pane h2{font-size:20px}.news-toolbar{flex-direction:column;align-items:stretch}.news-search{flex:0 0 auto;max-width:none;min-width:0}.news-dates{justify-content:space-between}.news-perpage{justify-content:space-between}}
 </style>
 </head>
 <body>
@@ -1487,16 +1489,23 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
   function renderPager(total){
     var pages=Math.max(1,Math.ceil(total/perPage));
     if(page>pages) page=pages;
-    var h='';
-    h+='<button type="button" data-pg="prev"'+(page<=1?' disabled':'')+'>이전</button>';
-    var win=2, start=Math.max(1,page-win), end=Math.min(pages,page+win);
-    if(start>1){ h+='<button type="button" data-pg="1">1</button>'; if(start>2) h+='<span class="pg-info">…</span>'; }
-    for(var i=start;i<=end;i++){ h+='<button type="button" class="'+(i===page?'cur':'')+'" data-pg="'+i+'">'+i+'</button>'; }
-    if(end<pages){ if(end<pages-1) h+='<span class="pg-info">…</span>'; h+='<button type="button" data-pg="'+pages+'">'+pages+'</button>'; }
-    h+='<button type="button" data-pg="next"'+(page>=pages?' disabled':'')+'>다음</button>';
-    h+='<span class="pg-info">'+total+'건 중 '+(total?((page-1)*perPage+1):0)+'–'+Math.min(total,page*perPage)+'</span>';
+    if(page<1) page=1;
+    var MAX=10;                                   // … 생략 없이 최대 10개까지 노출
+    var win=Math.min(pages,MAX);
+    var start=Math.max(1,Math.min(page-Math.floor(win/2),pages-win+1));
+    var end=start+win-1;
+    var showNav=pages>MAX;                         // 10페이지 초과일 때만 ‹ › 로 창 이동
+    var h='<div class="pg-count">'+total+'건 중 '+(total?((page-1)*perPage+1):0)+'–'+Math.min(total,page*perPage)+' · '+page+'/'+pages+' 페이지</div>';
+    if(pages>1){
+      h+='<div class="pg-btns">';
+      if(showNav) h+='<button type="button" class="nav" data-pg="prev"'+(page<=1?' disabled':'')+' aria-label="이전 페이지">‹</button>';
+      for(var i=start;i<=end;i++){ h+='<button type="button" class="'+(i===page?'cur':'')+'" data-pg="'+i+'">'+i+'</button>'; }
+      if(showNav) h+='<button type="button" class="nav" data-pg="next"'+(page>=pages?' disabled':'')+' aria-label="다음 페이지">›</button>';
+      h+='</div>';
+    }
     pager.innerHTML=h;
     [].forEach.call(pager.querySelectorAll('button'),function(b){
+      if(b.disabled) return;
       b.addEventListener('click',function(){
         var v=b.getAttribute('data-pg');
         if(v==='prev') page=Math.max(1,page-1);
