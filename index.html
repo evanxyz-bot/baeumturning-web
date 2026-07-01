@@ -80,6 +80,16 @@ section{scroll-margin-top:150px}
 .ap{display:inline-block;line-height:0;width:.92em;height:.92em;position:relative;top:-.01em;margin:0 -.012em;color:var(--accent)}
 .ap svg{width:100%;height:100%;display:block;transition:transform .7s var(--ease-spring)}
 a:hover .brand-wm .ap svg{transform:rotate(120deg)}
+/* 첫 로드 — 닫힌 검정 원이 왼쪽에서 바퀴처럼 굴러와 u 옆에 멈추며 초록 조리개로 열림 */
+.ap-disk,.ap-blades{transform-box:fill-box;transform-origin:center}
+@keyframes apRoll{0%{transform:translateX(-180px) rotate(-900deg)}100%{transform:translateX(0) rotate(0)}}
+@keyframes apDiskOut{0%,62%{opacity:1}86%,100%{opacity:0}}
+@keyframes apBladesIn{0%,60%{opacity:0;transform:scale(.7)}88%,100%{opacity:1;transform:scale(1)}}
+.ap-roll{animation:apRoll 1.35s var(--ease-out) both}
+/* 크로스페이드는 linear — 검정 원이 u 옆까지 굴러온 뒤 마지막에 초록 조리개로 열림 */
+.ap-roll .ap-disk{animation:apDiskOut 1.35s linear both}
+.ap-roll .ap-blades{animation:apBladesIn 1.35s linear both}
+@media(prefers-reduced-motion:reduce){.ap-roll{animation:none}.ap-roll .ap-disk{display:none}.ap-roll .ap-blades{animation:none;opacity:1;transform:none}}
 /* OutFocus 워드마크 — 우측 한글은 아래첨자 크기 */
 .brand-wm .wm-ko{font-size:.24em;font-weight:700;color:var(--text-3);margin-left:.3em;align-self:flex-end;margin-bottom:.62em;letter-spacing:-0.02em}
 
@@ -878,16 +888,15 @@ a:hover .brand-wm{transform:scale(1.03)}
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- 조리개 6날 — 각 날이 독립 조각(사이 투명 간격), 홈이 아닌 분리 -->
   <symbol id="aperture" viewBox="0 0 200 200">
-    <path fill="currentColor" fill-rule="evenodd"
-      d="M14 100 A86 86 0 0 1 186 100 A86 86 0 0 1 14 100 Z M134 119.63 L100 139.26 L66 119.63 L66 80.37 L100 60.74 L134 80.37 Z"/>
-    <g stroke="#fff" stroke-opacity=".95" stroke-width="6" fill="none" stroke-linecap="round">
-      <path d="M134 119.63 L144.74 166.32"/>
-      <path d="M100 139.26 L64.93 171.90"/>
-      <path d="M66 119.63 L20.20 105.58"/>
-      <path d="M66 80.37 L55.26 33.68"/>
-      <path d="M100 60.74 L135.07 28.10"/>
-      <path d="M134 80.37 L179.80 94.42"/>
+    <g fill="currentColor">
+      <path d="M131.5 121.25 L143.0 174.48 A86.0 86.0 0 0 1 67.78 179.74 L102.65 137.91 Z"/>
+      <path d="M97.35 137.91 L57.0 174.48 A86.0 86.0 0 0 1 14.84 111.97 L68.5 121.25 Z"/>
+      <path d="M65.85 116.66 L14.0 100.0 A86.0 86.0 0 0 1 47.05 32.23 L65.85 83.34 Z"/>
+      <path d="M68.5 78.75 L57.0 25.52 A86.0 86.0 0 0 1 132.22 20.26 L97.35 62.09 Z"/>
+      <path d="M102.65 62.09 L143.0 25.52 A86.0 86.0 0 0 1 185.16 88.03 L131.5 78.75 Z"/>
+      <path d="M134.15 83.34 L186.0 100.0 A86.0 86.0 0 0 1 152.95 167.77 L134.15 116.66 Z"/>
     </g>
   </symbol>
 </svg>
@@ -897,7 +906,7 @@ a:hover .brand-wm{transform:scale(1.03)}
   <div class="nav-top">
     <a href="#top" aria-label="OutFocus 홈">
       <span class="brand-wm" style="font-size:65px">
-        <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus<span class="wm-ko">아웃포커스</span>
+        <span class="ap ap-roll"><svg viewBox="0 0 200 200"><circle class="ap-disk" cx="100" cy="100" r="90" fill="#141414"/><g class="ap-blades"><use href="#aperture"/></g></svg></span>utFocus<span class="wm-ko">아웃포커스</span>
       </span>
     </a>
     <span class="login">로그인</span>
