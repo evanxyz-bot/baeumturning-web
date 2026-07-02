@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 400" role="img" aria-label="OutFocus wordmark">
+  <title>OutFocus wordmark - stencil cutout</title>
+
+  <!-- O : locked aperture symbol (trademark mark, position/scale only) -->
+  <!-- outer r 88 -> scaled 125, diameter 250, center (185,185) -->
+  <g transform="translate(43,43) scale(1.42)">
+    <g id="aperture-o" fill="#0b7a6a">
+      <path d="M144.00 100.00 L137.88 179.43 A88 88 0 0 1 62.12 179.43 L122.00 138.11 Z"/>
+      <path d="M122.00 138.11 L50.16 172.52 A88 88 0 0 1 12.27 106.90 L78.00 138.11 Z"/>
+      <path d="M78.00 138.11 L12.27 93.10 A88 88 0 0 1 50.16 27.48 L56.00 100.00 Z"/>
+      <path d="M56.00 100.00 L62.12 20.57 A88 88 0 0 1 137.88 20.57 L78.00 61.89 Z"/>
+      <path d="M78.00 61.89 L149.84 27.48 A88 88 0 0 1 187.73 93.10 L122.00 61.89 Z"/>
+      <path d="M122.00 61.89 L187.73 106.90 A88 88 0 0 1 149.84 172.52 L144.00 100.00 Z"/>
+    </g>
+  </g>
+
+  <!-- lettering : baseline 290, cap 100, x-height 150, stroke 34 (bars 30), stencil gap 9 -->
+  <g fill="#1a1a1a">
+    <!-- u : left stem / right stem / bottom half-annulus bowl (3 pieces) -->
+    <path d="M344,150 H378 V225 H344 Z"/>
+    <path d="M422,150 H456 V225 H422 Z"/>
+    <path d="M344,234 A56,56 0 0 0 456,234 L422,234 A22,22 0 0 1 378,234 Z"/>
+
+    <!-- t : ascender stem / left bar piece / right bar piece (3 pieces) -->
+    <path d="M512,118 H546 V290 H512 Z"/>
+    <path d="M480,150 H503 V180 H480 Z"/>
+    <path d="M555,150 H578 V180 H555 Z"/>
+
+    <!-- F : cap stem / top bar / mid bar (3 pieces) -->
+    <path d="M612,100 H646 V290 H612 Z"/>
+    <path d="M655,100 H745 V130 H655 Z"/>
+    <path d="M655,180 H730 V210 H655 Z"/>
+
+    <!-- c : ring open at right, split at left into two blade arcs (2 pieces) -->
+    <path d="M1086.6,262.5 A74,74 0 0 1 952.3,226.4 L986.2,223.5 A40,40 0 0 0 1058.8,243.0 Z"/>
+    <path d="M952.3,213.6 A74,74 0 0 1 1086.6,177.5 L1058.8,197.0 A40,40 0 0 0 986.2,216.5 Z"/>
+
+    <!-- u : second u (3 pieces) -->
+    <path d="M1108,150 H1142 V225 H1108 Z"/>
+    <path d="M1186,150 H1220 V225 H1186 Z"/>
+    <path d="M1108,234 A56,56 0 0 0 1220,234 L1186,234 A22,22 0 0 1 1142,234 Z"/>
+
+    <!-- s : upper hook + lower hook, radial gap at center (2 pieces) -->
+    <path d="M1346.3,181.1 A50,42 0 1 0 1290.2,233.5 L1294.9,203.9 A20,12 0 1 1 1317.3,188.9 Z"/>
+    <path d="M1249.7,258.9 A50,42 0 1 0 1305.8,206.5 L1301.1,236.1 A20,12 0 1 1 1278.7,251.1 Z"/>
+  </g>
+
+  <!-- o of Focus : teal accent, ring split into two aperture-like blade arcs (2 pieces) -->
+  <g fill="#0b7a6a">
+    <path d="M906.7,172.4 A74,74 0 0 1 802.4,276.7 L824.3,250.6 A40,40 0 0 0 880.6,194.3 Z"/>
+    <path d="M793.3,267.6 A74,74 0 0 1 897.6,163.3 L875.7,189.4 A40,40 0 0 0 819.4,245.7 Z"/>
+  </g>
+</svg>

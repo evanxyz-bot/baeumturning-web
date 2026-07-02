@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 400" role="img" aria-label="OutFocus wordmark - blade cut">
+  <title>OutFocus wordmark (blade-cut lettering)</title>
+
+  <!-- ===== O : locked aperture symbol - position/scale only =====
+       diameter 176*1.4205 = 250, center (165,185), spans x 40..290, y 60..310 -->
+  <g id="aperture-o" fill="#0b7a6a" transform="translate(22.95 42.95) scale(1.4205)">
+    <path d="M144.00 100.00 L137.88 179.43 A88 88 0 0 1 62.12 179.43 L122.00 138.11 Z"/>
+    <path d="M122.00 138.11 L50.16 172.52 A88 88 0 0 1 12.27 106.90 L78.00 138.11 Z"/>
+    <path d="M78.00 138.11 L12.27 93.10 A88 88 0 0 1 50.16 27.48 L56.00 100.00 Z"/>
+    <path d="M56.00 100.00 L62.12 20.57 A88 88 0 0 1 137.88 20.57 L78.00 61.89 Z"/>
+    <path d="M78.00 61.89 L149.84 27.48 A88 88 0 0 1 187.73 93.10 L122.00 61.89 Z"/>
+    <path d="M122.00 61.89 L187.73 106.90 A88 88 0 0 1 149.84 172.52 L144.00 100.00 Z"/>
+  </g>
+
+  <!-- ===== utFocus : custom blade-cut letterforms =====
+       every stroke terminal is cut on a rising 60-degree blade diagonal,
+       every joint carries a thin blade notch - the O's blade-separation
+       motif extended across the whole word. stroke weight 34 (s: 30). -->
+
+  <!-- u (1) : x 320..440 | notched left stem blade + bowl blade -->
+  <g fill="#1a1a1a">
+    <path d="M320 170 L354 150 L354 198 L320 218 Z"/>
+    <path d="M320 226 L354 206 L354 230 A26 26 0 0 0 406 230 L406 170 L440 150 L440 230 A60 60 0 0 1 320 230 Z"/>
+  </g>
+
+  <!-- t : stem x 520..554, ascender top 110 | stem blade + two floating crossbar blades -->
+  <g fill="#1a1a1a">
+    <path d="M520 130 L554 110 L554 270 L520 290 Z"/>
+    <path d="M484 150 L513 150 L501 184 L466 184 Z"/>
+    <path d="M573 150 L615 150 L595 184 L561 184 Z"/>
+  </g>
+
+  <!-- F : stem x 641..675, cap height 100..290 | teal accent = second-word
+       initial, pairing "O" and "F" in the brand color -->
+  <g fill="#0b7a6a">
+    <path d="M641 120 L675 100 L675 270 L641 290 Z"/>
+    <path d="M694 100 L786 100 L766 134 L682 134 Z"/>
+    <path d="M694 180 L766 180 L746 214 L682 214 Z"/>
+  </g>
+
+  <!-- o : center (882,220) R70 r36 | ring split into two blades, notches on
+       the rising diagonal (120/300 deg) - a two-blade aperture -->
+  <g fill="#1a1a1a">
+    <path d="M841.85 277.34 A70 70 0 0 1 911.58 156.56 L897.21 187.37 A36 36 0 0 0 861.35 249.49 Z"/>
+    <path d="M922.15 162.66 A70 70 0 0 1 852.42 283.44 L866.79 252.63 A36 36 0 0 0 902.65 190.51 Z"/>
+  </g>
+
+  <!-- c : center (1048,220) R70 r36 | right aperture opening (-40..40 deg)
+       plus one blade notch at 120 deg -->
+  <g fill="#1a1a1a">
+    <path d="M1007.85 277.34 A70 70 0 1 1 1101.62 175.00 L1075.58 196.85 A36 36 0 1 0 1027.35 249.49 Z"/>
+    <path d="M1101.62 265.00 A70 70 0 0 1 1018.42 283.44 L1032.79 252.63 A36 36 0 0 0 1075.58 243.15 Z"/>
+  </g>
+
+  <!-- u (2) : x 1128..1248 -->
+  <g fill="#1a1a1a">
+    <path d="M1128 170 L1162 150 L1162 198 L1128 218 Z"/>
+    <path d="M1128 226 L1162 206 L1162 230 A26 26 0 0 0 1214 230 L1214 170 L1248 150 L1248 230 A60 60 0 0 1 1128 230 Z"/>
+  </g>
+
+  <!-- s : two 232-degree hook blades (elliptical bands, centers (1326,192.5)
+       and (1326,247.5)) separated by a twisted blade notch at the waist;
+       both terminals carry the same rising blade cut -->
+  <g fill="#1a1a1a">
+    <path d="M1371.03 171.25 A52 42.5 0 1 0 1318.76 234.59 L1322.94 204.88 A22 12.5 0 1 1 1345.05 186.25 Z"/>
+    <path d="M1333.24 205.41 A52 42.5 0 1 1 1280.97 268.75 L1306.95 253.75 A22 12.5 0 1 0 1329.06 235.12 Z"/>
+  </g>
+</svg>

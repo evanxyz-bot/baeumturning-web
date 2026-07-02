@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 400">
+  <title>OutFocus wordmark - focus-blur</title>
+  <desc>Trademark wordmark. Aperture O (fixed symbol) + custom hand-built lettering. 'ut' carries an out-of-focus ghost offset 12px right; 'Focus' is sharp ink black.</desc>
+
+  <!-- ghost layer : out-of-focus double image of 'ut' (12px right offset, light teal tint) -->
+  <g transform="translate(12 0)" fill="#9ad7cd">
+    <path d="M 316 167 A 17 17 0 0 1 350 167 L 350 234 A 22 22 0 0 0 394 234 L 394 167 A 17 17 0 0 1 428 167 L 428 234 A 56 56 0 0 1 316 234 Z"/>
+    <path d="M 511 132 A 17 17 0 0 1 545 132 L 545 150 L 575 150 A 17 17 0 0 1 575 184 L 545 184 L 545 256 L 569 256 A 17 17 0 0 1 569 290 L 545 290 A 34 34 0 0 1 511 256 L 511 184 L 481 184 A 17 17 0 0 1 481 150 L 511 150 Z"/>
+  </g>
+
+  <!-- sharp layer : ink-black custom lettering, uniform 34px stroke weight, round free-end caps -->
+  <g fill="#1a1a1a">
+    <!-- u : two round-capped stems, semicircular tub bottom -->
+    <path d="M 316 167 A 17 17 0 0 1 350 167 L 350 234 A 22 22 0 0 0 394 234 L 394 167 A 17 17 0 0 1 428 167 L 428 234 A 56 56 0 0 1 316 234 Z"/>
+    <!-- t : round-capped ascender, round-ended crossbar, hooked right tail -->
+    <path d="M 511 132 A 17 17 0 0 1 545 132 L 545 150 L 575 150 A 17 17 0 0 1 575 184 L 545 184 L 545 256 L 569 256 A 17 17 0 0 1 569 290 L 545 290 A 34 34 0 0 1 511 256 L 511 184 L 481 184 A 17 17 0 0 1 481 150 L 511 150 Z"/>
+    <!-- F : baseline-grounded flat stem, round-ended double bars -->
+    <path d="M 630 100 L 750 100 A 17 17 0 0 1 750 134 L 664 134 L 664 176 L 730 176 A 17 17 0 0 1 730 210 L 664 210 L 664 290 L 630 290 Z"/>
+    <!-- o : geometric ring, outer R70 / inner r36 -->
+    <path fill-rule="evenodd" d="M 797 220 A 70 70 0 1 1 937 220 A 70 70 0 1 1 797 220 Z M 831 220 A 36 36 0 1 0 903 220 A 36 36 0 1 0 831 220 Z"/>
+    <!-- c : ring opened right at +/-45 degrees, round terminals -->
+    <path d="M 1082.5 170.5 A 70 70 0 1 0 1082.5 269.5 A 17 17 0 0 0 1058.5 245.5 A 36 36 0 1 1 1058.5 194.5 A 17 17 0 0 0 1082.5 170.5 Z"/>
+    <!-- u (second) -->
+    <path d="M 1116 167 A 17 17 0 0 1 1150 167 L 1150 234 A 22 22 0 0 0 1194 234 L 1194 167 A 17 17 0 0 1 1228 167 L 1228 234 A 56 56 0 0 1 1116 234 Z"/>
+    <!-- s : hand-drawn double-bowl spine (bezier outline), round caps -->
+    <path d="M 1346.4 161.8
+             C 1333 157.3 1322 150 1308 150
+             C 1282 150 1260 169 1260 192
+             C 1260 210 1285.3 221.3 1299 233
+             C 1305.8 238.9 1326 241 1326 248
+             C 1326 253.5 1319 256 1310 256
+             C 1300 256 1291.9 249 1282.4 245.8
+             A 17 17 0 0 0 1271.6 278.2
+             C 1283 282 1296 290 1310 290
+             C 1337 290 1360 272 1360 248
+             C 1360 226 1333.2 217.4 1321 207
+             C 1311.1 198.5 1294 199 1294 192
+             C 1294 187 1300 184 1308 184
+             C 1319 184 1325.2 190.7 1335.6 194.2
+             A 17 17 0 0 0 1346.4 161.8 Z"/>
+  </g>
+
+  <!-- aperture O : locked trademark symbol, verbatim paths, positioned/scaled via transform only -->
+  <!-- native center (100,100) r88 -> scale 1.42 => diameter ~250, center (165,185) -->
+  <g id="aperture-o" transform="translate(23 43) scale(1.42)" fill="#0b7a6a">
+    <path d="M144.00 100.00 L137.88 179.43 A88 88 0 0 1 62.12 179.43 L122.00 138.11 Z"/>
+    <path d="M122.00 138.11 L50.16 172.52 A88 88 0 0 1 12.27 106.90 L78.00 138.11 Z"/>
+    <path d="M78.00 138.11 L12.27 93.10 A88 88 0 0 1 50.16 27.48 L56.00 100.00 Z"/>
+    <path d="M56.00 100.00 L62.12 20.57 A88 88 0 0 1 137.88 20.57 L78.00 61.89 Z"/>
+    <path d="M78.00 61.89 L149.84 27.48 A88 88 0 0 1 187.73 93.10 L122.00 61.89 Z"/>
+    <path d="M122.00 61.89 L187.73 106.90 A88 88 0 0 1 149.84 172.52 L144.00 100.00 Z"/>
+  </g>
+</svg>

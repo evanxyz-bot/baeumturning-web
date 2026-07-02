@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 400">
+  <title>OutFocus wordmark - round monoline</title>
+  <!-- Aperture O symbol: trademark-fixed, used verbatim; positioned/scaled by the outer group only.
+       scale 1.42 -> symbol outer diameter 176 becomes ~250; center (100,100) -> (187,185) -->
+  <g transform="translate(45,43) scale(1.42)">
+    <g id="aperture-o" fill="#0b7a6a">
+      <path d="M144.00 100.00 L137.88 179.43 A88 88 0 0 1 62.12 179.43 L122.00 138.11 Z"/>
+      <path d="M122.00 138.11 L50.16 172.52 A88 88 0 0 1 12.27 106.90 L78.00 138.11 Z"/>
+      <path d="M78.00 138.11 L12.27 93.10 A88 88 0 0 1 50.16 27.48 L56.00 100.00 Z"/>
+      <path d="M56.00 100.00 L62.12 20.57 A88 88 0 0 1 137.88 20.57 L78.00 61.89 Z"/>
+      <path d="M78.00 61.89 L149.84 27.48 A88 88 0 0 1 187.73 93.10 L122.00 61.89 Z"/>
+      <path d="M122.00 61.89 L187.73 106.90 A88 88 0 0 1 149.84 172.52 L144.00 100.00 Z"/>
+    </g>
+  </g>
+  <!-- Custom round-monoline lettering "utFocus": uniform 34 stroke weight drawn as flat filled
+       outlines, fully round terminals, baseline y=290, x-height 150..290, cap height 100..290 -->
+  <g fill="#1a1a1a">
+    <!-- u : two round-capped stems joined by an exaggerated semicircular bowl (outer r65 / inner r31) -->
+    <path d="M342 167 A17 17 0 0 1 376 167 L376 225 A31 31 0 0 0 438 225 L438 167 A17 17 0 0 1 472 167 L472 225 A65 65 0 0 1 342 225 Z"/>
+    <!-- t : ascender stem (apex y=115) curling into a rounded right foot + round-ended crossbar at x-height -->
+    <path d="M536 132 A17 17 0 0 1 570 132 L570 249 A7 7 0 0 0 577 256 L593 256 A17 17 0 0 1 593 290 L577 290 A41 41 0 0 1 536 249 Z M515 150 L591 150 A17 17 0 0 1 591 184 L515 184 A17 17 0 0 1 515 150 Z"/>
+    <!-- F : full-height round-capped stem + two round-ended bars -->
+    <path d="M635 117 A17 17 0 0 1 669 117 L669 273 A17 17 0 0 1 635 273 Z M652 100 L748 100 A17 17 0 0 1 748 134 L652 134 Z M652 175 L730 175 A17 17 0 0 1 730 209 L652 209 Z"/>
+    <!-- o : perfect lens ring (outer r70 / inner r36), teal point accent echoing the aperture -->
+    <path fill="#0b7a6a" fill-rule="evenodd" d="M777 220 A70 70 0 1 0 917 220 A70 70 0 1 0 777 220 Z M811 220 A36 36 0 1 0 883 220 A36 36 0 1 0 811 220 Z"/>
+    <!-- c : ring opened to the right (mouth +-35deg), round terminals bulging into the mouth -->
+    <path d="M1068.34 179.85 A70 70 0 1 0 1068.34 260.15 A17 17 0 0 0 1040.49 240.65 A36 36 0 1 1 1040.49 199.35 A17 17 0 0 0 1068.34 179.85 Z"/>
+    <!-- u (second) -->
+    <path d="M1094 167 A17 17 0 0 1 1128 167 L1128 225 A31 31 0 0 0 1190 225 L1190 167 A17 17 0 0 1 1224 167 L1224 225 A65 65 0 0 1 1094 225 Z"/>
+    <!-- s : two tangent circular hoops (centers y=193.5 / y=246.5, 230deg each), rotationally symmetric, round caps -->
+    <path d="M1327.32 165.54 A43.5 43.5 0 1 0 1294 237 A9.5 9.5 0 1 1 1286.72 252.61 A17 17 0 0 0 1260.68 274.46 A43.5 43.5 0 1 0 1294 203 A9.5 9.5 0 1 1 1301.28 187.39 A17 17 0 0 0 1327.32 165.54 Z"/>
+  </g>
+</svg>

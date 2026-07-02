@@ -9,6 +9,9 @@
 <meta property="og:title" content="아웃포커스 OutFocus — 배움터닝">
 <meta property="og:description" content="국내 유일 검정고시 AI 성적분석·스케줄링. 약점 진단부터 오늘의 학습 플랜까지, 배움터닝이 자동으로 설계합니다.">
 <meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://infocus-edu.vercel.app/brand/outfocus-mark-2048.png">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="2048">
 <meta name="theme-color" content="#0b7a6a">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
@@ -930,7 +933,7 @@ a:hover .brand-wm{transform:scale(1.03)}
       _in=document.referrer&&new URL(document.referrer).origin===location.origin;
       if(_t==='reload'||!_in)document.querySelector('.nav-top .ap').classList.add('ap-roll');
     }catch(e){document.querySelector('.nav-top .ap').classList.add('ap-roll');}</script>
-    <span class="login">로그인</span>
+    <a class="login" href="https://baeumturning.vercel.app" target="_blank" rel="noopener">로그인</a>
   </div>
   <div class="nav-bot">
     <div class="navlinks" id="navlinks">
@@ -1026,7 +1029,7 @@ a:hover .brand-wm{transform:scale(1.03)}
 
                   <!-- 카테고리 1: 대시보드 -->
                   <div class="cat-slide on" data-cat="dash">
-                    <div class="ddaybar">다음 시험 <b>26년 2회차</b> (8월 1일) <span class="dchip">D-52</span></div>
+                    <div class="ddaybar">다음 시험 <b>26년 2회차</b> 26. 8. 10 (잠정) <span class="dchip" id="ddayChip">D-38</span></div>
                     <div class="cat-body">
                       <div class="cat-head"><span class="ci" style="background:#2f9183"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>대시보드</div>
                       <div class="mini-card pass-card">
@@ -1452,7 +1455,7 @@ a:hover .brand-wm{transform:scale(1.03)}
     </div>
     <div class="cc-summary reveal">
       <div class="ccs-big">학원비의 <b>약 1.8%</b>로,<br>매일 갱신되는 나만의 학습 전략을</div>
-      <div class="ccs-sub">월 환산 기준 최대 <b>98% 절감</b> · 무료 체험으로 AI 분석 3회 제공</div>
+      <div class="ccs-sub">월 환산 기준 최대 <b>98% 절감</b> · 무료 체험: AI 학습 보고서 2회 · AI 스케줄 2회 · 기출 오답분석 과목당 3회</div>
     </div>
     <p class="price-note">* 2025년 주요 업체 공개 가격 기준 참고치이며(월 환산 비교), 실제 가격은 업체별로 다를 수 있습니다.</p>
   </div>
@@ -1773,13 +1776,29 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var btn=document.getElementById('appDownloadBtn');
   var pop=document.getElementById('appPopup');
   var close=document.getElementById('appPopupClose');
-  if(!btn||!pop) return;
+  if(!pop) return;
   function show(){pop.classList.add('on');pop.setAttribute('aria-hidden','false');}
   function hide(){pop.classList.remove('on');pop.setAttribute('aria-hidden','true');}
-  btn.addEventListener('click',show);
+  if(btn) btn.addEventListener('click',show);
+  /* 서비스 카드 스토어 pill(App Store·Google Play)도 같은 '준비 중' 팝업 */
+  document.querySelectorAll('.store-pill').forEach(function(p){
+    p.addEventListener('click',function(e){ e.preventDefault(); show(); });
+  });
   if(close) close.addEventListener('click',hide);
   pop.addEventListener('click',function(e){ if(e.target===pop) hide(); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') hide(); });
+})();
+</script>
+
+<!-- 히어로 폰 목업 D-day 자동 계산 (26년 2회차 시험일 2026-08-10 잠정 기준) -->
+<script>
+(function(){
+  var chip=document.getElementById('ddayChip');
+  if(!chip) return;
+  var exam=new Date(2026,7,10), now=new Date();
+  now.setHours(0,0,0,0);
+  var d=Math.round((exam-now)/864e5);
+  chip.textContent = d>0 ? 'D-'+d : (d===0 ? 'D-DAY' : 'D+'+(-d));
 })();
 </script>
 </body>
