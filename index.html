@@ -111,6 +111,9 @@ a:hover .brand-wm .ap svg{transform:rotate(120deg)}
 @media(prefers-reduced-motion:reduce){.ap-roll{animation:none}.ap-roll .ap-disk{display:none}.ap-roll .ap-blades{animation:none;opacity:1;transform:none}}
 /* OutFocus 워드마크 — 우측 한글은 아래첨자 크기 */
 .brand-wm .wm-ko{font-size:.24em;font-weight:700;color:var(--text-3);margin-left:.3em;align-self:flex-end;margin-bottom:.62em;letter-spacing:-0.02em}
+/* F 강조 — 조리개 O처럼 초록·확대 (baseline 공유 위해 wm-tx 안에서 인라인 배치) */
+.brand-wm .wm-tx{display:inline;line-height:1}
+.brand-wm .wm-f{color:var(--accent);font-size:1.2em}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;
   border:0;border-radius:var(--r-lg);font-size:16.8px;font-weight:600;letter-spacing:-0.01em;cursor:pointer;
@@ -925,7 +928,7 @@ a:hover .brand-wm{transform:scale(1.03)}
   <div class="nav-top">
     <a href="#top" aria-label="OutFocus 홈">
       <span class="brand-wm" style="font-size:65px">
-        <span class="ap"><svg viewBox="0 0 200 200"><circle class="ap-disk" cx="100" cy="100" r="55" fill="#141414"/><g class="ap-blades"><use href="#aperture"/></g></svg></span>utFocus<span class="wm-ko">아웃포커스</span>
+        <span class="ap"><svg viewBox="0 0 200 200"><circle class="ap-disk" cx="100" cy="100" r="55" fill="#141414"/><g class="ap-blades"><use href="#aperture"/></g></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span>
       </span>
     </a>
     <script>/* 로고 인트로: 새로고침·재접속(외부/직접)에만 재생. 사이트 내 카테고리 이동 땐 정지 */
@@ -1513,7 +1516,7 @@ a:hover .brand-wm{transform:scale(1.03)}
 <footer class="foot" id="contact">
   <div class="wrap">
     <div class="foot-top">
-      <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus<span class="wm-ko">아웃포커스</span></span>
+      <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
       <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
     </div>
     <div class="biz-info">

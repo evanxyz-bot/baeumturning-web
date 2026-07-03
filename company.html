@@ -75,6 +75,9 @@ section{scroll-margin-top:150px}
 a:hover .brand-wm .ap svg{transform:rotate(120deg)}
 /* OutFocus 워드마크 — 우측 한글은 아래첨자 크기 */
 .brand-wm .wm-ko{font-size:.24em;font-weight:700;color:var(--text-3);margin-left:.3em;align-self:flex-end;margin-bottom:.62em;letter-spacing:-0.02em}
+/* F 강조 — 조리개 O처럼 초록·확대 (baseline 공유 위해 wm-tx 안에서 인라인 배치) */
+.brand-wm .wm-tx{display:inline;line-height:1}
+.brand-wm .wm-f{color:var(--accent);font-size:1.2em}
 @keyframes navLogoIn{from{opacity:0;transform:translateY(-12px) scale(.92)}to{opacity:1;transform:none}}
 .brand-wm{animation:navLogoIn .7s .05s both;transition:transform .22s var(--ease-spring)}
 a:hover .brand-wm{transform:scale(1.03)}
@@ -276,7 +279,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
   <div class="nav-top">
     <a href="index.html" aria-label="OutFocus 홈">
       <span class="brand-wm" style="font-size:65px">
-        <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus<span class="wm-ko">아웃포커스</span>
+        <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span>
       </span>
     </a>
     <a class="login" href="https://baeumturning.vercel.app" target="_blank" rel="noopener">로그인</a>
@@ -459,7 +462,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 <footer class="foot">
   <div class="wrap">
     <div class="foot-top">
-      <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span>utFocus<span class="wm-ko">아웃포커스</span></span>
+      <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
       <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
     </div>
     <div class="biz-info">
