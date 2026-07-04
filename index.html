@@ -149,11 +149,7 @@ h2.h{font-size:44.8px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   background:rgba(255,255,255,.88);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
   border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
-.nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1160px;margin:0 auto;padding:0 24px}
-.nav-top .login{position:absolute;right:24px;font-size:16.2px;font-weight:600;color:var(--text-2);cursor:pointer;
-  padding:7px 14px;border-radius:var(--r-md);transition:color .15s,background .15s}
-.nav-top .login:hover{color:var(--text);background:var(--surface-2)}
-.nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
+.nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1160px;margin:0 auto;padding:0 24px}.nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
 .navlinks{position:relative;display:flex;gap:15px;font-size:20.9px;font-weight:700}
 .nav-pill{position:absolute;top:50%;transform:translateY(-50%);height:38px;border-radius:11px;
   background:var(--accent-soft);opacity:0;
@@ -763,9 +759,7 @@ a:hover .brand-wm{transform:scale(1.03)}
   .mock-card{transform:none}
 }
 @media (max-width:560px){
-  .nav-top{height:72px}
-  .nav-top .login{right:18px}
-  .nav-top .brand-wm{font-size:47px!important}
+  .nav-top{height:72px}  .nav-top .brand-wm{font-size:47px!important}
   /* 네비 6항목 — 좁은 화면에 맞게 압축(넘치면 가로 스크롤) */
   .nav-bot{justify-content:flex-start;overflow-x:auto}
   .nav-bot::-webkit-scrollbar{display:none}
@@ -935,9 +929,7 @@ a:hover .brand-wm{transform:scale(1.03)}
     try{var _t=(performance.getEntriesByType('navigation')[0]||{}).type,
       _in=document.referrer&&new URL(document.referrer).origin===location.origin;
       if(_t==='reload'||!_in)document.querySelector('.nav-top .ap').classList.add('ap-roll');
-    }catch(e){document.querySelector('.nav-top .ap').classList.add('ap-roll');}</script>
-    <a class="login" href="https://baeumturning.vercel.app" target="_blank" rel="noopener">로그인</a>
-  </div>
+    }catch(e){document.querySelector('.nav-top .ap').classList.add('ap-roll');}</script>  </div>
   <div class="nav-bot">
     <div class="navlinks" id="navlinks">
       <span class="nav-pill" id="navpill"></span>
