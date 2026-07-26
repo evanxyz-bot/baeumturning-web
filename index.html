@@ -383,14 +383,15 @@ h2.h{font-size:44.8px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .svc .fts{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:16px auto 16px}
 .svc .fts span{font-size:12.3px;font-weight:600;padding:4px 10px;border-radius:8px}
 .svc .stores-mini{display:flex;justify-content:center;gap:8px}
-/* 서비스 카드 안 수록량 — 대입 서비스 삭제로 비게 된 열을 배움터닝 자료로 채운다 */
-.svc-stats{list-style:none;display:flex;flex-direction:column;gap:15px;padding:0;flex:1;
-  width:100%;max-width:280px;margin:4px auto 0}
-.svc-stats li{display:flex;align-items:baseline;gap:11px;text-align:left}
-.svc-stats b{font-family:'Outfit',sans-serif;font-size:27px;font-weight:700;color:var(--accent-strong);
-  letter-spacing:-0.02em;min-width:76px;text-align:right;line-height:1.1}
-.svc-stats i{font-style:normal;font-size:13.4px;color:var(--text-2);line-height:1.5}
-.svc-stats i b{display:block;font-family:inherit;font-size:14.6px;color:var(--text);min-width:0;text-align:left;margin-bottom:1px}
+/* 배움터닝을 두 카드로 나눠 설명 — 두 번째 카드의 단계 목록 */
+.svc-steps{list-style:none;display:flex;flex-direction:column;gap:17px;padding:0;flex:1;
+  width:100%;max-width:280px;margin:6px auto 0;text-align:left}
+.svc-steps li{display:flex;gap:11px;align-items:flex-start}
+.svc-steps li>div{flex:1}
+.svc-steps em{font-style:normal;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;color:#fff;
+  background:var(--accent);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+.svc-steps b{display:block;font-size:14.6px;color:var(--text);margin-bottom:3px}
+.svc-steps p{font-size:13.4px;color:var(--text-2);line-height:1.55;margin:0;max-width:none}
 .store-pill{display:inline-flex;align-items:center;gap:6px;background:#15181d;color:#fff;border-radius:10px;
   padding:8px 14px;font-size:14px;font-weight:600;transition:transform .16s var(--ease-spring),filter .18s}
 .store-pill:hover{filter:brightness(1.2);transform:translateY(-1px)}
@@ -1301,15 +1302,15 @@ a:hover .brand-wm{transform:scale(1.03)}
         <span class="go">서비스 소개 보기 <span>→</span></span>
       </div>
       <div class="svc reveal" data-href="#service">
-        <span class="sic" style="background:var(--p-amber)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#af9069" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-        <h3>직접 쌓은 학습 자료</h3>
-        <div class="st">2026년 7월 기준 수록량</div>
-        <ul class="svc-stats">
-          <li><b>3,465</b><i><b>기출 문항</b>중·고졸 22회차 · 2021년 이후</i></li>
-          <li><b>1,870</b><i><b>고졸 기출 해설</b>7과목 전 문항</i></li>
-          <li><b>106</b><i><b>단원 요약집</b>약점 단원 정리</i></li>
+        <span class="sic" style="background:var(--p-blue)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <h3>이렇게 돕습니다</h3>
+        <div class="st">기출 풀이 → 약점 진단 → 오늘의 학습</div>
+        <ul class="svc-steps">
+          <li><em>1</em><div><b>풀면 바로 채점</b><p>앱에서 기출을 풀면 즉시 채점하고, 점수 추이를 그래프로 남깁니다.</p></div></li>
+          <li><em>2</em><div><b>틀린 곳을 모읍니다</b><p>오답을 단원별로 모아 어디서 점수를 잃는지 짚어 드립니다.</p></div></li>
+          <li><em>3</em><div><b>오늘 할 일을 정합니다</b><p>잊을 때쯤 다시 묻도록 복습 주기를 계산해 하루치 문제를 골라 둡니다.</p></div></li>
         </ul>
-        <span class="go">자료 살펴보기 <span>→</span></span>
+        <span class="go">기능 자세히 보기 <span>→</span></span>
       </div>
     </div>
   </div>
