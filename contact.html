@@ -273,6 +273,8 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .frow input:focus,.frow select:focus,.frow textarea:focus{outline:none;border-color:var(--accent);
   box-shadow:0 0 0 3px rgba(11,122,106,.12);background:#fff}
 .frow .hint{font-size:13px;color:var(--text-3);margin-top:6px}
+.frow optgroup{font-weight:700;font-size:13.4px;color:var(--text-3);background:var(--surface-2)}
+.frow option{font-weight:400;font-size:15.4px;color:var(--text);background:#fff;padding:4px 0}
 .fhalf{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .fagree{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:var(--text-2);line-height:1.6;
   background:var(--p-teal);border-radius:12px;padding:13px 15px;margin-bottom:22px}
@@ -361,12 +363,27 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
       <div class="frow">
         <label for="ctype">문의 유형<span class="req">*</span></label>
         <select id="ctype" name="문의유형" required>
-          <option value="앱 사용법 문의">앱 사용법 문의</option>
-          <option value="앱 오류 신고">앱 오류 신고</option>
-          <option value="결제·환불 문의">결제·환불 문의</option>
-          <option value="계정·로그인 문의">계정·로그인 문의</option>
-          <option value="제휴·협력 제안">제휴·협력 제안</option>
-          <option value="기타">기타</option>
+          <optgroup label="앱 이용">
+            <option value="앱 사용법 문의">사용법이 궁금해요</option>
+            <option value="앱 오류 신고">오류·버그를 발견했어요</option>
+            <option value="학습 콘텐츠 문의">문제·해설 내용 문의</option>
+            <option value="기능 제안">이런 기능이 있으면 좋겠어요</option>
+          </optgroup>
+          <optgroup label="계정·결제">
+            <option value="계정·로그인 문의">로그인이 안 돼요</option>
+            <option value="결제·구독 문의">결제·구독 문의</option>
+            <option value="환불 요청">환불을 요청합니다</option>
+            <option value="회원탈퇴·개인정보 문의">탈퇴·개인정보 문의</option>
+          </optgroup>
+          <optgroup label="협력·제휴">
+            <option value="제휴·협력 제안">제휴·협력 제안</option>
+            <option value="기관 도입 문의">기관·단체 도입 문의</option>
+            <option value="저작권·콘텐츠 문의">저작권·콘텐츠 문의</option>
+            <option value="취재·인터뷰 요청">취재·인터뷰 요청</option>
+          </optgroup>
+          <optgroup label="그 밖에">
+            <option value="기타">기타 문의</option>
+          </optgroup>
         </select>
       </div>
       <div class="frow">
