@@ -924,8 +924,13 @@ a:hover .brand-wm{transform:scale(1.03)}
           <a href="partners.html">협력사</a>
         </div>
       </div>
-      <a href="#analysis" data-sec="analysis">AI 분석</a>
-      <a href="#service" data-sec="service">배움터닝</a>
+      <div class="nav-drop">
+        <a href="#service" data-sec="service">배움터닝<span class="chev">▾</span></a>
+        <div class="drop-menu">
+          <a href="#service">서비스 소개</a>
+          <a href="#analysis">AI 분석</a>
+        </div>
+      </div>
       <a href="news.html">검정 뉴스</a>
       <div class="nav-drop">
         <a href="notice.html">고객지원<span class="chev">▾</span></a>
@@ -1384,12 +1389,13 @@ navLinks.forEach(function(l){
 document.getElementById('navlinks').addEventListener('mouseleave',function(){movePill(currentActive());});
 function updateActive(){
   var scrollY=window.scrollY+160;
-  var ids=['analysis','service'];
+  var ids=['analysis','service'];  // analysis 는 배움터닝 하위 기능 → 같은 탭으로 표시
   var active=null;
   ids.forEach(function(id){
     var el=document.getElementById(id);
     if(el&&el.offsetTop<=scrollY) active=id;
   });
+  if(active==='analysis') active='service';
   var changed=false;
   navLinks.forEach(function(a){
     var want=a.dataset.sec===active;
