@@ -889,7 +889,38 @@ body{background:#0d1917}
   radial-gradient(900px 520px at 78% 8%, rgba(233,245,241,.9) 0%, rgba(233,245,241,0) 60%),
   radial-gradient(700px 480px at 8% 80%, rgba(248,240,244,.9) 0%, rgba(248,240,244,0) 55%),
   #fbfdfd}
-.tone-shift{height:170px;background:linear-gradient(180deg,#fbfdfd 0%,#eef4f2 18%,#3c534c 62%,#152420 86%,#0d1917 100%)}
+/* 화이트→다크 전환: 탁한 중간톤 대신 움직이는 빛으로 넘긴다 */
+.tone-shift{position:relative;height:200px;overflow:hidden;isolation:isolate;
+  background:linear-gradient(180deg,#fbfdfd 0%,#eaf5f2 30%,#123a33 76%,#0d1917 100%)}
+.tone-shift::before{content:'';position:absolute;left:-20%;right:-20%;bottom:-50px;height:250px;
+  background:radial-gradient(52% 100% at 50% 100%, rgba(78,207,180,.38) 0%, rgba(78,207,180,.12) 46%, transparent 74%);
+  filter:blur(24px);animation:auroraDrift 17s ease-in-out infinite}
+.tone-shift::after{content:'';position:absolute;left:10%;right:10%;bottom:40px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(127,227,204,.9) 50%,transparent);
+  animation:horizonBreathe 5.6s ease-in-out infinite}
+@keyframes auroraDrift{
+  0%,100%{transform:translateX(-6%) scaleY(1);opacity:.72}
+  50%{transform:translateX(6%) scaleY(1.16);opacity:1}}
+@keyframes horizonBreathe{
+  0%,100%{opacity:.22;transform:scaleX(.8)}
+  50%{opacity:.92;transform:scaleX(1)}}
+/* 다크존 은은한 빛무리 — 검은 화면이 죽어 보이지 않게 */
+.analysis,.features{position:relative;overflow:hidden}
+.analysis::before,.features::before{content:'';position:absolute;pointer-events:none;z-index:0;
+  width:1180px;height:520px;left:50%;border-radius:50%;will-change:transform,opacity}
+.analysis::before{top:-190px;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(78,207,180,.16), transparent 70%);
+  animation:glowFloatA 15s ease-in-out infinite}
+.features::before{top:-150px;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(120,158,205,.13), transparent 70%);
+  animation:glowFloatB 19s ease-in-out infinite}
+@keyframes glowFloatA{
+  0%,100%{opacity:.58;transform:translateX(calc(-58% - 42px))}
+  50%{opacity:1;transform:translateX(calc(-58% + 42px))}}
+@keyframes glowFloatB{
+  0%,100%{opacity:.58;transform:translateX(calc(-42% + 42px))}
+  50%{opacity:1;transform:translateX(calc(-42% - 42px))}}
+.analysis .wrap,.features .wrap{position:relative;z-index:1}
 
 /* 다크존 토큰 재정의 — 인라인 var() 참조까지 함께 전환된다 */
 .analysis,.features,.strip,.foot{
@@ -958,7 +989,12 @@ body{background:#0d1917}
   .an-cols{grid-template-columns:1fr}
   .spot-3d{margin-top:8px}
   .features .sec-head{margin:0 0 48px}
-  .tone-shift{height:120px}
+  .tone-shift{height:140px}
+  .analysis::before,.features::before{width:760px}
+}
+@media(prefers-reduced-motion:reduce){
+  .tone-shift::before,.tone-shift::after,
+  .analysis::before,.features::before{animation:none}
 }
 
 </style>
