@@ -882,6 +882,85 @@ a:hover .brand-wm{transform:scale(1.03)}
 .app-popup-close:hover{filter:brightness(1.06);transform:translateY(-1px)}
 @keyframes popFade{from{opacity:0}to{opacity:1}}
 @keyframes popUp{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+
+/* ============ 하단 다크존 — 진중함·신뢰 (히어로는 화이트 유지) ============ */
+body{background:#0d1917}
+.hero{background:
+  radial-gradient(900px 520px at 78% 8%, rgba(233,245,241,.9) 0%, rgba(233,245,241,0) 60%),
+  radial-gradient(700px 480px at 8% 80%, rgba(248,240,244,.9) 0%, rgba(248,240,244,0) 55%),
+  #fbfdfd}
+.tone-shift{height:170px;background:linear-gradient(180deg,#fbfdfd 0%,#eef4f2 18%,#3c534c 62%,#152420 86%,#0d1917 100%)}
+
+/* 다크존 토큰 재정의 — 인라인 var() 참조까지 함께 전환된다 */
+.analysis,.features,.strip,.foot{
+  --surface:#152420; --surface-2:#1a2c27; --surface-3:#22352f;
+  --bg:#101d1a;
+  --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
+  --text:#eaf2f0; --text-2:#b2c2bd; --text-3:#8d9e99; --text-4:#6e7e7a;
+  --accent:#4ecfb4; --accent-soft:rgba(78,207,180,.12); --accent-strong:#7fe3cc; --accent-mid:#2fae95;
+  --accent-grad:linear-gradient(135deg,#45cdb0 0%,#2aa189 55%,#1d8271 100%);
+  --p-teal:rgba(78,207,180,.14);    --s-teal:#63d6bd;
+  --p-coral:rgba(224,147,127,.15);  --s-coral:#eaa48d;
+  --p-blue:rgba(120,158,205,.15);   --s-blue:#93b6de;
+  --p-amber:rgba(214,178,120,.15);  --s-amber:#dfba85;
+  --p-purple:rgba(163,146,199,.15); --s-purple:#b9a9db;
+  --p-olive:rgba(170,186,120,.15);  --s-olive:#c0cd93;
+  --p-slate:rgba(130,163,176,.15);  --s-slate:#9dc0cc;
+  --warm:rgba(255,255,255,.05);
+  --coral:#eaa48d; --amber:#dfba85;
+  --matte:#eaf2f0;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.28);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3),0 2px 10px rgba(0,0,0,.26);
+  --shadow-md:0 2px 4px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+  --shadow-lg:0 4px 8px rgba(0,0,0,.32),0 24px 56px rgba(0,0,0,.44);
+  --shadow-accent:0 4px 18px rgba(42,161,137,.34);
+  color:var(--text);
+}
+
+/* 섹션 배경 — 아래로 갈수록 깊어진다 */
+.analysis{background:#0d1917;padding:64px 0 104px}
+.features{background:linear-gradient(180deg,#0d1917 0%,#101d1a 100%);padding:100px 0}
+.strip{background:#101d1a}
+.foot{background:#0a1413}
+
+/* 가로 폭 여유 (히어로 3D 씬은 기존 폭 유지) */
+.analysis .wrap,.features .wrap,.strip .wrap,.foot .wrap{max-width:1280px}
+
+/* 좌우 비대칭 — 중앙 정렬 일변도 탈피 */
+.analysis .sec-head{text-align:left;max-width:840px;margin:0 0 58px}
+.analysis .sec-head .lead{margin:16px 0 0;max-width:700px}
+.an-cols{grid-template-columns:1.06fr .94fr 1.2fr;gap:34px}
+.spot-3d{margin-top:52px}
+.features .sec-head{text-align:left;max-width:780px;margin:0 0 56px auto}
+.features .sec-head .lead{margin:16px 0 0;max-width:700px}
+.features .stores-hero{justify-content:flex-start}
+.fgrid{padding:0}
+.strip-grid{text-align:left}
+.strip .s{align-items:flex-start}
+
+/* 밝은 배경이 하드코딩된 요소 오버라이드 */
+.analysis .pnum{background:var(--surface-3);color:var(--accent-strong)}
+.analysis .evidence{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--accent-grad) border-box;
+  box-shadow:0 14px 40px rgba(0,0,0,.42)}
+.analysis .mock-card{background:var(--surface);box-shadow:32px 44px 80px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3)}
+.analysis .spot-3d:hover .mock-card{box-shadow:16px 24px 56px rgba(0,0,0,.46),0 2px 8px rgba(0,0,0,.3)}
+.analysis .mock-card .prow{background:var(--surface-2);box-shadow:0 14px 26px rgba(0,0,0,.32)}
+.analysis .mock-card .prow:hover{background:rgba(234,164,141,.14);border-color:rgba(234,164,141,.45);
+  box-shadow:0 0 0 1.5px rgba(234,164,141,.32),0 14px 32px rgba(0,0,0,.36)}
+.features .flow li{background:var(--surface)}
+.features .fcard{background:var(--surface);box-shadow:0 2px 12px rgba(0,0,0,.28)}
+.features .fcard:hover{background:#22352f;border-color:rgba(255,255,255,.2);box-shadow:0 14px 38px rgba(0,0,0,.42)}
+.features .store-pill{background:#eaf2f0;color:#0d1917}
+.features .store-pill svg path[fill="#fff"]{fill:#0d1917}
+.features .lead .pen{color:#0a1413;background:linear-gradient(180deg,transparent 58%,#63d6bd 58%)}
+
+@media(max-width:900px){
+  .an-cols{grid-template-columns:1fr}
+  .spot-3d{margin-top:8px}
+  .features .sec-head{margin:0 0 48px}
+  .tone-shift{height:120px}
+}
+
 </style>
 </head>
 <body>
@@ -1230,6 +1309,7 @@ a:hover .brand-wm{transform:scale(1.03)}
     </div>
   </div>
 </section>
+<div class="tone-shift" aria-hidden="true"></div>
 
 <!-- ===================== AI ANALYSIS ===================== -->
 <section class="analysis sec-focus" id="analysis">
