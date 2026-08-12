@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>전환 디자인 후보 비교 — 내부 시연</title>
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+@font-face{font-family:'GmarketSans';src:url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');font-weight:700;font-display:swap}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Pretendard Variable',Pretendard,sans-serif;color:#15221f;background:#fbfdfd;line-height:1.6}
+h1,h2,h3,.h{font-family:'GmarketSans','Pretendard Variable',sans-serif}
+.intro{max-width:760px;margin:0 auto;padding:64px 20px 30px}
+.intro h1{font-size:26px;margin-bottom:10px}
+.intro p{color:#51625d;font-size:15px}
+.badge{display:inline-block;background:#0b7a6a;color:#fff;font-size:12px;font-weight:800;padding:3px 12px;border-radius:20px;margin-bottom:12px}
+.cand{margin:70px 0 0}
+.cand-label{max-width:760px;margin:0 auto;padding:0 20px 18px}
+.cand-label b{display:inline-block;background:#15221f;color:#7ee2c7;font-size:13px;font-weight:800;padding:4px 12px;border-radius:8px;margin-right:8px}
+.cand-label span{font-size:14px;color:#51625d}
+.zone-light{background:#fbfdfd;padding:56px 20px 40px;text-align:center}
+.zone-light .h{font-size:24px}
+.zone-light p{color:#51625d;margin-top:8px;font-size:14px}
+.zone-dark{background:#0d1917;color:#dcefe9;padding:56px 20px 72px;text-align:center}
+.zone-dark .h{font-size:24px;color:#eef7f4}
+.zone-dark p{color:#8fb5ab;margin-top:8px;font-size:14px}
+
+/* ── A. 조리개 크라운 컷 (정적 기하) ── */
+.iris-shift{position:relative;height:210px;background:#fbfdfd;overflow:hidden}
+.iris-shift .bk{position:absolute;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle at 38% 34%, rgba(47,145,131,.34), rgba(47,145,131,.10) 58%, transparent 72%);
+  box-shadow:inset 0 0 0 1.5px rgba(47,145,131,.22);animation:bkFloat 14s ease-in-out infinite}
+.iris-shift .bk.warm{background:radial-gradient(circle at 40% 35%, rgba(197,130,110,.26), rgba(197,130,110,.08) 60%, transparent 74%);box-shadow:inset 0 0 0 1.5px rgba(197,130,110,.18)}
+.iris-shift .bk.soft{filter:blur(6px)}
+.iris-shift .crown{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:150px;display:block}
+.iris-shift .crown .facet{fill:#0d1917}
+.iris-shift .crown .edge{fill:none;stroke:rgba(78,207,180,.5);stroke-width:1.6;vector-effect:non-scaling-stroke}
+.iris-shift .mark{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:22px;height:22px;color:#4ecfb4;opacity:.9}
+@keyframes bkFloat{0%,100%{transform:translateY(5px)}50%{transform:translateY(-9px)}}
+
+/* ── B. 스크롤 조리개 리빌 (스크롤에 따라 육각 개구부가 열림) ── */
+.ap-pin{position:relative;height:230vh}
+.ap-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fbfdfd;
+  display:flex;align-items:center;justify-content:center}
+.ap-light{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+.ap-light .h{font-size:26px}
+.ap-light p{color:#51625d;margin-top:8px}
+.ap-dark{position:absolute;inset:0;background:#0d1917;color:#dcefe9;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;
+  clip-path:polygon(
+    calc(50% - 26% * var(--o)) calc(50% - 45% * var(--o)),
+    calc(50% + 26% * var(--o)) calc(50% - 45% * var(--o)),
+    calc(50% + 52% * var(--o)) 50%,
+    calc(50% + 26% * var(--o)) calc(50% + 45% * var(--o)),
+    calc(50% - 26% * var(--o)) calc(50% + 45% * var(--o)),
+    calc(50% - 52% * var(--o)) 50%)}
+.ap-dark .h{font-size:26px;color:#eef7f4}
+.ap-dark p{color:#8fb5ab;margin-top:8px}
+.ap-hint{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:12.5px;color:#8aa39c}
+
+/* ── C. 아웃포커스 심도 전환 (밝은 존이 초점을 잃고, 다크 존이 초점을 얻는다) ── */
+.dof-pin{position:relative;height:220vh}
+.dof-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#0d1917}
+.dof-light{position:absolute;inset:0;background:#fbfdfd;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;
+  filter:blur(calc(14px * var(--p))) brightness(calc(1 - .72 * var(--p)));
+  opacity:calc(1.05 - var(--p))}
+.dof-light .h{font-size:26px}
+.dof-light p{color:#51625d;margin-top:8px}
+.dof-dark{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;color:#dcefe9;
+  filter:blur(calc(14px * (1 - var(--p))));opacity:var(--p)}
+.dof-dark .h{font-size:26px;color:#eef7f4}
+.dof-dark p{color:#8fb5ab;margin-top:8px}
+.dof-ring{width:56px;height:56px;border-radius:50%;margin-bottom:18px;
+  border:2px solid rgba(126,226,199,.65);position:relative}
+.dof-ring::after{content:'';position:absolute;inset:6px;border-radius:50%;border:1.5px dashed rgba(126,226,199,.4)}
+
+/* ── D. 커브 스윕 컷 (조용한 대안 — 큰 곡선 한 번) ── */
+.curve-shift{position:relative;height:170px;background:#fbfdfd;overflow:hidden}
+.curve-shift svg{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:160px;display:block}
+.curve-shift .c-fill{fill:#0d1917}
+.curve-shift .c-edge{fill:none;stroke:rgba(78,207,180,.55);stroke-width:2;vector-effect:non-scaling-stroke}
+
+.foot-note{max-width:760px;margin:60px auto 90px;padding:0 20px;color:#51625d;font-size:13.5px}
+@media(max-width:640px){
+  .iris-shift{height:140px}.iris-shift .crown{height:100px}
+  .curve-shift{height:120px}.curve-shift svg{height:110px}
+}
+@media(prefers-reduced-motion:reduce){
+  .iris-shift .bk{animation:none}
+  .ap-pin,.dof-pin{height:auto}
+  .ap-stage,.dof-stage{position:relative;height:70vh}
+  .ap-dark{--o:1!important}
+  .dof-light{display:none}
+  .dof-dark{--p:1!important;position:relative}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="aperture" viewBox="0 0 200 200">
+    <g fill="currentColor">
+      <path d="M144.00 100.00 L137.88 179.43 A88.0 88.0 0 0 1 62.12 179.43 L122.00 138.11 Z"/>
+      <path d="M122.00 138.11 L50.16 172.52 A88.0 88.0 0 0 1 12.27 106.90 L78.00 138.11 Z"/>
+      <path d="M78.00 138.11 L12.27 93.10 A88.0 88.0 0 0 1 50.16 27.48 L56.00 100.00 Z"/>
+      <path d="M56.00 100.00 L62.12 20.57 A88.0 88.0 0 0 1 137.88 20.57 L78.00 61.89 Z"/>
+      <path d="M78.00 61.89 L149.84 27.48 A88.0 88.0 0 0 1 187.73 93.10 L122.00 61.89 Z"/>
+      <path d="M122.00 61.89 L187.73 106.90 A88.0 88.0 0 0 1 149.84 172.52 L144.00 100.00 Z"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="intro">
+  <span class="badge">내부 시연 · 색인 차단</span>
+  <h1>메인 화이트→다크 전환 후보 4종</h1>
+  <p>아래로 쭉 스크롤하면서 네 가지 전환을 그대로 겪어보세요. B와 C는 스크롤 속도에 반응하는 방식이라 천천히 내릴수록 잘 보입니다. 마음에 드는 후보(A/B/C/D)만 알려주시면 메인에 그대로 이식합니다.</p>
+</div>
+
+<!-- ═══════ A ═══════ -->
+<div class="cand">
+  <div class="cand-label"><b>후보 A</b><span>조리개 크라운 컷 — 다크 존이 조리개 날 각도로 솟는 기하 절개 + 보케. 정적이라 가볍고 어디서나 동일 (현재 메인에 임시 적용됨)</span></div>
+  <div class="zone-light"><div class="h">밝은 존의 마지막</div><p>서비스 소개가 끝나는 지점이라고 생각해 주세요.</p></div>
+  <div class="iris-shift" aria-hidden="true">
+    <span class="bk" style="width:74px;height:74px;left:12%;top:18px"></span>
+    <span class="bk soft" style="width:44px;height:44px;left:27%;top:64px;animation-delay:3s"></span>
+    <span class="bk warm" style="width:56px;height:56px;left:71%;top:26px;animation-delay:5.5s"></span>
+    <span class="bk soft warm" style="width:30px;height:30px;left:84%;top:78px;animation-delay:8s"></span>
+    <span class="bk" style="width:24px;height:24px;left:46%;top:12px;animation-delay:6.5s"></span>
+    <svg class="crown" viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <path class="facet" d="M0,150 L0,96 L430,42 L560,14 L880,14 L1010,42 L1440,96 L1440,150 Z"/>
+      <path class="edge" d="M0,88 L430,34 L560,6 L880,6 L1010,34 L1440,88"/>
+    </svg>
+    <svg class="mark" viewBox="0 0 200 200"><use href="#aperture"/></svg>
+  </div>
+  <div class="zone-dark"><div class="h">다크 존 시작</div><p>감이 아니라, 기록으로 공부합니다 — 분석 섹션이 이어집니다.</p></div>
+</div>
+
+<!-- ═══════ B ═══════ -->
+<div class="cand">
+  <div class="cand-label"><b>후보 B</b><span>스크롤 조리개 리빌 — 화면이 고정된 채, 스크롤할수록 육각 조리개가 열리며 다크 존이 드러남. 가장 극적·브랜드적</span></div>
+  <div class="ap-pin" id="apPin">
+    <div class="ap-stage">
+      <div class="ap-light"><div class="h">밝은 존의 마지막</div><p>여기서 스크롤을 내리면…</p></div>
+      <div class="ap-dark" id="apDark" style="--o:0">
+        <div class="h">조리개가 열리고, 다크 존</div><p>로고의 육각 개구부가 그대로 전환 장치가 됩니다.</p>
+      </div>
+      <div class="ap-hint">천천히 스크롤 ↓</div>
+    </div>
+  </div>
+</div>
+<div class="zone-dark" style="padding-top:24px"><p>─ B 구간 끝 ─</p></div>
+
+<!-- ═══════ C ═══════ -->
+<div class="cand">
+  <div class="cand-label" style="padding-top:26px"><b>후보 C</b><span>아웃포커스 심도 전환 — 밝은 존이 서서히 초점을 잃고(블러), 다크 존이 초점을 얻으며 등장. 회사명 'OutFocus'의 시각화</span></div>
+  <div class="dof-pin" id="dofPin">
+    <div class="dof-stage">
+      <div class="dof-light" id="dofLight" style="--p:0"><div class="h">밝은 존의 마지막</div><p>스크롤하면 이 화면의 초점이 흐려집니다.</p></div>
+      <div class="dof-dark" id="dofDark" style="--p:0">
+        <div class="dof-ring" aria-hidden="true"></div>
+        <div class="h">초점은 학습에</div><p>배경은 흐려지고, 다음 이야기에 초점이 맞습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="zone-dark" style="padding-top:24px"><p>─ C 구간 끝 ─</p></div>
+
+<!-- ═══════ D ═══════ -->
+<div class="cand">
+  <div class="cand-label" style="padding-top:26px"><b>후보 D</b><span>커브 스윕 — 큰 곡선 한 번으로 조용하게. 가장 절제된 안</span></div>
+  <div class="zone-light"><div class="h">밝은 존의 마지막</div><p>차분한 페이지 흐름을 원할 때.</p></div>
+  <div class="curve-shift" aria-hidden="true">
+    <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+      <path class="c-fill" d="M0,160 L0,110 C300,20 700,150 1010,70 C1180,28 1330,44 1440,86 L1440,160 Z"/>
+      <path class="c-edge" d="M0,102 C300,12 700,142 1010,62 C1180,20 1330,36 1440,78"/>
+    </svg>
+  </div>
+  <div class="zone-dark"><div class="h">다크 존 시작</div><p>곡선의 teal 엣지가 유일한 장식입니다.</p></div>
+</div>
+
+<p class="foot-note">※ 넷 다 모바일 대응·모션 민감 설정(reduced-motion) 대응이 들어 있습니다. B·C는 스크롤 고정(pin) 구간이 생겨 페이지가 그만큼 길어지고, A·D는 페이지 길이에 영향이 없습니다. 조합(예: B의 열림 + A의 보케)도 가능합니다.</p>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  var apPin = document.getElementById('apPin'), apDark = document.getElementById('apDark');
+  var dofPin = document.getElementById('dofPin'), dofLight = document.getElementById('dofLight'), dofDark = document.getElementById('dofDark');
+  function prog(el){
+    var r = el.getBoundingClientRect();
+    var total = r.height - innerHeight;
+    if (total <= 0) return 1;
+    return Math.min(1, Math.max(0, -r.top / total));
+  }
+  var ticking = false;
+  function onScroll(){
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function(){
+      ticking = false;
+      var o = prog(apPin);
+      apDark.style.setProperty('--o', (o*o*(3-2*o)).toFixed(4)); // smoothstep
+      var p = prog(dofPin);
+      var sp = (p*p*(3-2*p)).toFixed(4);
+      dofLight.style.setProperty('--p', sp);
+      dofDark.style.setProperty('--p', sp);
+    });
+  }
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>
