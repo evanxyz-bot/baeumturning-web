@@ -889,21 +889,25 @@ body{background:#0d1917}
   radial-gradient(900px 520px at 78% 8%, rgba(233,245,241,.9) 0%, rgba(233,245,241,0) 60%),
   radial-gradient(700px 480px at 8% 80%, rgba(248,240,244,.9) 0%, rgba(248,240,244,0) 55%),
   #fbfdfd}
-/* 화이트→다크 전환: 탁한 중간톤 대신 움직이는 빛으로 넘긴다 */
-.tone-shift{position:relative;height:200px;overflow:hidden;isolation:isolate;
-  background:linear-gradient(180deg,#fbfdfd 0%,#eaf5f2 30%,#123a33 76%,#0d1917 100%)}
-.tone-shift::before{content:'';position:absolute;left:-20%;right:-20%;bottom:-50px;height:250px;
-  background:radial-gradient(52% 100% at 50% 100%, rgba(78,207,180,.38) 0%, rgba(78,207,180,.12) 46%, transparent 74%);
-  filter:blur(24px);animation:auroraDrift 17s ease-in-out infinite}
-.tone-shift::after{content:'';position:absolute;left:10%;right:10%;bottom:40px;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(127,227,204,.9) 50%,transparent);
-  animation:horizonBreathe 5.6s ease-in-out infinite}
-@keyframes auroraDrift{
-  0%,100%{transform:translateX(-6%) scaleY(1);opacity:.72}
-  50%{transform:translateX(6%) scaleY(1.16);opacity:1}}
-@keyframes horizonBreathe{
-  0%,100%{opacity:.22;transform:scaleX(.8)}
-  50%{opacity:.92;transform:scaleX(1)}}
+/* 화이트→다크 전환: 필름 스트립 롤링 밴드 — 조리개(카메라) 브랜드의 물성으로 존을 넘긴다.
+   위 구멍은 밝은 존, 아래 구멍은 다크 존 색을 비춰 필름이 경계 위에 놓인 것처럼 보인다 */
+.film-band{position:relative;height:150px;background:#0a1412;overflow:hidden}
+.film-band::before{content:'';position:absolute;top:0;left:0;right:0;height:26px;z-index:2;
+  background:radial-gradient(7px 9px at 21px 14px,#fbfdfd 98%,transparent 100%);
+  background-size:42px 26px;background-repeat:repeat-x}
+.film-band::after{content:'';position:absolute;bottom:0;left:0;right:0;height:26px;z-index:2;
+  background:radial-gradient(7px 9px at 21px 12px,#0d1917 98%,transparent 100%);
+  background-size:42px 26px;background-repeat:repeat-x}
+.film-track{position:absolute;top:26px;bottom:26px;left:0;display:flex;align-items:center;
+  white-space:nowrap;will-change:transform;animation:filmRoll 34s linear infinite}
+.film-strip{display:flex;align-items:center;height:100%}
+.film-cell{display:inline-flex;align-items:center;gap:11px;padding:0 30px;height:100%;
+  border-right:1px solid rgba(232,244,240,.09);
+  font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif;font-weight:700;
+  font-size:15px;letter-spacing:.02em;color:#dcefe9}
+.film-cell svg{width:15px;height:15px;color:#4ecfb4;flex:none}
+.film-cell .fno{font-size:10.5px;font-weight:500;letter-spacing:.16em;color:rgba(220,239,233,.35)}
+@keyframes filmRoll{to{transform:translateX(-50%)}}
 /* 다크존 은은한 빛무리 — 검은 화면이 죽어 보이지 않게 */
 .analysis,.features{position:relative;overflow:hidden}
 .analysis::before,.features::before{content:'';position:absolute;pointer-events:none;z-index:0;
@@ -989,11 +993,12 @@ body{background:#0d1917}
   .an-cols{grid-template-columns:1fr}
   .spot-3d{margin-top:8px}
   .features .sec-head{margin:0 0 48px}
-  .tone-shift{height:140px}
+  .film-band{height:112px}
+  .film-cell{font-size:13px;padding:0 22px;gap:9px}
   .analysis::before,.features::before{width:760px}
 }
 @media(prefers-reduced-motion:reduce){
-  .tone-shift::before,.tone-shift::after,
+  .film-track,
   .analysis::before,.features::before{animation:none}
 }
 
@@ -1114,9 +1119,9 @@ body{background:#0d1917}
               <circle class="wn" cx="520" cy="140" r="5"/>
               <circle class="wn" cx="78" cy="300" r="5" style="animation-delay:.9s"/>
               <circle class="wn" cx="72" cy="598" r="5" style="animation-delay:1.7s"/>
-              <text x="528" y="147">AI 성적 분석</text>
-              <text x="14" y="272"><tspan x="14">AI 스케줄링 및</tspan><tspan x="14" dy="21">학습 분석</tspan></text>
-              <text x="84" y="605">맞춤 알림</text>
+              <text x="528" y="147">데이터 기반 분석</text>
+              <text x="14" y="272"><tspan x="14">AI 학습</tspan><tspan x="14" dy="21">스케줄</tspan></text>
+              <text x="84" y="605">학습 알림</text>
             </svg>
 
             <!-- tilted phone base -->
@@ -1141,28 +1146,29 @@ body{background:#0d1917}
                         <div class="pinfo"><b>합격선 마진</b>합격선 평균 60점<br>합격선까지 <b style="color:#17937e;display:inline">+8점</b></div>
                       </div>
                       <div class="mini-card">
-                        <div class="mc-title">오늘의 학습 플랜<span class="ai-tag">AI</span></div>
-                        <div class="plan-row done"><i>✓</i><span>영어 · 문법 12문제</span><b>완료</b></div>
-                        <div class="plan-row"><i></i><span>수학 · 도형의 방정식 8문제</span><b>25분</b></div>
+                        <div class="mc-title">오늘의 학습<span class="ai-tag" style="background:#5878a0">데이터 기반</span></div>
+                        <div class="plan-row done"><i>✓</i><span>오늘 세션 · 힘과 운동</span><b>완료</b></div>
+                        <div class="plan-row"><i></i><span>복습 25문제 — 잊기 전에 다시</span><b>›</b></div>
+                        <div class="plan-row"><i></i><span>새 단원 문제 5</span><b>›</b></div>
                       </div>
                     </div>
                   </div>
 
                   <!-- 카테고리 2: 학습달력 · AI 스케줄링 -->
                   <div class="cat-slide" data-cat="cal">
-                    <div class="ddaybar alt">학습달력 <b>8월 1주</b> <span class="dchip ai">AI 스케줄링</span></div>
+                    <div class="ddaybar alt">학습달력 <b>8월 1주</b> <span class="dchip ai">AI 학습 스케줄</span></div>
                     <div class="cat-body">
                       <div class="cat-head"><span class="ci" style="background:#5878a0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>학습달력</div>
                       <div class="wk">
                         <div class="wd">월</div><div class="wd">화</div><div class="wd">수</div><div class="wd">목</div><div class="wd">금</div><div class="wd">토</div><div class="wd">일</div>
                         <div class="wc">28</div><div class="wc tod">29</div><div class="wc">30</div><div class="wc">31</div><div class="wc">1</div><div class="wc">2</div><div class="wc">3</div>
                       </div>
-                      <div class="ai-place"><span class="sp"></span>AI가 오늘 할 일을 자동 배치했어요</div>
+                      <div class="ai-place"><span class="sp"></span>오늘은 3과목 — 개념→풀이→복습으로 나눠 배치했어요</div>
                       <div class="sched">
-                        <div class="sblock"><span class="sd" style="background:#2f9183"></span>국어 · 비문학 독해<b>09:00</b></div>
-                        <div class="sblock"><span class="sd" style="background:#c5826e"></span>영어 · 문법/어휘<b>11:00</b></div>
-                        <div class="sblock"><span class="sd" style="background:#5878a0"></span>수학 · 도형의 방정식<b>14:00</b></div>
-                        <div class="sblock"><span class="sd" style="background:#af9069"></span>복습 20문제<b>20:00</b></div>
+                        <div class="sblock"><span class="sd" style="background:#2f9183"></span>국어 · 비문학 독해<b>개념</b></div>
+                        <div class="sblock"><span class="sd" style="background:#c5826e"></span>영어 · 문법/어휘<b>풀이</b></div>
+                        <div class="sblock"><span class="sd" style="background:#5878a0"></span>수학 · 도형의 방정식<b>풀이</b></div>
+                        <div class="sblock"><span class="sd" style="background:#af9069"></span>오늘의 복습 25문제<b>복습</b></div>
                       </div>
                     </div>
                   </div>
@@ -1173,7 +1179,7 @@ body{background:#0d1917}
                     <div class="cat-body">
                       <div class="cat-head"><span class="ci" style="background:#c5826e"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>배움터 · 약점 분석</div>
                       <div class="mini-card">
-                        <div class="mc-title">우선 공략 단원<span class="ai-tag">AI</span></div>
+                        <div class="mc-title">우선 공략 단원<span class="ai-tag" style="background:#5878a0">데이터 기반</span></div>
                         <div class="weak-list">
                           <div class="weak-row"><div class="wt"><span>영어 · 문법/어휘</span><b>오답 72%</b></div><div class="wbar"><i style="--w:88%"></i></div></div>
                           <div class="weak-row"><div class="wt"><span>수학 · 도형의 방정식</span><b>오답 61%</b></div><div class="wbar"><i style="--w:64%"></i></div></div>
@@ -1189,10 +1195,10 @@ body{background:#0d1917}
                     <div class="cat-body">
                       <div class="cat-head"><span class="ci" style="background:#af9069"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>공지사항</div>
                       <div class="sched">
-                        <div class="sblock" style="border-left-color:#c5826e"><span class="sd" style="background:#c5826e"></span>26년 2회차 원서접수<b>D-7</b></div>
-                        <div class="sblock" style="border-left-color:#2f9183"><span class="sd" style="background:#2f9183"></span>AI 합격예측 정확도 개선<b>업데이트</b></div>
-                        <div class="sblock" style="border-left-color:#5878a0"><span class="sd" style="background:#5878a0"></span>8월 모의고사 일정 안내<b>안내</b></div>
-                        <div class="sblock" style="border-left-color:#af9069"><span class="sd" style="background:#af9069"></span>장학 혜택 신청 오픈<b>이벤트</b></div>
+                        <div class="sblock" style="border-left-color:#c5826e"><span class="sd" style="background:#c5826e"></span>27년 1회차 일정 안내<b>안내</b></div>
+                        <div class="sblock" style="border-left-color:#2f9183"><span class="sd" style="background:#2f9183"></span>오늘의 학습 개편 소식<b>업데이트</b></div>
+                        <div class="sblock" style="border-left-color:#5878a0"><span class="sd" style="background:#5878a0"></span>웹 베타 참여 안내<b>모집</b></div>
+                        <div class="sblock" style="border-left-color:#af9069"><span class="sd" style="background:#af9069"></span>단원 요약집 추가 소식<b>안내</b></div>
                       </div>
                     </div>
                   </div>
@@ -1205,7 +1211,7 @@ body{background:#0d1917}
                       <div class="sched">
                         <div class="sblock" style="border-left-color:#2f9183"><span class="sd" style="background:#2f9183"></span>학습 알림 시간<b>21:00</b></div>
                         <div class="sblock" style="border-left-color:#5878a0"><span class="sd" style="background:#5878a0"></span>목표 검정고시<b>고졸</b></div>
-                        <div class="sblock" style="border-left-color:#af9069"><span class="sd" style="background:#af9069"></span>화면 테마<b>자동</b></div>
+                        <div class="sblock" style="border-left-color:#af9069"><span class="sd" style="background:#af9069"></span>복습 하루 목표<b>25문제</b></div>
                         <div class="sblock" style="border-left-color:#c5826e"><span class="sd" style="background:#c5826e"></span>계정 · 로그인 관리<b>Google</b></div>
                       </div>
                     </div>
@@ -1333,9 +1339,9 @@ body{background:#0d1917}
             <!-- floating layer: 오늘의 학습 플랜 (합격선 마진 아래) -->
             <div class="layer l-plan"><div class="lf">
               <div class="mini-card">
-                <div class="mc-title">오늘의 학습 플랜<span class="ai-tag">AI</span></div>
-                <div class="plan-row done"><i>✓</i><span>영어 · 문법 12문제</span><b>완료</b></div>
-                <div class="plan-row"><i></i><span>수학 · 도형의 방정식 8문제</span><b>25분</b></div>
+                <div class="mc-title">오늘의 학습<span class="ai-tag" style="background:#5878a0">데이터 기반</span></div>
+                <div class="plan-row done"><i>✓</i><span>오늘 세션 · 힘과 운동</span><b>완료</b></div>
+                <div class="plan-row"><i></i><span>복습 25문제 — 잊기 전에 다시</span><b>›</b></div>
               </div>
             </div></div>
 
@@ -1346,7 +1352,7 @@ body{background:#0d1917}
     </div>
   </div>
 </section>
-<div class="tone-shift" aria-hidden="true"></div>
+<div class="film-band" aria-hidden="true"><div class="film-track"><div class="film-strip"><span class="film-cell"><span class="fno">01A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>기출 CBT</span><span class="film-cell"><span class="fno">02A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>채점 전부 무료</span><span class="film-cell"><span class="fno">03A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>오늘의 학습</span><span class="film-cell"><span class="fno">04A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>망각곡선 복습</span><span class="film-cell"><span class="fno">05A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>취약 단원 진단</span><span class="film-cell"><span class="fno">06A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>AI 학습 스케줄</span><span class="film-cell"><span class="fno">07A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>학습 성적표</span></div><div class="film-strip"><span class="film-cell"><span class="fno">01A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>기출 CBT</span><span class="film-cell"><span class="fno">02A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>채점 전부 무료</span><span class="film-cell"><span class="fno">03A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>오늘의 학습</span><span class="film-cell"><span class="fno">04A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>망각곡선 복습</span><span class="film-cell"><span class="fno">05A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>취약 단원 진단</span><span class="film-cell"><span class="fno">06A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>AI 학습 스케줄</span><span class="film-cell"><span class="fno">07A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>학습 성적표</span></div></div></div>
 
 <!-- ===================== AI ANALYSIS ===================== -->
 <section class="analysis sec-focus" id="analysis">
@@ -1398,13 +1404,13 @@ body{background:#0d1917}
     <div class="sec-head">
       <span class="eyebrow">MAIN SERVICE</span>
       <div class="app-title">배움터닝</div>
-      <h2 class="h" style="font-size:31.4px;margin-top:8px">검정고시 준비, 이 앱 하나로 끝</h2>
-      <div class="app-st">중·고졸 검정고시 학습앱 · 출시 준비 중</div>
-      <p class="lead" style="word-break:keep-all">
-        <b style="color:var(--accent-strong)">오답 데이터로 약점을 진단</b>하고 <b style="color:var(--accent-strong)">오늘 풀 문제</b>까지 정해주는 검정고시 <span style="white-space:nowrap">AI 학습 앱</span>.
+      <div class="app-st" style="margin-top:14px">중·고졸 검정고시 학습앱 · 출시 준비 중</div>
+      <h2 class="h" style="font-size:31.4px;margin-top:26px">검정고시 준비, 이 앱 하나로 끝</h2>
+      <p class="lead" style="word-break:keep-all;max-width:640px;line-height:1.82;margin-top:18px">
+        <b style="color:var(--accent-strong)">오답 데이터로 약점을 진단</b>하고 <b style="color:var(--accent-strong)">오늘 풀 문제</b>까지 정해주는 검정고시 <span style="white-space:nowrap">학습 관리 앱</span>.
         중졸·고졸 두 과정을 지원하며 만 14세 이상 이용할 수 있고, 성적분석부터 시험기록까지 <span class="pen">한 화면에서</span> 모두 끝냅니다.
       </p>
-      <div class="stores-hero">
+      <div class="stores-hero" style="margin-top:30px">
         <a href="#" class="store-pill"><svg width="14" height="16" viewBox="0 0 22 24" fill="#fff"><path d="M16.365 1.43c0 1.14-.49 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.21-2.98.8-.94 2.14-1.64 3.25-1.68.03.13.05.28.05.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C1.53 18.1.5 15.29.5 12.64c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.61 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></svg>App Store</a>
         <a href="#" class="store-pill"><svg width="14" height="15" viewBox="0 0 22 22"><path d="M3 2.1C2.6 2.3 2.4 2.7 2.4 3.3v15.4c0 .6.2 1 .6 1.2l8.2-8.3L3 2.1z" fill="#00C3FF"/><path d="M3 2.1 11.2 11l2.4-2.4L4.3 1.6c-.5-.3-1-.2-1.3.5z" fill="#00E676"/><path d="M13.6 8.6 11.2 11l2.4 2.4 3.6-2.1c.8-.5.8-1.7 0-2.2l-3.6-2.1z" fill="#FFCE00"/><path d="M2.4 18.7c.1.5.4.8.9 1l9.3-5.3-2.4-2.4-7.8 6.7z" fill="#FF3D47"/></svg>Google Play</a>
       </div>
@@ -1613,7 +1619,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var ghost=document.getElementById('absorbGhost');
   if(slides.length<2) return;
   var meta=[
-    {dock:0,label:'오늘의 학습 플랜',gx:'4px',gy:'-150px'},
+    {dock:0,label:'오늘의 학습',gx:'4px',gy:'-150px'},
     {dock:1,label:'AI 스케줄링',gx:'-150px',gy:'46px'},
     {dock:2,label:'약점 분석',gx:'150px',gy:'88px'},
     {dock:3,label:'공지사항',gx:'-150px',gy:'-66px'},

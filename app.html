@@ -232,22 +232,26 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 .hub-stats span{display:block;font-size:13.4px;color:var(--text-3);margin-top:6px;font-weight:600}
 .an-note{font-size:13.4px;color:var(--text-4);margin-top:18px}
 
-/* ── 화이트→다크 전환: 탁한 중간톤 대신 움직이는 빛으로 넘긴다 ── */
+/* ── 화이트→다크 전환: 필름 스트립 롤링 밴드 — 조리개(카메라) 브랜드의 물성으로 존을 넘긴다.
+   위 구멍은 밝은 존, 아래 구멍은 다크 존 색을 비춰 필름이 경계 위에 놓인 것처럼 보인다 ── */
 body{background:#0d1917}
-.tone-shift{position:relative;height:200px;overflow:hidden;isolation:isolate;
-  background:linear-gradient(180deg,#fbfdfd 0%,#eaf5f2 30%,#123a33 76%,#0d1917 100%)}
-.tone-shift::before{content:'';position:absolute;left:-20%;right:-20%;bottom:-50px;height:250px;
-  background:radial-gradient(52% 100% at 50% 100%, rgba(78,207,180,.38) 0%, rgba(78,207,180,.12) 46%, transparent 74%);
-  filter:blur(24px);animation:auroraDrift 17s ease-in-out infinite}
-.tone-shift::after{content:'';position:absolute;left:10%;right:10%;bottom:40px;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(127,227,204,.9) 50%,transparent);
-  animation:horizonBreathe 5.6s ease-in-out infinite}
-@keyframes auroraDrift{
-  0%,100%{transform:translateX(-6%) scaleY(1);opacity:.72}
-  50%{transform:translateX(6%) scaleY(1.16);opacity:1}}
-@keyframes horizonBreathe{
-  0%,100%{opacity:.22;transform:scaleX(.8)}
-  50%{opacity:.92;transform:scaleX(1)}}
+.film-band{position:relative;height:150px;background:#0a1412;overflow:hidden}
+.film-band::before{content:'';position:absolute;top:0;left:0;right:0;height:26px;z-index:2;
+  background:radial-gradient(7px 9px at 21px 14px,#fbfdfd 98%,transparent 100%);
+  background-size:42px 26px;background-repeat:repeat-x}
+.film-band::after{content:'';position:absolute;bottom:0;left:0;right:0;height:26px;z-index:2;
+  background:radial-gradient(7px 9px at 21px 12px,#0d1917 98%,transparent 100%);
+  background-size:42px 26px;background-repeat:repeat-x}
+.film-track{position:absolute;top:26px;bottom:26px;left:0;display:flex;align-items:center;
+  white-space:nowrap;will-change:transform;animation:filmRoll 34s linear infinite}
+.film-strip{display:flex;align-items:center;height:100%}
+.film-cell{display:inline-flex;align-items:center;gap:11px;padding:0 30px;height:100%;
+  border-right:1px solid rgba(232,244,240,.09);
+  font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif;font-weight:700;
+  font-size:15px;letter-spacing:.02em;color:#dcefe9}
+.film-cell svg{width:15px;height:15px;color:#4ecfb4;flex:none}
+.film-cell .fno{font-size:10.5px;font-weight:500;letter-spacing:.16em;color:rgba(220,239,233,.35)}
+@keyframes filmRoll{to{transform:translateX(-50%)}}
 
 /* ── 다크존 토큰 재정의 — 인라인 var() 참조까지 함께 전환된다 ── */
 .dz{
@@ -458,7 +462,8 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
   .flow{grid-template-columns:1fr;padding:0;gap:12px}
 }
 @media (max-width:900px){
-  .tone-shift{height:140px}
+  .film-band{height:112px}
+  .film-cell{font-size:13px;padding:0 22px;gap:9px}
   #analysis::before{width:760px}
 }
 @media (max-width:560px){
@@ -487,7 +492,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
   .cform{padding:26px 20px}
 }
 @media(prefers-reduced-motion:reduce){
-  .tone-shift::before,.tone-shift::after,#analysis::before{animation:none}
+  .film-track,#analysis::before{animation:none}
   .sec-focus,.reveal{opacity:1;transform:none;filter:none;transition:none}
   .btn-dl,.btn-ghost{animation:none!important}
 }
@@ -622,7 +627,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
   </div>
 </section>
 
-<div class="tone-shift" aria-hidden="true"></div>
+<div class="film-band" aria-hidden="true"><div class="film-track"><div class="film-strip"><span class="film-cell"><span class="fno">01A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>기출 CBT</span><span class="film-cell"><span class="fno">02A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>채점 전부 무료</span><span class="film-cell"><span class="fno">03A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>오늘의 학습</span><span class="film-cell"><span class="fno">04A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>망각곡선 복습</span><span class="film-cell"><span class="fno">05A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>취약 단원 진단</span><span class="film-cell"><span class="fno">06A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>AI 학습 스케줄</span><span class="film-cell"><span class="fno">07A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>학습 성적표</span></div><div class="film-strip"><span class="film-cell"><span class="fno">01A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>기출 CBT</span><span class="film-cell"><span class="fno">02A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>채점 전부 무료</span><span class="film-cell"><span class="fno">03A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>오늘의 학습</span><span class="film-cell"><span class="fno">04A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>망각곡선 복습</span><span class="film-cell"><span class="fno">05A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>취약 단원 진단</span><span class="film-cell"><span class="fno">06A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>AI 학습 스케줄</span><span class="film-cell"><span class="fno">07A</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>학습 성적표</span></div></div></div>
 
 <!-- ===================== 데이터 기반 학습 관리 ===================== -->
 <section class="dz sec-focus" id="analysis">
