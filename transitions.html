@@ -83,6 +83,16 @@ h1,h2,h3,.h{font-family:'GmarketSans','Pretendard Variable',sans-serif}
 .curve-shift .c-fill{fill:#0d1917}
 .curve-shift .c-edge{fill:none;stroke:rgba(78,207,180,.55);stroke-width:2;vector-effect:non-scaling-stroke}
 
+
+/* ── E. 카메라 플래시 스위치 (경계에서 플래시 한 번 → 암실) ── */
+.flash-bound{position:relative;height:96px;background:#0d1917;display:flex;align-items:center;justify-content:center}
+.flash-bound svg{width:20px;height:20px;color:#4ecfb4;opacity:.85}
+.flash-overlay{position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 60% at 50% 46%,rgba(255,255,255,.98),rgba(255,255,255,.86) 45%,rgba(236,248,244,.55) 72%,transparent 100%);
+  opacity:0;z-index:99}
+.flash-overlay.go{animation:camFlash .62s cubic-bezier(.13,.9,.24,1) both}
+@keyframes camFlash{0%{opacity:0}9%{opacity:1}22%{opacity:.55}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.flash-overlay{display:none}}
+
 .foot-note{max-width:760px;margin:60px auto 90px;padding:0 20px;color:#51625d;font-size:13.5px}
 @media(max-width:640px){
   .iris-shift{height:140px}.iris-shift .crown{height:100px}
@@ -114,8 +124,8 @@ h1,h2,h3,.h{font-family:'GmarketSans','Pretendard Variable',sans-serif}
 
 <div class="intro">
   <span class="badge">내부 시연 · 색인 차단</span>
-  <h1>메인 화이트→다크 전환 후보 4종</h1>
-  <p>아래로 쭉 스크롤하면서 네 가지 전환을 그대로 겪어보세요. B와 C는 스크롤 속도에 반응하는 방식이라 천천히 내릴수록 잘 보입니다. 마음에 드는 후보(A/B/C/D)만 알려주시면 메인에 그대로 이식합니다.</p>
+  <h1>메인 화이트→다크 전환 후보 5종</h1>
+  <p>아래로 쭉 스크롤하면서 다섯 가지 전환을 그대로 겪어보세요. B와 C는 스크롤 속도에 반응하는 방식이라 천천히 내릴수록 잘 보입니다. 마음에 드는 후보(A/B/C/D/E)만 알려주시면 메인에 그대로 이식합니다.</p>
 </div>
 
 <!-- ═══════ A ═══════ -->
@@ -180,6 +190,16 @@ h1,h2,h3,.h{font-family:'GmarketSans','Pretendard Variable',sans-serif}
   <div class="zone-dark"><div class="h">다크 존 시작</div><p>곡선의 teal 엣지가 유일한 장식입니다.</p></div>
 </div>
 
+
+<!-- ═══════ E ═══════ -->
+<div class="cand">
+  <div class="cand-label" style="padding-top:26px"><b>후보 E</b><span>카메라 플래시 스위치 — 경계를 지나는 순간 플래시가 한 번 터지고 암실(다크 존)로. 벤치마크 신규 발굴(Facility 사례 계열), 구현 비용 최저</span></div>
+  <div class="zone-light"><div class="h">밝은 존의 마지막</div><p>아래 경계선을 지나는 순간을 보세요.</p></div>
+  <div class="flash-bound" id="flashBound" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></div>
+  <div class="zone-dark"><div class="h">찰칵 — 암실입니다</div><p>라이트박스에서 암실로, 촬영의 순간 그 자체를 전환으로 씁니다.</p></div>
+</div>
+<div class="flash-overlay" id="flashOverlay" aria-hidden="true"></div>
+
 <p class="foot-note">※ 넷 다 모바일 대응·모션 민감 설정(reduced-motion) 대응이 들어 있습니다. B·C는 스크롤 고정(pin) 구간이 생겨 페이지가 그만큼 길어지고, A·D는 페이지 길이에 영향이 없습니다. 조합(예: B의 열림 + A의 보케)도 가능합니다.</p>
 
 <script>
@@ -206,6 +226,22 @@ h1,h2,h3,.h{font-family:'GmarketSans','Pretendard Variable',sans-serif}
       dofLight.style.setProperty('--p', sp);
       dofDark.style.setProperty('--p', sp);
     });
+  }
+
+  // 후보 E: 경계 통과 시 플래시 1회 (구간을 벗어나면 재장전)
+  var fb = document.getElementById('flashBound'), fo = document.getElementById('flashOverlay');
+  if (fb && fo && 'IntersectionObserver' in window){
+    var armed = true;
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting && armed){
+          armed = false;
+          fo.classList.remove('go'); void fo.offsetWidth; fo.classList.add('go');
+        } else if (!e.isIntersecting && Math.abs(e.boundingClientRect.top) > innerHeight){
+          armed = true;
+        }
+      });
+    }, {threshold:.6}).observe(fb);
   }
   addEventListener('scroll', onScroll, {passive:true});
   onScroll();
