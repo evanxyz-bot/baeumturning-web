@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>배움터닝 – 검정고시 기출 CBT·무료 자동 채점 학습앱 | 아웃포커스</title>
+<meta name="description" content="검정고시 기출 3,465문항(2021~2026년, 22회차)을 실제 시험처럼 풀고 무료로 채점하세요. 오답 복습과 데이터 기반 약점 진단, AI 학습 스케줄까지 — 중졸·고졸 검정고시 학습앱 배움터닝. 출시 알림을 신청하세요.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://outoffocus-edu.vercel.app/app.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="배움터닝 – 검정고시 기출, 실전처럼 풀고 무료로 채점">
+<meta property="og:description" content="중졸·고졸 검정고시 학습앱. 기출 CBT·자동 채점·복습은 무료, AI 학습 스케줄과 학습 보고서까지. 출시 준비 중.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://outoffocus-edu.vercel.app/brand/outfocus-mark-2048.png">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="2048">
+<meta name="theme-color" content="#0b7a6a">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"배움터닝","operatingSystem":"iOS, Android","applicationCategory":"EducationalApplication","description":"중졸·고졸 검정고시 학습 관리 앱. 기출 CBT와 무료 자동 채점, 오답 복습, 데이터 기반 약점 진단, AI 학습 스케줄을 제공합니다.","url":"https://outoffocus-edu.vercel.app/app.html","publisher":{"@type":"Organization","name":"아웃포커스","url":"https://outoffocus-edu.vercel.app/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"언제 출시되나요?","acceptedAnswer":{"@type":"Answer","text":"iOS와 Android 앱스토어 출시를 준비하고 있어요. 날짜가 정해지면 출시 알림 신청자분들께 가장 먼저 알려드립니다."}},
+{"@type":"Question","name":"정말 채점이 무료인가요?","acceptedAnswer":{"@type":"Answer","text":"네. 기출 CBT 풀이와 자동 채점, 성적 그래프, 복습·오답 정리, 취약 단원 진단은 모두 무료예요. 단원·유형별 문제은행은 구독 전용이고, AI 학습 스케줄과 AI 학습 보고서는 무료 체험 1회를 제공해요. 구독 가격은 출시와 함께 공개합니다."}},
+{"@type":"Question","name":"어떤 시험을 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"중졸·고졸 검정고시 두 과정을 지원해요. 고졸은 국어·수학·영어·사회·과학·한국사·도덕 7과목, 중졸은 6과목입니다. 2021년 1회부터 2026년 1회까지 기출 3,465문항을 수록했어요."}},
+{"@type":"Question","name":"해설도 있나요?","acceptedAnswer":{"@type":"Answer","text":"고졸 과정은 제공 회차의 전 문항에 해설 1,870개를 담았어요. 핵심 개념, 풀이 과정, 오답 소거, 한 줄 정리까지요. 해설과 단원 요약집은 체험으로 먼저 열어본 뒤 구독으로 전체를 이용할 수 있어요. 중졸 해설은 준비 중입니다."}},
+{"@type":"Question","name":"회원가입이 복잡하지 않나요?","acceptedAnswer":{"@type":"Answer","text":"구글 계정으로 바로 시작할 수 있어 별도 가입 절차가 없어요. 만 14세 미만은 가입할 수 없습니다."}},
+{"@type":"Question","name":"웹 베타는 어떻게 참여하나요?","acceptedAnswer":{"@type":"Answer","text":"출시 알림을 신청하면서 '웹 베타 참여'를 선택해 주세요. 참여 코드를 차례로 보내드립니다. 베타 기간에는 일부 기능이 제한될 수 있어요."}},
+{"@type":"Question","name":"기출문제 저작권은 문제없나요?","acceptedAnswer":{"@type":"Answer","text":"기출문제의 저작권은 한국교육과정평가원(KICE)과 시·도 교육청에 있습니다. 배움터닝은 앱 안의 모든 문항에 출처를 표기하고 있어요."}}
+]}
+</script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f3f7f6; --surface:#fff; --surface-2:#eef4f2; --surface-3:#e3ece9;
+  --border:#e6eeeb; --border-strong:#c9d8d3;
+  --text:#15181d; --text-2:#4b5260; --text-3:#8b91a0; --text-4:#b0b6c2;
+  --accent:#0b7a6a; --accent-soft:#e6f4f1; --accent-strong:#075c50; --accent-mid:#9ad7cd;
+  --accent-grad:linear-gradient(135deg,#17937e 0%,#0b7a6a 55%,#086050 100%);
+  --warm:#fbf0ee;
+  --coral:#c46a5e; --amber:#c49a5e;
+  --p-teal:#e6f4f1;   --s-teal:#2f9183;
+  --p-coral:#fbeeec;  --s-coral:#c5826e;
+  --p-blue:#eef1f8;   --s-blue:#5878a0;
+  --p-amber:#f8f2ea;  --s-amber:#af9069;
+  --p-purple:#f2f0f8; --s-purple:#8f7faa;
+  --p-olive:#f2f5ee;  --s-olive:#9aa674;
+  --p-slate:#edf3f6;  --s-slate:#82a3b0;
+  --matte:#1a1a1a; --matte-blade:#3f3f3f;
+  --r-sm:8px; --r-md:10px; --r-lg:14px; --r-xl:18px;
+  --shadow-xs:0 1px 2px rgba(13,38,33,.05);
+  --shadow-sm:0 1px 2px rgba(13,38,33,.04),0 2px 10px rgba(13,38,33,.05);
+  --shadow-md:0 2px 4px rgba(13,38,33,.04),0 8px 24px rgba(13,38,33,.08);
+  --shadow-lg:0 4px 8px rgba(13,38,33,.05),0 24px 56px rgba(13,38,33,.14);
+  --shadow-accent:0 4px 16px rgba(11,122,106,.24);
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+  --ease-spring:cubic-bezier(0.2,0.8,0.2,1);
+}
+html{scroll-behavior:smooth}
+/* 헤드라인 전용 폰트 — 지마켓 산스 (무료 상업적 이용 가능, G마켓 배포) */
+@font-face{font-family:'GmarketSans';font-weight:300;font-display:swap;
+  src:url('fonts/GmarketSansLight.woff') format('woff')}
+@font-face{font-family:'GmarketSans';font-weight:500;font-display:swap;
+  src:url('fonts/GmarketSansMedium.woff') format('woff')}
+@font-face{font-family:'GmarketSans';font-weight:700;font-display:swap;
+  src:url('fonts/GmarketSansBold.woff') format('woff')}
+body{font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,-apple-system,sans-serif;
+  color:var(--text);background:#fbfdfd;-webkit-font-smoothing:antialiased;line-height:1.62;letter-spacing:-0.01em;
+  text-rendering:optimizeLegibility;overflow-x:hidden;word-break:keep-all}
+/* 전역 컬러 메시 배경 */
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(42% 34% at 12% 14%, rgba(154,215,205,.22), transparent 70%),
+  radial-gradient(36% 28% at 88% 8%,  rgba(243,191,183,.18), transparent 70%),
+  radial-gradient(34% 30% at 86% 72%, rgba(182,196,224,.18), transparent 70%),
+  radial-gradient(30% 26% at 8% 82%,  rgba(232,216,188,.16), transparent 70%)}
+a{color:inherit;text-decoration:none}
+.tnum{font-variant-numeric:tabular-nums}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+section{scroll-margin-top:150px}
+
+/* ── 스크롤 집중 리빌: 섹션이 하나씩 나타남 ── */
+.sec-focus{opacity:0;transform:translateY(66px);filter:blur(8px);
+  transition:opacity .9s var(--ease-out),transform .9s var(--ease-out),filter .9s var(--ease-out)}
+.sec-focus.on{opacity:1;transform:none;filter:none}
+.reveal{opacity:0;transform:translateY(32px) scale(.965)}
+.reveal.in{opacity:1;transform:none;transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+
+/* OutFocus wordmark — 조리개가 fOcus의 O (teal 포인트) */
+.brand-wm{display:inline-flex;align-items:center;font-family:'Outfit','Pretendard Variable',system-ui,sans-serif;
+  font-weight:700;letter-spacing:.01em;white-space:nowrap;color:var(--matte)}
+.ap{display:inline-block;line-height:0;width:.92em;height:.92em;position:relative;top:-.01em;margin:0 -.012em;color:var(--accent)}
+.ap svg{width:100%;height:100%;display:block;transition:transform .7s var(--ease-spring)}
+a:hover .brand-wm .ap svg{transform:rotate(120deg)}
+/* 로고 인트로 — 새로고침마다 재생. 닫힌 검정 원이 왼쪽에서 바퀴처럼 굴러와 u 옆에 멈춰 초록 조리개로 열림. */
+.ap-disk,.ap-blades{transform-box:fill-box;transform-origin:center}
+.ap-disk{opacity:0}
+.ap-blades{opacity:1}
+@keyframes apRoll{
+  0%{transform:translateX(-360px) rotate(-1080deg);animation-timing-function:cubic-bezier(.3,.5,.4,1)}
+  60%{transform:translateX(0) rotate(0deg);animation-timing-function:cubic-bezier(.4,0,.3,1)}
+  100%{transform:translateX(0) rotate(360deg)}
+}
+@keyframes apDiskOut{0%,52%{opacity:1;transform:scale(1)}70%,100%{opacity:0;transform:scale(.3)}}
+@keyframes apBladesIn{
+  0%,56%{opacity:0;transform:scale(.35)}
+  72%{opacity:1;transform:scale(1.12)}
+  85%{transform:scale(.94)}
+  100%{opacity:1;transform:scale(1)}
+}
+.ap-roll{animation:apRoll 2.6s linear both}
+.ap-roll .ap-disk{animation:apDiskOut 2.6s linear both}
+.ap-roll .ap-blades{animation:apBladesIn 2.6s linear both}
+@media(prefers-reduced-motion:reduce){.ap-roll{animation:none}.ap-roll .ap-disk{display:none}.ap-roll .ap-blades{animation:none;opacity:1;transform:none}}
+.brand-wm .wm-ko{font-size:.24em;font-weight:700;color:var(--text-3);margin-left:.3em;align-self:flex-end;margin-bottom:.62em;letter-spacing:-0.02em}
+.brand-wm .wm-tx{display:inline;line-height:1}
+.brand-wm .wm-f{color:var(--accent);font-size:1.2em}
+@keyframes navLogoIn{from{opacity:0;transform:translateY(-12px) scale(.92)}to{opacity:1;transform:none}}
+.brand-wm{animation:navLogoIn .7s .05s both;transition:transform .22s var(--ease-spring)}
+a:hover .brand-wm{transform:scale(1.03)}
+
+/* ── 버튼 ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;
+  border:0;border-radius:var(--r-lg);font-size:16.8px;font-weight:600;letter-spacing:-0.01em;cursor:pointer;
+  transition:transform .16s var(--ease-spring),box-shadow .18s,filter .18s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--accent-grad);color:#fff;box-shadow:var(--shadow-accent)}
+.btn-primary:hover{filter:brightness(1.06);box-shadow:0 6px 22px rgba(11,122,106,.32)}
+.btn-dl{height:60px;padding:0 36px;font-size:20.2px;border-radius:var(--r-xl);
+  box-shadow:0 6px 24px rgba(11,122,106,.3)}
+.btn-dl:hover{transform:translateY(-1px)}
+.btn-ghost{background:#fff!important;color:var(--accent-strong)!important;border:2px solid var(--accent-mid);
+  box-shadow:0 4px 16px rgba(13,38,33,.08)!important;animation:heroUp .6s .55s both!important}
+.btn-ghost::after{display:none!important}
+.btn-ghost:hover{background:var(--accent-soft)!important;border-color:var(--accent);filter:none;transform:translateY(-1px)}
+@keyframes heroUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes heroFade{from{opacity:0}to{opacity:1}}
+@keyframes ctaPulse{0%,100%{box-shadow:0 6px 24px rgba(11,122,106,.3)}50%{box-shadow:0 10px 40px rgba(11,122,106,.55),0 0 0 10px rgba(11,122,106,.07)}}
+@keyframes shimmer{from{left:-80%}to{left:160%}}
+@keyframes nodePulse{0%,100%{opacity:.45}50%{opacity:1}}
+.btn-dl{animation:heroUp .6s .45s both,ctaPulse 3.8s 1.6s ease-in-out infinite;position:relative;overflow:hidden}
+.btn-dl::after{content:'';position:absolute;inset:0;left:-80%;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%);pointer-events:none}
+.btn-dl:hover::after{animation:shimmer .55s ease-out forwards}
+.cta-zone{display:flex;flex-direction:column;align-items:center;margin:40px auto 0;max-width:600px}
+.cta-row{display:flex;gap:14px;align-items:stretch;justify-content:center;flex-wrap:wrap;width:100%}
+.store-hint{font-size:14.6px;color:var(--text-3);margin-top:14px;display:flex;align-items:center;gap:8px;animation:heroFade .5s .62s both}
+.store-hint::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent-mid)}
+
+.eyebrow{display:inline-block;font-size:14.6px;font-weight:600;letter-spacing:.02em;color:var(--accent);
+  background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:18px}
+h2.h{font-size:44.8px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
+.lead{font-size:19px;color:var(--text-2);line-height:1.7;margin-top:16px;max-width:620px}
+.lead .pen{font-weight:700;color:var(--accent-strong);white-space:nowrap;
+  background:linear-gradient(180deg,transparent 58%,#9ad7cd 58%);padding:0 .12em;border-radius:3px}
+.sec-head{text-align:center;max-width:660px;margin:0 auto 56px}
+.sec-head .lead{margin:16px auto 0}
+/* 헤드라인은 지마켓 산스 — 본문 Pretendard와 대비 */
+h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif}
+
+/* ── NAV (서브페이지판) ── */
+.nav{position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+  border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
+.nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
+.nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1160px;margin:0 auto;padding:0 24px}.nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
+.navlinks{position:relative;display:flex;gap:15px;font-size:20.9px;font-weight:700}
+.navlinks a{position:relative;z-index:1;color:var(--text-2);padding:10px 22px;border-radius:var(--r-md);
+  transition:color .18s,transform .18s var(--ease-spring)}
+.navlinks a:hover{color:var(--text);transform:translateY(-1px)}
+.navlinks a.active{color:var(--accent-strong);font-weight:700}
+.navlinks a::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
+  width:0;height:3px;background:var(--accent-grad);border-radius:999px;transition:width .3s var(--ease-spring)}
+.navlinks a.active::after{width:calc(100% - 26px)}
+.nav-drop{position:relative;display:flex}
+.nav-drop>a .chev{display:inline-block;margin-left:4px;transition:transform .25s var(--ease-spring);font-size:10.1px;vertical-align:1px}
+.nav-drop:hover>a .chev{transform:rotate(180deg)}
+.drop-menu{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(6px);
+  min-width:152px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-md);
+  padding:7px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;z-index:60;
+  transition:opacity .22s,transform .25s var(--ease-spring),visibility .22s}
+.nav-drop:hover .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.drop-menu a{display:block;padding:8px 14px;border-radius:9px;font-size:15.1px;font-weight:600;color:var(--text-2);
+  transition:background .15s,color .15s}
+.drop-menu a:hover{background:var(--accent-soft);color:var(--accent-strong)}
+.drop-menu a::after{display:none}
+
+/* ── HERO (page-head) ── */
+.page-head{padding:72px 0 64px;text-align:center;background:
+  radial-gradient(700px 360px at 50% 0%, rgba(230,244,241,.8), transparent 70%) #fbfdfd}
+.page-head h1{font-size:49.3px;font-weight:700;letter-spacing:-0.035em;line-height:1.15}
+.page-head h1 .g{background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.page-head .lead{margin:18px auto 0}
+.crumb{font-size:14.6px;color:var(--text-4);margin-bottom:18px}
+.crumb a:hover{color:var(--text-2)}
+.crumb b{color:var(--accent-strong);font-weight:600}
+
+/* ── FLOW 3단계 ── */
+.flow-sec{padding:72px 0 56px;background:#fbfdfd}
+.flow{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+  max-width:880px;margin:0 auto;padding:0 26px}
+.flow li{display:flex;gap:11px;align-items:flex-start;background:#fff;border:2px solid var(--border);
+  border-radius:16px;padding:17px 18px;box-shadow:var(--shadow-sm)}
+.flow li>div{flex:1}
+.flow em{font-style:normal;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;color:#fff;
+  background:var(--accent);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+.flow b{display:block;font-size:14.6px;color:var(--text);margin-bottom:3px}
+.flow p{font-size:13.4px;color:var(--text-2);line-height:1.55;margin:0}
+.flow .reveal:nth-child(2).in,.flow li:nth-child(2).in{transition-delay:.12s}
+.flow .reveal:nth-child(3).in,.flow li:nth-child(3).in{transition-delay:.24s}
+
+/* ── 기출 CBT ── */
+.spot{padding:88px 0;background:radial-gradient(600px 380px at 15% 30%, rgba(238,241,248,.8), transparent 70%) #fbfdfd}
+.spot-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.feat-list{margin-top:20px;display:flex;flex-direction:column;gap:14px}
+.feat-list .fl{display:flex;gap:12px;align-items:flex-start}
+.feat-list .fl .dot{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;flex-shrink:0;margin-top:1px;font-size:13.4px;font-weight:700}
+.feat-list .fl b{font-weight:600}
+.feat-list .fl span{color:var(--text-2)}
+.feat-list .fl div{font-size:16.2px;line-height:1.6}
+.hub-stats{display:flex;gap:12px;margin-top:28px}
+.hub-stats>div{flex:1;background:#fff;border:1px solid var(--border);border-radius:14px;
+  padding:15px 10px;text-align:center;box-shadow:var(--shadow-xs)}
+.hub-stats b{display:block;font-family:'Outfit',sans-serif;font-size:34.7px;font-weight:700;color:var(--accent-strong);line-height:1}
+.hub-stats span{display:block;font-size:13.4px;color:var(--text-3);margin-top:6px;font-weight:600}
+.an-note{font-size:13.4px;color:var(--text-4);margin-top:18px}
+
+/* ── 화이트→다크 전환: 탁한 중간톤 대신 움직이는 빛으로 넘긴다 ── */
+body{background:#0d1917}
+.tone-shift{position:relative;height:200px;overflow:hidden;isolation:isolate;
+  background:linear-gradient(180deg,#fbfdfd 0%,#eaf5f2 30%,#123a33 76%,#0d1917 100%)}
+.tone-shift::before{content:'';position:absolute;left:-20%;right:-20%;bottom:-50px;height:250px;
+  background:radial-gradient(52% 100% at 50% 100%, rgba(78,207,180,.38) 0%, rgba(78,207,180,.12) 46%, transparent 74%);
+  filter:blur(24px);animation:auroraDrift 17s ease-in-out infinite}
+.tone-shift::after{content:'';position:absolute;left:10%;right:10%;bottom:40px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(127,227,204,.9) 50%,transparent);
+  animation:horizonBreathe 5.6s ease-in-out infinite}
+@keyframes auroraDrift{
+  0%,100%{transform:translateX(-6%) scaleY(1);opacity:.72}
+  50%{transform:translateX(6%) scaleY(1.16);opacity:1}}
+@keyframes horizonBreathe{
+  0%,100%{opacity:.22;transform:scaleX(.8)}
+  50%{opacity:.92;transform:scaleX(1)}}
+
+/* ── 다크존 토큰 재정의 — 인라인 var() 참조까지 함께 전환된다 ── */
+.dz{
+  --surface:#152420; --surface-2:#1a2c27; --surface-3:#22352f;
+  --bg:#101d1a;
+  --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
+  --text:#eaf2f0; --text-2:#b2c2bd; --text-3:#8d9e99; --text-4:#6e7e7a;
+  --accent:#4ecfb4; --accent-soft:rgba(78,207,180,.12); --accent-strong:#7fe3cc; --accent-mid:#2fae95;
+  --accent-grad:linear-gradient(135deg,#45cdb0 0%,#2aa189 55%,#1d8271 100%);
+  --p-teal:rgba(78,207,180,.14);    --s-teal:#63d6bd;
+  --p-coral:rgba(224,147,127,.15);  --s-coral:#eaa48d;
+  --p-blue:rgba(120,158,205,.15);   --s-blue:#93b6de;
+  --p-amber:rgba(214,178,120,.15);  --s-amber:#dfba85;
+  --p-purple:rgba(163,146,199,.15); --s-purple:#b9a9db;
+  --p-olive:rgba(170,186,120,.15);  --s-olive:#c0cd93;
+  --p-slate:rgba(130,163,176,.15);  --s-slate:#9dc0cc;
+  --warm:rgba(255,255,255,.05);
+  --coral:#eaa48d; --amber:#dfba85;
+  --matte:#eaf2f0;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.28);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3),0 2px 10px rgba(0,0,0,.26);
+  --shadow-md:0 2px 4px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+  --shadow-lg:0 4px 8px rgba(0,0,0,.32),0 24px 56px rgba(0,0,0,.44);
+  --shadow-accent:0 4px 18px rgba(42,161,137,.34);
+  color:var(--text);
+}
+/* 섹션 배경 — 아래로 갈수록 깊어진다 */
+section.dz{padding:88px 0}
+#analysis{background:#0d1917}
+#ai{background:linear-gradient(180deg,#0d1917 0%,#101d1a 100%)}
+#hub,#free{background:#101d1a}
+#mission{background:linear-gradient(180deg,#101d1a 0%,#0e1a18 100%)}
+#faq{background:#0e1a18}
+#notify{background:linear-gradient(180deg,#0e1a18 0%,#0c1614 100%);padding-bottom:104px}
+.foot.dz{background:#0a1413}
+/* 다크존 은은한 빛무리 — 검은 화면이 죽어 보이지 않게 */
+#analysis{position:relative;overflow:hidden}
+#analysis::before{content:'';position:absolute;pointer-events:none;z-index:0;
+  width:1180px;height:520px;left:50%;top:-190px;border-radius:50%;will-change:transform,opacity;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(78,207,180,.16), transparent 70%);
+  animation:glowFloatA 15s ease-in-out infinite}
+@keyframes glowFloatA{
+  0%,100%{opacity:.58;transform:translateX(calc(-58% - 42px))}
+  50%{opacity:1;transform:translateX(calc(-58% + 42px))}}
+#analysis .wrap{position:relative;z-index:1}
+
+/* ── 데이터 기반 학습 관리: 파이프라인 + 근거 카드 ── */
+.an2{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
+.pipe{margin-top:6px;display:flex;flex-direction:column;align-items:flex-start;position:relative}
+.pipe::before{content:'';position:absolute;left:27px;top:24px;bottom:24px;width:2px;
+  background:linear-gradient(180deg,var(--accent-mid),var(--border))}
+.pstep{position:relative;display:flex;gap:20px;padding:18px 14px 18px 0;align-items:flex-start}
+.pnum{position:relative;z-index:1;width:56px;height:56px;border-radius:50%;background:#fff;border:2.5px solid var(--accent-mid);
+  display:grid;place-items:center;font-size:20.2px;font-weight:800;color:var(--accent-strong);flex-shrink:0;
+  font-family:'Outfit',monospace;letter-spacing:.02em;box-shadow:var(--shadow-sm);
+  transition:background .25s,color .25s,border-color .25s,box-shadow .3s}
+.pstep:hover .pnum{background:var(--accent-grad);border-color:transparent;color:#fff;
+  animation:pnumGlow 1.6s ease-in-out infinite}
+.pstep::before{content:'❯';position:absolute;left:28px;bottom:-13px;z-index:2;
+  font-size:23.5px;font-weight:800;color:#14c2a3;opacity:0;pointer-events:none;line-height:1;
+  transform:translateX(-50%) rotate(90deg) translateX(-9px);
+  text-shadow:0 0 8px rgba(20,194,163,.95),0 0 20px rgba(20,194,163,.55),0 0 36px rgba(20,194,163,.3);
+  transition:opacity .25s,transform .3s var(--ease-spring)}
+.pstep:hover::before{opacity:1;transform:translateX(-50%) rotate(90deg) translateX(0)}
+.pstep:last-child::before{display:none}
+@keyframes pnumGlow{
+  0%,100%{box-shadow:0 0 0 5px rgba(11,122,106,.13),0 0 18px rgba(11,122,106,.45)}
+  50%{box-shadow:0 0 0 9px rgba(11,122,106,.08),0 0 32px rgba(11,122,106,.68)}
+}
+.pstep b{display:block;font-size:20.7px;font-weight:700;letter-spacing:-0.01em;margin-bottom:3px}
+.pstep span{font-size:16.8px;color:var(--text-3);line-height:1.55}
+.dz .pnum{background:var(--surface-3);color:var(--accent-strong)}
+/* 근거(evidence) 카드 */
+.evidence{margin-top:24px;background:linear-gradient(#fff,#fff) padding-box,var(--accent-grad) border-box;
+  border:2px solid transparent;border-radius:16px;padding:22px 24px;box-shadow:0 12px 34px rgba(11,122,106,.16)}
+.ev-head{display:flex;align-items:center;gap:9px;font-size:20.2px;font-weight:800;letter-spacing:-0.025em;color:var(--text);margin-bottom:16px}
+.ev-badge{font-size:12.9px;font-weight:800;letter-spacing:.02em;color:#fff;background:var(--accent-grad);padding:4px 11px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.ev-grid{display:flex;flex-direction:column;gap:14px}
+.ev-item{position:relative;padding-left:15px}
+.ev-item::before{content:'';position:absolute;left:0;top:5px;bottom:5px;width:3px;border-radius:2px;background:var(--accent-grad)}
+.ev-item.alt::before{background:linear-gradient(180deg,#5878a0,#8f7faa)}
+.ev-item b{display:block;font-size:17.4px;font-weight:700;letter-spacing:-0.01em;color:var(--accent-strong);margin-bottom:2px}
+.ev-item.alt b{color:var(--s-blue)}
+.ev-item span{font-size:15.7px;color:var(--text-2);line-height:1.62}
+.ev-note{font-size:13.4px;color:var(--text-4);margin-top:14px}
+.dz .evidence{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--accent-grad) border-box;
+  box-shadow:0 14px 40px rgba(0,0,0,.42)}
+
+/* ── 기능 카드(fcard) ── */
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px 34px;padding:0}
+.fgrid.g2{grid-template-columns:repeat(2,1fr);max-width:920px;margin:0 auto}
+.fcard{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);padding:26px 24px;box-shadow:var(--shadow-sm);
+  transition:transform .25s var(--ease-spring),box-shadow .25s,border-color .25s,background .25s}
+.fcard:hover{transform:translateY(-4px)}
+.fhead{display:flex;align-items:center;gap:13px;margin-bottom:13px}
+.fic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;flex-shrink:0;transition:transform .2s var(--ease-spring)}
+.fcard:hover .fic{transform:scale(1.08)}
+.fcard h3{font-size:22.4px;font-weight:700;letter-spacing:-0.02em}
+.fcard p{font-size:17.4px;color:var(--text-2);line-height:1.68}
+.fgrid .reveal:nth-child(2).in{transition-delay:.09s}
+/* AI 강조 배지 — AI 학습 스케줄·AI 학습 보고서 두 카드에만 */
+.ai-pill{display:inline-block;vertical-align:middle;margin-left:7px;background:linear-gradient(135deg,#17937e,#5878a0);
+  color:#fff;font-size:12.9px;font-weight:800;letter-spacing:.04em;padding:2px 9px;border-radius:7px;
+  box-shadow:0 2px 8px rgba(23,147,126,.28)}
+.ai-pill.sm{font-size:11.2px;padding:1px 7px;margin-left:5px;vertical-align:2px}
+.dz .fcard{background:var(--surface);box-shadow:0 2px 12px rgba(0,0,0,.28)}
+.dz .fcard:hover{background:#22352f;border-color:rgba(255,255,255,.2);box-shadow:0 14px 38px rgba(0,0,0,.42)}
+
+/* ── 배움터 허브 ── */
+.hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:880px;margin:0 auto}
+.hubitem{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-xs);padding:19px 18px;
+  transition:transform .22s var(--ease-spring),box-shadow .22s}
+.hubitem:hover{transform:translateY(-3px)}
+.hubitem .hi{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-bottom:13px}
+.hubitem b{display:block;font-size:18.5px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
+.hubitem span{font-size:14.6px;color:var(--text-3);line-height:1.6}
+.dz .hubitem{background:var(--surface)}
+
+/* ── 무료/유료 경계: 임팩트 배너 ── */
+.price-banner{margin-top:0;position:relative;overflow:hidden;background:var(--accent-grad);border-radius:18px;
+  box-shadow:0 18px 48px rgba(11,122,106,.34);padding:28px 32px;color:#fff;
+  display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+.price-banner::after{content:'';position:absolute;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);top:-90px;right:-40px;pointer-events:none}
+.price-banner .pb-name{font-size:16.8px;font-weight:800;letter-spacing:-0.01em;display:flex;align-items:center;gap:8px}
+.price-banner .best{background:rgba(255,255,255,.18);font-size:11.2px;font-weight:800;letter-spacing:.08em;
+  padding:4px 9px;border-radius:999px}
+.price-banner .free-chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);
+  padding:7px 14px;border-radius:999px;font-size:14px;font-weight:700;white-space:nowrap}
+.price-banner .pd{font-size:15.1px;color:rgba(255,255,255,.9);line-height:1.6;margin-left:auto;max-width:320px}
+
+/* ── 미션 카드 ── */
+.ceo-card{max-width:760px;margin:0 auto;background:linear-gradient(150deg,#0e6b5c 0%,#0b7a6a 55%,#08544a 100%);color:#fff;border-radius:24px;
+  padding:38px 36px;box-shadow:0 18px 48px rgba(11,122,106,.32);position:relative;overflow:hidden}
+.ceo-card::before{content:'';position:absolute;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);top:-70px;right:-60px}
+.ceo-card .mp{position:relative;font-size:17.4px;line-height:1.85;color:rgba(255,255,255,.94)}
+.ceo-card .mp+.mp{margin-top:16px}
+.ceo-card .mp b{color:#fff}
+
+/* ── FAQ ── */
+.qna-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+details.q{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-xs);overflow:hidden;
+  transition:box-shadow .2s,border-color .2s}
+details.q:hover{box-shadow:var(--shadow-sm)}
+details.q[open]{border-color:var(--accent-mid);box-shadow:var(--shadow-sm)}
+details.q summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:18px 22px;
+  font-size:16.8px;font-weight:600;letter-spacing:-0.01em}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary .qmark{flex-shrink:0;width:28px;height:28px;border-radius:9px;background:var(--accent-soft);color:var(--accent-strong);
+  display:grid;place-items:center;font-weight:800;font-size:14.6px}
+details.q summary .arrow{margin-left:auto;color:var(--text-4);transition:transform .25s var(--ease-spring)}
+details.q[open] summary .arrow{transform:rotate(180deg)}
+details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-height:1.7}
+.dz details.q{background:var(--surface)}
+
+/* ── 출시 알림 폼 ── */
+.cform{max-width:640px;margin:0 auto;background:#fff;border:2px solid var(--border);border-radius:22px;
+  padding:34px 32px;box-shadow:var(--shadow-sm)}
+.frow{margin-bottom:20px}
+.frow label{display:block;font-size:14.6px;font-weight:700;color:var(--text);margin-bottom:8px}
+.frow label .req{color:var(--s-coral);margin-left:3px}
+.frow input,.frow select{width:100%;font:inherit;font-size:16.5px;color:var(--text);
+  background:#fcfcfb;border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;
+  transition:border-color .18s,box-shadow .18s}
+.frow input:focus,.frow select:focus{outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(11,122,106,.12);background:#fff}
+.frow .hint{font-size:13px;color:var(--text-3);margin-top:6px}
+.frow option{font-weight:400;font-size:16px;color:var(--text);background:#fff;padding:4px 0}
+.fagree{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:var(--text-2);line-height:1.6;
+  background:var(--p-teal);border-radius:12px;padding:13px 15px;margin-bottom:22px}
+.fagree.fopt{margin-bottom:12px}
+.fagree input{width:17px;height:17px;flex:none;margin-top:2px;accent-color:var(--accent)}
+.fsend{width:100%;border:none;cursor:pointer;background:var(--accent);color:#fff;font:inherit;
+  font-size:16.4px;font-weight:700;border-radius:14px;padding:15px;box-shadow:var(--shadow-accent);
+  transition:transform .16s var(--ease-spring),filter .18s}
+.fsend:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.fsend:active{transform:translateY(1px)}
+.fsend:disabled{opacity:.55;cursor:not-allowed;transform:none;filter:none}
+.fmsg{margin-top:16px;font-size:14.6px;line-height:1.7;border-radius:12px;padding:14px 16px;display:none}
+.fmsg.ok{display:block;background:var(--p-teal);color:var(--s-teal)}
+.fmsg.err{display:block;background:var(--p-coral);color:var(--s-coral)}
+.cnote{max-width:640px;margin:22px auto 0;text-align:center;font-size:14px;color:var(--text-3);line-height:1.7}
+.dz .cform{background:var(--surface)}
+.dz .frow input,.dz .frow select{background:var(--surface-2);color:var(--text)}
+.dz .frow input:focus,.dz .frow select:focus{background:var(--surface-3)}
+.dz .frow option{background:var(--surface);color:var(--text)}
+.dz .fsend{background:var(--accent-grad);color:#08322b;font-weight:800}
+
+/* ── FOOTER ── */
+.foot{border-top:1px solid var(--border);padding:56px 0 36px;background:var(--surface-2);position:relative}
+.foot::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--s-teal),var(--s-blue),var(--s-purple),var(--s-coral),var(--s-amber))}
+.foot-top .desc{font-size:15.1px;color:var(--text-3);line-height:1.65;max-width:420px;margin-top:14px}
+.biz-info{margin-top:32px;padding-top:22px;border-top:1px solid var(--border);font-size:14px;color:var(--text-3);line-height:1.9}
+.biz-info b{color:var(--text-2);font-weight:600}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:18px;
+  font-size:14px;color:var(--text-4);flex-wrap:wrap;gap:10px}
+.foot-terms{color:var(--text-3);font-weight:600;transition:color .15s}
+.foot-terms:hover{color:var(--text)}
+
+/* ── RESPONSIVE ── */
+@media (max-width:920px){
+  h2.h{font-size:35.8px}
+  .page-head h1{font-size:38.1px}
+  .spot-grid,.an2{grid-template-columns:1fr;gap:40px}
+  .fgrid,.fgrid.g2{grid-template-columns:1fr;gap:20px}
+  .flow{grid-template-columns:1fr;padding:0;gap:12px}
+}
+@media (max-width:900px){
+  .tone-shift{height:140px}
+  #analysis::before{width:760px}
+}
+@media (max-width:560px){
+  .nav-top{height:72px}  .nav-top .brand-wm{font-size:47px!important}
+  .nav-bot{justify-content:flex-start;overflow-x:auto}
+  .nav-bot::-webkit-scrollbar{display:none}
+  .navlinks{gap:2px;font-size:12.6px;margin:0 auto;flex-wrap:wrap;justify-content:center;row-gap:1px}
+  .navlinks a{padding:6px 8px;white-space:nowrap}
+  .nav-drop>a .chev{margin-left:2px}
+  .wrap{padding:0 18px}
+  .page-head h1{font-size:32.5px}
+  h2.h{font-size:29.1px}
+  .cta-row{flex-direction:column}
+  .btn-dl{width:100%;font-size:17.9px;height:54px}
+  .hubgrid{grid-template-columns:1fr;gap:10px}
+  .hubitem{padding:16px 15px}
+  .hubitem b{font-size:16.8px}
+  .hubitem span{font-size:13.4px}
+  .hub-stats b{font-size:29.1px}
+  .pstep b{font-size:17.9px}
+  .pstep span{font-size:15.1px}
+  .pstep{padding-right:0}
+  .price-banner{flex-direction:column;align-items:flex-start;gap:12px;padding:24px 22px}
+  .price-banner .pd{margin-left:0;max-width:none}
+  details.q .a{padding-left:22px}
+  .cform{padding:26px 20px}
+}
+@media(prefers-reduced-motion:reduce){
+  .tone-shift::before,.tone-shift::after,#analysis::before{animation:none}
+  .sec-focus,.reveal{opacity:1;transform:none;filter:none;transition:none}
+  .btn-dl,.btn-ghost{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- OutFocus 조리개 O 브랜드마크 — 정통 핀휠 아이리스(호+선행변 6날, 육각 개구부), 순수 path -->
+  <symbol id="aperture" viewBox="0 0 200 200">
+    <g fill="currentColor">
+      <path d="M144.00 100.00 L137.88 179.43 A88.0 88.0 0 0 1 62.12 179.43 L122.00 138.11 Z"/>
+      <path d="M122.00 138.11 L50.16 172.52 A88.0 88.0 0 0 1 12.27 106.90 L78.00 138.11 Z"/>
+      <path d="M78.00 138.11 L12.27 93.10 A88.0 88.0 0 0 1 50.16 27.48 L56.00 100.00 Z"/>
+      <path d="M56.00 100.00 L62.12 20.57 A88.0 88.0 0 0 1 137.88 20.57 L78.00 61.89 Z"/>
+      <path d="M78.00 61.89 L149.84 27.48 A88.0 88.0 0 0 1 187.73 93.10 L122.00 61.89 Z"/>
+      <path d="M122.00 61.89 L187.73 106.90 A88.0 88.0 0 0 1 149.84 172.52 L144.00 100.00 Z"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav" id="nav">
+  <div class="nav-top">
+    <a href="index.html" aria-label="OutFocus 홈">
+      <span class="brand-wm" style="font-size:65px">
+        <span class="ap"><svg viewBox="0 0 200 200"><circle class="ap-disk" cx="100" cy="100" r="55" fill="#141414"/><g class="ap-blades"><use href="#aperture"/></g></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span>
+      </span>
+    </a>
+    <script>/* 로고 인트로: 새로고침·재접속(외부/직접)에만 재생. 사이트 내 카테고리 이동 땐 정지 */
+    try{var _t=(performance.getEntriesByType('navigation')[0]||{}).type,
+      _in=document.referrer&&new URL(document.referrer).origin===location.origin;
+      if(_t==='reload'||!_in)document.querySelector('.nav-top .ap').classList.add('ap-roll');
+    }catch(e){document.querySelector('.nav-top .ap').classList.add('ap-roll');}</script>  </div>
+  <div class="nav-bot">
+    <div class="navlinks">
+      <div class="nav-drop">
+        <a href="company.html">회사<span class="chev">▾</span></a>
+        <div class="drop-menu">
+          <a href="company.html">회사 소개</a>
+          <a href="history.html">연혁</a>
+          <a href="partners.html">협력사</a>
+        </div>
+      </div>
+      <a href="stories.html">소식</a>
+      <div class="nav-drop">
+        <a href="app.html" class="active">배움터닝<span class="chev">▾</span></a>
+        <div class="drop-menu">
+          <a href="app.html">서비스 소개</a>
+          <a href="#analysis">학습 분석</a>
+          <a href="#free">무료 범위</a>
+        </div>
+      </div>
+      <a href="news.html">검정 뉴스</a>
+      <div class="nav-drop">
+        <a href="notice.html">고객지원<span class="chev">▾</span></a>
+        <div class="drop-menu">
+          <a href="notice.html">공지사항</a>
+          <a href="qna.html">Q&amp;A</a>
+          <a href="privacy.html">개인정보처리방침</a>
+          <a href="contact.html">문의하기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="page-head" id="top">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">홈</a> › <b>배움터닝</b></div>
+    <span class="eyebrow">중·고졸 검정고시 학습앱 · 출시 준비 중</span>
+    <h1>기출은 실전처럼,<br>채점은 <span class="g">전부 무료</span></h1>
+    <p class="lead">배움터닝은 중졸·고졸 검정고시를 준비하는 사람을 위한 학습 관리 앱입니다. 실제 시험과 같은 시간표로 기출을 풀면 그 자리에서 채점되고, 틀린 문제는 복습으로, 쌓인 기록은 <span class="pen">오늘 할 공부</span>로 이어집니다.</p>
+    <div class="cta-zone">
+      <div class="cta-row">
+        <a href="#notify" class="btn btn-primary btn-dl">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          출시 알림 받기
+        </a>
+        <!-- TODO: 게이트 해제 시 href 교체 — 보조 CTA를 https://baeumturning.vercel.app 직링크 '웹으로 미리 써보기'로 승격 -->
+        <a href="#notify" class="btn btn-dl btn-ghost" data-beta="1">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+          웹 베타 참여 신청
+        </a>
+      </div>
+      <p class="store-hint">App Store · Google Play 출시 준비 중</p>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== FLOW ===================== -->
+<section class="flow-sec sec-focus" id="flow">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">HOW IT WORKS</span>
+      <h2 class="h">세 단계면 오늘 할 공부가 정해집니다</h2>
+      <p class="lead">복잡한 설정 없이, 기출 한 회차에서 시작하세요.</p>
+    </div>
+    <ol class="flow">
+      <li class="reveal"><em>1</em><div><b>실전처럼 풀기</b><p>과목별 실제 시험 시간 타이머로, 교시 순서 그대로 한 회차를 이어서 풀 수 있어요.</p></div></li>
+      <li class="reveal"><em>2</em><div><b>그 자리에서 무료 채점</b><p>점수는 성적 그래프에 자동 기록되고, 합격선(60점)까지 몇 점 남았는지 바로 확인해요.</p></div></li>
+      <li class="reveal"><em>3</em><div><b>하루 한 과정으로</b><p>틀린 문제는 복습 목록에 담기고, 잊을 때쯤 다시 만나도록 오늘의 학습에 배치돼요.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===================== 기출 CBT ===================== -->
+<section class="spot sec-focus" id="cbt">
+  <div class="wrap spot-grid">
+    <div class="reveal">
+      <span class="eyebrow">기출 CBT</span>
+      <h2 class="h">시험장을 그대로<br>옮겨 왔어요</h2>
+      <p class="lead">연습이 실전이 되려면, 환경부터 실전이어야 하니까요.</p>
+      <div class="feat-list">
+        <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>과목별 실제 시험 시간</b> <span>— 국어·수학·영어는 40분, 나머지 과목은 30분. 실제 시간표 그대로 타이머가 돌아갑니다.</span></div></div>
+        <div class="fl"><span class="dot" style="background:var(--p-coral);color:var(--s-coral)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><div><b>회차 전체 풀기</b> <span>— 교시 순서대로 한 번에, 고졸 기준 총 4시간. 중간에 나가도 채점한 과목 다음부터 이어서 풀 수 있어요.</span></div></div>
+        <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></span><div><b>전체화면 시험 모드 + 스와이프 OMR</b> <span>— 답을 고르면 다음 문항으로 자동 이동합니다.</span></div></div>
+        <div class="fl"><span class="dot" style="background:var(--p-amber);color:var(--s-amber)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span><div><b>출제범위 밖 문항 표시</b> <span>— 예전 기출 중 지금 출제범위를 벗어난 문항은 따로 표시해 드려요. 검정고시 출제범위는 정규 교육과정과 다르니까요.</span></div></div>
+        <div class="fl"><span class="dot" style="background:var(--p-purple);color:var(--s-purple)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><b>문항마다 이어지는 해설</b> <span>— 핵심 개념, 풀이, 내가 고른 답이 왜 아닌지, 한 줄 정리까지. 고졸은 제공 회차 전 문항에 해설 1,870개를 담았어요.</span></div></div>
+        <div class="fl"><span class="dot" style="background:var(--p-olive);color:var(--s-olive)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><div><b>기출 PDF 무료 다운로드</b> <span>— 종이로 풀고 싶은 날엔 회차·과목별로 내려받으세요.</span></div></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="hub-stats">
+        <div><b class="tnum">3,465</b><span>기출 문항</span></div>
+        <div><b class="tnum">22</b><span>수록 회차</span></div>
+        <div><b class="tnum">1,870</b><span>고졸 해설</span></div>
+      </div>
+      <p class="an-note">2021년 1회~2026년 1회 기출 기준. 기출문제의 저작권은 한국교육과정평가원(KICE)과 시·도 교육청에 있으며, 앱의 모든 문항에 출처를 표기합니다.</p>
+    </div>
+  </div>
+</section>
+
+<div class="tone-shift" aria-hidden="true"></div>
+
+<!-- ===================== 데이터 기반 학습 관리 ===================== -->
+<section class="dz sec-focus" id="analysis">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">데이터 기반 학습 관리</span>
+      <h2 class="h">감이 아니라, 기록으로 공부합니다</h2>
+      <p class="lead">배움터닝의 추천은 전부 당신의 풀이 기록에서 나옵니다. 문제를 풀수록 오답이 모이고, 오답이 모일수록 오늘 할 공부가 정확해져요.</p>
+    </div>
+    <div class="an2">
+      <div class="pipe reveal">
+        <div class="pstep"><span class="pnum">01</span><div><b>기출 풀이</b><span>실전처럼 풀고 그 자리에서 채점</span></div></div>
+        <div class="pstep"><span class="pnum">02</span><div><b>오답 수집</b><span>틀린 문제가 단원·유형별로 자동 정리</span></div></div>
+        <div class="pstep"><span class="pnum">03</span><div><b>취약 단원 진단</b><span>오답률과 틀린 횟수로 보완 지점을 짚어드려요</span></div></div>
+        <div class="pstep"><span class="pnum">04</span><div><b>복습 주기 계산</b><span>잊을 때쯤 다시 만나는 간격 반복</span></div></div>
+        <div class="pstep"><span class="pnum">05</span><div><b>오늘의 학습</b><span>복습과 새 문제를 하루 한 과정으로</span></div></div>
+      </div>
+      <div class="evidence reveal">
+        <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4ecfb4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>이렇게 설계한 근거 <span class="ev-badge">학습과학 문헌 기반</span></div>
+        <div class="ev-grid">
+          <div class="ev-item"><b>인출 연습(Retrieval Practice)</b><span>다시 읽기보다 문제로 꺼내 보는 연습이 기억에 오래 남는다는, 학습과학에서 반복 검증된 기법입니다.</span></div>
+          <div class="ev-item alt"><b>분산 연습(Spaced Practice)</b><span>한 번에 몰아치기보다 간격을 두고 나눠 공부할 때 효과가 크다는 근거로, 복습 주기와 하루 3과목 배치를 설계했어요.</span></div>
+        </div>
+        <p class="ev-note">참고: Dunlosky 외(2013) 학습기법 효용성 연구. 설계의 근거를 밝히는 것이며, 특정 성적 결과를 보장하지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== AI 기능 2종 ===================== -->
+<section class="dz sec-focus" id="ai">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">AI 기능</span>
+      <h2 class="h">AI가 하는 일은 두 가지뿐입니다</h2>
+      <p class="lead">채점·복습·약점 진단은 모두 당신의 기록으로 계산하는 데이터 기반 기능이에요. AI는 계획과 해석, 딱 두 곳에만 씁니다.</p>
+    </div>
+    <div class="fgrid g2">
+      <div class="fcard reveal">
+        <div class="fhead"><span class="fic" style="background:var(--p-teal)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#63d6bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span><h3>AI 학습 스케줄<span class="ai-pill sm">AI</span></h3></div>
+        <p>시험일과 약점, 최근 오답을 바탕으로 주차별 학습 계획을 짜 드려요. 목표와 주 3~7일 학습 빈도만 고르면 학습일마다 세 과목을 나눠 배치합니다. 무료 체험 1회, 무료 이용은 앞 30일 일정까지 제공돼요.</p>
+      </div>
+      <div class="fcard reveal">
+        <div class="fhead"><span class="fic" style="background:var(--p-blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#93b6de" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><h3>AI 학습 보고서<span class="ai-pill sm">AI</span></h3></div>
+        <p>성적표처럼 받아보는 석 장짜리 보고서. 판정과 진단, 취약 단원 처방전, 학습 플랜까지 담고 이미지로 저장할 수 있어요. 무료 체험 1회를 제공합니다.</p>
+      </div>
+    </div>
+    <p class="an-note" style="text-align:center;margin-top:24px">AI 분석은 이용 전에 개인정보 국외 이전 동의를 받으며, 동의하지 않아도 통계 기반 보고서는 그대로 이용할 수 있어요.</p>
+  </div>
+</section>
+
+<!-- ===================== 배움터 허브 ===================== -->
+<section class="dz sec-focus" id="hub">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">배움터</span>
+      <h2 class="h">공부에 필요한 것들이 한 곳에</h2>
+      <p class="lead">기출부터 보고서까지, 허브 한 화면에서 오갑니다.</p>
+    </div>
+    <div class="hubgrid">
+      <div class="hubitem reveal"><span class="hi" style="background:var(--p-teal)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#63d6bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg></span><b>검정고시 기출</b><span>CBT 풀이와 PDF 다운로드</span></div>
+      <div class="hubitem reveal"><span class="hi" style="background:var(--p-coral)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#eaa48d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg></span><b>취약 단원</b><span>오답률로 짚는 보완 지점</span></div>
+      <div class="hubitem reveal"><span class="hi" style="background:var(--p-purple)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b9a9db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span><b>약점 문제 풀기</b><span>내가 틀린 문제로 만든 30문제 세트</span></div>
+      <div class="hubitem reveal"><span class="hi" style="background:var(--p-blue)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#93b6de" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><b>문제은행</b><span>단원 130종·유형 6종 태그로 골라 풀기(구독)</span></div>
+      <div class="hubitem reveal"><span class="hi" style="background:var(--p-amber)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#dfba85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="m9 15 2 2 4-4"/></svg></span><b>학습 보고서</b><span>성적표처럼 받아보는 진단과 처방</span></div>
+      <div class="hubitem reveal"><span class="hi" style="background:var(--p-slate)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9dc0cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg></span><b>나의 서랍</b><span>지난 보고서를 12개까지 보관</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 무료/유료 경계 ===================== -->
+<section class="dz sec-focus" id="free">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">이용 안내</span>
+      <h2 class="h">무료로 시작하고, 필요할 때만 넓히세요</h2>
+    </div>
+    <div class="price-banner reveal">
+      <div class="pb-name">배움터닝 <span class="best">FREE TO START</span></div>
+      <span class="free-chip">기출 채점 전부 무료</span>
+      <p class="pd">채점·복습·성적 그래프처럼 매일 쓰는 기능은 모두 무료예요. 구독 가격은 정식 출시와 함께 공개합니다.</p>
+    </div>
+    <div class="fgrid g2" style="margin-top:26px;max-width:none">
+      <div class="fcard reveal">
+        <div class="fhead"><span class="fic" style="background:var(--p-teal)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#63d6bd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h3>무료로 시작</h3></div>
+        <div class="feat-list">
+          <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)">✓</span><div>기출 CBT·자동 채점·PDF 다운로드</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)">✓</span><div>오답 정리·망각곡선 복습·약점 문제 세트</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)">✓</span><div>성적 그래프·시험 기록·출석</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)">✓</span><div>취약 단원 진단·학습 달력·D-day</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)">✓</span><div>AI 학습 스케줄 체험 1회(무료는 앞 30일 일정)</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)">✓</span><div>AI 학습 보고서 체험 1회</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-teal);color:var(--s-teal)">✓</span><div>해설·단원 요약집 무료 체험</div></div>
+        </div>
+      </div>
+      <div class="fcard reveal">
+        <div class="fhead"><span class="fic" style="background:var(--p-blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#93b6de" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M18.4 5.6l-2.1 2.1M21 12h-3M5.6 5.6l2.1 2.1M3 12h3M12 21a6 6 0 0 0 6-6c0-3.3-2.7-4.5-6-9-3.3 4.5-6 5.7-6 9a6 6 0 0 0 6 6z"/></svg></span><h3>구독으로 확장</h3></div>
+        <div class="feat-list">
+          <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>단원·유형 문제은행(태그 130종)</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>AI 학습 스케줄 전체 기간</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>AI 학습 보고서 무제한</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>고졸 해설 1,870문항·단원 요약집 106개 전체 이용</div></div>
+        </div>
+      </div>
+    </div>
+    <p class="an-note" style="text-align:center;margin-top:24px">무료로 쓰는 동안의 학습 기록은 구독을 시작해도 그대로 이어집니다.</p>
+  </div>
+</section>
+
+<!-- ===================== 미션 ===================== -->
+<section class="dz sec-focus" id="mission">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">우리가 이 앱을 만드는 이유</span>
+      <h2 class="h">학교 밖에서도, 배움은 계속됩니다</h2>
+    </div>
+    <div class="ceo-card reveal">
+      <p class="mp">아웃포커스는 학교 밖 청소년을 비롯해 자기 속도로 공부하는 모든 수험생의 학습 접근성을 넓히는 것을 목표로, 사회적기업 설립을 준비하고 있습니다. 기출 채점을 누구에게나 무료로 여는 것도 그 약속의 일부예요.</p>
+      <p class="mp">그래서 배움터닝은 말도 고릅니다. 60점을 넘지 못한 날에도 점수를 깎아내리는 말 대신, 합격선까지 몇 점이 남았는지와 다음에 할 공부만 보여드립니다.</p>
+      <p class="mp">그리고 정직하게 말씀드립니다. 배움터닝은 학습을 돕는 도구이며, 합격을 보장하지 않습니다. 대신 공부한 기록이 헛돌지 않게 하는 일은 저희가 제일 잘합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="dz sec-focus" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="h">자주 묻는 질문</h2>
+    </div>
+    <div class="qna-list reveal">
+      <details class="q">
+        <summary><span class="qmark">Q</span>언제 출시되나요?<span class="arrow">▾</span></summary>
+        <div class="a">iOS와 Android 앱스토어 출시를 준비하고 있어요. 날짜가 정해지면 출시 알림 신청자분들께 가장 먼저 알려드립니다.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qmark">Q</span>정말 채점이 무료인가요?<span class="arrow">▾</span></summary>
+        <div class="a">네. 기출 CBT 풀이와 자동 채점, 성적 그래프, 복습·오답 정리, 취약 단원 진단은 모두 무료예요. 단원·유형별 문제은행은 구독 전용이고, AI 학습 스케줄과 AI 학습 보고서는 무료 체험 1회를 제공해요. 구독 가격은 출시와 함께 공개합니다.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qmark">Q</span>어떤 시험을 지원하나요?<span class="arrow">▾</span></summary>
+        <div class="a">중졸·고졸 검정고시 두 과정을 지원해요. 고졸은 국어·수학·영어·사회·과학·한국사·도덕 7과목, 중졸은 6과목입니다. 2021년 1회부터 2026년 1회까지 기출 3,465문항을 수록했어요.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qmark">Q</span>해설도 있나요?<span class="arrow">▾</span></summary>
+        <div class="a">고졸 과정은 제공 회차의 전 문항에 해설 1,870개를 담았어요. 핵심 개념, 풀이 과정, 오답 소거, 한 줄 정리까지요. 해설과 단원 요약집은 체험으로 먼저 열어본 뒤 구독으로 전체를 이용할 수 있어요. 중졸 해설은 준비 중입니다.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qmark">Q</span>회원가입이 복잡하지 않나요?<span class="arrow">▾</span></summary>
+        <div class="a">구글 계정으로 바로 시작할 수 있어 별도 가입 절차가 없어요. 만 14세 미만은 가입할 수 없습니다.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qmark">Q</span>웹 베타는 어떻게 참여하나요?<span class="arrow">▾</span></summary>
+        <div class="a">아래에서 출시 알림을 신청하면서 '웹 베타 참여'를 선택해 주세요. 참여 코드를 차례로 보내드립니다. 베타 기간에는 일부 기능이 제한될 수 있어요.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qmark">Q</span>기출문제 저작권은 문제없나요?<span class="arrow">▾</span></summary>
+        <div class="a">기출문제의 저작권은 한국교육과정평가원(KICE)과 시·도 교육청에 있습니다. 배움터닝은 앱 안의 모든 문항에 출처를 표기하고 있어요.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 출시 알림 ===================== -->
+<section class="dz sec-focus" id="notify">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">LAUNCH</span>
+      <h2 class="h">출시 소식을 가장 먼저 받아보세요</h2>
+      <p class="lead">지금은 웹에서 베타 테스트를 진행하고 있어요. 알림을 신청하시면 정식 출시 소식과 웹 베타 참여 안내를 순서대로 보내드립니다.</p>
+    </div>
+    <form class="cform reveal" id="nform" novalidate>
+      <div class="frow">
+        <label for="nmail">이메일<span class="req">*</span></label>
+        <input type="email" id="nmail" name="email" inputmode="email" autocomplete="email" required placeholder="you@example.com">
+      </div>
+      <div class="frow">
+        <label for="ncourse">준비 과정 (선택)</label>
+        <select id="ncourse" name="준비과정">
+          <option value="" selected>선택 안 함</option>
+          <option value="고졸">고졸</option>
+          <option value="중졸">중졸</option>
+          <option value="아직 몰라요">아직 몰라요</option>
+        </select>
+      </div>
+      <label class="fagree fopt">
+        <input type="checkbox" id="fbeta">
+        <span>웹 베타에도 참여하고 싶어요</span>
+      </label>
+      <label class="fagree">
+        <input type="checkbox" id="nagree" required>
+        <span>출시·베타 안내를 위한 이메일 수집·이용에 동의합니다. (안내 종료 후 파기)</span>
+      </label>
+      <button type="submit" class="fsend" id="nsend">알림 신청하기</button>
+      <div class="fmsg" id="nmsg"></div>
+    </form>
+    <p class="cnote">이메일은 배움터닝 출시·베타 안내에만 사용해요.</p>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot dz">
+  <div class="wrap">
+    <div class="foot-top">
+      <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
+      <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
+    </div>
+    <div class="biz-info">
+      <b>아웃포커스 (OutFocus)</b> · 대표 양승환 · 설립 2026년 7월<br>
+      이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구 · 사업자등록 준비 중
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 아웃포커스 (OutFocus). All rights reserved.</span>
+      <a href="terms.html" class="foot-terms">이용약관</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// nav scrolled
+var nav=document.getElementById('nav');
+function onScroll(){ if(window.scrollY>12) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }
+window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+// 섹션 집중 리빌
+if('IntersectionObserver' in window){
+  var secIO=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('on');secIO.unobserve(e.target);} });
+  },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.sec-focus').forEach(function(el){secIO.observe(el)});
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  },{threshold:.08,rootMargin:'0px 0px -32px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+}else{
+  document.querySelectorAll('.sec-focus').forEach(function(el){el.classList.add('on')});
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});
+}
+
+// in-page smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var id=a.getAttribute('href'); if(!id||id==='#') return;
+    var t=document.querySelector(id);
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+// 허브 아이템 호버 글로우
+var hubColors={'검정고시 기출':'#9ad7cd','취약 단원':'#f3bfb7','약점 문제 풀기':'#cdc4e5','문제은행':'#b6c4e0','학습 보고서':'#e8d8bc','나의 서랍':'#c9d8d3'};
+document.querySelectorAll('.hubitem').forEach(function(item){
+  var name=(item.querySelector('b')||{}).textContent||'';
+  var col=hubColors[name]||'#9ad7cd';
+  item.addEventListener('mouseenter',function(){
+    item.style.boxShadow='0 0 0 2px '+col+', 0 4px 16px rgba(13,38,33,.08)';
+  });
+  item.addEventListener('mouseleave',function(){
+    item.style.boxShadow='';
+  });
+});
+
+// 보조 CTA(웹 베타 참여 신청) 클릭 → 폼의 베타 체크박스 자동 체크
+document.querySelectorAll('[data-beta]').forEach(function(a){
+  a.addEventListener('click',function(){ var c=document.getElementById('fbeta'); if(c) c.checked=true; });
+});
+
+// ── 출시 알림 폼 → 대표 메일 발송 (정적 사이트라 서버 없이 FormSubmit 릴레이 사용) ──
+(function(){
+  var f=document.getElementById('nform'); if(!f) return;
+  var msg=document.getElementById('nmsg'), btn=document.getElementById('nsend');
+  function say(kind,text){ msg.className='fmsg '+kind; msg.textContent=text; }
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var m=document.getElementById('nmail').value.trim(),
+        course=document.getElementById('ncourse').value,
+        beta=document.getElementById('fbeta').checked;
+    if(!m){ say('err','이메일을 입력해주세요.'); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){ say('err','이메일 주소를 다시 확인해주세요.'); return; }
+    if(!document.getElementById('nagree').checked){ say('err','이메일 수집·이용에 동의해주셔야 접수됩니다.'); return; }
+    btn.disabled=true; btn.textContent='보내는 중…'; say('','');
+    fetch('https://formsubmit.co/ajax/outfocus.edu@gmail.com',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        _subject:'[배움터닝 출시 알림]'+(beta?' [웹 베타 희망]':''),
+        _template:'table',
+        _captcha:'false',
+        email:m,
+        준비과정:course||'(미선택)',
+        웹베타참여:beta?'예':'아니오'
+      })
+    }).then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d && String(d.success)==='true'){
+          f.reset(); say('ok','신청이 완료됐어요! 소식이 준비되는 대로 이 메일로 보내드릴게요.');
+        } else { throw new Error('relay'); }
+      })
+      .catch(function(){
+        say('err','전송에 실패했어요. outfocus.edu@gmail.com 으로 \'출시 알림\'이라고 보내주셔도 접수됩니다.');
+      })
+      .finally(function(){ btn.disabled=false; btn.textContent='알림 신청하기'; });
+  });
+})();
+</script>
+</body>
+</html>
