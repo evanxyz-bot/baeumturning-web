@@ -889,23 +889,38 @@ body{background:#0d1917}
   radial-gradient(900px 520px at 78% 8%, rgba(233,245,241,.9) 0%, rgba(233,245,241,0) 60%),
   radial-gradient(700px 480px at 8% 80%, rgba(248,240,244,.9) 0%, rgba(248,240,244,0) 55%),
   #fbfdfd}
-/* 화이트→다크 전환: 조리개 크라운 컷 — 다크 존이 조리개 날 각도로 솟아오르는 기하 절개.
-   그라데이션 대신 로고 지오메트리(flat-top 육각)를 경계선으로 쓰고, 흰 여백에는
-   회사명(OutFocus)을 시각화한 보케 원이 떠 있다 */
-.iris-shift{position:relative;height:210px;background:#fbfdfd;overflow:hidden}
-.iris-shift .bk{position:absolute;border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle at 38% 34%, rgba(47,145,131,.34), rgba(47,145,131,.10) 58%, transparent 72%);
-  box-shadow:inset 0 0 0 1.5px rgba(47,145,131,.22);
-  animation:bkFloat 14s ease-in-out infinite}
-.iris-shift .bk.warm{background:radial-gradient(circle at 40% 35%, rgba(197,130,110,.26), rgba(197,130,110,.08) 60%, transparent 74%);
-  box-shadow:inset 0 0 0 1.5px rgba(197,130,110,.18)}
-.iris-shift .bk.soft{filter:blur(6px)}
-.iris-shift .crown{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:150px;display:block}
-.iris-shift .crown .facet{fill:#0d1917}
-.iris-shift .crown .edge{fill:none;stroke:rgba(78,207,180,.5);stroke-width:1.6;vector-effect:non-scaling-stroke}
-.iris-shift .mark{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);
-  width:22px;height:22px;color:#4ecfb4;opacity:.9}
-@keyframes bkFloat{0%,100%{transform:translateY(5px)}50%{transform:translateY(-9px)}}
+/* 화이트→다크 전환: 조리개 × 초점 (대표 확정 2026-08-13 — 후보 B+C 결합)
+   스크롤로 정육각 조리개가 열리며 다크 존이 드러나고, 그 내용은 흐림→초점 인,
+   밝은 존은 아웃포커스로 물러난다. 정육각형은 vmax 단위라 화면 비율 무관하게 정다각형 */
+.apfx{position:relative;height:215vh}
+.apfx-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fbfdfd}
+.apfx-light{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;
+  filter:blur(calc(12px * var(--p,0))) brightness(calc(1 - .55 * var(--p,0)))}
+.apfx-light .t{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif;font-weight:700;
+  font-size:clamp(20px,3.2vw,30px);color:#22332f;letter-spacing:-.01em;opacity:calc(1 - var(--p,0))}
+.apfx-dark{position:absolute;inset:0;background:#0d1917;display:flex;align-items:center;justify-content:center;padding:20px;
+  clip-path:polygon(
+    calc(50% + var(--o,0) * 60vmax) 50%,
+    calc(50% + var(--o,0) * 30vmax) calc(50% - var(--o,0) * 52vmax),
+    calc(50% - var(--o,0) * 30vmax) calc(50% - var(--o,0) * 52vmax),
+    calc(50% - var(--o,0) * 60vmax) 50%,
+    calc(50% - var(--o,0) * 30vmax) calc(50% + var(--o,0) * 52vmax),
+    calc(50% + var(--o,0) * 30vmax) calc(50% + var(--o,0) * 52vmax))}
+.apfx-in{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;
+  filter:blur(calc(10px * (1 - var(--p,0))));opacity:calc(.2 + .8 * var(--p,0))}
+.apfx-in .mk{width:36px;height:36px;color:#4ecfb4}
+.apfx-in .tt{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif;font-weight:700;
+  font-size:clamp(20px,3vw,29px);color:#eef7f4;letter-spacing:-.01em}
+.apfx-in .st{font-size:14.5px;color:#8fb5ab}
+.apfx-hint{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:12px;color:#7e968f;
+  opacity:calc(1 - var(--p,0) * 2)}
+@media(prefers-reduced-motion:reduce){
+  .apfx{height:auto}
+  .apfx-stage{position:relative;height:72vh}
+  .apfx-light{display:none}
+  .apfx-dark{--o:1.7!important}
+  .apfx-in{--p:1!important;filter:none;opacity:1}
+}
 /* 다크존 은은한 빛무리 — 검은 화면이 죽어 보이지 않게 */
 .analysis,.features{position:relative;overflow:hidden}
 .analysis::before,.features::before{content:'';position:absolute;pointer-events:none;z-index:0;
@@ -991,12 +1006,10 @@ body{background:#0d1917}
   .an-cols{grid-template-columns:1fr}
   .spot-3d{margin-top:8px}
   .features .sec-head{margin:0 0 48px}
-  .iris-shift{height:132px}
-  .iris-shift .crown{height:96px}
   .analysis::before,.features::before{width:760px}
 }
 @media(prefers-reduced-motion:reduce){
-  .iris-shift .bk,
+  
   .analysis::before,.features::before{animation:none}
 }
 
@@ -1350,17 +1363,18 @@ body{background:#0d1917}
     </div>
   </div>
 </section>
-<div class="iris-shift" aria-hidden="true">
-  <span class="bk" style="width:74px;height:74px;left:12%;top:18px"></span>
-  <span class="bk soft" style="width:44px;height:44px;left:27%;top:64px;animation-delay:3s"></span>
-  <span class="bk warm" style="width:56px;height:56px;left:71%;top:26px;animation-delay:5.5s"></span>
-  <span class="bk soft warm" style="width:30px;height:30px;left:84%;top:78px;animation-delay:8s"></span>
-  <span class="bk" style="width:24px;height:24px;left:46%;top:12px;animation-delay:6.5s"></span>
-  <svg class="crown" viewBox="0 0 1440 150" preserveAspectRatio="none">
-    <path class="facet" d="M0,150 L0,96 L430,42 L560,14 L880,14 L1010,42 L1440,96 L1440,150 Z"/>
-    <path class="edge" d="M0,88 L430,34 L560,6 L880,6 L1010,34 L1440,88"/>
-  </svg>
-  <svg class="mark" viewBox="0 0 200 200"><use href="#aperture"/></svg>
+<div class="apfx" id="apfx">
+  <div class="apfx-stage">
+    <div class="apfx-light"><span class="t">공부에도 초점이 필요하니까</span></div>
+    <div class="apfx-dark" id="apfxDark">
+      <div class="apfx-in" id="apfxIn">
+        <svg class="mk" viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>
+        <span class="tt">초점을 학습에 맞춥니다</span>
+        <span class="st">감이 아니라, 기록으로 — 배움터닝의 분석이 시작됩니다</span>
+      </div>
+    </div>
+    <div class="apfx-hint" id="apfxHint">천천히 스크롤 ↓</div>
+  </div>
 </div></div>
 
 <!-- ===================== AI ANALYSIS ===================== -->
@@ -1761,6 +1775,30 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   now.setHours(0,0,0,0);
   var d=Math.round((exam-now)/864e5);
   chip.textContent = d>0 ? 'D-'+d : (d===0 ? 'D-DAY' : 'D+'+(-d));
+})();
+</script>
+<script>
+/* 조리개×초점 전환 — 스크롤 진행률로 정육각 개구부(--o)와 초점(--p)을 구동 */
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var pin = document.getElementById('apfx');
+  var dark = document.getElementById('apfxDark');
+  var inr = document.getElementById('apfxIn');
+  var hint = document.getElementById('apfxHint');
+  if (!pin || !dark) return;
+  var ticking = false;
+  function upd(){
+    ticking = false;
+    var r = pin.getBoundingClientRect();
+    var total = r.height - innerHeight;
+    var p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
+    var s = p * p * (3 - 2 * p);
+    dark.style.setProperty('--o', (s * 1.7).toFixed(4));
+    inr.style.setProperty('--p', s.toFixed(4));
+    if (hint) hint.style.setProperty('--p', s.toFixed(4));
+  }
+  addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(upd); } }, {passive:true});
+  upd();
 })();
 </script>
 </body>
