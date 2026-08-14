@@ -25,18 +25,6 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"배움터닝","operatingSystem":"iOS, Android","applicationCategory":"EducationalApplication","description":"중졸·고졸 검정고시 학습 관리 앱. 기출 CBT와 무료 자동 채점, 오답 복습, 데이터 기반 약점 진단, AI 학습 스케줄을 제공합니다.","url":"https://outoffocus-edu.vercel.app/app.html","publisher":{"@type":"Organization","name":"아웃포커스","url":"https://outoffocus-edu.vercel.app/"}}
 </script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"언제 출시되나요?","acceptedAnswer":{"@type":"Answer","text":"iOS와 Android 앱스토어 출시를 준비하고 있어요. 날짜가 정해지면 출시 알림 신청자분들께 가장 먼저 알려드립니다."}},
-{"@type":"Question","name":"정말 채점이 무료인가요?","acceptedAnswer":{"@type":"Answer","text":"네. 기출 CBT 풀이와 자동 채점, 성적 그래프, 복습·오답 정리, 취약 단원 진단은 모두 무료예요. 단원·유형별 문제은행은 구독 전용이고, AI 학습 스케줄과 AI 학습 보고서는 무료 체험 1회를 제공해요. 구독 가격은 출시와 함께 공개합니다."}},
-{"@type":"Question","name":"어떤 시험을 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"중졸·고졸 검정고시 두 과정을 지원해요. 고졸은 국어·수학·영어·사회·과학·한국사·도덕 7과목, 중졸은 6과목입니다. 2021년 1회부터 2026년 1회까지 기출 3,465문항을 수록했어요."}},
-{"@type":"Question","name":"해설도 있나요?","acceptedAnswer":{"@type":"Answer","text":"고졸 과정은 제공 회차의 전 문항에 해설 1,870개를 담았어요. 핵심 개념, 풀이 과정, 오답 소거, 한 줄 정리까지요. 해설과 단원 요약집은 체험으로 먼저 열어본 뒤 구독으로 전체를 이용할 수 있어요. 중졸 해설은 준비 중입니다."}},
-{"@type":"Question","name":"회원가입이 복잡하지 않나요?","acceptedAnswer":{"@type":"Answer","text":"구글 계정으로 바로 시작할 수 있어 별도 가입 절차가 없어요. 만 14세 미만은 가입할 수 없습니다."}},
-{"@type":"Question","name":"웹 베타는 어떻게 참여하나요?","acceptedAnswer":{"@type":"Answer","text":"출시 알림을 신청하면서 '웹 베타 참여'를 선택해 주세요. 참여 코드를 차례로 보내드립니다. 베타 기간에는 일부 기능이 제한될 수 있어요."}},
-{"@type":"Question","name":"기출문제 저작권은 문제없나요?","acceptedAnswer":{"@type":"Answer","text":"기출문제의 저작권은 한국교육과정평가원(KICE)과 시·도 교육청에 있습니다. 배움터닝은 앱 안의 모든 문항에 출처를 표기하고 있어요."}}
-]}
-</script>
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -283,7 +271,7 @@ section.dz{padding:88px 0}
 #ai{background:linear-gradient(180deg,#0d1917 0%,#101d1a 100%)}
 #hub,#free{background:#101d1a}
 #mission{background:linear-gradient(180deg,#101d1a 0%,#0e1a18 100%)}
-#faq{background:#0e1a18}
+
 #notify{background:linear-gradient(180deg,#0e1a18 0%,#0c1614 100%);padding-bottom:104px}
 .foot.dz{background:#0a1413}
 /* 다크존 은은한 빛무리 — 검은 화면이 죽어 보이지 않게 */
@@ -611,7 +599,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
         <div class="fl"><span class="dot" style="background:var(--p-coral);color:var(--s-coral)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><div><b>회차 전체 풀기</b> <span>— 교시 순서대로 한 번에, 고졸 기준 총 4시간. 중간에 나가도 채점한 과목 다음부터 이어서 풀 수 있어요.</span></div></div>
         <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></span><div><b>전체화면 시험 모드 + 스와이프 OMR</b> <span>— 답을 고르면 다음 문항으로 자동 이동합니다.</span></div></div>
         <div class="fl"><span class="dot" style="background:var(--p-amber);color:var(--s-amber)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span><div><b>출제범위 밖 문항 표시</b> <span>— 예전 기출 중 지금 출제범위를 벗어난 문항은 따로 표시해 드려요. 검정고시 출제범위는 정규 교육과정과 다르니까요.</span></div></div>
-        <div class="fl"><span class="dot" style="background:var(--p-purple);color:var(--s-purple)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><b>문항마다 이어지는 해설</b> <span>— 핵심 개념, 풀이, 내가 고른 답이 왜 아닌지, 한 줄 정리까지. 고졸은 제공 회차 전 문항에 해설 1,870개를 담았어요.</span></div></div>
+        <div class="fl"><span class="dot" style="background:var(--p-purple);color:var(--s-purple)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><b>문항마다 이어지는 해설</b> <span>— 핵심 개념, 풀이, 내가 고른 답이 왜 아닌지, 한 줄 정리까지. 제공 회차 전 문항에 해설 1,870개를 담았어요.</span></div></div>
         <div class="fl"><span class="dot" style="background:var(--p-olive);color:var(--s-olive)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><div><b>기출 PDF 무료 다운로드</b> <span>— 종이로 풀고 싶은 날엔 회차·과목별로 내려받으세요.</span></div></div>
       </div>
     </div>
@@ -619,7 +607,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
       <div class="hub-stats">
         <div><b class="tnum">3,465</b><span>기출 문항</span></div>
         <div><b class="tnum">22</b><span>수록 회차</span></div>
-        <div><b class="tnum">1,870</b><span>고졸 해설</span></div>
+        <div><b class="tnum">1,870</b><span>해설</span></div>
       </div>
       <p class="an-note">2021년 1회~2026년 1회 기출 기준. 기출문제의 저작권은 한국교육과정평가원(KICE)과 시·도 교육청에 있으며, 앱의 모든 문항에 출처를 표기합니다.</p>
     </div>
@@ -736,10 +724,10 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
       <div class="fcard reveal">
         <div class="fhead"><span class="fic" style="background:var(--p-blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#93b6de" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M18.4 5.6l-2.1 2.1M21 12h-3M5.6 5.6l2.1 2.1M3 12h3M12 21a6 6 0 0 0 6-6c0-3.3-2.7-4.5-6-9-3.3 4.5-6 5.7-6 9a6 6 0 0 0 6 6z"/></svg></span><h3>구독으로 확장</h3></div>
         <div class="feat-list">
-          <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>단원·유형 문제은행(태그 130종)</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>단원·유형 문제은행</div></div>
           <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>AI 학습 스케줄 전체 기간</div></div>
           <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>AI 학습 보고서 무제한</div></div>
-          <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>고졸 해설 1,870문항·단원 요약집 106개 전체 이용</div></div>
+          <div class="fl"><span class="dot" style="background:var(--p-blue);color:var(--s-blue)">+</span><div>해설 1,870문항·단원 요약집 106개 전체 이용</div></div>
         </div>
       </div>
     </div>
@@ -755,53 +743,13 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
       <h2 class="h">학교 밖에서도, 배움은 계속됩니다</h2>
     </div>
     <div class="ceo-card reveal">
-      <p class="mp">아웃포커스는 학교 밖 청소년을 비롯해 자기 속도로 공부하는 모든 수험생의 학습 접근성을 넓히는 것을 목표로, 사회적기업 설립을 준비하고 있습니다. 기출 채점을 누구에게나 무료로 여는 것도 그 약속의 일부예요.</p>
-      <p class="mp">그래서 배움터닝은 말도 고릅니다. 60점을 넘지 못한 날에도 점수를 깎아내리는 말 대신, 합격선까지 몇 점이 남았는지와 다음에 할 공부만 보여드립니다.</p>
-      <p class="mp">그리고 정직하게 말씀드립니다. 배움터닝은 학습을 돕는 도구이며, 합격을 보장하지 않습니다. 대신 공부한 기록이 헛돌지 않게 하는 일은 저희가 제일 잘합니다.</p>
+      <p class="mp">아웃포커스는 학교 밖 청소년을 비롯해 자기 속도로 공부하는 모든 수험생의 학습 접근성을 넓히는 것을 목표로, 사회적기업 설립을 준비하고 있습니다.</p>
+      <p class="mp">정직하게 말씀드립니다. 배움터닝은 학습을 돕는 도구이며, 합격을 보장하지 않습니다. 대신 공부한 기록이 헛돌지 않게 하는 일은 저희가 제일 잘합니다.</p>
     </div>
   </div>
 </section>
 
 <!-- ===================== FAQ ===================== -->
-<section class="dz sec-focus" id="faq">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">FAQ</span>
-      <h2 class="h">자주 묻는 질문</h2>
-    </div>
-    <div class="qna-list reveal">
-      <details class="q">
-        <summary><span class="qmark">Q</span>언제 출시되나요?<span class="arrow">▾</span></summary>
-        <div class="a">iOS와 Android 앱스토어 출시를 준비하고 있어요. 날짜가 정해지면 출시 알림 신청자분들께 가장 먼저 알려드립니다.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qmark">Q</span>정말 채점이 무료인가요?<span class="arrow">▾</span></summary>
-        <div class="a">네. 기출 CBT 풀이와 자동 채점, 성적 그래프, 복습·오답 정리, 취약 단원 진단은 모두 무료예요. 단원·유형별 문제은행은 구독 전용이고, AI 학습 스케줄과 AI 학습 보고서는 무료 체험 1회를 제공해요. 구독 가격은 출시와 함께 공개합니다.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qmark">Q</span>어떤 시험을 지원하나요?<span class="arrow">▾</span></summary>
-        <div class="a">중졸·고졸 검정고시 두 과정을 지원해요. 고졸은 국어·수학·영어·사회·과학·한국사·도덕 7과목, 중졸은 6과목입니다. 2021년 1회부터 2026년 1회까지 기출 3,465문항을 수록했어요.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qmark">Q</span>해설도 있나요?<span class="arrow">▾</span></summary>
-        <div class="a">고졸 과정은 제공 회차의 전 문항에 해설 1,870개를 담았어요. 핵심 개념, 풀이 과정, 오답 소거, 한 줄 정리까지요. 해설과 단원 요약집은 체험으로 먼저 열어본 뒤 구독으로 전체를 이용할 수 있어요. 중졸 해설은 준비 중입니다.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qmark">Q</span>회원가입이 복잡하지 않나요?<span class="arrow">▾</span></summary>
-        <div class="a">구글 계정으로 바로 시작할 수 있어 별도 가입 절차가 없어요. 만 14세 미만은 가입할 수 없습니다.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qmark">Q</span>웹 베타는 어떻게 참여하나요?<span class="arrow">▾</span></summary>
-        <div class="a">아래에서 출시 알림을 신청하면서 '웹 베타 참여'를 선택해 주세요. 참여 코드를 차례로 보내드립니다. 베타 기간에는 일부 기능이 제한될 수 있어요.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qmark">Q</span>기출문제 저작권은 문제없나요?<span class="arrow">▾</span></summary>
-        <div class="a">기출문제의 저작권은 한국교육과정평가원(KICE)과 시·도 교육청에 있습니다. 배움터닝은 앱 안의 모든 문항에 출처를 표기하고 있어요.</div>
-      </details>
-    </div>
-  </div>
-</section>
-
 <!-- ===================== 출시 알림 ===================== -->
 <section class="dz sec-focus" id="notify">
   <div class="wrap">
