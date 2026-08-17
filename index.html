@@ -1026,11 +1026,18 @@ body::before{background:
 .foot-top{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
 .foot-top .brand-wm{font-size:52px!important;flex-shrink:0}
 .foot-desc{margin:0;max-width:300px;font-size:14.6px;line-height:1.6;color:var(--text-3)}
-.foot-top .biz-info{margin:0;padding:0;border:0;text-align:right;margin-left:auto;
+/* 설명글을 로고 글자 기준선에 맞춰 내린다 (로고는 한글 병기가 아래에 붙어 시각 중심이 낮다) */
+.foot-desc{align-self:center;margin-top:18px}
+.foot-top .foot-terms{margin-left:auto;align-self:center;margin-top:18px;font-size:13.4px}
+/* 회사정보 2줄은 아래 행 우측으로 */
+.foot-bottom{align-items:flex-start}
+.foot-bottom .biz-info{margin:0;padding:0;border:0;text-align:right;margin-left:auto;
   font-size:12.8px;line-height:1.85;color:var(--text-3)}
 @media (max-width:900px){
   .foot-top{gap:16px}
-  .foot-top .biz-info{margin-left:0;text-align:left;flex-basis:100%}
+  .foot-top .foot-terms{margin-left:0;margin-top:0}
+  .foot-bottom{flex-direction:column;gap:12px}
+  .foot-bottom .biz-info{margin-left:0;text-align:left}
 }
 @media (max-width:640px){
   .foot-top .brand-wm{font-size:38px!important}
@@ -1865,14 +1872,14 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="foot-top">
       <span class="brand-wm"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
       <p class="foot-desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니.</p>
+      <a href="terms.html" class="foot-terms">이용약관</a>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 아웃포커스 (OutFocus). All rights reserved.</span>
       <div class="biz-info">
         <b>아웃포커스 (OutFocus)</b> · 대표 양승환 · 설립 2026년 7월<br>
         이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구 · 사업자등록 준비 중
       </div>
-    </div>
-    <div class="foot-bottom">
-      <span>© 2026 아웃포커스 (OutFocus). All rights reserved.</span>
-      <a href="terms.html" class="foot-terms">이용약관</a>
     </div>
   </div>
 </footer>
