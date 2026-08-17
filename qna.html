@@ -275,6 +275,13 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .mailq button:disabled{opacity:.6}
 .mailq .fmsg{margin-top:10px;font-size:13.5px}.mailq .fmsg.ok{color:#0b7a6a}.mailq .fmsg.err{color:#c0392b}
 @media(max-width:560px){.mailq .row{grid-template-columns:1fr}}
+
+/* ── 줄바꿈 품질 (2026-08-17 전 페이지 적용) ──
+   balance: 제목이 마지막 줄에 한두 글자만 남지 않게 균등 분배
+   pretty : 본문 끝줄 고아 단어 방지. keep-all 은 한국어 어절 중간 끊김 방지 */
+h1,h2,h3,h4,.h,.qt,.app-title{text-wrap:balance}
+p,.lead,.sub,.desc,.a,.pd,li,.tip-d,.nn,figcaption{text-wrap:pretty}
+body{word-break:keep-all;overflow-wrap:break-word}
 </style>
 </head>
 <body>
