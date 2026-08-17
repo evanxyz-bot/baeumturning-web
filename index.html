@@ -1022,13 +1022,19 @@ body::before{background:
 .apfx-dark{background:#101d1a}
 
 /* ── 푸터 아이덴티티 — 로고 확대 + 설명을 같은 줄 우측에 ── */
-.foot-top{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+/* 로고 · 설명 · 회사정보를 한 행에 (행을 나누면 빈 줄이 생겨 공간만 먹는다) */
+.foot-top{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
 .foot-top .brand-wm{font-size:52px!important;flex-shrink:0}
-.foot-desc{margin:0;max-width:420px;font-size:15px;line-height:1.6;color:var(--text-3)}
+.foot-desc{margin:0;max-width:300px;font-size:14.6px;line-height:1.6;color:var(--text-3)}
+.foot-top .biz-info{margin:0;padding:0;border:0;text-align:right;margin-left:auto;
+  font-size:12.8px;line-height:1.85;color:var(--text-3)}
+@media (max-width:900px){
+  .foot-top{gap:16px}
+  .foot-top .biz-info{margin-left:0;text-align:left;flex-basis:100%}
+}
 @media (max-width:640px){
-  .foot-top{gap:14px}
   .foot-top .brand-wm{font-size:38px!important}
-  .foot-desc{font-size:14px}
+  .foot-desc{font-size:13.8px;max-width:none;flex-basis:100%}
 }
 
 /* 분석 방법론 표 — 논문 방법론 섹션의 형식을 빌려 근거를 드러낸다 */
@@ -1859,8 +1865,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="foot-top">
       <span class="brand-wm"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
       <p class="foot-desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니.</p>
-    </div>
-    <div class="foot-id">
       <div class="biz-info">
         <b>아웃포커스 (OutFocus)</b> · 대표 양승환 · 설립 2026년 7월<br>
         이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구 · 사업자등록 준비 중
