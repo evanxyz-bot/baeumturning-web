@@ -435,6 +435,14 @@ body{word-break:keep-all;overflow-wrap:break-word}
       </div>
       <div class="news-pane" id="npane"></div>
     </div>
+<!--
+  ▼ 정적 아카이브 (크롤러·AI 검색용)
+  아래 START~END 사이는 위 var NEWS=[...] 와 "같은 데이터"를 정적 HTML로 출력한 것입니다.
+  · 스크립트가 켜져 있으면 이 블록은 즉시 제거되고 위 2분할 UI가 보입니다 (중복 노출 없음).
+  · 스크립트가 꺼져 있으면 검색·2분할 UI가 숨겨지고(head 의 noscript) 이 블록만 보입니다.
+  ⚠️ NEWS 배열을 고치면 이 블록도 함께 갱신해야 합니다.
+     scratchpad/gen_news_static.py 처럼 START~END 사이를 다시 렌더하는 스크립트로 재생성하세요.
+-->
 <!--NEWS_STATIC_START-->
     <div class="news-static" id="news-static">
       <h2 class="ns-h">자료 전체 목록</h2>

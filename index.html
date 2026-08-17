@@ -796,13 +796,13 @@ body::before{background:
 
 /* 호버 말풍선 — 좌측 노드는 오른쪽, 우측 노드는 왼쪽에 뜬다 */
 .nw{position:relative;width:fit-content}
-.tip{position:absolute;top:50%;width:296px;z-index:20;pointer-events:none;
+.tip{position:absolute;top:50%;width:max-content;max-width:296px;z-index:20;pointer-events:none;
   background:#16241f;border:1px solid rgba(99,214,189,.30);border-radius:15px;padding:17px 19px;
   box-shadow:0 20px 46px rgba(0,0,0,.55);
   opacity:0;visibility:hidden;transition:opacity .22s,visibility .22s,transform .28s var(--ease-spring)}
 .net-in .tip{left:106px;transform:translateY(-50%) translateX(-8px)}
 .net-out .tip{right:106px;transform:translateY(-50%) translateX(8px)}
-.net-core .tip{left:50%;top:calc(100% + 46px);width:340px;transform:translateX(-50%) translateY(8px)}
+.net-core .tip{left:50%;top:calc(100% + 46px);max-width:340px;transform:translateX(-50%) translateY(8px)}
 /* 호버한 컬럼을 최상단으로 — .net-col 이 stacking context 를 만들어
    .tip 의 z-index 만으론 코어를 넘지 못한다 */
 .net-col:has(.nw:hover),.net-col:has(.nw:focus-within),
@@ -853,7 +853,7 @@ body::before{background:
 .net-in{align-items:flex-start}
 .net-out{align-items:flex-end}
 .net-core{position:relative;z-index:2;display:flex;align-items:center;justify-content:center}
-.nw{display:flex;flex-direction:column;align-items:center;gap:15px;width:fit-content}
+.nw{display:flex;flex-direction:column;align-items:center;gap:7px;width:fit-content}
 .node{position:relative;width:86px;height:86px;display:grid;place-items:center;border-radius:26px;
   color:var(--nc);background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02)),#16241f;
   border:1px solid rgba(255,255,255,.11);
@@ -924,7 +924,7 @@ body::before{background:
 }
 @media (max-width:860px){
   .netsec{padding:72px 0 78px}
-  .tip{width:min(268px,64vw);padding:14px 15px}
+  .tip{width:max-content;max-width:min(268px,64vw);padding:14px 15px}
   .net-in .tip{left:86px}
   .net-out .tip{right:86px}
   .net-core .tip{width:min(280px,72vw)}
@@ -1012,6 +1012,46 @@ body::before{background:
 .web3d{opacity:.55}
 .web3d text{font-size:16px}
 
+/* ── 섹션 이음매 제거 — 다크존을 하나의 연속 계조로 ──
+   기존: netsec #101d1a / analysis #0d1917 / foot #0a1413 이 맞닿아 가로 띠가 보였다.
+   각 구간의 끝색 = 다음 구간의 시작색으로 이어 붙여 경계선을 없앤다. */
+.netsec{background:linear-gradient(180deg,#101d1a 0%,#0e1a18 100%)}
+.analysis{background:linear-gradient(180deg,#0e1a18 0%,#0c1715 100%)}
+.foot{background:linear-gradient(180deg,#0c1715 0%,#0a1413 46%,#0a1413 100%)}
+/* 다크 전환(apfx) 끝색과 첫 다크 섹션 시작색도 일치시킨다 */
+.apfx-dark{background:#101d1a}
+
+/* ── 푸터 아이덴티티 — 로고 확대 + 설명을 같은 줄 우측에 ── */
+.foot-top{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.foot-top .brand-wm{font-size:52px!important;flex-shrink:0}
+.foot-desc{margin:0;max-width:420px;font-size:15px;line-height:1.6;color:var(--text-3)}
+@media (max-width:640px){
+  .foot-top{gap:14px}
+  .foot-top .brand-wm{font-size:38px!important}
+  .foot-desc{font-size:14px}
+}
+
+/* 분석 방법론 표 — 논문 방법론 섹션의 형식을 빌려 근거를 드러낸다 */
+.mth-intro{font-size:15.6px;color:#a8bfb8;line-height:1.7;margin:14px 0 20px;max-width:760px}
+.mth{width:100%;border-collapse:collapse;font-size:15px}
+.mth th{text-align:left;font-size:12.4px;font-weight:800;letter-spacing:.06em;color:#7f9a92;
+  text-transform:uppercase;padding:0 0 10px;border-bottom:1px solid rgba(255,255,255,.12)}
+.mth td{padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
+.mth tr:last-child td{border-bottom:0}
+.mth-n{width:42px;font-family:'Outfit',sans-serif;font-weight:700;font-size:13.5px;color:#63d6bd;padding-right:8px!important}
+.mth-t{width:34%;padding-right:20px!important}
+.mth-t b{display:block;font-size:16.4px;font-weight:700;color:#eef7f4;letter-spacing:-0.01em;margin-bottom:3px}
+.mth-t span{display:block;font-size:13.2px;color:#8fa8a1;font-variant-numeric:tabular-nums}
+.mth-d{color:#bfd4ce;line-height:1.62}
+.mth-d b{color:#eef7f4;font-weight:700}
+@media (max-width:720px){
+  .mth thead{display:none}
+  .mth tr{display:grid;grid-template-columns:34px 1fr;gap:0 10px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+  .mth td{border:0;padding:0}
+  .mth-t{width:auto;padding-right:0!important}
+  .mth-d{grid-column:2;margin-top:6px}
+}
+
 /* ============ 반응형 안정화 (2026-08-18) ============
    문제: 3D 씬·네트워크가 고정 px + 성긴 브레이크포인트라 창을 줄이면 값이 툭툭 점프했다
    (폰 293->234, 네트워크 852->520). 중간 폭에서 비율이 깨지고 요소가 화면 밖으로 나갔다.
@@ -1044,7 +1084,7 @@ body::before{background:
 /* 말풍선도 노드 크기를 따라가게 (고정 106px 였음) */
 .net-in .tip{left:calc(clamp(52px, 5.4vw, 86px) + 20px)}
 .net-out .tip{right:calc(clamp(52px, 5.4vw, 86px) + 20px)}
-.tip{width:clamp(228px, 24vw, 296px)}
+.tip{width:max-content;max-width:clamp(228px, 24vw, 296px)}
 
 /* 마지막 네비 드롭다운이 가운데 정렬이라 좁은 폭에서 화면 밖으로 나가 가로 스크롤을 만들던 것 */
 .nav-drop:last-child .drop-menu{left:auto;right:0;transform:translateX(0) translateY(6px)}
@@ -1495,7 +1535,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 
                   <!-- 카테고리 1: 대시보드 -->
                   <div class="cat-slide on" data-cat="dash">
-                    <div class="ddaybar">다음 시험 <b>27년 1회차</b> 27. 4. (예정) <span class="dchip" id="ddayChip">D-241</span></div>
+                    <div class="ddaybar">다음 시험 <b>27년 1회차</b> (일정 공고 전) <span class="dchip" id="ddayChip">D-241</span></div>
                     <div class="cat-body">
                       <div class="cat-head"><span class="ci" style="background:#2f9183"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>대시보드</div>
                       <div class="mini-card pass-card">
@@ -1739,7 +1779,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="apfx-dark" id="apfxDark">
       <div class="apfx-in" id="apfxIn">
         <svg class="mk" viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>
-        <span class="tt"><em class="fx">초점</em>을 학습에 맞춥니다</span>
+        <span class="tt"><em class="fx">초점</em>을 데이터에 맞춥니다</span>
       </div>
     </div>
     <div class="apfx-hint" id="apfxHint">천천히 스크롤 ↓</div>
@@ -1760,7 +1800,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <div class="net-col net-in">
         <div class="nw"><div class="node" id="nA" style="--nc:var(--s-blue);--np:rgba(88,120,160,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><span class="nn">기출 풀이</span><div class="tip"><b>기출 풀이</b><span class="tip-d">회차별 기출을 앱에서 풀면 문항 단위로 풀이 기록이 남습니다. CBT 모드로 실전처럼.</span></div></div>
         <div class="nw"><div class="node" id="nB" style="--nc:var(--s-teal);--np:rgba(47,145,131,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="9" cy="8.5" r="1.6"/><circle cx="9" cy="15" r="1.6"/><path d="M13 8.5h4M13 15h4"/></svg></div><span class="nn">OMR 채점</span><div class="tip"><b>OMR 자동채점</b><span class="tip-d">풀고 나면 OMR로 즉시 채점. 어떤 문항을 왜 틀렸는지까지 데이터로 기록됩니다.</span></div></div>
-        <div class="nw"><div class="node" id="nC" style="--nc:var(--s-coral);--np:rgba(197,130,110,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div><span class="nn">오답 기록</span><div class="tip"><b>실점 정량화</b><span class="tip-d">오답을 단원별로 모아, 어디서 얼마나 점수를 잃는지 집중도를 수치화합니다.</span></div></div>
+        <div class="nw"><div class="node" id="nC" style="--nc:var(--s-coral);--np:rgba(197,130,110,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div><span class="nn">오답 DB화</span><div class="tip"><b>실점 정량화</b><span class="tip-d">오답을 단원별로 모아, 어디서 얼마나 점수를 잃는지 집중도를 수치화합니다.</span></div></div>
         <div class="nw"><div class="node" id="nG" style="--nc:var(--s-olive);--np:rgba(154,166,116,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M16 2v4M8 2v4M4 10h16"/><path d="m9.5 15 1.6 1.6 3.4-3.4"/></svg></div><span class="nn">시험 기록</span><div class="tip"><b>시험 기록 아카이브</b><span class="tip-d">회차별 성적과 응시 기록이 쌓여 점수 추이 그래프의 근거가 됩니다.</span></div></div>
       </div>
       <div class="net-core">
@@ -1786,15 +1826,23 @@ body{word-break:keep-all;overflow-wrap:break-word}
     </div>
     <!-- 근거는 별도 행으로 분리 — 3열 배너 -->
     <div class="evidence reveal">
-      <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석의 근거 <span class="ev-badge">검증된 기법 + AI</span></div>
-      <div class="ev-grid">
-        <div class="ev-item"><b>통계학 · 교육통계학</b><span>학계에서 검증된 통계 기법으로 점수와 오답을 객관적인 수치로 해석합니다.</span></div>
-        <div class="ev-item"><b>검증된 학습과학 논문 · 학습법</b><span>효과가 입증된 학습과학 연구와 학습법에 근거해 우선순위를 정합니다.</span></div>
-        <div class="ev-item alt"><b>+ AI 분석 도구</b><span>축적된 풀이·오답 데이터를 해석해 학습 플랜에 반영합니다.</span></div>
-      </div>
+      <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석 방법론 <span class="ev-badge">7개 기법</span></div>
+      <p class="mth-intro">배움터닝의 분석은 새로 만든 이론이 아니라, <b>학계에 공개·검증된 방법론을 자체 구현</b>한 것입니다. 각 기법이 어떤 근거로 무엇을 산출하는지 아래에 밝힙니다.</p>
+      <table class="mth">
+        <thead><tr><th></th><th>기법</th><th>산출물</th></tr></thead>
+        <tbody>
+        <tr><td class="mth-n">01</td><td class="mth-t"><b>파레토 분석</b><span>Pareto (1896) · 80/20 법칙</span></td><td class="mth-d">단원별 <b>실점 집중도</b> — 전체 실점의 다수를 차지하는 소수 단원을 산출</td></tr>
+        <tr><td class="mth-n">02</td><td class="mth-t"><b>간격 반복</b><span>Ebbinghaus (1885) · 망각곡선</span></td><td class="mth-d">기억 잔존율이 떨어지는 시점에 맞춰 <b>과목별 복습 주기</b>를 계산</td></tr>
+        <tr><td class="mth-n">03</td><td class="mth-t"><b>우선순위 매트릭스</b><span>효과 × 노력 (Impact–Effort)</span></td><td class="mth-d">같은 시간을 썼을 때 <b>점수 상승폭이 큰 단원</b>부터 학습 순서를 결정</td></tr>
+        <tr><td class="mth-n">04</td><td class="mth-t"><b>오답 패턴 분석</b><span>문항 단위 반복 오류 집계</span></td><td class="mth-d">단원·유형별 <b>연속 오답과 오답률</b>을 추적해 취약 지점을 특정</td></tr>
+        <tr><td class="mth-n">05</td><td class="mth-t"><b>추세 분석</b><span>회차별 시계열 비교</span></td><td class="mth-d">과목별 점수의 <b>상승·정체·하락 추세</b>를 판정</td></tr>
+        <tr><td class="mth-n">06</td><td class="mth-t"><b>학습량 보정</b><span>응시 문항 수 가중</span></td><td class="mth-d">표본이 적은 단원의 오답률을 <b>과대 해석하지 않도록</b> 보정</td></tr>
+        <tr><td class="mth-n">07</td><td class="mth-t"><b>합격선 마진</b><span>평균 60점 기준 거리</span></td><td class="mth-d">현재 평균과 합격선 사이의 <b>위치와 밴드</b>를 표시</td></tr>
+        </tbody>
+      </table>
       <div class="ev-foot">
-        <div class="ev-tags"><span>실점 집중도</span><span>합격 예측</span><span>오답 패턴</span><span>복습 주기</span><span>성적 추세</span></div>
-        <p class="ev-note">* 외부의 막연한 추측이 아니라, 공개·검증된 방법론을 자체 구현해 적용합니다.</p>
+        <p class="ev-note">* 모든 수치는 <b>본인의 풀이·채점 기록</b>에서만 계산합니다. 타인과의 비교나 외부 추정치를 쓰지 않습니다.<br>
+        * 합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.</p>
       </div>
     </div>
   </div>
@@ -1803,34 +1851,16 @@ body{word-break:keep-all;overflow-wrap:break-word}
 
 
 
-<!-- ===================== 배움터닝 (서비스 소개 + 기능 통합) ===================== -->
-<section class="features sec-focus" id="service">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">MAIN SERVICE</span>
-      <div class="app-title">배움터닝</div>
-      <div class="app-st" style="margin-top:14px">고졸 검정고시 학습앱 · 출시 준비 중</div>
-      <h2 class="h" style="font-size:31.4px;margin-top:26px">검정고시 준비, 이 앱 하나로 끝</h2>
-      <p class="lead" style="word-break:keep-all;max-width:600px;line-height:1.78;margin-top:18px">
-        <b style="color:var(--accent-strong)">오답 데이터로 약점을 진단</b>하고 <b style="color:var(--accent-strong)">오늘 풀 문제</b>까지 정해주는 검정고시 학습 관리 앱.
-        성적분석부터 시험기록까지 <span class="pen">한 화면에서</span> 끝냅니다.
-      </p>
-      <p class="app-meta">고졸 과정 지원(중졸 추후 추가) · 만 14세 이상 이용 가능</p>
-      <div class="stores-hero" style="margin-top:30px">
-        <a href="#" class="store-pill"><svg width="14" height="16" viewBox="0 0 22 24" fill="#fff"><path d="M16.365 1.43c0 1.14-.49 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.21-2.98.8-.94 2.14-1.64 3.25-1.68.03.13.05.28.05.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C1.53 18.1.5 15.29.5 12.64c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.61 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></svg>App Store</a>
-        <a href="#" class="store-pill"><svg width="14" height="15" viewBox="0 0 22 22"><path d="M3 2.1C2.6 2.3 2.4 2.7 2.4 3.3v15.4c0 .6.2 1 .6 1.2l8.2-8.3L3 2.1z" fill="#00C3FF"/><path d="M3 2.1 11.2 11l2.4-2.4L4.3 1.6c-.5-.3-1-.2-1.3.5z" fill="#00E676"/><path d="M13.6 8.6 11.2 11l2.4 2.4 3.6-2.1c.8-.5.8-1.7 0-2.2l-3.6-2.1z" fill="#FFCE00"/><path d="M2.4 18.7c.1.5.4.8.9 1l9.3-5.3-2.4-2.4-7.8 6.7z" fill="#FF3D47"/></svg>Google Play</a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ===================== STRIP ===================== -->
 <!-- ===================== FOOTER ===================== -->
 <footer class="foot" id="contact">
   <div class="wrap">
-    <p class="foot-desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니.</p>
+    <div class="foot-top">
+      <span class="brand-wm"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
+      <p class="foot-desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니.</p>
+    </div>
     <div class="foot-id">
-      <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
       <div class="biz-info">
         <b>아웃포커스 (OutFocus)</b> · 대표 양승환 · 설립 2026년 7월<br>
         이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구 · 사업자등록 준비 중
