@@ -759,6 +759,59 @@ body::before{background:
 /* 다크 전환 구간 — 한 문장에 215vh는 과한 스크롤 비용. 165vh로 단축 */
 .apfx{height:165vh}
 
+/* 푸터 — 로고를 최하단 좌측, 회사 정보는 우측 */
+.foot-desc{font-size:14.6px;color:var(--text-3);line-height:1.65;max-width:420px}
+.foot-id{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;flex-wrap:wrap;
+  margin-top:34px;padding-top:24px;border-top:1px solid var(--border)}
+.foot-id .brand-wm{flex-shrink:0}
+.foot-id .biz-info{margin:0;padding:0;border:0;text-align:right;flex:1;min-width:280px}
+@media (max-width:640px){
+  .foot-id{flex-direction:column;gap:16px}
+  .foot-id .biz-info{text-align:left;min-width:0}
+}
+
+/* 초점 — 브랜드 컬러 강조 */
+.apfx-light .t .fx{font-style:normal;color:var(--accent)}
+.apfx-in .tt .fx{font-style:normal;color:#63d6bd}
+
+/* 코어 — 빔이 도착하는 순간 테두리에 빛이 한 바퀴 */
+.core-ring{position:absolute;inset:-7px;border-radius:38px;pointer-events:none;
+  background:conic-gradient(from 0deg,transparent 0deg,rgba(99,214,189,.95) 34deg,transparent 78deg);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
+  opacity:0;animation:coreSpin 6s linear infinite;animation-delay:2.25s}
+@keyframes coreSpin{
+  0%{opacity:0;transform:rotate(0deg)}
+  4%{opacity:1}
+  22%{opacity:1}
+  30%{opacity:0;transform:rotate(360deg)}
+  100%{opacity:0;transform:rotate(360deg)}
+}
+
+/* 호버 패널 — 파이프라인 단계·약점 그래프를 여기로 흡수 */
+.net-panel{max-width:760px;margin:52px auto 0;background:rgba(255,255,255,.032);
+  border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:20px 24px;
+  min-height:112px;display:flex;flex-direction:column;justify-content:center;
+  transition:border-color .3s,background .3s}
+.net-panel.act{border-color:rgba(99,214,189,.34);background:rgba(99,214,189,.05)}
+.np-body{display:flex;align-items:flex-start;gap:16px}
+.np-num{flex-shrink:0;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+  font-family:'Outfit',sans-serif;font-weight:800;font-size:15px;color:#63d6bd;
+  border:2px solid rgba(99,214,189,.42);background:rgba(99,214,189,.08)}
+.np-tx b{display:block;font-size:18.5px;font-weight:700;color:#eef7f4;letter-spacing:-0.01em;margin-bottom:5px}
+.np-tx span{font-size:15.6px;color:#a8bfb8;line-height:1.6}
+.np-graph{margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.13)}
+.npg-h{font-size:13.6px;font-weight:700;color:#cfe3dd;margin-bottom:11px}
+.npg-h span{font-weight:500;color:#8fa8a1;margin-left:6px}
+.npg-r{display:grid;grid-template-columns:1fr auto;gap:2px 10px;margin-bottom:9px}
+.npg-n{font-size:13.4px;color:#bfd4ce}
+.npg-v{font-size:13.4px;font-weight:800;color:#e08b78;font-variant-numeric:tabular-nums}
+.npg-r i{grid-column:1/-1;height:7px;border-radius:999px;background:rgba(255,255,255,.08);position:relative}
+.npg-r i::after{content:'';position:absolute;inset:0;width:var(--w);border-radius:999px;
+  background:linear-gradient(90deg,#dca093,#c4584a);transform-origin:left;
+  animation:npgGrow .8s var(--ease-out) both}
+@keyframes npgGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
 /* ── 학습 기록 네트워크 (기존 스트립 대체) ── */
 .netsec{background:#101d1a;padding:96px 0 104px}
 .net-head{max-width:820px;margin:0 auto 8px;text-align:center}
@@ -766,15 +819,15 @@ body::before{background:
 .net-head .h{color:#f2f8f6}
 .netsec .eyebrow{color:#0a1413;background-color:#63d6bd;background-image:none;
   padding:4px 12px;border-radius:999px;font-size:12.5px;letter-spacing:.08em}
-.net{position:relative;max-width:940px;margin:44px auto 0;
+.net{position:relative;max-width:1000px;margin:48px auto 0;
   display:grid;grid-template-columns:1fr 1.1fr 1fr;align-items:center}
 .net-col{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;
-  height:330px}
+  height:474px}
 .net-in{align-items:flex-start}
 .net-out{align-items:flex-end}
 .net-core{position:relative;z-index:2;display:flex;align-items:center;justify-content:center}
 .nw{display:flex;flex-direction:column;align-items:center;gap:9px}
-.node{position:relative;width:66px;height:66px;display:grid;place-items:center;border-radius:20px;
+.node{position:relative;width:86px;height:86px;display:grid;place-items:center;border-radius:26px;
   color:var(--nc);background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02)),#16241f;
   border:1px solid rgba(255,255,255,.11);
   box-shadow:0 14px 30px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.09);
@@ -782,22 +835,30 @@ body::before{background:
 .node svg{width:52%;height:52%;display:block}
 .nw:hover .node{transform:translateY(-4px) scale(1.06);border-color:var(--nc);
   box-shadow:0 18px 40px rgba(0,0,0,.42),0 0 0 4px var(--np),inset 0 1px 0 rgba(255,255,255,.12)}
-.node-lg{width:106px;height:106px;border-radius:31px;color:#63d6bd;
+.node-lg{width:142px;height:142px;border-radius:42px;color:#63d6bd;
   background:linear-gradient(160deg,rgba(99,214,189,.14),rgba(99,214,189,.03)),#13221e;
   border-color:rgba(99,214,189,.34);
   box-shadow:0 22px 54px rgba(11,122,106,.34),0 0 0 8px rgba(99,214,189,.05),inset 0 1px 0 rgba(255,255,255,.14)}
 .node-lg svg{width:58%;height:58%}
-.nn{font-size:13.4px;font-weight:700;color:#9db5ae;letter-spacing:-0.01em;transition:color .28s}
+
+.nn{font-size:14.6px;font-weight:700;color:#9db5ae;letter-spacing:-0.01em;transition:color .28s}
 .nw:hover .nn{color:#e6f2ee}
-.core-nn{font-size:15.4px;color:#cfe9e1}
+
+.core-nn{font-size:17px;color:#cfe9e1}
 /* 빔 */
 .beams{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none}
 .beams .bb{stroke:rgba(255,255,255,.10);stroke-width:1.6;fill:none;stroke-linecap:round}
-.beams .bf{stroke:var(--bc,#63d6bd);stroke-width:2.4;fill:none;stroke-linecap:round;
-  filter:drop-shadow(0 0 5px var(--bc,#63d6bd));
-  stroke-dasharray:46 620;stroke-dashoffset:666;
-  animation:beamRun 4.6s linear infinite;animation-delay:var(--bd,0s)}
-@keyframes beamRun{to{stroke-dashoffset:0}}
+.beams .bf{stroke:var(--bc,#63d6bd);stroke-width:3;fill:none;stroke-linecap:round;
+  filter:drop-shadow(0 0 6px var(--bc,#63d6bd));
+  stroke-dasharray:54 2400;stroke-dashoffset:2454;
+  animation:beamRun 6s linear infinite;animation-delay:var(--bd,0s)}
+/* 이동은 사이클의 28%(1.68s) 동안만, 나머지는 경로 밖에서 대기 →
+   입력 3줄이 코어에 도착한 뒤 출력 3줄이 출발한다 */
+@keyframes beamRun{
+  0%{stroke-dashoffset:2454}
+  28%{stroke-dashoffset:1954}
+  100%{stroke-dashoffset:1954}
+}
 .net-status{display:flex;align-items:center;justify-content:center;gap:9px;
   margin-top:40px;font-size:14.2px;color:#8fa8a1}
 .net-status i{width:7px;height:7px;border-radius:50%;background:#63d6bd;
@@ -809,17 +870,17 @@ body::before{background:
 @media (max-width:860px){
   .netsec{padding:72px 0 78px}
   .net{grid-template-columns:1fr 1fr 1fr;max-width:520px}
-  .net-col{height:300px}
-  .node{width:56px;height:56px;border-radius:17px}
-  .node-lg{width:84px;height:84px;border-radius:25px}
+  .net-col{height:392px}
+  .node{width:68px;height:68px;border-radius:21px}
+  .node-lg{width:104px;height:104px;border-radius:31px}
   .nn{font-size:12.3px}
 }
 @media (max-width:430px){
   .net{max-width:none}
-  .node{width:48px;height:48px;border-radius:15px}
-  .node-lg{width:72px;height:72px;border-radius:22px}
+  .node{width:58px;height:58px;border-radius:18px}
+  .node-lg{width:86px;height:86px;border-radius:26px}
   .nn{font-size:11.6px}
-  .net-col{height:280px}
+  .net-col{height:352px}
 }
 
 /* ── 기능 섹션 정리: 6장 나열 → 의미 그룹 2개 ── */
@@ -1569,12 +1630,11 @@ body{background:#0d1917}
 </section>
 <div class="apfx" id="apfx">
   <div class="apfx-stage">
-    <div class="apfx-light"><span class="t">공부에도 초점이 필요하니까</span></div>
+    <div class="apfx-light"><span class="t">공부에도 <em class="fx">초점</em>이 필요하니까</span></div>
     <div class="apfx-dark" id="apfxDark">
       <div class="apfx-in" id="apfxIn">
         <svg class="mk" viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>
-        <span class="tt">초점을 학습에 맞춥니다</span>
-        <span class="st">감이 아니라, 기록으로 — 배움터닝의 분석이 시작됩니다</span>
+        <span class="tt"><em class="fx">초점</em>을 학습에 맞춥니다</span>
       </div>
     </div>
     <div class="apfx-hint" id="apfxHint">천천히 스크롤 ↓</div>
@@ -1582,6 +1642,49 @@ body{background:#0d1917}
 </div></div>
 
 <!-- ===================== AI ANALYSIS ===================== -->
+<!-- ===================== NETWORK (학습 기록 → 분석 → 오늘의 학습) ===================== -->
+<section class="netsec sec-focus" id="how">
+  <div class="wrap">
+    <div class="net-head reveal">
+      <span class="eyebrow">HOW IT WORKS</span>
+      <h2 class="h">흩어진 학습 기록이<br>하나로 모입니다</h2>
+      <p class="lead">문제를 풀 때마다 쌓인 기록이 배움터닝으로 모이고, 분석을 거쳐 오늘 할 학습으로 다시 돌아옵니다.</p>
+    </div>
+    <div class="net" id="net">
+      <svg class="beams" id="beams" aria-hidden="true"></svg>
+      <div class="net-col net-in">
+        <div class="nw"><div class="node" id="nA" data-num="01" data-t="오답 데이터 수집" data-d="기출을 풀면 문항 단위로 풀이 기록이 쌓입니다. 어떤 문제를 어떻게 골랐는지까지 남습니다." style="--nc:var(--s-blue);--np:rgba(88,120,160,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><span class="nn">기출 풀이</span></div>
+        <div class="nw"><div class="node" id="nB" data-num="01" data-t="채점 결과 축적" data-d="OMR 채점 결과가 자동으로 기록돼, 맞고 틀림이 데이터로 정리됩니다." style="--nc:var(--s-teal);--np:rgba(47,145,131,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="9" cy="8.5" r="1.6"/><circle cx="9" cy="15" r="1.6"/><path d="M13 8.5h4M13 15h4"/></svg></div><span class="nn">OMR 채점</span></div>
+        <div class="nw"><div class="node" id="nC" data-num="02" data-t="실점 정량화" data-d="단원별로 어디서 얼마나 틀리는지 집중도를 수치화합니다." style="--nc:var(--s-coral);--np:rgba(197,130,110,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div><span class="nn">오답 기록</span></div>
+        <div class="nw"><div class="node" id="nG" data-num="01" data-t="시험 기록 축적" data-d="회차별 성적과 응시 기록이 함께 쌓여 추이 분석의 근거가 됩니다." style="--nc:var(--s-olive);--np:rgba(154,166,116,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M16 2v4M8 2v4M4 10h16"/><path d="m9.5 15 1.6 1.6 3.4-3.4"/></svg></div><span class="nn">시험 기록</span></div>
+      </div>
+      <div class="net-core">
+        <div class="nw"><div class="node node-lg" id="core" data-num="03" data-t="우선순위 산출" data-d="모인 기록을 분석해 점수 상승 효과가 큰 단원부터 학습 순서를 정합니다."><span class="core-ring"></span><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></div><span class="nn core-nn">배움터닝</span></div>
+      </div>
+      <div class="net-col net-out">
+        <div class="nw"><div class="node" id="nD" data-num="02" data-t="약점 분석 결과" data-d="실점이 집중된 단원을 그래프로 보여줍니다." style="--nc:var(--s-purple);--np:rgba(143,127,170,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 3-4 3 2.5 4.5-6"/></svg></div><span class="nn">성적 분석</span></div>
+        <div class="nw"><div class="node" id="nE" data-num="05" data-t="일일 플랜 자동 생성" data-d="오늘 풀 문제를 자동 배치합니다 — AI 스케줄링." style="--nc:var(--accent-mid);--np:rgba(154,215,205,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="m3 6 1.2 1.2L6.5 5M3 12l1.2 1.2L6.5 11M3 18l1.2 1.2L6.5 17"/></svg></div><span class="nn">오늘의 학습</span></div>
+        <div class="nw"><div class="node" id="nF" data-num="04" data-t="복습 주기 계산" data-d="기억이 옅어질 시점에 맞춰 과목별 복습 타이밍을 산출합니다." style="--nc:var(--s-amber);--np:rgba(175,144,105,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><span class="nn">복습 알림</span></div>
+        <div class="nw"><div class="node" id="nH" data-num="02" data-t="취약단원 진단" data-d="자주 틀리는 단원을 자동으로 모아 보완할 지점을 짚어줍니다." style="--nc:var(--s-slate);--np:rgba(130,163,176,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8.2v3.4M11 14.1h.01"/></svg></div><span class="nn">취약단원</span></div>
+      </div>
+    </div>
+    <div class="net-panel" id="netPanel">
+      <div class="np-body">
+        <span class="np-num" id="npNum">01</span>
+        <div class="np-tx"><b id="npT">기록이 쌓이고, 분석이 시작됩니다</b><span id="npD">아이콘에 마우스를 올리면 각 단계에서 무슨 일이 일어나는지 볼 수 있습니다.</span></div>
+      </div>
+      <div class="np-graph" id="npGraph" hidden>
+        <div class="npg-h">실점 집중도 <span>전체 실점 577점 중 상위 단원</span></div>
+        <div class="npg-r"><span class="npg-n">영어 · 문법/어휘</span><span class="npg-v">12%</span><i style="--w:100%"></i></div>
+        <div class="npg-r"><span class="npg-n">수학 · 도형의 방정식</span><span class="npg-v">9%</span><i style="--w:70%"></i></div>
+        <div class="npg-r"><span class="npg-n">수학 · 다항식</span><span class="npg-v">8%</span><i style="--w:63%"></i></div>
+        <div class="npg-r"><span class="npg-n">국어 · 문학</span><span class="npg-v">7%</span><i style="--w:56%"></i></div>
+      </div>
+    </div>
+    <p class="net-status"><i></i>풀이 기록이 쌓일수록 분석은 더 정확해집니다</p>
+  </div>
+</section>
+
 <section class="analysis sec-focus" id="analysis">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -1589,27 +1692,6 @@ body{background:#0d1917}
       <h2 class="h">감이 아니라,<br>검증된 학습 기법으로 분석합니다</h2>
       <p class="lead">추측이 아니라 <b>학계가 검증한 통계·학습과학 방법</b>에 <b>AI 분석</b>을 더해 약점을 진단하고 공부할 순서를 정합니다.</p>
     </div>
-    <div class="an-cols">
-      <div class="pipe reveal">
-        <div class="pstep"><span class="pnum">01</span><div><b>오답 데이터 수집</b><span>풀이 기록·OMR 채점 결과를 문항 단위로 축적</span></div></div>
-        <div class="pstep"><span class="pnum">02</span><div><b>실점 정량화</b><span>단원별로 어디서 얼마나 틀리는지 집중도를 수치화</span></div></div>
-        <div class="pstep"><span class="pnum">03</span><div><b>우선순위 산출</b><span>점수 상승 효과가 큰 단원부터 학습 순서를 결정</span></div></div>
-        <div class="pstep"><span class="pnum">04</span><div><b>복습 주기 계산</b><span>기억이 옅어질 시점에 맞춰 과목별 복습 타이밍 산출</span></div></div>
-        <div class="pstep"><span class="pnum">05</span><div><b>일일 플랜 자동 생성</b><span>오늘 풀 문제를 자동 배치 — AI 스케줄링</span></div></div>
-      </div>
-      <div class="spot-3d re-anim">
-        <div class="mock-card">
-          <div class="mh">성적 분석 · 실점 집중도</div>
-          <div class="ms">전체 실점 <b>577점</b> 중 핵심 약점 <b>18개</b>를 먼저 공략하세요.</div>
-          <div class="prow" style="--pz:64"><div class="pt"><span class="nm">영어 <i>· 문법/어휘</i></span><span class="vl tnum"><b>12%</b><small>-72점</small></span></div><div class="ptrack"><i style="width:100%"></i></div></div>
-          <div class="prow" style="--pz:50"><div class="pt"><span class="nm">수학 <i>· 도형의 방정식</i></span><span class="vl tnum"><b>9%</b><small>-50점</small></span></div><div class="ptrack"><i style="width:70%"></i></div></div>
-          <div class="prow" style="--pz:36"><div class="pt"><span class="nm">수학 <i>· 다항식</i></span><span class="vl tnum"><b>8%</b><small>-45점</small></span></div><div class="ptrack"><i style="width:63%"></i></div></div>
-          <div class="prow" style="--pz:22"><div class="pt"><span class="nm">국어 <i>· 문학</i></span><span class="vl tnum"><b>7%</b><small>-40점</small></span></div><div class="ptrack"><i style="width:56%"></i></div></div>
-          <div class="prow" style="--pz:10;margin-bottom:0"><div class="pt"><span class="nm">과학 <i>· 물리학</i></span><span class="vl tnum"><b>7%</b><small>-40점</small></span></div><div class="ptrack"><i style="width:56%"></i></div></div>
-        </div>
-      </div>
-    </div>
-
     <!-- 근거는 별도 행으로 분리 — 3열 배너 -->
     <div class="evidence reveal">
       <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석의 근거 <span class="ev-badge">검증된 기법 + AI</span></div>
@@ -1685,44 +1767,16 @@ body{background:#0d1917}
 </section>
 
 <!-- ===================== STRIP ===================== -->
-<!-- ===================== NETWORK (학습 기록 → 분석 → 오늘의 학습) ===================== -->
-<section class="netsec sec-focus" id="how">
-  <div class="wrap">
-    <div class="net-head reveal">
-      <span class="eyebrow">HOW IT WORKS</span>
-      <h2 class="h">흩어진 학습 기록이<br>하나로 모입니다</h2>
-      <p class="lead">문제를 풀 때마다 쌓인 기록이 배움터닝으로 모이고, 분석을 거쳐 오늘 할 학습으로 다시 돌아옵니다.</p>
-    </div>
-    <div class="net" id="net">
-      <svg class="beams" id="beams" aria-hidden="true"></svg>
-      <div class="net-col net-in">
-        <div class="nw"><div class="node" id="nA" style="--nc:var(--s-blue);--np:rgba(88,120,160,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><span class="nn">기출 풀이</span></div>
-        <div class="nw"><div class="node" id="nB" style="--nc:var(--s-teal);--np:rgba(47,145,131,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="9" cy="8.5" r="1.6"/><circle cx="9" cy="15" r="1.6"/><path d="M13 8.5h4M13 15h4"/></svg></div><span class="nn">OMR 채점</span></div>
-        <div class="nw"><div class="node" id="nC" style="--nc:var(--s-coral);--np:rgba(197,130,110,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div><span class="nn">오답 기록</span></div>
-      </div>
-      <div class="net-core">
-        <div class="nw"><div class="node node-lg" id="core"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></div><span class="nn core-nn">배움터닝</span></div>
-      </div>
-      <div class="net-col net-out">
-        <div class="nw"><div class="node" id="nD" style="--nc:var(--s-purple);--np:rgba(143,127,170,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 3-4 3 2.5 4.5-6"/></svg></div><span class="nn">성적 분석</span></div>
-        <div class="nw"><div class="node" id="nE" style="--nc:var(--accent-mid);--np:rgba(154,215,205,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="m3 6 1.2 1.2L6.5 5M3 12l1.2 1.2L6.5 11M3 18l1.2 1.2L6.5 17"/></svg></div><span class="nn">오늘의 학습</span></div>
-        <div class="nw"><div class="node" id="nF" style="--nc:var(--s-amber);--np:rgba(175,144,105,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><span class="nn">복습 알림</span></div>
-      </div>
-    </div>
-    <p class="net-status"><i></i>풀이 기록이 쌓일수록 분석은 더 정확해집니다</p>
-  </div>
-</section>
-
 <!-- ===================== FOOTER ===================== -->
 <footer class="foot" id="contact">
   <div class="wrap">
-    <div class="foot-top">
+    <p class="foot-desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니.</p>
+    <div class="foot-id">
       <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
-      <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
-    </div>
-    <div class="biz-info">
-      <b>아웃포커스 (OutFocus)</b> · 대표 양승환 · 설립 2026년 7월<br>
-      이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구 · 사업자등록 준비 중
+      <div class="biz-info">
+        <b>아웃포커스 (OutFocus)</b> · 대표 양승환 · 설립 2026년 7월<br>
+        이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구 · 사업자등록 준비 중
+      </div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 아웃포커스 (OutFocus). All rights reserved.</span>
@@ -2028,13 +2082,16 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var net=document.getElementById('net'), svg=document.getElementById('beams');
   if(!net||!svg) return;
   var core=document.getElementById('core');
+  /* 입력 4줄(0~1.5s 출발, 1.68s 이동 → 3.2s 전 도착) 뒤 출력 4줄이 출발 */
   var BEAMS=[
-    {id:'nA',dir:'in', curve:-86, color:'#5878a0', delay:0},
-    {id:'nB',dir:'in', curve:0,   color:'#2f9183', delay:.55},
-    {id:'nC',dir:'in', curve:86,  color:'#c5826e', delay:1.1},
-    {id:'nD',dir:'out',curve:-86, color:'#8f7faa', delay:1.65},
-    {id:'nE',dir:'out',curve:0,   color:'#9ad7cd', delay:2.2},
-    {id:'nF',dir:'out',curve:86,  color:'#af9069', delay:2.75}
+    {id:'nA',dir:'in', curve:-96, color:'#5878a0', delay:0},
+    {id:'nB',dir:'in', curve:-30, color:'#2f9183', delay:.25},
+    {id:'nG',dir:'in', curve:34,  color:'#9aa674', delay:.5},
+    {id:'nC',dir:'in', curve:96,  color:'#c5826e', delay:.75},
+    {id:'nD',dir:'out',curve:-96, color:'#8f7faa', delay:2.6},
+    {id:'nH',dir:'out',curve:-30, color:'#82a3b0', delay:2.85},
+    {id:'nE',dir:'out',curve:34,  color:'#9ad7cd', delay:3.1},
+    {id:'nF',dir:'out',curve:96,  color:'#af9069', delay:3.35}
   ];
   function draw(){
     var nr=net.getBoundingClientRect(), cr=core.getBoundingClientRect();
@@ -2063,6 +2120,39 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var sec=document.getElementById('how');
   if(sec) sec.addEventListener('transitionend',function(e){if(e.propertyName==='transform')draw()});
   setTimeout(draw,700); setTimeout(draw,1800);
+})();
+</script>
+
+<script>
+/* 네트워크 노드 호버 → 해당 분석 단계 설명(+약점 그래프) 표시 */
+(function(){
+  var panel=document.getElementById('netPanel');
+  if(!panel) return;
+  var num=document.getElementById('npNum'),t=document.getElementById('npT'),
+      d=document.getElementById('npD'),g=document.getElementById('npGraph');
+  var base={n:'01',t:'기록이 쌓이고, 분석이 시작됩니다',
+            d:'아이콘에 마우스를 올리면 각 단계에서 무슨 일이 일어나는지 볼 수 있습니다.'};
+  function show(el){
+    num.textContent=el.dataset.num; t.textContent=el.dataset.t; d.textContent=el.dataset.d;
+    panel.classList.add('act');
+    var wantG=(el.id==='nD');
+    g.hidden=!wantG;
+    if(wantG){ g.querySelectorAll('i').forEach(function(b){b.style.animation='none';void b.offsetWidth;b.style.animation='';}); }
+  }
+  function reset(){
+    num.textContent=base.n; t.textContent=base.t; d.textContent=base.d;
+    panel.classList.remove('act'); g.hidden=true;
+  }
+  document.querySelectorAll('.net .node[data-t]').forEach(function(el){
+    el.addEventListener('mouseenter',function(){show(el)});
+    el.addEventListener('focus',function(){show(el)});
+    el.setAttribute('tabindex','0');
+  });
+  var net=document.getElementById('net');
+  if(net){ net.addEventListener('mouseleave',reset); }
+  document.querySelectorAll('.net .node[data-t]').forEach(function(el){
+    el.addEventListener('blur',reset);
+  });
 })();
 </script>
 </body>
