@@ -759,6 +759,16 @@ body::before{background:
 /* 다크 전환 구간 — 한 문장에 215vh는 과한 스크롤 비용. 165vh로 단축 */
 .apfx{height:165vh}
 
+/* ── 기능 섹션 정리: 6장 나열 → 의미 그룹 2개 ── */
+.app-meta{font-size:14.6px;color:var(--text-3);margin-top:12px;font-weight:600}
+.fgroup{max-width:1240px;margin:0 auto;padding:0}
+.fgroup-t{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:800;
+  letter-spacing:-0.01em;color:var(--text-2);margin:46px 0 20px}
+.fgroup-t span{font-size:12.5px;font-weight:800;letter-spacing:.06em;color:var(--accent-strong);
+  background:var(--accent-soft);padding:4px 11px;border-radius:999px}
+.fgroup-t::after{content:'';flex:1;height:1px;background:var(--border-strong);opacity:.5}
+.fgrid+.fgroup .fgroup-t{margin-top:52px}
+
 /* ── 분석 섹션 재배치: 3열 압축 → 2행 ──
    [1행] 절차 5단계 | 실점 집중도 카드   [2행] 분석의 근거 3열 배너 */
 .an-cols{grid-template-columns:1fr 1fr;gap:56px;align-items:center}
@@ -1072,6 +1082,12 @@ body{background:#0d1917}
 
 /* 가로 폭 여유 (히어로 3D 씬은 기존 폭 유지) */
 .analysis .wrap,.features .wrap,.strip .wrap,.foot .wrap{max-width:1280px}
+/* 기능 그룹 소제목 — 다크존 */
+.features .fgroup-t{color:#cfe3dd}
+.features .fgroup-t span{color:#0a1413;background:#63d6bd}
+.features .fgroup-t::after{background:rgba(255,255,255,.14)}
+.features .app-meta{color:#8fa8a1}
+
 /* 근거 배너는 다크존에서도 3열 유지 (좁은 화면은 1열 — 아래 미디어쿼리) */
 @media (min-width:1100px){
   .analysis .ev-grid{grid-template-columns:repeat(3,1fr)}
@@ -1086,7 +1102,7 @@ body{background:#0d1917}
 .analysis .sec-head .lead{margin:16px 0 0;max-width:700px}
 .an-cols{grid-template-columns:1.02fr 1fr;gap:58px}
 .spot-3d{margin-top:0}
-.features .sec-head{text-align:left;max-width:780px;margin:0 0 56px auto}
+.features .sec-head{text-align:left;max-width:820px;margin:0 auto 56px 0}
 .features .sec-head .lead{margin:16px 0 0;max-width:700px}
 .features .stores-hero{justify-content:flex-start}
 .fgrid{padding:0}
@@ -1107,7 +1123,7 @@ body{background:#0d1917}
 .features .fcard:hover{background:#22352f;border-color:rgba(255,255,255,.2);box-shadow:0 14px 38px rgba(0,0,0,.42)}
 .features .store-pill{background:#eaf2f0;color:#0d1917}
 .features .store-pill svg path[fill="#fff"]{fill:#0d1917}
-.features .lead .pen{color:#0a1413;background:linear-gradient(180deg,transparent 58%,#63d6bd 58%)}
+.features .lead .pen{color:#eaf6f2;background:linear-gradient(transparent 60%,rgba(99,214,189,.32) 60%,rgba(99,214,189,.32) 92%,transparent 92%)}
 
 @media(max-width:900px){
   .an-cols{grid-template-columns:1fr}
@@ -1558,44 +1574,48 @@ body{background:#0d1917}
       <div class="app-title">배움터닝</div>
       <div class="app-st" style="margin-top:14px">중·고졸 검정고시 학습앱 · 출시 준비 중</div>
       <h2 class="h" style="font-size:31.4px;margin-top:26px">검정고시 준비, 이 앱 하나로 끝</h2>
-      <p class="lead" style="word-break:keep-all;max-width:640px;line-height:1.82;margin-top:18px">
-        <b style="color:var(--accent-strong)">오답 데이터로 약점을 진단</b>하고 <b style="color:var(--accent-strong)">오늘 풀 문제</b>까지 정해주는 검정고시 <span style="white-space:nowrap">학습 관리 앱</span>.
-        중졸·고졸 두 과정을 지원하며 만 14세 이상 이용할 수 있고, 성적분석부터 시험기록까지 <span class="pen">한 화면에서</span> 모두 끝냅니다.
+      <p class="lead" style="word-break:keep-all;max-width:600px;line-height:1.78;margin-top:18px">
+        <b style="color:var(--accent-strong)">오답 데이터로 약점을 진단</b>하고 <b style="color:var(--accent-strong)">오늘 풀 문제</b>까지 정해주는 검정고시 학습 관리 앱.
+        성적분석부터 시험기록까지 <span class="pen">한 화면에서</span> 끝냅니다.
       </p>
+      <p class="app-meta">중졸·고졸 과정 지원 · 만 14세 이상 이용 가능</p>
       <div class="stores-hero" style="margin-top:30px">
         <a href="#" class="store-pill"><svg width="14" height="16" viewBox="0 0 22 24" fill="#fff"><path d="M16.365 1.43c0 1.14-.49 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.21-2.98.8-.94 2.14-1.64 3.25-1.68.03.13.05.28.05.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C1.53 18.1.5 15.29.5 12.64c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.61 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></svg>App Store</a>
         <a href="#" class="store-pill"><svg width="14" height="15" viewBox="0 0 22 22"><path d="M3 2.1C2.6 2.3 2.4 2.7 2.4 3.3v15.4c0 .6.2 1 .6 1.2l8.2-8.3L3 2.1z" fill="#00C3FF"/><path d="M3 2.1 11.2 11l2.4-2.4L4.3 1.6c-.5-.3-1-.2-1.3.5z" fill="#00E676"/><path d="M13.6 8.6 11.2 11l2.4 2.4 3.6-2.1c.8-.5.8-1.7 0-2.2l-3.6-2.1z" fill="#FFCE00"/><path d="M2.4 18.7c.1.5.4.8.9 1l9.3-5.3-2.4-2.4-7.8 6.7z" fill="#FF3D47"/></svg>Google Play</a>
       </div>
     </div>
-    <ol class="flow">
-      <li class="reveal"><em>1</em><div><b>풀면 바로 채점</b><p>앱에서 기출을 풀면 즉시 채점하고, 점수 추이를 그래프로 남깁니다.</p></div></li>
-      <li class="reveal"><em>2</em><div><b>틀린 곳을 모읍니다</b><p>오답을 단원별로 모아 어디서 점수를 잃는지 짚어 드립니다.</p></div></li>
-      <li class="reveal"><em>3</em><div><b>오늘 할 일을 정합니다</b><p>잊을 때쯤 다시 묻도록 복습 주기를 계산해 하루치 문제를 골라 둡니다.</p></div></li>
-    </ol>
+    <div class="fgroup">
+      <h4 class="fgroup-t"><span>분석</span>데이터가 짚어주는 것</h4>
+    </div>
     <div class="fgrid">
-      <div class="fcard reveal" style="--card-accent:var(--s-teal)">
-        <div class="fhead"><span class="fic" style="background:var(--p-teal)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M18.4 5.6l-2.1 2.1M21 12h-3M5.6 5.6l2.1 2.1M3 12h3M12 21a6 6 0 0 0 6-6c0-3.3-2.7-4.5-6-9-3.3 4.5-6 5.7-6 9a6 6 0 0 0 6 6z"/></svg></span><h3>AI 학습 스케줄링</h3></div>
-        <p>AI가 약점 진단 결과로 '오늘 무엇을 풀지'를 자동 설계합니다. 점수가 가장 크게 오를 단원이 가장 먼저.</p>
-      </div>
       <div class="fcard reveal" style="--card-accent:var(--s-coral)">
-        <div class="fhead"><span class="fic" style="background:var(--p-coral)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5826e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><h3>근거기반 성적 분석<span class="ai-pill sm">데이터 기반</span></h3></div>
-        <p><b>통계학·교육통계학의 검증된 논문·학습법</b>에 <b>AI 분석 도구</b>를 결합했습니다. 실점 집중도·합격 예측·오답 패턴 등 7가지 기법으로 약점을 숫자로 정량화합니다.</p>
+        <div class="fhead"><span class="fic" style="background:var(--p-coral)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5826e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 3-4 3 2.5 4.5-6"/></svg></span><h3>근거기반 성적 분석</h3></div>
+        <p>검증된 통계·학습과학 기법에 AI 분석을 더해, 실점 집중도와 오답 패턴을 숫자로 정량화합니다.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-purple)">
-        <div class="fhead"><span class="fic" style="background:var(--p-purple)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><h3>취약단원 진단<span class="ai-pill sm">데이터 기반</span></h3></div>
-        <p>자주 틀리는 단원을 오답 데이터로 자동 수집해, 막연한 불안 대신 정확한 보완 지점을 짚어줍니다.</p>
+        <div class="fhead"><span class="fic" style="background:var(--p-purple)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8f7faa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><h3>취약단원 진단</h3></div>
+        <p>자주 틀리는 단원을 오답 데이터로 자동 수집해, 막연한 불안 대신 보완 지점을 짚어줍니다.</p>
       </div>
+      <div class="fcard reveal" style="--card-accent:var(--s-teal)">
+        <div class="fhead"><span class="fic" style="background:var(--p-teal)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M18.4 5.6l-2.1 2.1M21 12h-3M5.6 5.6l2.1 2.1M3 12h3M12 21a6 6 0 0 0 6-6c0-3.3-2.7-4.5-6-9-3.3 4.5-6 5.7-6 9a6 6 0 0 0 6 6z"/></svg></span><h3>AI 학습 스케줄링</h3></div>
+        <p>진단 결과로 오늘 무엇을 풀지 자동 설계합니다. 점수가 가장 크게 오를 단원이 가장 먼저.</p>
+      </div>
+    </div>
+    <div class="fgroup">
+      <h4 class="fgroup-t"><span>학습</span>매일 쓰는 기능</h4>
+    </div>
+    <div class="fgrid">
       <div class="fcard reveal" style="--card-accent:var(--s-blue)">
         <div class="fhead"><span class="fic" style="background:var(--p-blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5878a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg></span><h3>문제풀이 자동채점</h3></div>
-        <p>문제를 앱에서 풀고 OMR로 즉시 채점. 어떤 문항을 왜 틀렸는지까지 데이터로 기록됩니다.</p>
+        <p>앱에서 기출을 풀고 OMR로 즉시 채점. 어떤 문항을 왜 틀렸는지까지 기록에 남습니다.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-amber)">
         <div class="fhead"><span class="fic" style="background:var(--p-amber)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#af9069" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg></span><h3>망각곡선 복습</h3></div>
-        <p>잊을 때쯤 다시. 기억이 옅어질 시점에 맞춘 간격 반복으로 오늘 복습할 문제만 골라드립니다.</p>
+        <p>기억이 옅어질 시점에 맞춘 간격 반복으로, 오늘 복습할 문제만 골라드립니다.</p>
       </div>
       <div class="fcard reveal" style="--card-accent:var(--s-olive)">
         <div class="fhead"><span class="fic" style="background:var(--p-olive)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9aa674" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><h3>시험 일정 관리</h3></div>
-        <p>접수일·시험일 D-day와 나만의 학습 일정을 한 캘린더에. 중요한 날을 자동 알림으로.</p>
+        <p>접수일·시험일 D-day와 나만의 학습 일정을 한 캘린더에. 중요한 날은 자동 알림으로.</p>
       </div>
     </div>
   </div>
