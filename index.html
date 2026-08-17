@@ -781,11 +781,11 @@ body::before{background:
   -webkit-mask-composite:xor;
   mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   mask-composite:exclude;
-  opacity:0;animation:coreFlash 5s linear infinite;animation-delay:1.86s}
+  opacity:0;animation:coreFlash 4s linear infinite;animation-delay:1.48s}
 .core-ring::before{content:'';position:absolute;left:50%;top:50%;width:210%;height:210%;
   background:conic-gradient(transparent 0deg,rgba(99,214,189,.95) 32deg,transparent 74deg);
   transform:translate(-50%,-50%) rotate(0deg);
-  animation:coreSpin 5s linear infinite;animation-delay:1.86s}
+  animation:coreSpin 4s linear infinite;animation-delay:1.48s}
 @keyframes coreFlash{0%{opacity:0}4%{opacity:1}26%{opacity:1}34%{opacity:0}100%{opacity:0}}
 @keyframes coreSpin{
   0%{transform:translate(-50%,-50%) rotate(0deg)}
@@ -875,7 +875,54 @@ body::before{background:
 /* 빔 출발(좌)·도착(우) 순간에 아이콘 자체가 한 번 빛난다 — 지연은 JS가 --fd 로 주입.
    테두리(box-shadow)가 아니라 SVG 획에 drop-shadow 를 걸어 아이콘이 발광하게 한다 */
 .node svg{transition:filter .3s}
-.node[style*="--fd"] svg{animation:iconFlash 5s ease-out infinite;animation-delay:var(--fd,0s)}
+.node[style*="--fd"] svg{animation:iconFlash 4s ease-out infinite;animation-delay:var(--fd,0s)}
+@keyframes iconFlash{
+  0%{filter:none}
+  4%{filter:drop-shadow(0 0 7px var(--nc)) drop-shadow(0 0 15px var(--nc)) brightness(1.75)}
+  10%{filter:drop-shadow(0 0 6px var(--nc)) drop-shadow(0 0 13px var(--nc)) brightness(1.55)}
+  26%{filter:drop-shadow(0 0 2px var(--nc)) brightness(1.12)}
+  32%,100%{filter:none}
+}
+/* 빔 */
+.beams{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none}
+.beams .bb{stroke:rgba(255,255,255,.10);stroke-width:1.6;fill:none;stroke-linecap:round}
+/* 라이트닝 = 같은 중심을 공유하는 3겹.
+   dash 길이만 다르게 하고 중심을 맞추면(긴 겹일수록 offset 을 절반만큼 늦춤)
+   앞뒤로 똑같이 번지는 대칭 그라데이션이 된다 — 머리·몸통·꼬리가 한 덩어리.
+   이동 속도 500u / 1.48s = 338u/s → (96-34)/2=31u → 0.092s, (190-34)/2=78u → 0.231s */
+.beams .bf,.beams .bm,.beams .bt{fill:none;stroke-linecap:round;stroke:var(--bc,#63d6bd);opacity:0;
+  animation-duration:4s;animation-timing-function:linear;animation-iteration-count:infinite}
+.beams .bf{stroke-width:3.4;stroke-dasharray:34 2420;stroke-dashoffset:1954;
+  filter:drop-shadow(0 0 5px var(--bc,#63d6bd));
+  animation-name:beamCore;animation-delay:var(--bd,0s)}
+.beams .bm{stroke-width:2.8;stroke-dasharray:96 2358;stroke-dashoffset:1954;
+  filter:blur(2.4px);
+  animation-name:beamMid;animation-delay:calc(var(--bd,0s) + .092s)}
+.beams .bt{stroke-width:2.2;stroke-dasharray:190 2264;stroke-dashoffset:1954;
+  filter:blur(5px);
+  animation-name:beamHalo;animation-delay:calc(var(--bd,0s) + .231s)}
+@keyframes beamCore{
+  0%{stroke-dashoffset:2454;opacity:0}
+  6%{opacity:1} 31%{opacity:1}
+  37%{stroke-dashoffset:1954;opacity:0}
+  100%{stroke-dashoffset:1954;opacity:0}
+}
+@keyframes beamMid{
+  0%{stroke-dashoffset:2454;opacity:0}
+  6%{opacity:.5} 31%{opacity:.5}
+  37%{stroke-dashoffset:1954;opacity:0}
+  100%{stroke-dashoffset:1954;opacity:0}
+}
+@keyframes beamHalo{
+  0%{stroke-dashoffset:2454;opacity:0}
+  6%{opacity:.22} 31%{opacity:.22}
+  37%{stroke-dashoffset:1954;opacity:0}
+  100%{stroke-dashoffset:1954;opacity:0}
+}
+/* 빔 출발(좌)·도착(우) 순간에 아이콘 자체가 한 번 빛난다 — 지연은 JS가 --fd 로 주입.
+   테두리(box-shadow)가 아니라 SVG 획에 drop-shadow 를 걸어 아이콘이 발광하게 한다 */
+.node svg{transition:filter .3s}
+.node[style*="--fd"] svg{animation:iconFlash 4s ease-out infinite;animation-delay:var(--fd,0s)}
 @keyframes iconFlash{
   0%{filter:none}
   4%{filter:drop-shadow(0 0 7px var(--nc)) drop-shadow(0 0 15px var(--nc)) brightness(1.75)}
@@ -917,7 +964,7 @@ body::before{background:
   box-shadow:0 0 10px #63d6bd;animation:nodePulse 2.2s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){
   .beams .bf{animation:none;stroke-dasharray:none;stroke-dashoffset:0;opacity:.55}
-  .beams .bt{display:none}
+  .beams .bm,.beams .bt{display:none}
   .node[style*="--fd"] svg{animation:none!important;filter:none!important}
   .net-status i{animation:none}
 }
@@ -2099,28 +2146,30 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   if(!net||!svg) return;
   var core=document.getElementById('core');
   var BEAMS=[
+    /* 좌 4개 동시 출발(0s) → 코어 도착 1.48s → 우 4개 동시 출발(1.6s) */
     {id:'nA',dir:'in', color:'#5878a0', delay:0},
-    {id:'nB',dir:'in', color:'#2f9183', delay:.12},
-    {id:'nG',dir:'in', color:'#9aa674', delay:.24},
-    {id:'nC',dir:'in', color:'#c5826e', delay:.36},
-    {id:'nD',dir:'out',color:'#8f7faa', delay:2.0},
-    {id:'nH',dir:'out',color:'#82a3b0', delay:2.12},
-    {id:'nE',dir:'out',color:'#9ad7cd', delay:2.24},
-    {id:'nF',dir:'out',color:'#af9069', delay:2.36}
+    {id:'nB',dir:'in', color:'#2f9183', delay:0},
+    {id:'nG',dir:'in', color:'#9aa674', delay:0},
+    {id:'nC',dir:'in', color:'#c5826e', delay:0},
+    {id:'nD',dir:'out',color:'#8f7faa', delay:1.6},
+    {id:'nH',dir:'out',color:'#82a3b0', delay:1.6},
+    {id:'nE',dir:'out',color:'#9ad7cd', delay:1.6},
+    {id:'nF',dir:'out',color:'#af9069', delay:1.6}
   ];
   var NS='http://www.w3.org/2000/svg', made=[];
   BEAMS.forEach(function(b){
     var n=document.getElementById(b.id);
     /* 좌측=출발 시각, 우측=도착 시각(출발+이동 1.5s) */
-    if(n) n.style.setProperty('--fd',(b.dir==='in'?b.delay:b.delay+1.5)+'s');
+    if(n) n.style.setProperty('--fd',(b.dir==='in'?b.delay:b.delay+1.48)+'s');
     var base=document.createElementNS(NS,'path'); base.setAttribute('class','bb');
-    var tail=document.createElementNS(NS,'path'); tail.setAttribute('class','bt');
+    var halo=document.createElementNS(NS,'path'); halo.setAttribute('class','bt');
+    var mid=document.createElementNS(NS,'path');  mid.setAttribute('class','bm');
     var flow=document.createElementNS(NS,'path'); flow.setAttribute('class','bf');
-    [tail,flow].forEach(function(el){
+    [halo,mid,flow].forEach(function(el){
       el.style.setProperty('--bc',b.color); el.style.setProperty('--bd',b.delay+'s');
     });
-    svg.appendChild(base); svg.appendChild(tail); svg.appendChild(flow);
-    made.push({cfg:b,base:base,tail:tail,flow:flow});
+    svg.appendChild(base); svg.appendChild(halo); svg.appendChild(mid); svg.appendChild(flow);
+    made.push({cfg:b,base:base,halo:halo,mid:mid,flow:flow});
   });
   var lastW=0,lastH=0;
   function draw(force){
@@ -2142,7 +2191,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
       var ex=inbound?cx-cR:nx-nR, ey=inbound?cy:ny;
       var dx=(ex-sx)*0.52;
       var d='M '+sx+','+sy+' C '+(sx+dx)+','+sy+' '+(ex-dx)+','+ey+' '+ex+','+ey;
-      m.base.setAttribute('d',d); m.tail.setAttribute('d',d); m.flow.setAttribute('d',d);
+      m.base.setAttribute('d',d); m.halo.setAttribute('d',d); m.mid.setAttribute('d',d); m.flow.setAttribute('d',d);
     });
   }
   draw(true);
