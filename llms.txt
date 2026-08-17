@@ -1,0 +1,49 @@
+# 아웃포커스 (OutFocus)
+
+> 검정고시 학습관리 앱 '배움터닝'을 만드는 교육 솔루션 회사입니다.
+> 학교 밖 청소년을 비롯해 자기 속도로 공부하는 수험생의 학습 접근성을 넓히는 것을 목표로 합니다.
+
+## 회사
+
+- 상호: 아웃포커스 (OutFocus)
+- 대표: 양승환
+- 설립: 2026년 7월
+- 소재지: 인천광역시 계양구
+- 문의: outfocus.edu@gmail.com
+- 사업자등록 준비 중, 사회적기업 설립 준비 중
+
+## 제품 — 배움터닝 (BaeumTurning)
+
+- 검정고시 학습관리 앱입니다. 기출을 실제 시험처럼 풀면 OMR 자동 채점이 되고, 오답 기록으로 취약 단원을 짚어 공부 순서를 정리해 줍니다.
+- 상태: **미출시**. 2027년 초 정식 출시를 목표로 준비 중이며, 현재 웹 베타를 진행하고 있습니다.
+- 지원 과정: **현재 고졸 검정고시만 지원**합니다. 중졸 과정은 추후 추가 예정입니다.
+- 필수 과목: 국어·수학·영어·사회·과학·한국사. 여기에 선택 1과목을 더해 총 7과목을 응시합니다. (선택 과목의 구성은 회차별 시행공고를 따릅니다)
+- 수록 기출: 3,465문항 / 22회차 (2021년 1회 ~ 2026년 1회)
+- 해설: 고졸 1,870개 · 단원 요약집: 106개
+- 무료 기능: 기출 CBT 풀이, 자동 채점, 오답 정리와 망각곡선 복습, 성적 그래프, 시험 기록, 취약 단원 진단, 학습 달력·D-day, 대입 내신 환산
+- 체험 제공: AI 학습 스케줄 1회, AI 학습 보고서 1회
+- 구독 가격은 정식 출시와 함께 공개할 예정이며, 현재 결제는 활성화돼 있지 않습니다.
+
+## 주요 페이지
+
+- [홈](https://outoffocus-edu.vercel.app/): 회사와 서비스 개요
+- [배움터닝 서비스 소개](https://outoffocus-edu.vercel.app/app.html): 기능, 무료 이용 범위, 설계 근거
+- [검정 뉴스](https://outoffocus-edu.vercel.app/news.html): 검정고시·학교 밖 청소년 관련 공식 출처 자료 아카이브 63건(2010~2026). 시험 요강·합격 기준·정부 통계·법령 개정을 출처와 날짜를 붙여 정리했습니다.
+- [자주 묻는 질문](https://outoffocus-edu.vercel.app/qna.html): 서비스 이용 문답
+- [출시 알림](https://outoffocus-edu.vercel.app/launch.html): 정식 출시·웹 베타 참여 안내 신청
+- [회사 소개](https://outoffocus-edu.vercel.app/company.html): 미션과 팀
+- [연혁](https://outoffocus-edu.vercel.app/history.html)
+- [협력사](https://outoffocus-edu.vercel.app/partners.html)
+- [공지사항](https://outoffocus-edu.vercel.app/notice.html)
+- [기록](https://outoffocus-edu.vercel.app/stories.html): 개발 기록과 현장 이야기
+- [문의하기](https://outoffocus-edu.vercel.app/contact.html)
+- [개인정보처리방침](https://outoffocus-edu.vercel.app/privacy.html)
+- [이용약관](https://outoffocus-edu.vercel.app/terms.html)
+
+## 참고
+
+- 검정고시 기출문제의 저작권은 한국교육과정평가원(KICE)과 시·도 교육청에 있습니다. 배움터닝은 앱 안의 모든 문항에 출처를 표기합니다.
+- 배움터닝은 학습을 돕는 도구이며 합격을 보장하지 않습니다.
+- 검정고시 시험 일정과 요강은 거주지 관할 시·도교육청 공고로 확정됩니다. 이 사이트의 정리 내용은 공식 공고를 대체하지 않습니다.
+
+최종 수정: 2026-08-18

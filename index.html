@@ -929,7 +929,7 @@ body::before{background:
   .net-out .tip{right:86px}
   .net-core .tip{width:min(280px,72vw)}
   .tip b{font-size:15.2px}.tip-d{font-size:13.2px}
-  .net{grid-template-columns:1fr 1fr 1fr;max-width:520px}
+  .net{grid-template-columns:1fr 1fr 1fr}
   .net-col{height:392px}
   .node{width:68px;height:68px;border-radius:21px}
   .node-lg{width:104px;height:104px;border-radius:31px}
@@ -1012,6 +1012,44 @@ body::before{background:
 .web3d{opacity:.55}
 .web3d text{font-size:16px}
 
+/* ============ 반응형 안정화 (2026-08-18) ============
+   문제: 3D 씬·네트워크가 고정 px + 성긴 브레이크포인트라 창을 줄이면 값이 툭툭 점프했다
+   (폰 293->234, 네트워크 852->520). 중간 폭에서 비율이 깨지고 요소가 화면 밖으로 나갔다.
+   해결 ① 길이 기반은 clamp() 로 연속화  ② scale 처럼 clamp 를 못 쓰는 값은
+   브레이크포인트를 촘촘히(0.04 단위) 나눠 계단이 눈에 띄지 않게 한다.
+   ※ clamp(.60,.30+.047vw,.98) 같은 식은 무단위 수와 vw 를 더해 CSS 문법상 무효 — 쓰지 말 것 */
+
+/* 3D 씬 — scale 과 씬 높이를 함께 내려 항상 비율 유지 (높이 = 폰 580 x scale + 여유) */
+.scene{height:624px}
+.s3d-scale{transform:scale(.98)}
+@media (max-width:1380px){ .s3d-scale{transform:scale(.94)} .scene{height:600px} }
+@media (max-width:1260px){ .s3d-scale{transform:scale(.90)} .scene{height:576px} }
+@media (max-width:1160px){ .s3d-scale{transform:scale(.86)} .scene{height:552px} }
+/* 1099 이하는 플로팅 레이어가 사라지므로 폰을 다시 키운다 */
+@media (max-width:1099px){ .s3d-scale{transform:scale(.88)} .scene{height:560px} }
+@media (max-width:860px){  .s3d-scale{transform:scale(.86)} .scene{height:548px} }
+@media (max-width:640px){  .s3d-scale{transform:scale(.82)} .scene{height:520px} }
+@media (max-width:480px){  .s3d-scale{transform:scale(.76)} .scene{height:486px} }
+@media (max-width:400px){  .s3d-scale{transform:scale(.70)} .scene{height:452px} }
+/* 플로팅 레이어 자리(기존 고정 210px)도 폭에 따라 줄인다 */
+@media (min-width:1100px){ .stage{padding-left:clamp(120px,14vw,210px);padding-right:clamp(120px,14vw,210px)} }
+
+/* 네트워크 — 1000 -> 520 급락을 연속 축소로 */
+.net{max-width:min(1000px, 94vw)}
+.node{width:clamp(52px, 5.4vw, 86px);height:clamp(52px, 5.4vw, 86px);border-radius:clamp(16px, 1.7vw, 26px)}
+.node-lg{width:clamp(78px, 9vw, 142px);height:clamp(78px, 9vw, 142px);border-radius:clamp(24px, 2.7vw, 42px)}
+.net-col{height:clamp(330px, 34vw, 520px)}
+.nn{font-size:clamp(11.5px, 1.05vw, 14.6px)}
+.core-nn{font-size:clamp(13px, 1.2vw, 17px)}
+/* 말풍선도 노드 크기를 따라가게 (고정 106px 였음) */
+.net-in .tip{left:calc(clamp(52px, 5.4vw, 86px) + 20px)}
+.net-out .tip{right:calc(clamp(52px, 5.4vw, 86px) + 20px)}
+.tip{width:clamp(228px, 24vw, 296px)}
+
+/* 마지막 네비 드롭다운이 가운데 정렬이라 좁은 폭에서 화면 밖으로 나가 가로 스크롤을 만들던 것 */
+.nav-drop:last-child .drop-menu{left:auto;right:0;transform:translateX(0) translateY(6px)}
+.nav-drop:last-child:hover .drop-menu{transform:translateX(0) translateY(0)}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width:920px){
   h2.h{font-size:35.8px}
@@ -1019,7 +1057,6 @@ body::before{background:
   .hero h1{font-size:42.6px}
   .hero-grid,.spot-grid,.spot.rev .spot-grid,.mission-grid,.an-grid,.an-cols,.co-grid,.up-grid,.upcoming.alt .up-grid{grid-template-columns:1fr;gap:40px;direction:ltr}
   .stage{order:-1}
-  .scene{height:660px}
   .fgrid,.price-grid{grid-template-columns:1fr 1fr}
   .fgrid{gap:20px;padding:0}
   /* 분석 번들 — 모바일은 카드 위에 가로 칩으로 펼침 */
@@ -1048,8 +1085,6 @@ body::before{background:
   h2.h{font-size:29.1px}
   .app-title{font-size:51.5px}
   .btn-dl{width:100%;font-size:17.9px;height:54px}
-  .scene{height:560px}
-  .s3d-scale{transform:scale(.78)}
   .l-bars{right:-66px}
   .l-weak{left:-40px}
   .l-pass{right:-52px}
