@@ -872,6 +872,15 @@ body::before{background:
 .nw:hover .nn{color:#e6f2ee}
 
 .core-nn{font-size:17px;color:#cfe9e1}
+/* 빔 출발(좌)·도착(우) 순간에 아이콘이 한 번 빛난다 — 지연은 JS가 --fd 로 주입 */
+.node::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0}
+.node[style*="--fd"]::after{animation:nodeFlash 5s ease-out infinite;animation-delay:var(--fd,0s)}
+@keyframes nodeFlash{
+  0%{opacity:0;box-shadow:0 0 0 0 var(--nc)}
+  4%{opacity:1;box-shadow:0 0 15px 2px var(--nc),inset 0 0 12px -2px var(--nc)}
+  24%{opacity:0;box-shadow:0 0 24px 7px var(--nc),inset 0 0 12px -2px var(--nc)}
+  100%{opacity:0;box-shadow:0 0 0 0 var(--nc)}
+}
 /* 빔 */
 .beams{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none}
 .beams .bb{stroke:rgba(255,255,255,.10);stroke-width:1.6;fill:none;stroke-linecap:round}
@@ -894,6 +903,7 @@ body::before{background:
   box-shadow:0 0 10px #63d6bd;animation:nodePulse 2.2s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){
   .beams .bf{animation:none;stroke-dasharray:none;stroke-dashoffset:0;opacity:.55}
+  .node::after{animation:none!important}
   .net-status i{animation:none}
 }
 @media (max-width:860px){
@@ -2085,6 +2095,9 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   ];
   var NS='http://www.w3.org/2000/svg', made=[];
   BEAMS.forEach(function(b){
+    var n=document.getElementById(b.id);
+    /* 좌측=출발 시각, 우측=도착 시각(출발+이동 1.5s) */
+    if(n) n.style.setProperty('--fd',(b.dir==='in'?b.delay:b.delay+1.5)+'s');
     var base=document.createElementNS(NS,'path'); base.setAttribute('class','bb');
     var flow=document.createElementNS(NS,'path'); flow.setAttribute('class','bf');
     flow.style.setProperty('--bc',b.color); flow.style.setProperty('--bd',b.delay+'s');
