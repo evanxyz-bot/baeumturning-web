@@ -886,6 +886,44 @@ body::before{background:
 /* 빔 */
 .beams{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none}
 .beams .bb{stroke:rgba(255,255,255,.10);stroke-width:1.6;fill:none;stroke-linecap:round}
+/* 라이트닝 = 경로를 따라 움직이는 '연속' 그라데이션 한 줄.
+   dash 를 여러 겹 쌓으면 겹 수만큼 계단이 생긴다. 대신 빛줄기 엘리먼트 하나를
+   offset-path 로 곡선 위에 태우고, 그 안을 linear-gradient 로 채운다.
+   가운데가 가장 밝고 양 끝이 완전히 투명 → 머리·몸통·꼬리가 이어진 대칭 발광 */
+.spark{position:absolute;left:0;top:0;width:132px;height:8px;pointer-events:none;
+  border-radius:999px;opacity:0;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--bc) 32%, transparent) 26%,
+    color-mix(in srgb, var(--bc) 82%, transparent) 43%,
+    var(--bc) 50%,
+    color-mix(in srgb, var(--bc) 82%, transparent) 57%,
+    color-mix(in srgb, var(--bc) 32%, transparent) 74%,
+    transparent 100%);
+  filter:blur(2.2px) drop-shadow(0 0 6px var(--bc));
+  offset-rotate:auto;offset-distance:0%;
+  animation:sparkRun 4s linear infinite;animation-delay:var(--bd,0s)}
+@keyframes sparkRun{
+  0%{offset-distance:0%;opacity:0}
+  7%{opacity:1}
+  30%{opacity:1}
+  37%{offset-distance:100%;opacity:0}
+  100%{offset-distance:100%;opacity:0}
+}
+/* 빔 출발(좌)·도착(우) 순간에 아이콘 자체가 한 번 빛난다 — 지연은 JS가 --fd 로 주입.
+   테두리(box-shadow)가 아니라 SVG 획에 drop-shadow 를 걸어 아이콘이 발광하게 한다 */
+.node svg{transition:filter .3s}
+.node[style*="--fd"] svg{animation:iconFlash 4s ease-out infinite;animation-delay:var(--fd,0s)}
+@keyframes iconFlash{
+  0%{filter:none}
+  4%{filter:drop-shadow(0 0 7px var(--nc)) drop-shadow(0 0 15px var(--nc)) brightness(1.75)}
+  10%{filter:drop-shadow(0 0 6px var(--nc)) drop-shadow(0 0 13px var(--nc)) brightness(1.55)}
+  26%{filter:drop-shadow(0 0 2px var(--nc)) brightness(1.12)}
+  32%,100%{filter:none}
+}
+/* 빔 */
+.beams{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none}
+.beams .bb{stroke:rgba(255,255,255,.10);stroke-width:1.6;fill:none;stroke-linecap:round}
 /* 라이트닝 = 같은 중심을 공유하는 3겹.
    dash 길이만 다르게 하고 중심을 맞추면(긴 겹일수록 offset 을 절반만큼 늦춤)
    앞뒤로 똑같이 번지는 대칭 그라데이션이 된다 — 머리·몸통·꼬리가 한 덩어리.
@@ -964,7 +1002,7 @@ body::before{background:
   box-shadow:0 0 10px #63d6bd;animation:nodePulse 2.2s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){
   .beams .bf{animation:none;stroke-dasharray:none;stroke-dashoffset:0;opacity:.55}
-  .beams .bm,.beams .bt{display:none}
+  .spark{display:none}
   .node[style*="--fd"] svg{animation:none!important;filter:none!important}
   .net-status i{animation:none}
 }
@@ -2157,19 +2195,20 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     {id:'nF',dir:'out',color:'#af9069', delay:1.6}
   ];
   var NS='http://www.w3.org/2000/svg', made=[];
+  var CAN_PATH=window.CSS&&CSS.supports&&CSS.supports('offset-path','path("M0,0 L1,1")');
   BEAMS.forEach(function(b){
     var n=document.getElementById(b.id);
     /* 좌측=출발 시각, 우측=도착 시각(출발+이동 1.5s) */
     if(n) n.style.setProperty('--fd',(b.dir==='in'?b.delay:b.delay+1.48)+'s');
     var base=document.createElementNS(NS,'path'); base.setAttribute('class','bb');
-    var halo=document.createElementNS(NS,'path'); halo.setAttribute('class','bt');
-    var mid=document.createElementNS(NS,'path');  mid.setAttribute('class','bm');
-    var flow=document.createElementNS(NS,'path'); flow.setAttribute('class','bf');
-    [halo,mid,flow].forEach(function(el){
-      el.style.setProperty('--bc',b.color); el.style.setProperty('--bd',b.delay+'s');
-    });
-    svg.appendChild(base); svg.appendChild(halo); svg.appendChild(mid); svg.appendChild(flow);
-    made.push({cfg:b,base:base,halo:halo,mid:mid,flow:flow});
+    svg.appendChild(base);
+    var spark=null;
+    if(CAN_PATH){
+      spark=document.createElement('div'); spark.className='spark';
+      spark.style.setProperty('--bc',b.color); spark.style.setProperty('--bd',b.delay+'s');
+      net.appendChild(spark);
+    }
+    made.push({cfg:b,base:base,spark:spark});
   });
   var lastW=0,lastH=0;
   function draw(force){
@@ -2191,7 +2230,8 @@ document.querySelectorAll('.hubitem').forEach(function(item){
       var ex=inbound?cx-cR:nx-nR, ey=inbound?cy:ny;
       var dx=(ex-sx)*0.52;
       var d='M '+sx+','+sy+' C '+(sx+dx)+','+sy+' '+(ex-dx)+','+ey+' '+ex+','+ey;
-      m.base.setAttribute('d',d); m.halo.setAttribute('d',d); m.mid.setAttribute('d',d); m.flow.setAttribute('d',d);
+      m.base.setAttribute('d',d);
+      if(m.spark) m.spark.style.offsetPath='path("'+d+'")';
     });
   }
   draw(true);
