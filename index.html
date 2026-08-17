@@ -781,11 +781,11 @@ body::before{background:
   -webkit-mask-composite:xor;
   mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   mask-composite:exclude;
-  opacity:0;animation:coreFlash 6s linear infinite;animation-delay:2.25s}
+  opacity:0;animation:coreFlash 5s linear infinite;animation-delay:1.86s}
 .core-ring::before{content:'';position:absolute;left:50%;top:50%;width:210%;height:210%;
   background:conic-gradient(transparent 0deg,rgba(99,214,189,.95) 32deg,transparent 74deg);
   transform:translate(-50%,-50%) rotate(0deg);
-  animation:coreSpin 6s linear infinite;animation-delay:2.25s}
+  animation:coreSpin 5s linear infinite;animation-delay:1.86s}
 @keyframes coreFlash{0%{opacity:0}4%{opacity:1}26%{opacity:1}34%{opacity:0}100%{opacity:0}}
 @keyframes coreSpin{
   0%{transform:translate(-50%,-50%) rotate(0deg)}
@@ -795,14 +795,18 @@ body::before{background:
 }
 
 /* 호버 말풍선 — 좌측 노드는 오른쪽, 우측 노드는 왼쪽에 뜬다 */
-.nw{position:relative}
+.nw{position:relative;width:fit-content}
 .tip{position:absolute;top:50%;width:296px;z-index:20;pointer-events:none;
   background:#16241f;border:1px solid rgba(99,214,189,.30);border-radius:15px;padding:17px 19px;
   box-shadow:0 20px 46px rgba(0,0,0,.55);
   opacity:0;visibility:hidden;transition:opacity .22s,visibility .22s,transform .28s var(--ease-spring)}
-.net-in .tip{left:calc(100% + 20px);transform:translateY(-50%) translateX(-8px)}
-.net-out .tip{right:calc(100% + 20px);transform:translateY(-50%) translateX(8px)}
+.net-in .tip{left:106px;transform:translateY(-50%) translateX(-8px)}
+.net-out .tip{right:106px;transform:translateY(-50%) translateX(8px)}
 .net-core .tip{left:50%;top:calc(100% + 46px);width:340px;transform:translateX(-50%) translateY(8px)}
+/* 호버한 컬럼을 최상단으로 — .net-col 이 stacking context 를 만들어
+   .tip 의 z-index 만으론 코어를 넘지 못한다 */
+.net-col:has(.nw:hover),.net-col:has(.nw:focus-within),
+.net-core:has(.nw:hover),.net-core:has(.nw:focus-within){z-index:40}
 .nw:hover .tip,.nw:focus-within .tip{opacity:1;visibility:visible}
 .net-in .nw:hover .tip,.net-in .nw:focus-within .tip{transform:translateY(-50%) translateX(0)}
 .net-out .nw:hover .tip,.net-out .nw:focus-within .tip{transform:translateY(-50%) translateX(0)}
@@ -844,12 +848,12 @@ body::before{background:
   padding:4px 12px;border-radius:999px;font-size:12.5px;letter-spacing:.08em}
 .net{position:relative;max-width:1000px;margin:48px auto 0;
   display:grid;grid-template-columns:1fr 1.1fr 1fr;align-items:center}
-.net-col{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;
+.net-col{position:relative;z-index:5;display:flex;flex-direction:column;justify-content:space-between;
   height:520px}
 .net-in{align-items:flex-start}
 .net-out{align-items:flex-end}
 .net-core{position:relative;z-index:2;display:flex;align-items:center;justify-content:center}
-.nw{display:flex;flex-direction:column;align-items:center;gap:15px}
+.nw{display:flex;flex-direction:column;align-items:center;gap:15px;width:fit-content}
 .node{position:relative;width:86px;height:86px;display:grid;place-items:center;border-radius:26px;
   color:var(--nc);background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02)),#16241f;
   border:1px solid rgba(255,255,255,.11);
@@ -873,14 +877,16 @@ body::before{background:
 .beams .bb{stroke:rgba(255,255,255,.10);stroke-width:1.6;fill:none;stroke-linecap:round}
 .beams .bf{stroke:var(--bc,#63d6bd);stroke-width:3;fill:none;stroke-linecap:round;
   filter:drop-shadow(0 0 6px var(--bc,#63d6bd));
-  stroke-dasharray:54 2400;stroke-dashoffset:2454;
-  animation:beamRun 6s linear infinite;animation-delay:var(--bd,0s)}
+  stroke-dasharray:54 2400;stroke-dashoffset:1954;opacity:0;
+  animation:beamRun 5s linear infinite;animation-delay:var(--bd,0s)}
 /* 이동은 사이클의 28%(1.68s) 동안만, 나머지는 경로 밖에서 대기 →
    입력 3줄이 코어에 도착한 뒤 출력 3줄이 출발한다 */
 @keyframes beamRun{
-  0%{stroke-dashoffset:2454}
-  28%{stroke-dashoffset:1954}
-  100%{stroke-dashoffset:1954}
+  0%{stroke-dashoffset:2454;opacity:0}
+  3%{opacity:1}
+  27%{opacity:1}
+  30%{stroke-dashoffset:1954;opacity:0}
+  100%{stroke-dashoffset:1954;opacity:0}
 }
 .net-status{display:flex;align-items:center;justify-content:center;gap:9px;
   margin-top:40px;font-size:14.2px;color:#8fa8a1}
@@ -893,6 +899,8 @@ body::before{background:
 @media (max-width:860px){
   .netsec{padding:72px 0 78px}
   .tip{width:min(268px,64vw);padding:14px 15px}
+  .net-in .tip{left:86px}
+  .net-out .tip{right:86px}
   .net-core .tip{width:min(280px,72vw)}
   .tip b{font-size:15.2px}.tip-d{font-size:13.2px}
   .net{grid-template-columns:1fr 1fr 1fr;max-width:520px}
@@ -903,6 +911,8 @@ body::before{background:
 }
 @media (max-width:430px){
   .net{max-width:none}
+  .net-in .tip{left:74px}
+  .net-out .tip{right:74px}
   .node{width:58px;height:58px;border-radius:18px}
   .node-lg{width:86px;height:86px;border-radius:26px}
   .nn{font-size:11.6px}
@@ -2065,13 +2075,13 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var core=document.getElementById('core');
   var BEAMS=[
     {id:'nA',dir:'in', color:'#5878a0', delay:0},
-    {id:'nB',dir:'in', color:'#2f9183', delay:.25},
-    {id:'nG',dir:'in', color:'#9aa674', delay:.5},
-    {id:'nC',dir:'in', color:'#c5826e', delay:.75},
-    {id:'nD',dir:'out',color:'#8f7faa', delay:2.6},
-    {id:'nH',dir:'out',color:'#82a3b0', delay:2.85},
-    {id:'nE',dir:'out',color:'#9ad7cd', delay:3.1},
-    {id:'nF',dir:'out',color:'#af9069', delay:3.35}
+    {id:'nB',dir:'in', color:'#2f9183', delay:.12},
+    {id:'nG',dir:'in', color:'#9aa674', delay:.24},
+    {id:'nC',dir:'in', color:'#c5826e', delay:.36},
+    {id:'nD',dir:'out',color:'#8f7faa', delay:2.0},
+    {id:'nH',dir:'out',color:'#82a3b0', delay:2.12},
+    {id:'nE',dir:'out',color:'#9ad7cd', delay:2.24},
+    {id:'nF',dir:'out',color:'#af9069', delay:2.36}
   ];
   var NS='http://www.w3.org/2000/svg', made=[];
   BEAMS.forEach(function(b){
@@ -2097,8 +2107,8 @@ document.querySelectorAll('.hubitem').forEach(function(item){
       var nx=r.left-nr.left+r.width/2, ny=r.top-nr.top+r.height/2, nR=r.width/2;
       var inbound=m.cfg.dir==='in';
       /* 노드/코어 가장자리에서 시작·종료 (원 안으로 파고들지 않게) */
-      var sx=inbound?nx+nR+8:cx+cR+8, sy=inbound?ny:cy;
-      var ex=inbound?cx-cR-8:nx-nR-8, ey=inbound?cy:ny;
+      var sx=inbound?nx+nR:cx+cR, sy=inbound?ny:cy;
+      var ex=inbound?cx-cR:nx-nR, ey=inbound?cy:ny;
       var dx=(ex-sx)*0.52;
       var d='M '+sx+','+sy+' C '+(sx+dx)+','+sy+' '+(ex-dx)+','+ey+' '+ex+','+ey;
       m.base.setAttribute('d',d); m.flow.setAttribute('d',d);
