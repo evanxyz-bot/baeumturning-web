@@ -775,17 +775,23 @@ body::before{background:
 .apfx-in .tt .fx{font-style:normal;color:#63d6bd}
 
 /* 코어 — 빔이 도착하는 순간 테두리에 빛이 한 바퀴 */
-.core-ring{position:absolute;inset:-5px;border-radius:47px;pointer-events:none;
-  background:conic-gradient(from 0deg,transparent 0deg,rgba(99,214,189,.95) 34deg,transparent 78deg);
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
-  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
-  opacity:0;animation:coreSpin 6s linear infinite;animation-delay:2.25s}
+.core-ring{position:absolute;inset:-5px;border-radius:47px;padding:3px;pointer-events:none;
+  /* 둥근 사각형 테두리 밴드만 남기는 마스크 — 원형 마스크는 모서리가 어긋난다 */
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  mask-composite:exclude;
+  opacity:0;animation:coreFlash 6s linear infinite;animation-delay:2.25s}
+.core-ring::before{content:'';position:absolute;left:50%;top:50%;width:210%;height:210%;
+  background:conic-gradient(transparent 0deg,rgba(99,214,189,.95) 32deg,transparent 74deg);
+  transform:translate(-50%,-50%) rotate(0deg);
+  animation:coreSpin 6s linear infinite;animation-delay:2.25s}
+@keyframes coreFlash{0%{opacity:0}4%{opacity:1}26%{opacity:1}34%{opacity:0}100%{opacity:0}}
 @keyframes coreSpin{
-  0%{opacity:0;transform:rotate(0deg)}
-  4%{opacity:1}
-  22%{opacity:1}
-  30%{opacity:0;transform:rotate(360deg)}
-  100%{opacity:0;transform:rotate(360deg)}
+  0%{transform:translate(-50%,-50%) rotate(0deg)}
+  34%{transform:translate(-50%,-50%) rotate(360deg)}
+  100%{transform:translate(-50%,-50%) rotate(360deg)}
+}
 }
 
 /* 호버 말풍선 — 좌측 노드는 오른쪽, 우측 노드는 왼쪽에 뜬다 */
