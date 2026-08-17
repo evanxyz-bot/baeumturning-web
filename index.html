@@ -759,6 +759,27 @@ body::before{background:
 /* 다크 전환 구간 — 한 문장에 215vh는 과한 스크롤 비용. 165vh로 단축 */
 .apfx{height:165vh}
 
+/* ── 분석 섹션 재배치: 3열 압축 → 2행 ──
+   [1행] 절차 5단계 | 실점 집중도 카드   [2행] 분석의 근거 3열 배너 */
+.an-cols{grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.evidence{margin-top:44px;grid-column:1/-1}
+.ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.ev-item{padding-left:16px}
+.ev-foot{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  margin-top:22px;padding-top:18px;border-top:1px dashed var(--border-strong)}
+.ev-tags,.ev-note{margin-top:0}
+.spot-3d{margin-top:0}
+.mock-card{max-width:none}
+/* 절차 카드 — 여백 회복 */
+.pipe{margin-top:0}
+.pstep{padding:14px 0}
+.pstep b{font-size:19px}
+.pstep span{font-size:16px}
+
+/* ── 히어로: 중앙 쏠림 해소 — 무대를 넓게 쓴다 ── */
+.hero .wrap{max-width:1320px}
+.analysis .wrap,.features .wrap{max-width:1240px}
+
 /* ── 히어로 재배치: 폰 화면이 주인공. 카드는 폰을 가리지 않고 좌우로 비켜선다 ──
    기존엔 6장이 폰 위에 겹쳐 앱 화면이 안 보였음. 좌 1 / 우 1 배치 + 폰은 항상 최상단.
    ⚠️ 좌우 오프셋 배치는 무대 폭이 충분한 데스크톱(≥1100px)에서만. 아래 미디어쿼리 참조 */
@@ -781,6 +802,11 @@ body::before{background:
   .layer{display:none}
   .stage{padding:0}
   .web3d{display:none}
+  /* 분석 섹션 1열 (3열 유지 시 글자가 세로로 깨짐) */
+  .an-cols,.analysis .an-cols{grid-template-columns:1fr;gap:36px}
+  .ev-grid,.analysis .ev-grid{grid-template-columns:1fr;gap:18px}
+  .ev-head{flex-wrap:wrap}
+  .ev-badge{margin-left:0}
 }
 /* 우측 열 — 폰 화면(합격선·오늘의 학습)과 중복되는 카드는 띄우지 않는다 */
 .l-pass,.l-plan,.l-review{display:none}
@@ -866,7 +892,10 @@ body::before{background:
 .cat-slide.prev{transform:translateX(-44px) scale(.97)}
 .cat-body{flex:1;padding:11px 12px 6px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
 .cat-head{display:flex;align-items:center;gap:8px;font-size:16.8px;font-weight:800;color:var(--text-2);letter-spacing:-0.02em}
-.cat-head .ci{width:21px;height:21px;border-radius:7px;display:grid;place-items:center;color:#fff;flex-shrink:0}
+/* 섹션 카드용 .ci(padding:16px·border)가 상속돼 아이콘이 찌그러지던 것 차단 */
+.cat-head .ci{width:21px;height:21px;border-radius:7px;display:grid;place-items:center;color:#fff;flex-shrink:0;
+  padding:0;border:0;box-shadow:none}
+.cat-head .ci svg{display:block}
 .ddaybar.alt{background:linear-gradient(90deg,rgba(23,147,126,.13),rgba(88,120,160,.13))}
 .dchip.ai{background:linear-gradient(135deg,#17937e,#5878a0);animation:aiGlow 2.2s ease-in-out infinite}
 .pass-card{display:flex;align-items:center;gap:14px}
@@ -1043,12 +1072,20 @@ body{background:#0d1917}
 
 /* 가로 폭 여유 (히어로 3D 씬은 기존 폭 유지) */
 .analysis .wrap,.features .wrap,.strip .wrap,.foot .wrap{max-width:1280px}
+/* 근거 배너는 다크존에서도 3열 유지 (좁은 화면은 1열 — 아래 미디어쿼리) */
+@media (min-width:1100px){
+  .analysis .ev-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:1099px){
+  .analysis .ev-grid{grid-template-columns:1fr}
+  .analysis .an-cols{grid-template-columns:1fr}
+}
 
 /* 좌우 비대칭 — 중앙 정렬 일변도 탈피 */
 .analysis .sec-head{text-align:left;max-width:840px;margin:0 0 58px}
 .analysis .sec-head .lead{margin:16px 0 0;max-width:700px}
-.an-cols{grid-template-columns:1.06fr .94fr 1.2fr;gap:34px}
-.spot-3d{margin-top:52px}
+.an-cols{grid-template-columns:1.02fr 1fr;gap:58px}
+.spot-3d{margin-top:0}
 .features .sec-head{text-align:left;max-width:780px;margin:0 0 56px auto}
 .features .sec-head .lead{margin:16px 0 0;max-width:700px}
 .features .stores-hero{justify-content:flex-start}
@@ -1230,7 +1267,7 @@ body{background:#0d1917}
                         <div class="mc-title">오늘의 학습<span class="ai-tag" style="background:#5878a0">데이터 기반</span></div>
                         <div class="plan-row done"><i>✓</i><span>과학 · 힘과 운동</span><b>완료</b></div>
                         <div class="plan-row"><i></i><span>복습 25 + 새 문제 5</span><b>30문제</b></div>
-                        <div class="plan-row"><i></i><span>버튼 하나로 이어서 풀기</span><b>›</b></div>
+                        <div class="plan-row"><i></i><span>기출문제 풀기 · CBT</span><b>›</b></div>
                       </div>
                     </div>
                   </div>
@@ -1471,7 +1508,7 @@ body{background:#0d1917}
     <div class="sec-head reveal">
       <span class="eyebrow">근거기반 분석 시스템</span>
       <h2 class="h">감이 아니라,<br>검증된 학습 기법으로 분석합니다</h2>
-      <p class="lead">배움터닝의 성적분석은 <b>통계학·교육통계학의 검증된 논문과 학습법</b>에 근거한 분석 시스템에 <b>AI 분석 도구</b>를 결합했습니다. 추측이 아니라 학계가 검증한 방법으로 약점을 진단하고, 공부할 순서를 정합니다.</p>
+      <p class="lead">추측이 아니라 <b>학계가 검증한 통계·학습과학 방법</b>에 <b>AI 분석</b>을 더해 약점을 진단하고 공부할 순서를 정합니다.</p>
     </div>
     <div class="an-cols">
       <div class="pipe reveal">
@@ -1480,16 +1517,6 @@ body{background:#0d1917}
         <div class="pstep"><span class="pnum">03</span><div><b>우선순위 산출</b><span>점수 상승 효과가 큰 단원부터 학습 순서를 결정</span></div></div>
         <div class="pstep"><span class="pnum">04</span><div><b>복습 주기 계산</b><span>기억이 옅어질 시점에 맞춰 과목별 복습 타이밍 산출</span></div></div>
         <div class="pstep"><span class="pnum">05</span><div><b>일일 플랜 자동 생성</b><span>오늘 풀 문제를 자동 배치 — AI 스케줄링</span></div></div>
-      </div>
-      <div class="evidence reveal">
-        <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석의 근거 <span class="ev-badge">검증된 기법 + AI</span></div>
-        <div class="ev-grid">
-          <div class="ev-item"><b>통계학 · 교육통계학</b><span>학계에서 검증된 통계 기법으로 점수와 오답을 객관적인 수치로 해석합니다.</span></div>
-          <div class="ev-item"><b>검증된 학습과학 논문 · 학습법</b><span>효과가 입증된 학습과학 연구와 학습법에 근거해 우선순위를 정합니다.</span></div>
-          <div class="ev-item alt"><b>+ AI 분석 도구</b><span>축적된 풀이·오답 데이터를 해석해 학습 플랜에 반영합니다.</span></div>
-        </div>
-        <div class="ev-tags"><span>실점 집중도</span><span>합격 예측</span><span>오답 패턴</span><span>복습 주기</span><span>성적 추세</span></div>
-        <p class="ev-note">* 외부의 막연한 추측이 아니라, 공개·검증된 방법론을 자체 구현해 적용합니다.</p>
       </div>
       <div class="spot-3d re-anim">
         <div class="mock-card">
@@ -1501,6 +1528,20 @@ body{background:#0d1917}
           <div class="prow" style="--pz:22"><div class="pt"><span class="nm">국어 <i>· 문학</i></span><span class="vl tnum"><b>7%</b><small>-40점</small></span></div><div class="ptrack"><i style="width:56%"></i></div></div>
           <div class="prow" style="--pz:10;margin-bottom:0"><div class="pt"><span class="nm">과학 <i>· 물리학</i></span><span class="vl tnum"><b>7%</b><small>-40점</small></span></div><div class="ptrack"><i style="width:56%"></i></div></div>
         </div>
+      </div>
+    </div>
+
+    <!-- 근거는 별도 행으로 분리 — 3열 배너 -->
+    <div class="evidence reveal">
+      <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석의 근거 <span class="ev-badge">검증된 기법 + AI</span></div>
+      <div class="ev-grid">
+        <div class="ev-item"><b>통계학 · 교육통계학</b><span>학계에서 검증된 통계 기법으로 점수와 오답을 객관적인 수치로 해석합니다.</span></div>
+        <div class="ev-item"><b>검증된 학습과학 논문 · 학습법</b><span>효과가 입증된 학습과학 연구와 학습법에 근거해 우선순위를 정합니다.</span></div>
+        <div class="ev-item alt"><b>+ AI 분석 도구</b><span>축적된 풀이·오답 데이터를 해석해 학습 플랜에 반영합니다.</span></div>
+      </div>
+      <div class="ev-foot">
+        <div class="ev-tags"><span>실점 집중도</span><span>합격 예측</span><span>오답 패턴</span><span>복습 주기</span><span>성적 추세</span></div>
+        <p class="ev-note">* 외부의 막연한 추측이 아니라, 공개·검증된 방법론을 자체 구현해 적용합니다.</p>
       </div>
     </div>
   </div>
