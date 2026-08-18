@@ -2,12 +2,22 @@
 """news.html 의 var NEWS=[...] 배열을 읽어 동일 내용을 정적 HTML 로 렌더해
    <!--NEWS_STATIC_START--> ~ <!--NEWS_STATIC_END--> 사이에 채워 넣는다.
    항목을 추가·수정한 뒤 다시 실행하면 정적 블록도 그대로 갱신된다."""
-import json, re, io, sys
+import json, re, io, sys, os
 
-PATH = r"C:/Users/dol37/Desktop/GED App/website/news.html"
+# 윈도우 콘솔 기본 코드페이지(cp949)에서 한글·em dash 출력이 깨지지 않도록
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
+PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "news.html")
 
 s = io.open(PATH, encoding="utf-8").read()
-i = s.index("var NEWS=[")
+# 주석 안의 "var NEWS=[...]" 언급이 아니라 실제 배열 선언만 잡는다 (여는 대괄호 뒤 줄바꿈으로 구분)
+m = re.search(r"var NEWS=\[\s*\n", s)
+if not m:
+    sys.exit("news.html 에서 var NEWS=[ 배열 선언을 찾지 못했습니다.")
+i = m.start()
 j = s.index("\n];", i)
 data = json.loads(s[i + len("var NEWS="):j + 2])
 
@@ -65,8 +75,10 @@ block = "\n" + "\n".join(out) + "\n"
 new = re.sub(r"<!--NEWS_STATIC_START-->.*?<!--NEWS_STATIC_END-->",
              lambda m: "<!--NEWS_STATIC_START-->" + block + "<!--NEWS_STATIC_END-->",
              s, flags=re.S)
+if "<!--NEWS_STATIC_START-->" not in s or "<!--NEWS_STATIC_END-->" not in s:
+    sys.exit("news.html 에서 NEWS_STATIC_START/END 마커를 찾지 못했습니다.")
 if new == s:
-    print("marker not found / unchanged")
-    sys.exit(1)
+    print("ok: %d items — 정적 블록이 이미 최신입니다 (변경 없음)" % len(data))
+    sys.exit(0)
 io.open(PATH, "w", encoding="utf-8", newline="").write(new)
-print("ok: %d items, static block %d chars" % (len(data), len(block)))
+print("ok: %d items, static block %d chars — news.html 갱신됨" % (len(data), len(block)))
