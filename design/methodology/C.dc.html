@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800&family=Noto+Sans+KR:wght@400;500;700&family=Outfit:wght@600;700&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Noto Sans KR', 'Pretendard', system-ui, sans-serif;
+           -webkit-font-smoothing: antialiased; }
+    a { color: #7fe3cc; } a:hover { color: #4ecfb4; }
+    .hd { font-family: 'Gothic A1', 'GmarketSans', sans-serif; }
+    .num { font-family: 'Outfit', sans-serif; font-variant-numeric: tabular-nums; }
+    /* 파이프라인과 기법 상세가 같은 격자를 쓴다 — 아래 열이 위 단계 바로 밑에 떨어진다 */
+    .lane { display: grid; grid-template-columns: 1fr 30px 1fr 30px 1fr; gap: 0 13px; }
+    .arrow { display: flex; align-items: center; justify-content: center; }
+  </style>
+</helmet>
+
+<div style="width: 1280px; background: #0d1917; padding: 64px 0 56px; box-sizing: border-box">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 24px; box-sizing: border-box">
+
+    <!-- 섹션 헤더 -->
+    <div style="max-width: 840px; margin: 0 0 46px">
+      <span style="display: inline-block; font-size: 14.6px; font-weight: 600; letter-spacing: .02em;
+                   color: #4ecfb4; background: rgba(78,207,180,.12); padding: 5px 12px;
+                   border-radius: 999px; margin-bottom: 18px">근거기반 분석 시스템</span>
+      <h2 class="hd" style="margin: 0; font-size: 44.8px; font-weight: 700; line-height: 1.18;
+                            letter-spacing: -.025em; color: #eaf2f0; word-break: keep-all">감이 아니라,<br>검증된 학습 기법으로 분석합니다</h2>
+      <p style="margin: 16px 0 0; max-width: 700px; font-size: 19px; line-height: 1.7;
+                color: #b2c2bd; word-break: keep-all; text-wrap: pretty">공개된 통계·학습과학 방법 위에, 검정고시 데이터로 조정한 <b style="color: #eaf2f0; font-weight: 700">자체 로직과 가중치</b>를 얹어 직접 구현했습니다.</p>
+    </div>
+
+    <div style="background: linear-gradient(#152420,#152420) padding-box,
+                            linear-gradient(135deg,#45cdb0 0%,#2aa189 55%,#1d8271 100%) border-box;
+                border: 2px solid transparent; border-radius: 16px; padding: 40px 44px 34px;
+                box-shadow: 0 14px 40px rgba(0,0,0,.42)">
+
+      <!-- 카드 머리 -->
+      <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 12px">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4ecfb4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span class="hd" style="font-size: 20.2px; font-weight: 800; letter-spacing: -.025em; color: #eaf2f0">분석 파이프라인</span>
+        <span class="num" style="margin-left: auto; font-size: 12.9px; font-weight: 700; color: #0d1917;
+                     background: linear-gradient(135deg,#45cdb0 0%,#2aa189 55%,#1d8271 100%);
+                     padding: 4px 12px; border-radius: 999px">7개 기법 · 3단계</span>
+      </div>
+
+      <div style="display: flex; align-items: flex-end; gap: 40px; margin-bottom: 30px">
+        <p style="flex: 1; margin: 0; max-width: 720px; font-size: 15.6px; line-height: 1.72; color: #a8bfb8; word-break: keep-all">한 번의 채점 기록이 학습 리포트가 되기까지 거치는 경로입니다. 기법의 뼈대는 공개·검증된 방법이지만, <b style="color: #dce9e5; font-weight: 700">각 단계의 로직·가중치·임계값은 배움터닝이 직접 설계해 보유</b>합니다.</p>
+
+        <!-- 색 범례 — 두 계열이 무슨 뜻인지 먼저 밝힌다 -->
+        <div style="margin-left: auto; flex-shrink: 0; display: flex; flex-direction: column; gap: 9px; padding-bottom: 2px">
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span style="width: 9px; height: 9px; border-radius: 2px; background: #dfba85; flex-shrink: 0"></span>
+            <span style="font-size: 12.6px; color: #c8b494; font-weight: 700">관측</span>
+            <span style="font-size: 12.6px; color: #7f9a92">기록에서 사실을 집계</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span style="width: 9px; height: 9px; border-radius: 2px; background: #63d6bd; flex-shrink: 0"></span>
+            <span style="font-size: 12.6px; color: #9dc7bd; font-weight: 700">판단</span>
+            <span style="font-size: 12.6px; color: #7f9a92">사실에서 순서를 결정</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 입력 -->
+      <div style="display: flex; align-items: center; gap: 16px; background: #101d1a;
+                  border: 1px dashed rgba(214,178,120,.34); border-radius: 12px; padding: 15px 20px">
+        <span class="num" style="font-size: 11.4px; font-weight: 700; letter-spacing: .1em; color: #dfba85; flex-shrink: 0">INPUT</span>
+        <span style="width: 1px; height: 18px; background: rgba(255,255,255,.12); flex-shrink: 0"></span>
+        <b style="font-size: 15.4px; font-weight: 700; color: #eef7f4; letter-spacing: -.01em; flex-shrink: 0">풀이 · 채점 기록</b>
+        <div style="margin-left: auto; display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end"><span style="font-size: 12.4px; font-weight: 500; color: #cdbb9c; background: rgba(214,178,120,.11); border: 1px solid rgba(214,178,120,.20); padding: 5px 11px; border-radius: 7px; white-space: nowrap">문항 단위 정오답</span><span style="font-size: 12.4px; font-weight: 500; color: #cdbb9c; background: rgba(214,178,120,.11); border: 1px solid rgba(214,178,120,.20); padding: 5px 11px; border-radius: 7px; white-space: nowrap">응시 회차</span><span style="font-size: 12.4px; font-weight: 500; color: #cdbb9c; background: rgba(214,178,120,.11); border: 1px solid rgba(214,178,120,.20); padding: 5px 11px; border-radius: 7px; white-space: nowrap">소요 시간</span></div>
+      </div>
+
+      <div style="display: flex; justify-content: center; padding: 9px 0; color: #8d9e99">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="m6 13 6 6 6-6"></path></svg>
+      </div>
+
+      <!-- 3단계 -->
+      <div class="lane">
+        <div style="display: flex; flex-direction: column; background: #1a2c27; border: 1px solid rgba(214,178,120,.26); border-top: 3px solid #dfba85;
+                    border-radius: 12px; padding: 17px 18px 15px">
+          <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 3px">
+            <span class="num" style="font-size: 11.4px; font-weight: 700; letter-spacing: .1em; color: #dfba85">STEP 1</span>
+            <span class="hd" style="font-size: 16.8px; font-weight: 800; color: #eef7f4; letter-spacing: -.02em">진단</span>
+          </div>
+          <p style="margin: 0 0 13px; font-size: 13.2px; line-height: 1.55; color: #8fa8a1; word-break: keep-all">무엇이 점수를 깎고 있지?</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 7px">
+            <span class="num" style="font-size: 12.4px; font-weight: 600; color: #e2d3b8; background: rgba(214,178,120,.13); border: 1px solid rgba(214,178,120,.24); padding: 6px 10px; border-radius: 7px">01 파레토 분석</span>
+            <span class="num" style="font-size: 12.4px; font-weight: 600; color: #e2d3b8; background: rgba(214,178,120,.13); border: 1px solid rgba(214,178,120,.24); padding: 6px 10px; border-radius: 7px">04 오답 패턴 분석</span>
+            <span class="num" style="font-size: 12.4px; font-weight: 600; color: #e2d3b8; background: rgba(214,178,120,.13); border: 1px solid rgba(214,178,120,.24); padding: 6px 10px; border-radius: 7px">06 학습량 보정</span>
+          </div>
+          <div style="margin-top: auto; padding-top: 15px; display: flex; align-items: center; gap: 7px;
+                      font-size: 12.6px; color: #7f9a92">
+            <span style="color: #dfba85; font-weight: 700">&rarr;</span>취약 단원 목록
+          </div>
+        </div>
+
+        <div class="arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8d9e99" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></div>
+
+        <div style="display: flex; flex-direction: column; background: #1a2c27; border: 1px solid rgba(78,207,180,.24); border-top: 3px solid #63d6bd;
+                    border-radius: 12px; padding: 17px 18px 15px">
+          <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 3px">
+            <span class="num" style="font-size: 11.4px; font-weight: 700; letter-spacing: .1em; color: #63d6bd">STEP 2</span>
+            <span class="hd" style="font-size: 16.8px; font-weight: 800; color: #eef7f4; letter-spacing: -.02em">판정</span>
+          </div>
+          <p style="margin: 0 0 13px; font-size: 13.2px; line-height: 1.55; color: #8fa8a1; word-break: keep-all">지금 어디쯤 와 있지?</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 7px">
+            <span class="num" style="font-size: 12.4px; font-weight: 600; color: #cfe3dd; background: rgba(78,207,180,.11); border: 1px solid rgba(78,207,180,.22); padding: 6px 10px; border-radius: 7px">05 추세 분석</span>
+            <span class="num" style="font-size: 12.4px; font-weight: 600; color: #cfe3dd; background: rgba(78,207,180,.11); border: 1px solid rgba(78,207,180,.22); padding: 6px 10px; border-radius: 7px">07 합격선 마진</span>
+          </div>
+          <div style="margin-top: auto; padding-top: 15px; display: flex; align-items: center; gap: 7px;
+                      font-size: 12.6px; color: #7f9a92">
+            <span style="color: #63d6bd; font-weight: 700">&rarr;</span>합격선 기준 위치
+          </div>
+        </div>
+
+        <div class="arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8d9e99" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></div>
+
+        <div style="display: flex; flex-direction: column; background: #1a2c27; border: 1px solid rgba(78,207,180,.24); border-top: 3px solid #63d6bd;
+                    border-radius: 12px; padding: 17px 18px 15px">
+          <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 3px">
+            <span class="num" style="font-size: 11.4px; font-weight: 700; letter-spacing: .1em; color: #63d6bd">STEP 3</span>
+            <span class="hd" style="font-size: 16.8px; font-weight: 800; color: #eef7f4; letter-spacing: -.02em">처방</span>
+          </div>
+          <p style="margin: 0 0 13px; font-size: 13.2px; line-height: 1.55; color: #8fa8a1; word-break: keep-all">무엇부터, 언제 다시 보지?</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 7px">
+            <span class="num" style="font-size: 12.4px; font-weight: 600; color: #cfe3dd; background: rgba(78,207,180,.11); border: 1px solid rgba(78,207,180,.22); padding: 6px 10px; border-radius: 7px">03 우선순위 매트릭스</span>
+            <span class="num" style="font-size: 12.4px; font-weight: 600; color: #cfe3dd; background: rgba(78,207,180,.11); border: 1px solid rgba(78,207,180,.22); padding: 6px 10px; border-radius: 7px">02 간격 반복</span>
+          </div>
+          <div style="margin-top: auto; padding-top: 15px; display: flex; align-items: center; gap: 7px;
+                      font-size: 12.6px; color: #7f9a92">
+            <span style="color: #63d6bd; font-weight: 700">&rarr;</span>오늘 풀 순서
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; padding: 9px 0; color: #8d9e99">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="m6 13 6 6 6-6"></path></svg>
+      </div>
+
+      <!-- 출력 -->
+      <div style="display: flex; align-items: center; gap: 16px; background: rgba(78,207,180,.09);
+                  border: 1px solid rgba(78,207,180,.35); border-radius: 12px; padding: 15px 20px">
+        <span class="num" style="font-size: 11.4px; font-weight: 700; letter-spacing: .1em; color: #4ecfb4; flex-shrink: 0">OUTPUT</span>
+        <span style="width: 1px; height: 18px; background: rgba(255,255,255,.14); flex-shrink: 0"></span>
+        <b style="font-size: 15.4px; font-weight: 700; color: #eef7f4; letter-spacing: -.01em; flex-shrink: 0">학습 리포트</b>
+        <div style="margin-left: auto; display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end"><span style="font-size: 12.4px; font-weight: 500; color: #a9c9c0; background: rgba(78,207,180,.10); border: 1px solid rgba(78,207,180,.20); padding: 5px 11px; border-radius: 7px; white-space: nowrap">취약 단원</span><span style="font-size: 12.4px; font-weight: 500; color: #a9c9c0; background: rgba(78,207,180,.10); border: 1px solid rgba(78,207,180,.20); padding: 5px 11px; border-radius: 7px; white-space: nowrap">합격선 위치</span><span style="font-size: 12.4px; font-weight: 500; color: #a9c9c0; background: rgba(78,207,180,.10); border: 1px solid rgba(78,207,180,.20); padding: 5px 11px; border-radius: 7px; white-space: nowrap">오늘 풀 순서</span></div>
+      </div>
+
+      <!-- 기법별 산출물 — 위 3단계와 같은 격자에 떨어진다 -->
+      <div style="margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12)">
+        <div style="font-size: 12.4px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+                    color: #7f9a92; margin-bottom: 18px">기법별 산출물</div>
+
+        <div class="lane">
+          <!-- STEP 1 -->
+          <div style="display: flex; flex-direction: column; gap: 14px">
+            <div style="display: flex; align-items: baseline; gap: 8px; padding-bottom: 12px;
+                        margin-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,.08)">
+              <span class="num" style="font-size: 11.4px; font-weight: 700; letter-spacing: .1em; color: #dfba85">STEP 1</span>
+              <span style="font-size: 13.6px; font-weight: 700; color: #cfe3dd">진단</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 32px 1fr; gap: 0 10px">
+              <span class="num" style="font-size: 13.4px; font-weight: 700; color: #dfba85; padding-top: 2px">01</span>
+              <div>
+                <b style="display: block; font-size: 15.2px; font-weight: 700; color: #eef7f4; letter-spacing: -.01em">파레토 분석</b>
+                <p style="margin: 4px 0 7px; font-size: 13.5px; line-height: 1.6; color: #bfd4ce; word-break: keep-all">전체 실점의 다수를 차지하는 <b style="color: #eef7f4; font-weight: 700">소수 단원</b>을 산출</p>
+                <span class="num" style="display: inline-block; font-size: 12.2px; font-weight: 600; color: #9dbdb4; background: #22352f; border: 1px solid rgba(255,255,255,.08); padding: 4px 9px; border-radius: 6px">집중 단원 목록</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 32px 1fr; gap: 0 10px">
+              <span class="num" style="font-size: 13.4px; font-weight: 700; color: #dfba85; padding-top: 2px">04</span>
+              <div>
+                <b style="display: block; font-size: 15.2px; font-weight: 700; color: #eef7f4; letter-spacing: -.01em">오답 패턴 분석</b>
+                <p style="margin: 4px 0 7px; font-size: 13.5px; line-height: 1.6; color: #bfd4ce; word-break: keep-all">단원·유형별 <b style="color: #eef7f4; font-weight: 700">연속 오답과 오답률</b>을 추적</p>
+                <span class="num" style="display: inline-block; font-size: 12.2px; font-weight: 600; color: #9dbdb4; background: #22352f; border: 1px solid rgba(255,255,255,.08); padding: 4px 9px; border-radius: 6px">취약 지점</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 32px 1fr; gap: 0 10px">
+              <span class="num" style="font-size: 13.4px; font-weight: 700; color: #dfba85; padding-top: 2px">06</span>
+              <div>
+                <b style="display: block; font-size: 15.2px; font-weight: 700; color: #eef7f4; letter-spacing: -.01em">학습량 보정</b>
+                <p style="margin: 4px 0 7px; font-size: 13.5px; line-height: 1.6; color: #bfd4ce; word-break: keep-all">표본이 적은 단원을 <b style="color: #eef7f4; font-weight: 700">과대 해석하지 않도록</b> 보정</p>
+                <span class="num" style="display: inline-block; font-size: 12.2px; font-weight: 600; color: #9dbdb4; background: #22352f; border: 1px solid rgba(255,255,255,.08); padding: 4px 9px; border-radius: 6px">보정 오답률</span>
+              </div>
+            </div>
+          </div>
+
+          <div></div>
+
+          <!-- STEP 2 -->
+          <div style="display: flex; flex-direction: column; gap: 14px">
+            <div style="display: flex; align-items: baseline; gap: 8px; padding-bottom: 12px;
+                        margin-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,.08)">
+              <span class="num" style="font-size: 11.4px; font-weight: 700; letter-spacing: .1em; color: #63d6bd">STEP 2</span>
+              <span style="font-size: 13.6px; font-weight: 700; color: #cfe3dd">판정</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 32px 1fr; gap: 0 10px">
+              <span class="num" style="font-size: 13.4px; font-weight: 700; color: #63d6bd; padding-top: 2px">05</span>
+              <div>
+                <b style="display: block; font-size: 15.2px; font-weight: 700; color: #eef7f4; letter-spacing: -.01em">추세 분석</b>
+                <p style="margin: 4px 0 7px; font-size: 13.5px; line-height: 1.6; color: #bfd4ce; word-break: keep-all">회차별 시계열로 <b style="color: #eef7f4; font-weight: 700">상승·정체·하락</b>을 판정</p>
+                <span class="num" style="display: inline-block; font-size: 12.2px; font-weight: 600; color: #9dbdb4; background: #22352f; border: 1px solid rgba(255,255,255,.08); padding: 4px 9px; border-radius: 6px">추세 판정</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 32px 1fr; gap: 0 10px">
+              <span class="num" style="font-size: 13.4px; font-weight: 700; color: #63d6bd; padding-top: 2px">07</span>
+              <div>
+                <b style="display: block; font-size: 15.2px; font-weight: 700; color: #eef7f4; letter-spacing: -.01em">합격선 마진</b>
+                <p style="margin: 4px 0 7px; font-size: 13.5px; line-height: 1.6; color: #bfd4ce; word-break: keep-all">평균 60점 기준 <b style="color: #eef7f4; font-weight: 700">현재 위치와 밴드</b>를 표시</p>
+                <span class="num" style="display: inline-block; font-size: 12.2px; font-weight: 600; color: #9dbdb4; background: #22352f; border: 1px solid rgba(255,255,255,.08); padding: 4px 9px; border-radius: 6px">합격선 거리</span>
+              </div>
+            </div>
+          </div>
+
+          <div></div>
+
+          <!-- STEP 3 -->
+          <div style="display: flex; flex-direction: column; gap: 14px">
+            <div style="display: flex; align-items: baseline; gap: 8px; padding-bottom: 12px;
+                        margin-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,.08)">
+              <span class="num" style="font-size: 11.4px; font-weight: 700; letter-spacing: .1em; color: #63d6bd">STEP 3</span>
+              <span style="font-size: 13.6px; font-weight: 700; color: #cfe3dd">처방</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 32px 1fr; gap: 0 10px">
+              <span class="num" style="font-size: 13.4px; font-weight: 700; color: #63d6bd; padding-top: 2px">03</span>
+              <div>
+                <b style="display: block; font-size: 15.2px; font-weight: 700; color: #eef7f4; letter-spacing: -.01em">우선순위 매트릭스</b>
+                <p style="margin: 4px 0 7px; font-size: 13.5px; line-height: 1.6; color: #bfd4ce; word-break: keep-all">같은 시간에 <b style="color: #eef7f4; font-weight: 700">상승폭이 큰 단원</b>부터 순서를 결정</p>
+                <span class="num" style="display: inline-block; font-size: 12.2px; font-weight: 600; color: #9dbdb4; background: #22352f; border: 1px solid rgba(255,255,255,.08); padding: 4px 9px; border-radius: 6px">학습 순서</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 32px 1fr; gap: 0 10px">
+              <span class="num" style="font-size: 13.4px; font-weight: 700; color: #63d6bd; padding-top: 2px">02</span>
+              <div>
+                <b style="display: block; font-size: 15.2px; font-weight: 700; color: #eef7f4; letter-spacing: -.01em">간격 반복</b>
+                <p style="margin: 4px 0 7px; font-size: 13.5px; line-height: 1.6; color: #bfd4ce; word-break: keep-all">기억이 흐려지는 시점에 맞춰 <b style="color: #eef7f4; font-weight: 700">복습 주기</b>를 계산</p>
+                <span class="num" style="display: inline-block; font-size: 12.2px; font-weight: 600; color: #9dbdb4; background: #22352f; border: 1px solid rgba(255,255,255,.08); padding: 4px 9px; border-radius: 6px">복습 주기 (일)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 각주 -->
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px;
+                  margin-top: 26px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,.16)">
+        <p style="margin: 0; font-size: 13.2px; line-height: 1.68; color: #7f9a92; word-break: keep-all">모든 수치는 <b style="color: #a8bfb8; font-weight: 700">본인의 풀이·채점 기록</b>에서만 계산합니다. 타인과의 비교나 외부 추정치를 쓰지 않습니다.</p>
+        <p style="margin: 0; font-size: 13.2px; line-height: 1.68; color: #7f9a92; word-break: keep-all">합격 가능성은 단정적 확률이 아니라 <b style="color: #a8bfb8; font-weight: 700">합격선 기준 위치와 구간</b>으로 표시합니다.</p>
+        <p style="margin: 0; font-size: 13.2px; line-height: 1.68; color: #7f9a92; word-break: keep-all">가중치·임계값·판정 기준은 검정고시 기출 데이터로 조정한 <b style="color: #a8bfb8; font-weight: 700">배움터닝 자체 구현</b>입니다.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1280,"height":1240}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

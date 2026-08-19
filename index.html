@@ -1066,6 +1066,76 @@ body::before{background:
   .mth-d{grid-column:2;margin-top:6px}
 }
 
+/* 분석 파이프라인 — 입력 → 3단계 → 출력. 아래 상세가 위 단계와 같은 격자에 떨어진다.
+   색은 2계열 고정: 앰버(#dfba85)=관측(기록에서 사실을 집계) / 틸=판단(사실에서 순서를 결정) */
+.analysis .evidence{padding:40px 44px 34px}
+.pipe-lane{display:grid;grid-template-columns:1fr 30px 1fr 30px 1fr;gap:0 13px}
+.pipe-arrow{display:flex;align-items:center;justify-content:center;color:#8d9e99}
+.pipe-vsep{display:flex;justify-content:center;padding:9px 0;color:#8d9e99}
+.pipe-intro{display:flex;align-items:flex-end;gap:40px;margin-bottom:30px}
+.pipe-intro>p{flex:1;margin:0;max-width:720px;font-size:15.6px;line-height:1.72;color:#a8bfb8;word-break:keep-all}
+.pipe-legend{margin-left:auto;flex-shrink:0;display:flex;flex-direction:column;gap:9px;padding-bottom:2px}
+.pipe-legend div{display:flex;align-items:center;gap:8px;font-size:12.6px;color:#7f9a92}
+.pipe-legend i{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.pipe-legend b{font-weight:700}
+.pipe-io{display:flex;align-items:center;gap:16px;border-radius:12px;padding:15px 20px}
+.pipe-io .io-l{font-family:'Outfit',sans-serif;font-size:11.4px;font-weight:700;letter-spacing:.1em;flex-shrink:0}
+.pipe-io .io-bar{width:1px;height:18px;background:rgba(255,255,255,.13);flex-shrink:0}
+.pipe-io>b{font-size:15.4px;font-weight:700;color:#eef7f4;letter-spacing:-.01em;flex-shrink:0}
+.pipe-io .io-chips{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.pipe-in{background:#101d1a;border:1px dashed rgba(214,178,120,.34)}
+.pipe-in .io-l{color:#dfba85}
+.pipe-out{background:rgba(78,207,180,.09);border:1px solid rgba(78,207,180,.35)}
+.pipe-out .io-l{color:#4ecfb4}
+.chip{font-size:12.4px;font-weight:500;padding:5px 11px;border-radius:7px;white-space:nowrap}
+.chip-w{color:#cdbb9c;background:rgba(214,178,120,.11);border:1px solid rgba(214,178,120,.20)}
+.chip-t{color:#a9c9c0;background:rgba(78,207,180,.10);border:1px solid rgba(78,207,180,.20)}
+.pipe-step{display:flex;flex-direction:column;background:var(--surface-2);border-radius:12px;padding:17px 18px 15px}
+.pipe-step.warm{border:1px solid rgba(214,178,120,.26);border-top:3px solid #dfba85}
+.pipe-step.cool{border:1px solid rgba(78,207,180,.24);border-top:3px solid #63d6bd}
+.pipe-step .st{display:flex;align-items:baseline;gap:9px;margin-bottom:3px}
+.pipe-step .st i{font-family:'Outfit',sans-serif;font-style:normal;font-size:11.4px;font-weight:700;letter-spacing:.1em}
+.pipe-step.warm .st i,.pipe-col.warm>.chd i,.pipe-m.warm>.n{color:#dfba85}
+.pipe-step.cool .st i,.pipe-col.cool>.chd i,.pipe-m.cool>.n{color:#63d6bd}
+.pipe-step .st span{font-size:16.8px;font-weight:800;color:#eef7f4;letter-spacing:-.02em}
+.pipe-step .q{margin:0 0 13px;font-size:13.2px;line-height:1.55;color:#8fa8a1;word-break:keep-all}
+.pipe-step .tags{display:flex;flex-wrap:wrap;gap:7px}
+.pipe-step .tags span{font-family:'Outfit',sans-serif;font-size:12.4px;font-weight:600;padding:6px 10px;border-radius:7px}
+.pipe-step.warm .tags span{color:#e2d3b8;background:rgba(214,178,120,.13);border:1px solid rgba(214,178,120,.24)}
+.pipe-step.cool .tags span{color:#cfe3dd;background:rgba(78,207,180,.11);border:1px solid rgba(78,207,180,.22)}
+.pipe-step .yield{margin-top:auto;padding-top:15px;display:flex;align-items:center;gap:7px;font-size:12.6px;color:#7f9a92}
+.pipe-step .yield i{font-style:normal;font-weight:700}
+.pipe-detail{margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12)}
+.pipe-detail>.lbl{font-size:12.4px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7f9a92;margin-bottom:18px}
+.pipe-col{display:flex;flex-direction:column;gap:14px}
+.pipe-col>.chd{display:flex;align-items:baseline;gap:8px;padding-bottom:12px;margin-bottom:2px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pipe-col>.chd i{font-family:'Outfit',sans-serif;font-style:normal;font-size:11.4px;font-weight:700;letter-spacing:.1em}
+.pipe-col>.chd span{font-size:13.6px;font-weight:700;color:#cfe3dd}
+.pipe-m{display:grid;grid-template-columns:32px 1fr;gap:0 10px}
+.pipe-m>.n{font-family:'Outfit',sans-serif;font-size:13.4px;font-weight:700;padding-top:2px}
+.pipe-m b{display:block;font-size:15.2px;font-weight:700;color:#eef7f4;letter-spacing:-.01em}
+.pipe-m p{margin:4px 0 7px;font-size:13.5px;line-height:1.6;color:#bfd4ce;word-break:keep-all}
+.pipe-m p b{display:inline;font-size:inherit}
+.pipe-m .out{display:inline-block;font-family:'Outfit',sans-serif;font-size:12.2px;font-weight:600;color:#9dbdb4;
+  background:var(--surface-3);border:1px solid rgba(255,255,255,.08);padding:4px 9px;border-radius:6px}
+.pipe-note{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:26px;padding-top:20px;
+  border-top:1px dashed rgba(255,255,255,.16)}
+.pipe-note p{margin:0;font-size:13.2px;line-height:1.68;color:#7f9a92;word-break:keep-all}
+.pipe-note b{color:#a8bfb8;font-weight:700}
+@media (max-width:1000px){
+  .analysis .evidence{padding:28px 24px 24px}
+  .pipe-lane{grid-template-columns:1fr;gap:12px}
+  .pipe-gap{display:none}
+  .pipe-arrow{transform:rotate(90deg);padding:2px 0}
+  .pipe-intro{flex-direction:column;align-items:flex-start;gap:18px}
+  .pipe-legend{margin-left:0}
+}
+@media (max-width:720px){
+  .pipe-io{flex-wrap:wrap;gap:10px 14px}
+  .pipe-io .io-chips{margin-left:0;justify-content:flex-start}
+  .pipe-note{grid-template-columns:1fr;gap:13px}
+}
+
 /* ============ 반응형 안정화 (2026-08-18) ============
    문제: 3D 씬·네트워크가 고정 px + 성긴 브레이크포인트라 창을 줄이면 값이 툭툭 점프했다
    (폰 293->234, 네트워크 852->520). 중간 폭에서 비율이 깨지고 요소가 화면 밖으로 나갔다.
@@ -1891,28 +1961,99 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="sec-head reveal">
       <span class="eyebrow">근거기반 분석 시스템</span>
       <h2 class="h">감이 아니라,<br>검증된 학습 기법으로 분석합니다</h2>
-      <p class="lead">추측이 아니라 <b>학계가 검증한 통계·학습과학 방법</b>에 <b>AI 분석</b>을 더해 약점을 진단하고 공부할 순서를 정합니다.</p>
+      <p class="lead">공개된 통계·학습과학 방법 위에, 검정고시 데이터로 조정한 <b>자체 로직과 가중치</b>를 얹어 직접 구현했습니다.</p>
     </div>
-    <!-- 근거는 별도 행으로 분리 — 3열 배너 -->
+    <!-- 채점 기록이 리포트가 되는 경로 — 관측(앰버) → 판단(틸) 2계열로 색을 고정 -->
     <div class="evidence reveal">
-      <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석 방법론 <span class="ev-badge">7개 기법</span></div>
-      <p class="mth-intro">기법의 뼈대는 공개·검증된 통계·학습과학 방법이지만, <b>실제 산출을 결정하는 로직·가중치·임계값은 배움터닝이 직접 설계해 보유</b>합니다. 검정고시 기출 데이터로 조정한 자체 구현이며, 각 기법이 무엇을 산출하는지 아래에 밝힙니다.</p>
-      <table class="mth">
-        <thead><tr><th></th><th>기법</th><th>산출물</th></tr></thead>
-        <tbody>
-        <tr><td class="mth-n">01</td><td class="mth-t"><b>파레토 분석</b><span>80/20 누적 기여도</span></td><td class="mth-d">단원별 <b>실점 집중도</b> — 전체 실점의 다수를 차지하는 소수 단원을 산출</td></tr>
-        <tr><td class="mth-n">02</td><td class="mth-t"><b>간격 반복</b><span>망각 구간 기반 복습 주기 배치</span></td><td class="mth-d">기억 잔존율이 떨어지는 시점에 맞춰 <b>과목별 복습 주기</b>를 계산</td></tr>
-        <tr><td class="mth-n">03</td><td class="mth-t"><b>우선순위 매트릭스</b><span>효과 × 노력 가중 정렬</span></td><td class="mth-d">같은 시간을 썼을 때 <b>점수 상승폭이 큰 단원</b>부터 학습 순서를 결정</td></tr>
-        <tr><td class="mth-n">04</td><td class="mth-t"><b>오답 패턴 분석</b><span>문항 단위 반복 오류 집계</span></td><td class="mth-d">단원·유형별 <b>연속 오답과 오답률</b>을 추적해 취약 지점을 특정</td></tr>
-        <tr><td class="mth-n">05</td><td class="mth-t"><b>추세 분석</b><span>회차별 시계열 비교</span></td><td class="mth-d">과목별 점수의 <b>상승·정체·하락 추세</b>를 판정</td></tr>
-        <tr><td class="mth-n">06</td><td class="mth-t"><b>학습량 보정</b><span>응시 문항 수 가중</span></td><td class="mth-d">표본이 적은 단원의 오답률을 <b>과대 해석하지 않도록</b> 보정</td></tr>
-        <tr><td class="mth-n">07</td><td class="mth-t"><b>합격선 마진</b><span>평균 60점 기준 거리</span></td><td class="mth-d">현재 평균과 합격선 사이의 <b>위치와 밴드</b>를 표시</td></tr>
-        </tbody>
-      </table>
-      <div class="ev-foot">
-        <p class="ev-note">* 모든 수치는 <b>본인의 풀이·채점 기록</b>에서만 계산합니다. 타인과의 비교나 외부 추정치를 쓰지 않습니다.<br>
-        * 합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.<br>
-        * 각 기법의 <b>가중치·임계값·판정 기준</b>은 검정고시 기출 데이터로 조정한 <b>배움터닝 자체 구현</b>입니다.</p>
+      <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4ecfb4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석 파이프라인 <span class="ev-badge">7개 기법 · 3단계</span></div>
+
+      <div class="pipe-intro">
+        <p>한 번의 채점 기록이 학습 리포트가 되기까지 거치는 경로입니다. 기법의 뼈대는 공개·검증된 방법이지만, <b>각 단계의 로직·가중치·임계값은 배움터닝이 직접 설계해 보유</b>합니다.</p>
+        <div class="pipe-legend">
+          <div><i style="background:#dfba85"></i><b style="color:#c8b494">관측</b>기록에서 사실을 집계</div>
+          <div><i style="background:#63d6bd"></i><b style="color:#9dc7bd">판단</b>사실에서 순서를 결정</div>
+        </div>
+      </div>
+
+      <div class="pipe-io pipe-in">
+        <span class="io-l">INPUT</span><span class="io-bar"></span><b>풀이 · 채점 기록</b>
+        <div class="io-chips"><span class="chip chip-w">문항 단위 정오답</span><span class="chip chip-w">응시 회차</span><span class="chip chip-w">소요 시간</span></div>
+      </div>
+
+      <div class="pipe-vsep"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg></div>
+
+      <div class="pipe-lane">
+        <div class="pipe-step warm">
+          <div class="st"><i>STEP 1</i><span>진단</span></div>
+          <p class="q">무엇이 점수를 깎고 있지?</p>
+          <div class="tags"><span>01 파레토 분석</span><span>04 오답 패턴 분석</span><span>06 학습량 보정</span></div>
+          <div class="yield"><i style="color:#dfba85">&rarr;</i>취약 단원 목록</div>
+        </div>
+        <div class="pipe-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+        <div class="pipe-step cool">
+          <div class="st"><i>STEP 2</i><span>판정</span></div>
+          <p class="q">지금 어디쯤 와 있지?</p>
+          <div class="tags"><span>05 추세 분석</span><span>07 합격선 마진</span></div>
+          <div class="yield"><i style="color:#63d6bd">&rarr;</i>합격선 기준 위치</div>
+        </div>
+        <div class="pipe-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+        <div class="pipe-step cool">
+          <div class="st"><i>STEP 3</i><span>처방</span></div>
+          <p class="q">무엇부터, 언제 다시 보지?</p>
+          <div class="tags"><span>03 우선순위 매트릭스</span><span>02 간격 반복</span></div>
+          <div class="yield"><i style="color:#63d6bd">&rarr;</i>오늘 풀 순서</div>
+        </div>
+      </div>
+
+      <div class="pipe-vsep"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg></div>
+
+      <div class="pipe-io pipe-out">
+        <span class="io-l">OUTPUT</span><span class="io-bar"></span><b>학습 리포트</b>
+        <div class="io-chips"><span class="chip chip-t">취약 단원</span><span class="chip chip-t">합격선 위치</span><span class="chip chip-t">오늘 풀 순서</span></div>
+      </div>
+
+      <div class="pipe-detail">
+        <div class="lbl">기법별 산출물</div>
+        <div class="pipe-lane">
+          <div class="pipe-col warm">
+            <div class="chd"><i>STEP 1</i><span>진단</span></div>
+        <div class="pipe-m warm"><span class="n">01</span>
+          <div><b>파레토 분석</b><p>전체 실점의 다수를 차지하는 <b>소수 단원</b>을 산출</p><span class="out">집중 단원 목록</span></div>
+        </div>
+        <div class="pipe-m warm"><span class="n">04</span>
+          <div><b>오답 패턴 분석</b><p>단원·유형별 <b>연속 오답과 오답률</b>을 추적</p><span class="out">취약 지점</span></div>
+        </div>
+        <div class="pipe-m warm"><span class="n">06</span>
+          <div><b>학습량 보정</b><p>표본이 적은 단원을 <b>과대 해석하지 않도록</b> 보정</p><span class="out">보정 오답률</span></div>
+        </div>
+          </div>
+          <div class="pipe-gap"></div>
+          <div class="pipe-col cool">
+            <div class="chd"><i>STEP 2</i><span>판정</span></div>
+        <div class="pipe-m cool"><span class="n">05</span>
+          <div><b>추세 분석</b><p>회차별 시계열로 <b>상승·정체·하락</b>을 판정</p><span class="out">추세 판정</span></div>
+        </div>
+        <div class="pipe-m cool"><span class="n">07</span>
+          <div><b>합격선 마진</b><p>평균 60점 기준 <b>현재 위치와 밴드</b>를 표시</p><span class="out">합격선 거리</span></div>
+        </div>
+          </div>
+          <div class="pipe-gap"></div>
+          <div class="pipe-col cool">
+            <div class="chd"><i>STEP 3</i><span>처방</span></div>
+        <div class="pipe-m cool"><span class="n">03</span>
+          <div><b>우선순위 매트릭스</b><p>같은 시간에 <b>상승폭이 큰 단원</b>부터 순서를 결정</p><span class="out">학습 순서</span></div>
+        </div>
+        <div class="pipe-m cool"><span class="n">02</span>
+          <div><b>간격 반복</b><p>기억이 흐려지는 시점에 맞춰 <b>복습 주기</b>를 계산</p><span class="out">복습 주기 (일)</span></div>
+        </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipe-note">
+        <p>모든 수치는 <b>본인의 풀이·채점 기록</b>에서만 계산합니다. 타인과의 비교나 외부 추정치를 쓰지 않습니다.</p>
+        <p>합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.</p>
+        <p>가중치·임계값·판정 기준은 검정고시 기출 데이터로 조정한 <b>배움터닝 자체 구현</b>입니다.</p>
       </div>
     </div>
   </div>
