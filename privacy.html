@@ -72,6 +72,53 @@ h1,h2,h3,h4,.h,.qt,.app-title{text-wrap:balance}
 p,.lead,.sub,.desc,.a,.pd,li,.tip-d,.nn,figcaption{text-wrap:pretty}
 body{word-break:keep-all;overflow-wrap:break-word}
 </style>
+<style>
+/* ==========================================================
+   모바일 최적화 (2026-08-26)
+   폰 390px 실측으로 확인한 것만 고친다. 데스크톱 동작은 건드리지 않는다.
+   ========================================================== */
+
+/* [1] 터치 기기에는 hover 가 없어 .nav-drop:hover 서브메뉴가 영영 안 열렸다.
+       연혁·협력사·출시알림·Q&A·개인정보처리방침·문의하기 등 8개 페이지가
+       폰 내비에서 도달 불가였다. .open 은 문서 끝 스크립트가 탭에 붙인다. */
+.nav-drop.open .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-drop.open>a .chev{transform:rotate(180deg)}
+.nav-drop:last-child.open .drop-menu{transform:translateX(0) translateY(0)}
+
+/* [2] 워드마크 한글 병기(.24em)가 푸터 기준(24.6px)에서 5.9px 로 떨어져
+       읽을 수 없었다. 비율은 유지하고 하한만 둔다 — nav·히어로의 큰
+       워드마크는 계산값이 이미 11px 를 넘으므로 그대로다. */
+.brand-wm .wm-ko{font-size:max(11px,.24em)}
+
+@media (max-width:920px){
+  /* [3] iOS 사파리는 16px 미만 입력에 포커스하면 페이지를 확대한다.
+         문의하기·출시알림 폼이 15.4px, 뉴스 검색·날짜가 13.5~14.5px 라
+         탭할 때마다 화면이 튀었다. 기존 규칙이 .frow input(0,1,1) 처럼
+         클래스를 끼고 있어 단일 타입 선택자로는 못 이긴다 — 폼이 새로
+         생겨도 계속 듣도록 important 로 못박는다(920px 이하에서만). */
+  input,textarea,select{font-size:16px!important}
+}
+
+@media (max-width:560px){
+  /* [4] 내비 탭 타깃이 32px 였다. nav-bot 이 56px 이라 높이 변화 없이 44px 를 넣는다. */
+  .navlinks>a,.navlinks .nav-drop>a{min-height:44px;display:inline-flex;align-items:center}
+  .drop-menu a{min-height:44px;display:flex;align-items:center}
+
+  /* [5] 서브메뉴가 left:50% 중앙정렬이라 첫 항목(회사)이 화면 왼쪽으로
+         152px 중 상당분이 잘려 나갔다. 폰에서는 링크 왼쪽에 붙인다.
+         마지막(고객지원)은 기존 right:0 정렬을 그대로 둔다. */
+  .drop-menu{left:0;transform:translateX(0) translateY(6px);max-width:calc(100vw - 20px)}
+  .nav-drop.open .drop-menu{transform:translateX(0) translateY(0)}
+  .nav-drop:last-child .drop-menu{left:auto;right:0}
+
+  /* [6] .nav-bot 의 overflow-x:auto 가 절대배치된 서브메뉴를 통째로 잘라
+         메뉴가 열려도 화면에 나타나지 않았다(getBoundingClientRect 는
+         정상값을 주므로 수치 검증만으로는 안 잡힌다 — 캡처로 확인).
+         링크는 이미 flex-wrap 으로 줄바꿈되니 가로 스크롤이 필요 없다.
+         좁은 기기에서 줄이 늘면 바가 잘리지 않고 커지도록 높이도 푼다. */
+  .nav-bot{overflow:visible;height:auto;min-height:56px}
+}
+</style>
 </head>
 <body>
 <div class="topbar">
