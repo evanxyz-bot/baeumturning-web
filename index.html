@@ -1386,6 +1386,18 @@ body{background:#0d1917}
     calc(50% - var(--o,0) * 60vmax) 50%,
     calc(50% - var(--o,0) * 30vmax) calc(50% + var(--o,0) * 52vmax),
     calc(50% + var(--o,0) * 30vmax) calc(50% + var(--o,0) * 52vmax))}
+/* 조리개 날 — 육각 개구부가 열리는 그 자리에 아웃포커스 마크(정통 아이리스)를 겹친다.
+   마크의 육각 구멍은 반지름 44/200 이고 clip-path 육각의 반지름은 60vmax*o 이므로
+   200 * 60/44 = 272.7vmax*o 로 잡으면 구멍과 개구부가 정확히 포개진다.
+   회전은 넣지 않는다 — 날만 돌면 구멍이 어긋나 다크존이 날 밖으로 새어 나온다. */
+.apfx-iris{position:absolute;left:50%;top:50%;pointer-events:none;
+  width:calc(var(--o,0) * 272.7vmax);height:calc(var(--o,0) * 272.7vmax);
+  transform:translate(-50%,-50%);
+  /* 마크를 통째로 두면 날의 바깥 반지름(120vmax*o)이 화면을 다 덮어 청록 벽이 된다.
+     바깥을 원으로 잘라 개구부를 감싸는 '날 고리'만 남긴다 — 로고의 바깥 경계도
+     원호라 잘린 자리가 같은 언어로 읽힌다. */
+  clip-path:circle(calc(var(--o,0) * 80vmax) at 50% 50%);
+  color:#9ad7cd;opacity:calc(1 - var(--o,0) * .3)}
 .apfx-in{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;
   filter:blur(calc(10px * (1 - var(--p,0))));opacity:calc(.2 + .8 * var(--p,0))}
 .apfx-in .mk{width:52px;height:52px;color:#4ecfb4}
@@ -1400,6 +1412,7 @@ body{background:#0d1917}
   .apfx-light{display:none}
   .apfx-dark{--o:1.7!important}
   .apfx-in{--p:1!important;filter:none;opacity:1}
+  .apfx-iris{display:none}
 }
 /* 다크존 은은한 빛무리 — 검은 화면이 죽어 보이지 않게 */
 .analysis,.features{position:relative;overflow:hidden}
@@ -1976,6 +1989,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <span class="tt"><em class="fx">초점</em>을 데이터에 맞춥니다</span>
       </div>
     </div>
+    <svg class="apfx-iris" viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>
     <div class="apfx-hint" id="apfxHint">천천히 스크롤 ↓</div>
   </div>
 </div></div>
@@ -2413,7 +2427,8 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var dark = document.getElementById('apfxDark');
   var inr = document.getElementById('apfxIn');
   var hint = document.getElementById('apfxHint');
-  if (!pin || !dark) return;
+  var stage = pin.querySelector('.apfx-stage');
+  if (!pin || !dark || !stage) return;
   var ticking = false;
   function upd(){
     ticking = false;
@@ -2421,7 +2436,8 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     var total = r.height - innerHeight;
     var p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
     var s = p * p * (3 - 2 * p);
-    dark.style.setProperty('--o', (s * 1.7).toFixed(4));
+    // 무대에 걸어 두면 다크존 clip-path 와 조리개 날이 같은 값을 본다
+    stage.style.setProperty('--o', (s * 1.7).toFixed(4));
     inr.style.setProperty('--p', s.toFixed(4));
     if (hint) hint.style.setProperty('--p', s.toFixed(4));
   }
