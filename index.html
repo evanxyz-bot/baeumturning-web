@@ -251,13 +251,16 @@ h2.h{font-size:44.8px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .l-weak .float-chip{position:static;animation:none;box-shadow:0 16px 36px rgba(13,38,33,.16)}
 .l-weak .lf{animation:layerIn .7s var(--ease-spring) 1.15s both,lfloat 6.5s ease-in-out 3.7s infinite}
 /* 합격 가능성 + 오늘의 학습 플랜 — 우측 공백 플로팅 (크기 축소) */
-.l-pass{top:30px;right:-168px;transform:translateZ(95px)}
-.l-pass .mini-card{width:202px;box-shadow:0 20px 46px rgba(11,90,76,.28);transform:scale(.85);transform-origin:top right}
-.l-pass .pass-card{gap:11px}
-.l-pass .pgauge,.l-pass .pgauge svg{width:62px;height:62px}
-.l-pass .pgauge .pv{font-size:20px}
-.l-pass .pinfo{font-size:12.5px}
-.l-pass .pinfo b{font-size:14px}
+.l-pass{top:30px;right:-232px;transform:translateZ(95px)}
+/* 1400px 미만에서는 -232 로 두면 카드 오른쪽이 화면 밖으로 잘린다.
+   대신 폰 위쪽 여백으로 올려 D-day 줄을 가리지 않게 한다 */
+@media (max-width:1399px){.l-pass{right:-178px;top:-26px}.l-pass .mini-card{transform:scale(.8)}}
+.l-pass .mini-card{width:232px;box-shadow:0 20px 46px rgba(11,90,76,.28);transform:scale(.92);transform-origin:top right}
+.l-pass .pm-head{font-size:12px}
+.l-pass .pm-head .big{font-size:25px}
+.l-pass .pm-sub{font-size:11.4px}
+.l-pass .pm-bar{height:12px}
+.l-pass .pm-lab{font-size:9px}
 .l-pass .lf{animation:layerIn .7s var(--ease-spring) .85s both,lfloat 6.5s ease-in-out 2.5s infinite}
 .l-plan{top:142px;right:-168px;transform:translateZ(95px)}
 .l-plan .mini-card{width:202px;box-shadow:0 18px 40px rgba(13,38,33,.16);transform:scale(.85);transform-origin:top right}
@@ -317,11 +320,13 @@ h2.h{font-size:44.8px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .review-card .ch{opacity:.8;font-size:17.9px}
 .bars{display:flex;flex-direction:column;gap:9px;margin-top:4px}
 .barrow{display:grid;grid-template-columns:34px 1fr 30px;align-items:center;gap:8px}
-.barrow .lb{font-size:12.3px;color:var(--text-2);font-weight:500}
-.track{position:relative;height:9px;background:var(--surface-3);border-radius:999px}
-.track .fill{position:absolute;left:0;top:0;height:100%;border-radius:999px}
-.track .pass{position:absolute;top:-2px;bottom:-2px;left:60%;width:1.5px;background:#3a4150;border-radius:2px}
-.barrow .vl{font-size:13.4px;font-weight:700;text-align:right}
+.barrow .lb{font-size:12.3px;color:#4b5563;font-weight:500;text-align:right;white-space:nowrap}
+/* 앱 RadarChartSection 과 동일: h-2.5 · bg-gray-200 · rounded-none · 60% 눈금 2px */
+.track{position:relative;height:10px;background:#e5e7eb;border-radius:0;overflow:hidden}
+.track .fill{position:absolute;left:0;top:0;height:100%;border-radius:0}
+.track .pass{position:absolute;top:0;bottom:0;left:60%;width:2px;background:#374151;border-radius:0}
+.track .pass.avg{background:rgba(156,163,175,.8)}
+.barrow .vl{font-size:13.4px;font-weight:700;text-align:right;color:#374151}
 .float-chip{background:#fff;border:1px solid var(--border);border-radius:14px;padding:11px 13px;width:186px}
 .float-chip .fh{display:flex;align-items:center;gap:6px;font-size:12.3px;font-weight:700;color:var(--accent-strong);margin-bottom:6px}
 .float-chip .fr{display:flex;justify-content:space-between;align-items:baseline;font-size:12.3px;color:var(--text-2);margin-bottom:5px}
@@ -1009,8 +1014,10 @@ body::before{background:
   .ev-head{flex-wrap:wrap}
   .ev-badge{margin-left:0}
 }
-/* 우측 열 — 폰 화면(합격선·오늘의 학습)과 중복되는 카드는 띄우지 않는다 */
-.l-pass,.l-plan,.l-review{display:none}
+/* 우측 열 — 폰 첫 화면이 '배움터'로 바뀌어 합격선·오늘의 학습이 폰 안에서
+   사라졌다. 중복이 아니게 됐으므로 다시 띄운다(앱 학습보고서·오늘의 학습 형태).
+   .l-review(복습 알림)만 계속 숨긴다 — 우측 열이 세 장을 넘으면 폰을 가린다. */
+.l-review,.l-plan{display:none}
 .l-bars{top:150px;right:-206px;bottom:auto;transform:translateZ(70px)}
 .l-bars .mini-card{width:220px}
 /* 거미줄은 배경 힌트로만 (라벨이 카드와 충돌하지 않게 축소) */
@@ -1257,14 +1264,25 @@ body::before{background:
 .cat-head .ci svg{display:block}
 .ddaybar.alt{background:linear-gradient(90deg,rgba(23,147,126,.13),rgba(88,120,160,.13))}
 .dchip.ai{background:linear-gradient(135deg,#17937e,#5878a0);animation:aiGlow 2.2s ease-in-out infinite}
-.pass-card{display:flex;align-items:center;gap:14px}
-.pgauge{width:72px;height:72px;flex-shrink:0;position:relative}
-.pgauge .pv{position:absolute;inset:0;display:grid;place-items:center;font-size:23.5px;font-weight:800;color:var(--accent-strong)}
-.cat-slide.on .pgauge .pring{animation:gaugeSweep 1.2s var(--ease-out) both}
-.pass-card .pinfo{font-size:14px;color:var(--text-3);line-height:1.5}
-.pass-card .pinfo b{font-size:16.2px;color:var(--text-2);font-weight:700}
-/* 라벨과 뒤 문장이 붙어 "합격선 마진합격선 평균 60점" 으로 읽혔다 */
-.pass-card .pinfo>b:first-child{display:block}
+/* 합격선 위치 — 앱 학습보고서의 DeviationBar 를 그대로 옮긴 형태.
+   예전의 도넛 게이지(%)는 앱에 없다(확률 게이지는 2026-07-30 제거). */
+.pass-card{display:flex;flex-direction:column}
+.pm-head{font-size:12.5px;color:var(--text-3);line-height:1.35}
+.pm-head .big{font-family:var(--font-head,'GmarketSans');font-size:29px;font-weight:700;
+  letter-spacing:-.03em;line-height:1;color:#0b7a6a;margin:0 2px}
+.pm-head b{color:#243447;font-weight:700}
+.pm-sub{font-size:12.3px;color:var(--text-3);margin-top:3px}
+.pm-sub b{color:#243447;font-weight:700}
+.pm-sub .up{color:#2f9183}
+.pm-bar{position:relative;height:14px;border-radius:999px;background:#e9edf2;margin-top:11px}
+.pm-bar .band{position:absolute;top:0;bottom:0;border-radius:7px;
+  background:linear-gradient(90deg,rgba(11,122,106,0) 0%,rgba(11,122,106,.45) 30%,rgba(11,122,106,.45) 70%,rgba(11,122,106,0) 100%)}
+.pm-bar .avgm{position:absolute;top:-3px;bottom:-3px;width:4px;border-radius:999px;background:#0b7a6a}
+.pm-bar .tk{position:absolute;top:-2px;bottom:-2px;width:2px}
+.pm-bar .tk.p{background:#243447}
+.pm-bar .tk.s{background:#8ea0b5}
+.pm-lab{position:relative;height:14px;margin-top:2px;font-size:10px;color:var(--text-4)}
+.pm-lab span{position:absolute;transform:translateX(-50%)}
 .wk{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
 .wk .wd{font-size:12.3px;color:var(--text-3);font-weight:700}
 .wk .wc{font-size:14.6px;font-weight:700;color:var(--text-2);padding:6px 0;border-radius:7px;background:#fff;border:1px solid var(--border)}
@@ -1319,7 +1337,6 @@ body::before{background:
   100%{opacity:0;transform:translate(-50%,-50%) scale(.72)}}
 @keyframes ghostSuck{0%{opacity:0;transform:translate(calc(-50% + var(--gx,0px)),calc(-50% + var(--gy,0px))) scale(.95)}
   22%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(.08)}}
-@keyframes gaugeSweep{from{stroke-dashoffset:201}}
 @keyframes blockIn{to{opacity:1;transform:none}}
 @keyframes barGrow{to{width:var(--w,60%)}}
 @media(prefers-reduced-motion:reduce){
@@ -1904,7 +1921,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
               <div class="mini-card">
                 <div class="mc-title">과목별 점수 <span style="float:right;font-weight:500;color:var(--text-3);font-size:12.3px">최근 2회차 평균</span></div>
                 <div class="bars">
-                  <div class="barrow"><span class="lb">평균</span><div class="track"><span class="fill" style="width:60%;background:#5b6675"></span><span class="pass"></span></div><span class="vl tnum">60</span></div>
+                  <div class="barrow"><span class="lb">평균</span><div class="track"><span class="fill" style="width:60%;background:#5b6675"></span><span class="pass avg"></span></div><span class="vl tnum" style="color:#5b6675">60</span></div>
                   <div class="barrow"><span class="lb">국어</span><div class="track"><span class="fill" style="width:89%;background:#2f9183"></span><span class="pass"></span></div><span class="vl tnum">89</span></div>
                   <div class="barrow"><span class="lb">영어</span><div class="track"><span class="fill" style="width:38%;background:#c46a5e"></span><span class="pass"></span></div><span class="vl tnum" style="color:#c46a5e">38</span></div>
                   <div class="barrow"><span class="lb">수학</span><div class="track"><span class="fill" style="width:76%;background:#c49a5e"></span><span class="pass"></span></div><span class="vl tnum">76</span></div>
@@ -1927,14 +1944,16 @@ body{word-break:keep-all;overflow-wrap:break-word}
             <!-- floating layer: 합격선 마진 (우측 공백, 대시보드 풀카드) -->
             <div class="layer l-pass"><div class="lf">
               <div class="mini-card pass-card">
-                <div class="pgauge">
-                  <svg width="72" height="72" viewBox="0 0 72 72" style="transform:rotate(-90deg)">
-                    <circle cx="36" cy="36" r="32" fill="none" stroke="#e6eeeb" stroke-width="7"/>
-                    <circle class="pring" cx="36" cy="36" r="32" fill="none" stroke="#2f9183" stroke-width="7" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="96"/>
-                  </svg>
-                  <span class="pv">52점</span>
+                <div class="mc-title">학습 성적표 <span style="float:right;font-weight:500;color:var(--text-3);font-size:12.3px">26년 2회차 대비</span></div>
+                <div class="pm-head">합격선까지 <span class="big tnum">+10점</span></div>
+                <div class="pm-sub">평균 <b class="tnum">70.3</b> · 지난 대비 <b class="up tnum">&#9650;6</b></div>
+                <div class="pm-bar">
+                  <i class="band" style="left:65.5%;width:9.6%"></i>
+                  <i class="avgm" style="left:calc(70.3% - 2px)"></i>
+                  <i class="tk p" style="left:60%"></i>
+                  <i class="tk s" style="left:75%"></i>
                 </div>
-                <div class="pinfo"><b>합격선 마진</b>합격선 평균 60점<br>최근 3회 평균 <b style="color:#17937e;display:inline">52점</b></div>
+                <div class="pm-lab"><span style="left:60%">합격선</span><span style="left:75%">안정선</span></div>
               </div>
             </div></div>
 
