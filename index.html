@@ -1722,17 +1722,18 @@ body{word-break:keep-all;overflow-wrap:break-word}
             <svg class="web3d" viewBox="0 0 660 700" aria-hidden="true">
               <ellipse class="wr" cx="330" cy="336" rx="230" ry="185"/>
               <ellipse class="wr" cx="330" cy="336" rx="285" ry="235"/>
-              <!-- 실 세 가닥 — 끝에 라벨이 붙는 것만 남긴다. 라벨은 떠 있는 카드에
-                   가리지 않는 빈 자리에 둔다(카드 뒤로 들어가면 선만 남아 깨져 보인다). -->
-              <path class="wl" d="M470 466 Q498 476 508 490"/>
-              <path class="wl" d="M206 442 Q142 446 84 454"/>
-              <path class="wl" d="M218 654 Q150 664 88 674"/>
-              <circle class="wn" cx="512" cy="492" r="5"/>
-              <circle class="wn" cx="80" cy="455" r="5" style="animation-delay:.9s"/>
-              <circle class="wn" cx="84" cy="676" r="5" style="animation-delay:1.7s"/>
-              <text x="524" y="492"><tspan x="524">데이터 기반</tspan><tspan x="524" dy="21">약점 분석</tspan></text>
-              <text x="92" y="462">학습 보고서</text>
-              <text x="96" y="700">학습 알림</text>
+              <!-- 실 세 가닥 — 폰을 둘러싼 빈 자리 세 곳(왼쪽 위 / 오른쪽 아래 / 아래)에
+                   고르게 벌려 두고, 각 실은 폰 안에서 시작해 라벨까지 길게 나온다.
+                   경로는 떠 있는 카드 영역(왼쪽 y204~429·오른쪽 y214~437)을 피해 잡았다. -->
+              <path class="wl" d="M215 140 Q120 108 4 98"/>
+              <path class="wl" d="M400 640 Q510 620 508 508"/>
+              <path class="wl" d="M300 640 Q280 690 164 690"/>
+              <circle class="wn" cx="-4" cy="97" r="5"/>
+              <circle class="wn" cx="514" cy="504" r="5" style="animation-delay:.9s"/>
+              <circle class="wn" cx="152" cy="690" r="5" style="animation-delay:1.7s"/>
+              <text x="10" y="104">학습 보고서</text>
+              <text x="528" y="498"><tspan x="528">데이터 기반</tspan><tspan x="528" dy="21">약점 분석</tspan></text>
+              <text x="166" y="697">학습 알림</text>
             </svg>
 
             <!-- tilted phone base -->
