@@ -254,7 +254,7 @@ h2.h{font-size:44.8px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .l-pass{top:30px;right:-232px;transform:translateZ(95px)}
 /* 1400px 미만에서는 -232 로 두면 카드 오른쪽이 화면 밖으로 잘린다.
    대신 폰 위쪽 여백으로 올려 D-day 줄을 가리지 않게 한다 */
-@media (max-width:1399px){.l-pass{right:-178px;top:-26px}.l-pass .mini-card{transform:scale(.8)}}
+@media (max-width:1399px){.l-pass{right:-178px;top:-46px}.l-pass .mini-card{transform:scale(.78)}}
 .l-pass .mini-card{width:232px;box-shadow:0 20px 46px rgba(11,90,76,.28);transform:scale(.92);transform-origin:top right}
 .l-pass .pm-head{font-size:12px}
 .l-pass .pm-head .big{font-size:25px}
@@ -1722,19 +1722,17 @@ body{word-break:keep-all;overflow-wrap:break-word}
             <svg class="web3d" viewBox="0 0 660 700" aria-hidden="true">
               <ellipse class="wr" cx="330" cy="336" rx="230" ry="185"/>
               <ellipse class="wr" cx="330" cy="336" rx="285" ry="235"/>
-              <path class="wl" d="M330 336 Q260 240 218 100"/>
-              <path class="wl" d="M330 336 Q400 380 466 462"/>
-              <path class="wl" d="M330 336 Q262 430 215 480"/>
-              <path class="wl" d="M330 336 Q330 480 330 595"/>
-              <path class="wl" d="M452 204 Q492 174 520 140"/>
-              <path class="wl" d="M330 336 Q200 312 78 300"/>
-              <path class="wl" d="M330 336 Q180 490 72 598"/>
-              <circle class="wn" cx="520" cy="140" r="5"/>
-              <circle class="wn" cx="78" cy="300" r="5" style="animation-delay:.9s"/>
-              <circle class="wn" cx="72" cy="598" r="5" style="animation-delay:1.7s"/>
-              <text x="528" y="147">데이터 기반 분석</text>
-              <text x="14" y="272"><tspan x="14">학습</tspan><tspan x="14" dy="21">보고서</tspan></text>
-              <text x="84" y="605">학습 알림</text>
+              <!-- 실 세 가닥 — 끝에 라벨이 붙는 것만 남긴다. 라벨은 떠 있는 카드에
+                   가리지 않는 빈 자리에 둔다(카드 뒤로 들어가면 선만 남아 깨져 보인다). -->
+              <path class="wl" d="M330 336 Q432 398 506 488"/>
+              <path class="wl" d="M330 336 Q214 372 86 452"/>
+              <path class="wl" d="M330 336 Q256 536 92 672"/>
+              <circle class="wn" cx="512" cy="492" r="5"/>
+              <circle class="wn" cx="80" cy="455" r="5" style="animation-delay:.9s"/>
+              <circle class="wn" cx="84" cy="676" r="5" style="animation-delay:1.7s"/>
+              <text x="524" y="492"><tspan x="524">데이터 기반</tspan><tspan x="524" dy="21">약점 분석</tspan></text>
+              <text x="92" y="462">학습 보고서</text>
+              <text x="96" y="700">학습 알림</text>
             </svg>
 
             <!-- tilted phone base -->
@@ -1749,11 +1747,11 @@ body{word-break:keep-all;overflow-wrap:break-word}
                     <div class="cat-body">
                       <div class="cat-head"><span class="ci" style="background:#2f9183"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>배움터</div>
                       <div style="display:flex;flex-direction:column;gap:7px">
-                        <div style="background:#4a5d8f;border-radius:12px;padding:9px 11px;color:#fff"><b style="font-size:13px;display:block;line-height:1.25">검정고시 기출문제</b><span style="font-size:10.8px;opacity:.84">실전처럼 회차별로 풀고 바로 채점</span></div>
-                        <div style="background:#34477a;border-radius:12px;padding:9px 11px;color:#fff"><b style="font-size:13px;display:block;line-height:1.25">학습 보고서 만들기</b><span style="font-size:10.8px;opacity:.84">새 학습 데이터가 쌓였어요</span></div>
-                        <div style="background:#b0605c;border-radius:12px;padding:9px 11px;color:#fff"><b style="font-size:13px;display:block;line-height:1.25">취약 단원</b><span style="font-size:10.8px;opacity:.84">내가 자꾸 틀리는 단원만 모아서</span></div>
-                        <div style="background:#a0863c;border-radius:12px;padding:9px 11px;color:#fff"><b style="font-size:13px;display:block;line-height:1.25">문제은행</b><span style="font-size:10.8px;opacity:.84">과목·단원별로 골라 풀기</span></div>
-                        <div style="background:#5f8a7d;border-radius:12px;padding:9px 11px;color:#fff"><b style="font-size:13px;display:block;line-height:1.25">내 기록</b><span style="font-size:10.8px;opacity:.84">점수 추이·시험지·지난 보고서</span></div>
+                        <div style="position:relative;overflow:hidden;background:#4a5d8f;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">검정고시 기출문제</b><span style="font-size:10.8px;opacity:.84;position:relative">실전처럼 회차별로 풀고 바로 채점</span></div>
+                        <div style="position:relative;overflow:hidden;background:#34477a;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><path d="m12 3 1.9 5.3L19 10l-5.1 1.7L12 17l-1.9-5.3L5 10l5.1-1.7Z"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">학습 보고서 만들기</b><span style="font-size:10.8px;opacity:.84;position:relative">새 학습 데이터가 쌓였어요</span></div>
+                        <div style="position:relative;overflow:hidden;background:#b0605c;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">취약 단원</b><span style="font-size:10.8px;opacity:.84;position:relative">내가 자꾸 틀리는 단원만 모아서</span></div>
+                        <div style="position:relative;overflow:hidden;background:#a0863c;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">문제은행</b><span style="font-size:10.8px;opacity:.84;position:relative">과목·단원별로 골라 풀기</span></div>
+                        <div style="position:relative;overflow:hidden;background:#5f8a7d;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">내 기록</b><span style="font-size:10.8px;opacity:.84;position:relative">점수 추이·시험지·지난 보고서</span></div>
                       </div>
                     </div>
                   </div>
