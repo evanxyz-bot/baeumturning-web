@@ -12,5 +12,6 @@
   <url><loc>https://outoffocus-edu.vercel.app/partners.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://outoffocus-edu.vercel.app/contact.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://outoffocus-edu.vercel.app/privacy.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://outoffocus-edu.vercel.app/delete-account.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
   <url><loc>https://outoffocus-edu.vercel.app/terms.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
 </urlset>
