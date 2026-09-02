@@ -389,6 +389,22 @@ body{word-break:keep-all;overflow-wrap:break-word}
   .doc table{font-size:13.4px}
   .doc th,.doc td{padding:7px 8px;white-space:normal}
 }
+/* ── 하단 정보 높이 축소 (2026-09-03) ──
+   브랜드(워드마크 + 한 줄 소개)를 우측 아래로 보내고, 사업자 정보·저작권은
+   왼쪽에 쌓는다. 세로로 세 덩이가 쌓여 있던 것이 두 열로 겹쳐져 높이가 준다. */
+.foot{padding:34px 0 26px}
+.foot .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"info brand" "bottom brand";column-gap:40px;row-gap:8px;align-items:end}
+.foot-top{grid-area:brand;display:flex;flex-direction:column;align-items:flex-end;
+  text-align:right;gap:6px;align-self:end}
+.foot-top .desc{margin-top:0;font-size:13.4px;line-height:1.6;max-width:340px}
+.biz-info{grid-area:info;margin-top:0;padding-top:0;border-top:0}
+.foot-bottom{grid-area:bottom;margin-top:4px;padding-top:12px;border-top:1px solid var(--border)}
+@media (max-width:760px){
+  .foot .wrap{grid-template-columns:1fr;grid-template-areas:"info" "bottom" "brand";row-gap:14px}
+  .foot-top{align-items:flex-start;text-align:left}
+  .foot-top .desc{max-width:none}
+}
 </style>
 </head>
 <body>
@@ -425,14 +441,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
         </div>
       </div>
       <a href="stories.html">소식</a>
-      <div class="nav-drop">
-        <a href="app.html">배움터닝<span class="chev">▾</span></a>
-        <div class="drop-menu">
-          <a href="app.html">서비스 소개</a>
-          <a href="app.html#analysis">학습 분석</a>
-          <a href="app.html#free">무료 범위</a>
-        </div>
-      </div>
       <a href="news.html">검정 뉴스</a>
       <div class="nav-drop">
         <a href="notice.html" class="active">고객지원<span class="chev">▾</span></a>

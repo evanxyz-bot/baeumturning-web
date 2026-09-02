@@ -766,8 +766,8 @@ body::before{background:
   background-image:linear-gradient(transparent 62%, rgba(154,215,205,.5) 62%, rgba(154,215,205,.5) 94%, transparent 94%)}
 /* 키보드 포커스 링 */
 :focus-visible{outline:2.5px solid var(--accent-mid);outline-offset:2px;border-radius:4px}
-/* 다크 전환 구간 — 한 문장에 215vh는 과한 스크롤 비용. 165vh로 단축 */
-.apfx{height:165vh}
+/* 다크 전환 구간의 길이는 아래 .apfx 규칙(선언 순서상 뒤)에서 정한다.
+   여기서 165vh 로 줄여 뒀던 것이 뒤 규칙에 밀려 무효였다 — 뒤에서 직접 줄인다. */
 
 /* 푸터 — 로고를 최하단 좌측, 회사 정보는 우측 */
 .foot-desc{font-size:14.6px;color:var(--text-3);line-height:1.65;max-width:420px}
@@ -1369,7 +1369,10 @@ body{background:#0d1917}
 /* 화이트→다크 전환: 조리개 × 초점 (대표 확정 2026-08-13 — 후보 B+C 결합)
    스크롤로 정육각 조리개가 열리며 다크 존이 드러나고, 그 내용은 흐림→초점 인,
    밝은 존은 아웃포커스로 물러난다. 정육각형은 vmax 단위라 화면 비율 무관하게 정다각형 */
-.apfx{position:relative;height:215vh}
+/* 100vh 는 고정(sticky) 무대라, 애니메이션에 실제로 드는 스크롤 = height - 100vh.
+   215vh 면 115vh 를 굴려야 끝나 휠을 여러 번 돌려야 했다. 140vh(=40vh 스크롤)로
+   줄여 감도를 약 3배 올린다. */
+.apfx{position:relative;height:140vh}
 .apfx-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fbfdfd}
 .apfx-light{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;
   filter:blur(calc(12px * var(--p,0))) brightness(calc(1 - .55 * var(--p,0)))}
@@ -1656,14 +1659,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
         </div>
       </div>
       <a href="stories.html">소식</a>
-      <div class="nav-drop">
-        <a href="app.html" data-sec="service">배움터닝<span class="chev">▾</span></a>
-        <div class="drop-menu">
-          <a href="app.html">서비스 소개</a>
-          <a href="app.html#analysis">학습 분석</a>
-          <a href="app.html#free">무료 범위</a>
-        </div>
-      </div>
       <a href="news.html">검정 뉴스</a>
       <div class="nav-drop">
         <a href="notice.html">고객지원<span class="chev">▾</span></a>
@@ -1974,7 +1969,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 </section>
 <div class="apfx" id="apfx">
   <div class="apfx-stage">
-    <div class="apfx-light"><span class="t">공부에도 <em class="fx">초점</em>이 필요하니까</span></div>
+    <div class="apfx-light"><span class="t">공부에는 <em class="fx">초점</em>이 필요하니까</span></div>
     <div class="apfx-dark" id="apfxDark">
       <div class="apfx-in" id="apfxIn">
         <svg class="mk" viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>

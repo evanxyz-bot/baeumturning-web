@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>출시 알림 · 아웃포커스</title>
-<meta name="description" content="배움터닝 정식 출시 소식과 웹 베타 참여 안내를 가장 먼저 받아보세요. 이메일만 남기면 됩니다.">
+<meta name="description" content="배움터닝 앱 테스터 참여와 정식 출시 소식을 가장 먼저 받아보세요. 이메일만 남기면 됩니다.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="출시 알림 — 아웃포커스">
 <meta property="og:description" content="배움의 출발선이 어디든, 도착선은 같아야 합니다. 아웃포커스를 소개합니다.">
@@ -348,6 +348,28 @@ body{word-break:keep-all;overflow-wrap:break-word}
          좁은 기기에서 줄이 늘면 바가 잘리지 않고 커지도록 높이도 푼다. */
   .nav-bot{overflow:visible;height:auto;min-height:56px}
 }
+/* ── 하단 정보 높이 축소 (2026-09-03) ──
+   브랜드(워드마크 + 한 줄 소개)를 우측 아래로 보내고, 사업자 정보·저작권은
+   왼쪽에 쌓는다. 세로로 세 덩이가 쌓여 있던 것이 두 열로 겹쳐져 높이가 준다. */
+.foot{padding:34px 0 26px}
+.foot .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"info brand" "bottom brand";column-gap:40px;row-gap:8px;align-items:end}
+.foot-top{grid-area:brand;display:flex;flex-direction:column;align-items:flex-end;
+  text-align:right;gap:6px;align-self:end}
+.foot-top .desc{margin-top:0;font-size:13.4px;line-height:1.6;max-width:340px}
+.biz-info{grid-area:info;margin-top:0;padding-top:0;border-top:0}
+.foot-bottom{grid-area:bottom;margin-top:4px;padding-top:12px;border-top:1px solid var(--border)}
+@media (max-width:760px){
+  .foot .wrap{grid-template-columns:1fr;grid-template-areas:"info" "bottom" "brand";row-gap:14px}
+  .foot-top{align-items:flex-start;text-align:left}
+  .foot-top .desc{max-width:none}
+}
+/* 고정값 입력칸(준비 과정) — 입력이 아니라 안내라는 걸 보이게 */
+.fixedval{background:var(--surface-2);color:var(--text-2);cursor:default}
+.fixedval:focus{outline:none;box-shadow:none}
+/* 필수 체크 둘을 채우기 전까지 신청 버튼은 잠긴 상태 */
+.fsend:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
+.fagree .req{color:#c0563a;font-weight:800;margin-right:2px}
 </style>
 </head>
 <body>
@@ -384,14 +406,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
         </div>
       </div>
       <a href="stories.html">소식</a>
-      <div class="nav-drop">
-        <a href="app.html">배움터닝<span class="chev">▾</span></a>
-        <div class="drop-menu">
-          <a href="app.html">서비스 소개</a>
-          <a href="app.html#analysis">학습 분석</a>
-          <a href="app.html#free">무료 범위</a>
-        </div>
-      </div>
       <a href="news.html">검정 뉴스</a>
       <div class="nav-drop">
         <a href="notice.html" class="active">고객지원<span class="chev">▾</span></a>
@@ -420,7 +434,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
   <div class="wrap">
     <div class="sec-head">
       <h2 class="h">출시 소식을 가장 먼저 받아보세요</h2>
-      <p class="lead">지금은 웹에서 베타 테스트를 진행하고 있어요. 알림을 신청하시면 정식 출시 소식과 웹 베타 참여 안내를 순서대로 보내드립니다.</p>
+      <p class="lead">지금은 출시 전 테스트를 진행하고 있어요. 신청해 주시면 <b>앱 테스터 참여 안내</b>와 정식 출시 소식을 순서대로 보내드립니다.</p>
     </div>
     <form class="cform reveal" id="nform" novalidate>
       <div class="frow">
@@ -428,26 +442,23 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <input type="email" id="nmail" name="email" inputmode="email" autocomplete="email" required placeholder="you@example.com">
       </div>
       <div class="frow">
-        <label for="ncourse">준비 과정 (선택)</label>
-        <select id="ncourse" name="준비과정">
-          <option value="" selected>선택 안 함</option>
-          <option value="고졸">고졸</option>
-          <option value="중졸">중졸</option>
-          <option value="아직 몰라요">아직 몰라요</option>
-        </select>
+        <label for="ncourse">준비 과정</label>
+        <!-- 지금 서비스하는 과정이 고졸 하나뿐이라 고르게 하지 않는다.
+             중졸을 열면 그때 select 로 되돌린다. -->
+        <input type="text" id="ncourse" value="고졸 검정고시" readonly aria-readonly="true" class="fixedval">
       </div>
-      <label class="fagree fopt">
-        <input type="checkbox" id="fbeta">
-        <span>웹 베타에도 참여하고 싶어요</span>
+      <label class="fagree">
+        <input type="checkbox" id="fbeta" required>
+        <span><span class="req">*</span> 앱 테스터로 참여하고 싶어요</span>
       </label>
       <label class="fagree">
         <input type="checkbox" id="nagree" required>
-        <span>출시·베타 안내를 위한 이메일 수집·이용에 동의합니다. (안내 종료 후 파기)</span>
+        <span><span class="req">*</span> 테스터 안내를 위한 이메일 수집·이용에 동의합니다. (안내 종료 후 파기)</span>
       </label>
-      <button type="submit" class="fsend" id="nsend">알림 신청하기</button>
+      <button type="submit" class="fsend" id="nsend" disabled>알림 신청하기</button>
       <div class="fmsg" id="nmsg"></div>
     </form>
-    <p class="cnote">이메일은 배움터닝 출시·베타 안내에만 사용해요.</p>
+    <p class="cnote">이메일은 배움터닝 테스터·출시 안내에만 사용해요.</p>
   </div>
 </section>
 
@@ -584,10 +595,20 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   });
 });
 
-// 보조 CTA(웹 베타 참여 신청) 클릭 → 폼의 베타 체크박스 자동 체크
+// 보조 CTA(앱 테스터 참여) 클릭 → 폼의 테스터 체크박스 자동 체크
 document.querySelectorAll('[data-beta]').forEach(function(a){
-  a.addEventListener('click',function(){ var c=document.getElementById('fbeta'); if(c) c.checked=true; });
+  a.addEventListener('click',function(){ var c=document.getElementById('fbeta');
+    if(c && !c.checked){ c.checked=true; c.dispatchEvent(new Event('change',{bubbles:true})); } });
 });
+
+// 필수 체크 둘(테스터 참여 · 수집 동의)을 모두 켜야 신청 버튼이 열린다
+(function(){
+  var beta=document.getElementById('fbeta'), agree=document.getElementById('nagree'),
+      btn=document.getElementById('nsend');
+  if(!beta||!agree||!btn) return;
+  function sync(){ btn.disabled = !(beta.checked && agree.checked); }
+  beta.addEventListener('change',sync); agree.addEventListener('change',sync); sync();
+})();
 
 // ── 출시 알림 폼 → 대표 메일 발송 (정적 사이트라 서버 없이 FormSubmit 릴레이 사용) ──
 (function(){
@@ -597,33 +618,36 @@ document.querySelectorAll('[data-beta]').forEach(function(a){
   f.addEventListener('submit',function(e){
     e.preventDefault();
     var m=document.getElementById('nmail').value.trim(),
-        course=document.getElementById('ncourse').value,
+        course=document.getElementById('ncourse').value,   // 고정값(고졸 검정고시)
         beta=document.getElementById('fbeta').checked;
     if(!m){ say('err','이메일을 입력해주세요.'); return; }
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){ say('err','이메일 주소를 다시 확인해주세요.'); return; }
+    if(!beta){ say('err','앱 테스터 참여에 체크해주셔야 접수됩니다.'); return; }
     if(!document.getElementById('nagree').checked){ say('err','이메일 수집·이용에 동의해주셔야 접수됩니다.'); return; }
     btn.disabled=true; btn.textContent='보내는 중…'; say('','');
     fetch('https://formsubmit.co/ajax/outfocus.edu@gmail.com',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
-        _subject:'[배움터닝 출시 알림]'+(beta?' [웹 베타 희망]':''),
+        _subject:'[배움터닝 출시 알림] [앱 테스터 희망]',
         _template:'table',
         _captcha:'false',
         email:m,
-        준비과정:course||'(미선택)',
-        웹베타참여:beta?'예':'아니오'
+        준비과정:course||'고졸 검정고시',
+        앱테스터참여:'예'
       })
     }).then(function(r){ return r.json(); })
       .then(function(d){
         if(d && String(d.success)==='true'){
-          f.reset(); say('ok','신청이 완료됐어요! 소식이 준비되는 대로 이 메일로 보내드릴게요.');
+          f.reset(); btn.disabled=true;   // reset 으로 체크가 풀리므로 다시 잠근다
+          say('ok','신청이 완료됐어요! 테스터 안내가 준비되는 대로 이 메일로 보내드릴게요.');
         } else { throw new Error('relay'); }
       })
       .catch(function(){
         say('err','전송에 실패했어요. outfocus.edu@gmail.com 으로 \'출시 알림\'이라고 보내주셔도 접수됩니다.');
       })
-      .finally(function(){ btn.disabled=false; btn.textContent='알림 신청하기'; });
+      .finally(function(){ btn.textContent='알림 신청하기';
+        btn.disabled = !(document.getElementById('fbeta').checked && document.getElementById('nagree').checked); });
   });
 })();
 </script>
