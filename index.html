@@ -48,9 +48,13 @@
   --ease-out:cubic-bezier(0.22,1,0.36,1);
   --ease-spring:cubic-bezier(0.2,0.8,0.2,1);
 }
-html{scroll-behavior:smooth;scroll-snap-type:y proximity}
-/* 화면 단위로 딱 떨어지게 — 뷰포트보다 긴 섹션은 proximity 라 자유롭게 읽힌다 */
-.hero,.netsec,.analysis,.foot{scroll-snap-align:start}
+html{scroll-behavior:smooth}
+/* 터치 기기 — 손가락 스크롤은 그대로 두되 섹션 근처에서 화면이 맞게 붙는다.
+   데스크톱(휠·키보드)은 아래 페이저 스크립트가 한 번에 한 칸씩 옮긴다. */
+@media (hover:none){
+  html{scroll-snap-type:y proximity}
+  .hero,.apfx,.netsec,.analysis,.foot{scroll-snap-align:start}
+}
 @media (prefers-reduced-motion:reduce){html{scroll-snap-type:none}}
 /* 헤드라인 전용 폰트 — 지마켓 산스 (무료 상업적 이용 가능, G마켓 배포) */
 @font-face{font-family:'GmarketSans';font-weight:300;font-display:swap;
@@ -1375,7 +1379,7 @@ body{background:#0d1917}
 /* 스크롤 진행률에 묶여 있던 구간을 '들어오면 한 번 재생'으로 바꿨다(2026-09-03).
    115vh → 40vh 로 줄여도 여러 번 굴려야 했는데, 이제 한 화면만 차지하고
    화면에 들어온 순간 애니메이션이 저절로 돈다. */
-.apfx{position:relative;height:100vh;scroll-snap-align:start;scroll-snap-stop:always}
+.apfx{position:relative;height:100vh}
 .apfx-stage{position:relative;height:100vh;overflow:hidden;background:#fbfdfd}
 .apfx-light{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;
   filter:blur(calc(12px * var(--p,0))) brightness(calc(1 - .55 * var(--p,0)))}
@@ -2423,6 +2427,103 @@ document.querySelectorAll('.hubitem').forEach(function(item){
 <script>
 /* 조리개×초점 전환 — 스크롤 진행률로 정육각 개구부(--o)와 초점(--p)을 구동 */
 (function(){
+  /* 화면 한 칸씩 넘기는 페이저 — PPT 처럼 휠 한 번에 한 화면.
+     섹션이 화면보다 길면 그 안을 화면 높이로 잘라 정거장을 더 만든다.
+     내용이 잘려 나가지 않으면서도 늘 화면에 딱 맞게 선다.
+     터치 기기는 손대지 않는다(관성 스크롤을 가로채면 더 나빠진다). */
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var touch  = matchMedia('(hover: none)').matches;
+  if (reduce || touch) return;
+
+  var root = document.documentElement, stops = [], locked = false;
+
+  function build(){
+    var vh = innerHeight, max = root.scrollHeight - vh, list = [0];
+    document.querySelectorAll('.hero, #apfx, .netsec, .analysis, .foot').forEach(function(sec){
+      var top = sec.getBoundingClientRect().top + scrollY;
+      var h = sec.offsetHeight;
+      list.push(top);
+      // 화면보다 긴 섹션은 한 화면씩 끊어서 정거장을 놓는다
+      for (var y = top + vh; y < top + h - vh * 0.25; y += vh) list.push(y);
+      if (h > vh) list.push(top + h - vh);          // 섹션 끝을 화면 아래에 맞춘다
+    });
+    list.push(max);
+    // 붙어 있는 정거장은 합친다 — filter 의 세 번째 인자는 '원본' 배열이라
+    // 연속 제거가 이어지지 않는다(145 같은 헛칸이 살아남던 원인). 직접 누산한다.
+    var sorted = list.map(function(v){ return Math.max(0, Math.min(max, Math.round(v))); })
+                     .sort(function(a, b){ return a - b; });
+    stops = [];
+    sorted.forEach(function(v){
+      if (!stops.length || v - stops[stops.length - 1] > vh * 0.35) stops.push(v);
+    });
+    // 맨 끝은 반드시 문서 끝이어야 푸터까지 닿는다
+    if (stops[stops.length - 1] !== max) stops[stops.length - 1] = max;
+    // 간격이 한 화면을 넘으면 그 사이 내용이 건너뛰어진다 — 균등하게 쪼갠다.
+    // prev+vh 를 그냥 끼우면 다음 정거장과 30px 쯤 떨어진 '헛칸'이 생기므로
+    // 개수로 나눠 같은 폭으로 놓는다. 한 화면을 조금(12%) 넘는 정도는 그대로 둔다.
+    for (var i = 0; i < stops.length - 1; i++){
+      var gap = stops[i + 1] - stops[i];
+      if (gap <= vh * 1.12) continue;
+      var n = Math.ceil(gap / vh), ins = [];
+      for (var k = 1; k < n; k++) ins.push(Math.round(stops[i] + gap / n * k));
+      stops.splice.apply(stops, [i + 1, 0].concat(ins));
+      i += ins.length;
+    }
+  }
+
+  function indexFor(dir){
+    var y = scrollY, i;
+    if (dir > 0){ for (i = 0; i < stops.length; i++) if (stops[i] > y + 4) return i; return -1; }
+    for (i = stops.length - 1; i >= 0; i--) if (stops[i] < y - 4) return i;
+    return -1;
+  }
+
+  function go(target, done){
+    var from = scrollY, dist = target - from, t0 = 0, DUR = 560;
+    var prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';            // CSS smooth 와 겹쳐 두 번 굴러가지 않게
+    function step(ts){
+      if (!t0) t0 = ts;
+      var k = Math.min(1, (ts - t0) / DUR);
+      var e = 1 - Math.pow(1 - k, 3);              // easeOutCubic
+      scrollTo(0, from + dist * e);
+      if (k < 1) requestAnimationFrame(step);
+      else { root.style.scrollBehavior = prev; done && done(); }
+    }
+    requestAnimationFrame(step);
+  }
+
+  addEventListener('wheel', function(e){
+    if (e.ctrlKey) return;                         // 확대/축소는 건드리지 않는다
+    if (locked){ e.preventDefault(); return; }
+    if (Math.abs(e.deltaY) < 3) return;
+    var i = indexFor(e.deltaY > 0 ? 1 : -1);
+    if (i < 0) return;                             // 끝이면 기본 동작
+    e.preventDefault();
+    locked = true;
+    go(stops[i], function(){ setTimeout(function(){ locked = false; }, 60); });
+  }, {passive:false});
+
+  addEventListener('keydown', function(e){
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    var dir = (e.key === 'PageDown' || e.key === 'ArrowDown' || e.key === ' ') ? 1
+            : (e.key === 'PageUp'   || e.key === 'ArrowUp') ? -1 : 0;
+    if (!dir || locked) return;
+    var i = indexFor(dir);
+    if (i < 0) return;
+    e.preventDefault();
+    locked = true;
+    go(stops[i], function(){ setTimeout(function(){ locked = false; }, 60); });
+  });
+
+  build();
+  addEventListener('resize', build, {passive:true});
+  addEventListener('load', build);
+})();
+
+(function(){
   /* 조리개 전환 — 화면에 들어오면 한 번 재생한다.
      예전엔 스크롤 진행률(-top/total)에 묶여 있어 끝까지 보려면 휠을 여러 번
      굴려야 했다. 이제 구간은 한 화면이고, 진행은 시간이 만든다.
@@ -2450,10 +2551,10 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   }
   new IntersectionObserver(function(entries){
     entries.forEach(function(en){
-      if (en.isIntersecting && !playing && !done){ playing = true; t0 = 0; requestAnimationFrame(frame); }
+      if (en.intersectionRatio >= .6 && !playing && !done){ playing = true; t0 = 0; requestAnimationFrame(frame); }
       else if (!en.isIntersecting && en.intersectionRatio === 0){ done = false; playing = false; set(0, 0); }
     });
-  }, {threshold:[0, .5]}).observe(stage);
+  }, {threshold:[0, .6]}).observe(stage);
 })();
 </script>
 
