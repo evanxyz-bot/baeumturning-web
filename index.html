@@ -1038,11 +1038,12 @@ body::before{background:
    각 구간의 끝색 = 다음 구간의 시작색으로 이어 붙여 경계선을 없앤다. */
 .netsec{background:linear-gradient(180deg,#101d1a 0%,#0e1a18 100%)}
 .analysis{background:linear-gradient(180deg,#0e1a18 0%,#0c1715 100%)}
-/* 마지막 화면도 한 페이지로 떨어지게 — 푸터가 화면보다 낮으면 그 상단이
-   정거장이 될 수 없어(문서 끝에 걸려) 분석 섹션이 잘린 채 마지막 화면이 됐다.
-   한 화면으로 세우고 내용을 세로 가운데 둔다. */
-.foot{background:linear-gradient(180deg,#0c1715 0%,#0a1413 46%,#0a1413 100%);padding-top:64px;
-  min-height:100vh;display:flex;align-items:center}
+/* 마지막 칸 — 한 화면(100vh)으로 세우니 푸터 네 줄만 덩그러니 남아 빈 칸이
+   너무 컸다. 68vh 로 낮춘다. 마지막 정거장에서는 분석 카드의 '근거 3장 + 고지'
+   가 위에 남고 그 아래로 푸터가 붙어, 잘린 느낌 없이 한 화면이 채워진다.
+   (68vh 도 여전히 헐거워 54vh 로 한 번 더 낮췄다) */
+.foot{background:linear-gradient(180deg,#0c1715 0%,#0a1413 46%,#0a1413 100%);padding:52px 0 40px;
+  min-height:54vh;display:flex;align-items:center}
 .foot>.wrap{width:100%}
 .foot-top .brand-wm{font-size:62px!important}
 /* 다크 전환(apfx) 끝색과 첫 다크 섹션 시작색도 일치시킨다 */
