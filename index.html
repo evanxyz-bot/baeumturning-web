@@ -858,14 +858,16 @@ body::before{background:
   background:linear-gradient(90deg,#dca093,#c4584a)}
 
 /* ── 학습 기록 네트워크 (기존 스트립 대체) ── */
-.netsec{background:#101d1a;padding:96px 0 104px}
+/* 한 화면(=한 칸)에 담기도록 위아래 여백 축소 — 두 칸으로 쪼개지면
+   휠 한 번에 다음 섹션으로 못 간다(2026-09-03) */
+.netsec{background:#101d1a;padding:44px 0 44px}
 .net-head{max-width:1120px;margin:0 auto 8px;text-align:center}
 @media (min-width:861px){.net-head .h{white-space:nowrap;font-size:clamp(30px,3.1vw,42px)}}
 .net-head .lead{margin:16px auto 0;max-width:600px;color:#a8bfb8}
 .net-head .h{color:#f2f8f6}
 .netsec .eyebrow{color:#0a1413;background-color:#63d6bd;background-image:none;
   padding:4px 12px;border-radius:999px;font-size:12.5px;letter-spacing:.08em}
-.net{position:relative;max-width:1000px;margin:48px auto 0;
+.net{position:relative;max-width:1000px;margin:34px auto 0;
   display:grid;grid-template-columns:1fr 1.1fr 1fr;align-items:center}
 .net-col{position:relative;z-index:5;display:flex;flex-direction:column;justify-content:space-between;
   height:520px}
