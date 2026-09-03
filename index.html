@@ -48,7 +48,10 @@
   --ease-out:cubic-bezier(0.22,1,0.36,1);
   --ease-spring:cubic-bezier(0.2,0.8,0.2,1);
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity}
+/* 화면 단위로 딱 떨어지게 — 뷰포트보다 긴 섹션은 proximity 라 자유롭게 읽힌다 */
+.hero,.netsec,.analysis,.foot{scroll-snap-align:start}
+@media (prefers-reduced-motion:reduce){html{scroll-snap-type:none}}
 /* 헤드라인 전용 폰트 — 지마켓 산스 (무료 상업적 이용 가능, G마켓 배포) */
 @font-face{font-family:'GmarketSans';font-weight:300;font-display:swap;
   src:url('fonts/GmarketSansLight.woff') format('woff')}
@@ -1369,11 +1372,11 @@ body{background:#0d1917}
 /* 화이트→다크 전환: 조리개 × 초점 (대표 확정 2026-08-13 — 후보 B+C 결합)
    스크롤로 정육각 조리개가 열리며 다크 존이 드러나고, 그 내용은 흐림→초점 인,
    밝은 존은 아웃포커스로 물러난다. 정육각형은 vmax 단위라 화면 비율 무관하게 정다각형 */
-/* 100vh 는 고정(sticky) 무대라, 애니메이션에 실제로 드는 스크롤 = height - 100vh.
-   215vh 면 115vh 를 굴려야 끝나 휠을 여러 번 돌려야 했다. 140vh(=40vh 스크롤)로
-   줄여 감도를 약 3배 올린다. */
-.apfx{position:relative;height:140vh}
-.apfx-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fbfdfd}
+/* 스크롤 진행률에 묶여 있던 구간을 '들어오면 한 번 재생'으로 바꿨다(2026-09-03).
+   115vh → 40vh 로 줄여도 여러 번 굴려야 했는데, 이제 한 화면만 차지하고
+   화면에 들어온 순간 애니메이션이 저절로 돈다. */
+.apfx{position:relative;height:100vh;scroll-snap-align:start;scroll-snap-stop:always}
+.apfx-stage{position:relative;height:100vh;overflow:hidden;background:#fbfdfd}
 .apfx-light{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;
   filter:blur(calc(12px * var(--p,0))) brightness(calc(1 - .55 * var(--p,0)))}
 .apfx-light .t{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif;font-weight:700;
@@ -1984,12 +1987,11 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="apfx-light"><span class="t">공부에는 <em class="fx">초점</em>이 필요하니까</span></div>
     <div class="apfx-dark" id="apfxDark">
       <div class="apfx-in" id="apfxIn">
-        <svg class="mk" viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>
-        <span class="tt"><em class="fx">초점</em>을 데이터에 맞춥니다</span>
+        <span class="tt"><em class="fx">초점</em>을 <em class="fx">데이터</em>에 맞춥니다</span>
       </div>
     </div>
     <svg class="apfx-iris" viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>
-    <div class="apfx-hint" id="apfxHint">천천히 스크롤 ↓</div>
+    <div class="apfx-hint" id="apfxHint">초점을 맞추는 중 …</div>
   </div>
 </div></div>
 
@@ -2421,27 +2423,37 @@ document.querySelectorAll('.hubitem').forEach(function(item){
 <script>
 /* 조리개×초점 전환 — 스크롤 진행률로 정육각 개구부(--o)와 초점(--p)을 구동 */
 (function(){
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* 조리개 전환 — 화면에 들어오면 한 번 재생한다.
+     예전엔 스크롤 진행률(-top/total)에 묶여 있어 끝까지 보려면 휠을 여러 번
+     굴려야 했다. 이제 구간은 한 화면이고, 진행은 시간이 만든다.
+     구간을 완전히 벗어나면 되감아 다시 볼 수 있게 둔다. */
   var pin = document.getElementById('apfx');
-  var dark = document.getElementById('apfxDark');
+  var stage = pin && pin.querySelector('.apfx-stage');
   var inr = document.getElementById('apfxIn');
   var hint = document.getElementById('apfxHint');
-  var stage = pin.querySelector('.apfx-stage');
-  if (!pin || !dark || !stage) return;
-  var ticking = false;
-  function upd(){
-    ticking = false;
-    var r = pin.getBoundingClientRect();
-    var total = r.height - innerHeight;
-    var p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
-    var s = p * p * (3 - 2 * p);
-    // 무대에 걸어 두면 다크존 clip-path 와 조리개 날이 같은 값을 본다
-    stage.style.setProperty('--o', (s * 1.7).toFixed(4));
-    inr.style.setProperty('--p', s.toFixed(4));
-    if (hint) hint.style.setProperty('--p', s.toFixed(4));
+  if (!pin || !stage || !inr) return;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function set(o, p){
+    stage.style.setProperty('--o', o.toFixed(4));
+    inr.style.setProperty('--p', p.toFixed(4));
+    if (hint) hint.style.setProperty('--p', p.toFixed(4));
   }
-  addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(upd); } }, {passive:true});
-  upd();
+  if (reduce) { set(1.7, 1); return; }
+  set(0, 0);
+  var DUR = 1400, playing = false, done = false, t0 = 0;
+  function frame(ts){
+    if (!t0) t0 = ts;
+    var k = Math.min(1, (ts - t0) / DUR);
+    var e = k * k * (3 - 2 * k);               // smoothstep — 시작·끝이 부드럽게
+    set(e * 1.7, e);
+    if (k < 1) requestAnimationFrame(frame); else { playing = false; done = true; }
+  }
+  new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting && !playing && !done){ playing = true; t0 = 0; requestAnimationFrame(frame); }
+      else if (!en.isIntersecting && en.intersectionRatio === 0){ done = false; playing = false; set(0, 0); }
+    });
+  }, {threshold:[0, .5]}).observe(stage);
 })();
 </script>
 
