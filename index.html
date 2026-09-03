@@ -1393,11 +1393,10 @@ body{background:#0d1917}
 .apfx-iris{position:absolute;left:50%;top:50%;pointer-events:none;
   width:calc(var(--o,0) * 272.7vmax);height:calc(var(--o,0) * 272.7vmax);
   transform:translate(-50%,-50%);
-  /* 마크를 통째로 두면 날의 바깥 반지름(120vmax*o)이 화면을 다 덮어 청록 벽이 된다.
-     바깥을 원으로 잘라 개구부를 감싸는 '날 고리'만 남긴다 — 로고의 바깥 경계도
-     원호라 잘린 자리가 같은 언어로 읽힌다. */
-  clip-path:circle(calc(var(--o,0) * 80vmax) at 50% 50%);
-  color:#9ad7cd;opacity:calc(1 - var(--o,0) * .3)}
+  /* 로고와 같은 비율(구멍:바깥 = 1:2)로 날을 두껍게 둔다. 바깥 원 클립은
+     화면을 덮지 않도록 하는 안전장치로만 남기고 로고 경계(120vmax*o)에 가깝게. */
+  clip-path:circle(calc(var(--o,0) * 112vmax) at 50% 50%);
+  color:#2f9183;opacity:calc(1 - var(--o,0) * .12)}
 .apfx-in{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;
   filter:blur(calc(10px * (1 - var(--p,0))));opacity:calc(.2 + .8 * var(--p,0))}
 .apfx-in .mk{width:52px;height:52px;color:#4ecfb4}
