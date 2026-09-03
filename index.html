@@ -2445,7 +2445,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var touch  = matchMedia('(hover: none)').matches;
   if (reduce || touch) return;
 
-  var root = document.documentElement, stops = [], locked = false;
+  var root = document.documentElement, stops = [], anchors = [], locked = false;
 
   function build(){
     var vh = innerHeight, max = root.scrollHeight - vh, list = [{y:0, a:true}];
@@ -2472,6 +2472,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
       if (o.a && !last.a) kept[kept.length - 1] = o;   // 섹션 상단이 이긴다
     });
     stops = kept.map(function(o){ return o.y; });
+    anchors = kept.filter(function(o){ return o.a; }).map(function(o){ return o.y; });
     // 맨 끝은 반드시 문서 끝이어야 푸터까지 닿는다.
     // 교체하면 바로 앞의 섹션 상단이 사라진다(분석 페이지에 한 번에 못 서던 원인) —
     // 가깝더라도 덧붙인다. 마지막 한 칸은 푸터를 여는 짧은 이동이 된다.
@@ -2512,6 +2513,23 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     return -1;
   }
 
+  /* 도착 지점을 섹션 상단에 다시 붙인다 — 이동 중 레이아웃이 밀렸을 때 보정 */
+  function settle(){
+    if (locked === 'anim') return;
+    build();
+    var near = null, gap = 150;
+    anchors.forEach(function(a){
+      var d = Math.abs(a - scrollY);
+      if (d < gap){ gap = d; near = a; }
+    });
+    if (near !== null && near !== Math.round(scrollY)){
+      var prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      scrollTo(0, near);
+      root.style.scrollBehavior = prev;
+    }
+  }
+
   function go(target, done){
     var from = scrollY, dist = target - from, t0 = 0, DUR = 560;
     var prev = root.style.scrollBehavior;
@@ -2522,7 +2540,12 @@ document.querySelectorAll('.hubitem').forEach(function(item){
       var e = 1 - Math.pow(1 - k, 3);              // easeOutCubic
       scrollTo(0, from + dist * e);
       if (k < 1) requestAnimationFrame(step);
-      else { root.style.scrollBehavior = prev; done && done(); }
+      else {
+        // 도착하면 그때서야 리빌 애니메이션이 걸리면서 레이아웃이 밀린다.
+        // 한 번으로는 못 잡아 두 박자에 걸쳐 다시 맞춘다(섹션 머리 잘림의 원인).
+        settle(); setTimeout(settle, 180); setTimeout(settle, 460);
+        root.style.scrollBehavior = prev; done && done();
+      }
     }
     requestAnimationFrame(step);
   }
@@ -2532,6 +2555,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     if (locked){ e.preventDefault(); return; }
     if (Math.abs(e.deltaY) < 3) return;
     if (pagerSkip(e.deltaY > 0 ? 1 : -1)) return;    // 조리개 구간은 손대지 않는다
+    build();                                        // 조작 직전에 좌표를 다시 잰다
     var i = indexFor(e.deltaY > 0 ? 1 : -1);
     if (i < 0) return;                             // 끝이면 기본 동작
     e.preventDefault();
@@ -2547,6 +2571,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
             : (e.key === 'PageUp'   || e.key === 'ArrowUp') ? -1 : 0;
     if (!dir || locked) return;
     if (pagerSkip(dir)) return;
+    build();
     var i = indexFor(dir);
     if (i < 0) return;
     e.preventDefault();
@@ -2557,6 +2582,8 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   build();
   addEventListener('resize', build, {passive:true});
   addEventListener('load', build);
+  // 웹폰트가 늦게 앉으면 줄 수가 바뀌어 섹션 위치가 통째로 밀린다
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
 })();
 
 (function(){
