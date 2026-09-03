@@ -1086,15 +1086,24 @@ body::before{background:
 
 /* 분석 파이프라인 — 입력 → 3단계 → 출력. 아래 상세가 위 단계와 같은 격자에 떨어진다.
    색은 2계열 고정: 앰버(#dfba85)=관측(기록에서 사실을 집계) / 틸=판단(사실에서 순서를 결정) */
-.analysis .evidence{padding:40px 44px 34px}
-.pipe-lane{display:grid;grid-template-columns:1fr 30px 1fr 30px 1fr;gap:0 13px}
-.pipe-arrow{display:flex;align-items:center;justify-content:center;color:#8d9e99}
-.pipe-vsep{display:flex;justify-content:center;padding:9px 0;color:#8d9e99}
+.analysis .evidence{padding:40px 44px 34px;position:relative;overflow:hidden}
+/* 배경 수식 — 통계·분석 지면이라는 인상만 남기고 읽히지는 않게 */
+.pipe-math{position:absolute;inset:0;pointer-events:none;user-select:none;z-index:0}
+.pipe-math span{position:absolute;font-family:'Times New Roman',Georgia,serif;font-style:italic;
+  color:rgba(120,214,192,.075);white-space:nowrap;line-height:1}
+.analysis .evidence>*:not(.pipe-math){position:relative;z-index:1}
+.pipe-lane{display:grid;grid-template-columns:1fr 52px 1fr 52px 1fr;gap:0 14px}
+/* 흐름 화살표 — 15px 실선 꺾쇠는 눈에 안 띄어 세 칸이 그냥 나열처럼 보였다.
+   점선 꼬리 + 큰 촉으로 바꾸고 브랜드 색을 준다. */
+.pipe-arrow{display:flex;align-items:center;justify-content:center;color:#63d6bd}
+.pipe-arrow svg{width:52px;height:28px}
+.pipe-vsep{display:flex;justify-content:center;padding:14px 0;color:#63d6bd}
+.pipe-vsep svg{width:28px;height:46px}
 .pipe-intro{display:flex;align-items:flex-end;gap:40px;margin-bottom:30px}
-.pipe-intro>p{flex:1;margin:0;max-width:720px;font-size:15.6px;line-height:1.72;color:#a8bfb8;word-break:keep-all}
+.pipe-intro>p{flex:1;margin:0;max-width:880px;font-size:15.6px;line-height:1.72;color:#a8bfb8;word-break:keep-all}
 .pipe-legend{margin-left:auto;flex-shrink:0;display:flex;flex-direction:column;gap:9px;padding-bottom:2px}
-.pipe-legend div{display:flex;align-items:center;gap:8px;font-size:12.6px;color:#7f9a92}
-.pipe-legend i{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.pipe-legend div{display:flex;align-items:center;gap:9px;font-size:13.2px;color:#8aa8a0;white-space:nowrap}
+.pipe-legend i{width:11px;height:11px;border-radius:3px;flex-shrink:0}
 .pipe-legend b{font-weight:700}
 .pipe-io{display:flex;align-items:center;gap:16px;border-radius:12px;padding:15px 20px}
 .pipe-io .io-l{font-family:'Outfit',sans-serif;font-size:11.4px;font-weight:700;letter-spacing:.1em;flex-shrink:0}
@@ -1108,7 +1117,7 @@ body::before{background:
 .chip{font-size:12.4px;font-weight:500;padding:5px 11px;border-radius:7px;white-space:nowrap}
 .chip-w{color:#cdbb9c;background:rgba(214,178,120,.11);border:1px solid rgba(214,178,120,.20)}
 .chip-t{color:#a9c9c0;background:rgba(78,207,180,.10);border:1px solid rgba(78,207,180,.20)}
-.pipe-step{display:flex;flex-direction:column;background:var(--surface-2);border-radius:12px;padding:17px 18px 15px}
+.pipe-step{display:flex;flex-direction:column;background:var(--surface-2);border-radius:12px;padding:18px 20px 16px}
 .pipe-step.warm{border:1px solid rgba(214,178,120,.26);border-top:3px solid #dfba85}
 .pipe-step.cool{border:1px solid rgba(78,207,180,.24);border-top:3px solid #63d6bd}
 .pipe-step .st{display:flex;align-items:baseline;gap:9px;margin-bottom:3px}
@@ -1117,7 +1126,7 @@ body::before{background:
 .pipe-step.cool .st i,.pipe-col.cool>.chd i,.pipe-m.cool>.n{color:#63d6bd}
 .pipe-step .st span{font-size:16.8px;font-weight:800;color:#eef7f4;letter-spacing:-.02em}
 .pipe-step .q{margin:0 0 13px;font-size:13.2px;line-height:1.55;color:#8fa8a1;word-break:keep-all}
-.pipe-step .tags{display:flex;flex-wrap:wrap;gap:7px}
+.pipe-step .tags{display:flex;flex-wrap:wrap;gap:7px;align-content:center;min-height:71px}
 .pipe-step .tags span{font-family:'Outfit',sans-serif;font-size:12.4px;font-weight:600;padding:6px 10px;border-radius:7px}
 .pipe-step.warm .tags span{color:#e2d3b8;background:rgba(214,178,120,.13);border:1px solid rgba(214,178,120,.24)}
 .pipe-step.cool .tags span{color:#cfe3dd;background:rgba(78,207,180,.11);border:1px solid rgba(78,207,180,.22)}
@@ -2034,11 +2043,25 @@ body{word-break:keep-all;overflow-wrap:break-word}
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">근거기반 분석 시스템</span>
-      <h2 class="h">남의 평균이 아니라,<br>학생 한 명의 데이터로 분석합니다</h2>
+      <h2 class="h">나의 데이터로,<br>나를 위한 학습 플랜 계획</h2>
       <p class="lead">공개된 통계·학습과학 방법 위에, 검정고시 기출 데이터로 조정한 <b>자체 로직·가중치·임계값</b>을 얹어 직접 구현했습니다. 계산에 들어가는 건 그 학생의 기록뿐입니다.</p>
     </div>
     <!-- 채점 기록이 리포트가 되는 경로 — 관측(앰버) → 판단(틸) 2계열로 색을 고정 -->
     <div class="evidence reveal">
+      <!-- 배경 수식 — 장식일 뿐이라 읽히지 않게 흐리게 깐다(스크린리더 제외) -->
+      <div class="pipe-math" aria-hidden="true">
+        <span style="left:4%;top:7%;font-size:44px">&Sigma;</span>
+        <span style="left:22%;top:30%;font-size:26px">x&#772; = &Sigma;x / n</span>
+        <span style="left:70%;top:5%;font-size:30px">&sigma;&sup2;</span>
+        <span style="left:86%;top:26%;font-size:24px">p &lt; .05</span>
+        <span style="left:8%;top:56%;font-size:26px">R&sup2;</span>
+        <span style="left:38%;top:70%;font-size:23px">&radic;(&Sigma;(x&minus;x&#772;)&sup2;/n)</span>
+        <span style="left:64%;top:52%;font-size:38px">&int;</span>
+        <span style="left:88%;top:66%;font-size:30px">&lambda;</span>
+        <span style="left:16%;top:88%;font-size:24px">&chi;&sup2;</span>
+        <span style="left:52%;top:92%;font-size:23px">&Delta;p / &Delta;t</span>
+        <span style="left:78%;top:86%;font-size:26px">&mu;</span>
+      </div>
       <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4ecfb4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석 파이프라인 <span class="ev-badge">7개 기법 · 3단계</span></div>
 
       <div class="pipe-intro">
@@ -2054,7 +2077,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <div class="io-chips"><span class="chip chip-w">문항 단위 정오답</span><span class="chip chip-w">응시 회차</span><span class="chip chip-w">소요 시간</span></div>
       </div>
 
-      <div class="pipe-vsep"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg></div>
+      <div class="pipe-vsep"><svg viewBox="0 0 24 44" fill="none" aria-hidden="true"><path d="M12 2v30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 6"/><path d="m5 30 7 8 7-8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
       <div class="pipe-lane">
         <div class="pipe-step warm">
@@ -2063,14 +2086,14 @@ body{word-break:keep-all;overflow-wrap:break-word}
           <div class="tags"><span>01 파레토 분석</span><span>04 오답 패턴 분석</span><span>06 학습량 보정</span></div>
           <div class="yield"><i style="color:#dfba85">&rarr;</i>취약 단원 목록</div>
         </div>
-        <div class="pipe-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+        <div class="pipe-arrow"><svg viewBox="0 0 44 24" fill="none" aria-hidden="true"><path d="M2 12h30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 6"/><path d="m30 5 8 7-8 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="pipe-step cool">
           <div class="st"><i>STEP 2</i><span>정밀 분석</span></div>
           <p class="q">지금 어디쯤 와 있지?</p>
           <div class="tags"><span>05 추세 분석</span><span>07 합격선 마진</span></div>
           <div class="yield"><i style="color:#63d6bd">&rarr;</i>합격선 기준 위치</div>
         </div>
-        <div class="pipe-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+        <div class="pipe-arrow"><svg viewBox="0 0 44 24" fill="none" aria-hidden="true"><path d="M2 12h30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 6"/><path d="m30 5 8 7-8 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="pipe-step cool">
           <div class="st"><i>STEP 3</i><span>개인별 학습 계획</span></div>
           <p class="q">무엇부터, 언제 다시 공부하지?</p>
@@ -2079,7 +2102,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
         </div>
       </div>
 
-      <div class="pipe-vsep"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg></div>
+      <div class="pipe-vsep"><svg viewBox="0 0 24 44" fill="none" aria-hidden="true"><path d="M12 2v30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 6"/><path d="m5 30 7 8 7-8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
       <div class="pipe-io pipe-out">
         <span class="io-l">OUTPUT</span><span class="io-bar"></span><b>학습 리포트</b>
