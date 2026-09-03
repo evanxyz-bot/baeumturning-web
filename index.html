@@ -1040,10 +1040,11 @@ body::before{background:
 .analysis{background:linear-gradient(180deg,#0e1a18 0%,#0c1715 100%)}
 /* 마지막 화면도 한 페이지로 떨어지게 — 푸터가 화면보다 낮으면 그 상단이
    정거장이 될 수 없어(문서 끝에 걸려) 분석 섹션이 잘린 채 마지막 화면이 됐다.
-   푸터를 한 화면 높이로 세우고 내용을 가운데 둔다. */
+   한 화면으로 세우고 내용을 세로 가운데 둔다. */
 .foot{background:linear-gradient(180deg,#0c1715 0%,#0a1413 46%,#0a1413 100%);padding-top:64px;
   min-height:100vh;display:flex;align-items:center}
 .foot>.wrap{width:100%}
+.foot-top .brand-wm{font-size:62px!important}
 /* 다크 전환(apfx) 끝색과 첫 다크 섹션 시작색도 일치시킨다 */
 .apfx-dark{background:#101d1a}
 
@@ -1154,10 +1155,17 @@ body::before{background:
 .pipe-m p b{display:inline;font-size:inherit}
 .pipe-m .out{display:inline-block;font-family:'Outfit',sans-serif;font-size:12.2px;font-weight:600;color:#9dbdb4;
   background:var(--surface-3);border:1px solid rgba(255,255,255,.08);padding:4px 9px;border-radius:6px}
-.pipe-note{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:12px;padding-top:10px;
+.pipe-why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:10px;padding-top:12px;
   border-top:1px dashed rgba(255,255,255,.16)}
-.pipe-note p{margin:0;font-size:13.8px;line-height:1.62;color:#7f9a92;word-break:keep-all}
-.pipe-note b{color:#a8bfb8;font-weight:700}
+.pipe-why>div{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:11px 14px}
+.pipe-why b{display:block;font-size:15.4px;font-weight:700;color:#eef7f4;margin-bottom:5px;letter-spacing:-.01em}
+.pipe-why span{display:block;font-size:13.8px;line-height:1.6;color:#8fa8a1;word-break:keep-all}
+.pipe-fine{margin:9px 0 0;font-size:13.4px;color:#7f9a92}
+.pipe-fine b{color:#a8bfb8;font-weight:700}
+/* 푸터 닫는 CTA */
+.foot-cta{display:flex;gap:10px;flex-wrap:wrap;width:100%;margin-top:18px}
+.foot-cta .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#dbeae6}
+.foot-cta .btn.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
 @media (max-width:1000px){
   .analysis .evidence{padding:28px 24px 24px}
   .pipe-lane{grid-template-columns:1fr;gap:12px}
@@ -1483,7 +1491,7 @@ body{background:#0d1917}
 
 /* 섹션 배경 — 아래로 갈수록 깊어진다 */
 /* 한 화면에 담기도록 압축(2026-09-03) */
-.analysis{background:#0d1917;padding:40px 0 14px}
+.analysis{background:#0d1917;padding:30px 0 10px}
 .features{background:linear-gradient(180deg,#0d1917 0%,#101d1a 100%);padding:100px 0}
 .strip{background:#101d1a}
 .foot{background:#0a1413}
@@ -1507,7 +1515,7 @@ body{background:#0d1917}
 
 /* 좌우 비대칭 — 중앙 정렬 일변도 탈피 */
 .analysis .sec-head h2.h{font-size:clamp(28px,3vw,38px);line-height:1.2}
-.analysis .sec-head{text-align:left;max-width:900px;margin:0 0 16px}
+.analysis .sec-head{text-align:left;max-width:900px;margin:0 0 12px}
 .analysis .sec-head .lead{margin:10px 0 0;max-width:860px;font-size:16.4px}
 .an-cols{grid-template-columns:1.02fr 1fr;gap:58px}
 .spot-3d{margin-top:0}
@@ -1653,25 +1661,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
          링크는 이미 flex-wrap 으로 줄바꿈되니 가로 스크롤이 필요 없다.
          좁은 기기에서 줄이 늘면 바가 잘리지 않고 커지도록 높이도 푼다. */
   .nav-bot{overflow:visible;height:auto;min-height:56px}
-}
-/* ── 마지막 화면(푸터 페이지)의 어필 블록 ── */
-.foot-pitch{padding-bottom:38px;margin-bottom:30px;border-bottom:1px solid rgba(255,255,255,.10)}
-.foot-pitch .eyebrow{color:#7fe0c8;background-image:linear-gradient(transparent 62%, rgba(78,207,180,.22) 62%, rgba(78,207,180,.22) 94%, transparent 94%)}
-.fp-h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif;font-weight:700;
-  font-size:clamp(26px,2.9vw,38px);line-height:1.24;letter-spacing:-.025em;color:#eef7f4;margin:12px 0 0}
-.fp-lead{margin:14px 0 0;max-width:880px;font-size:16.4px;line-height:1.72;color:#a8bfb8;word-break:keep-all}
-.fp-lead b{color:#d7ece6;font-weight:700}
-.fp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:26px}
-.fp-grid>div{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);
-  border-radius:14px;padding:16px 18px}
-.fp-grid b{display:block;font-size:16.6px;font-weight:700;color:#eef7f4;margin-bottom:7px;letter-spacing:-.01em}
-.fp-grid span{display:block;font-size:14.8px;line-height:1.65;color:#8fa8a1;word-break:keep-all}
-.fp-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.fp-cta .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#dbeae6}
-.fp-cta .btn.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
-@media (max-width:860px){
-  .fp-grid{grid-template-columns:1fr;gap:12px}
-  .foot-pitch{padding-bottom:26px;margin-bottom:22px}
 }
 </style>
 </head>
@@ -2072,7 +2061,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="sec-head reveal">
       <span class="eyebrow">근거기반 분석 시스템</span>
       <h2 class="h">나의 데이터로,<br>나를 위한 학습 플랜 계획</h2>
-      <p class="lead">계산에 들어가는 건 <b>그 학생의 기록</b>뿐입니다.</p>
+      <p class="lead">기법의 뼈대는 공개·검증된 방법이지만, <b>로직·가중치·임계값은 배움터닝이 직접 설계</b>했습니다. 계산에 들어가는 건 <b>그 학생의 기록</b>뿐입니다.</p>
     </div>
     <!-- 채점 기록이 리포트가 되는 경로 — 관측(앰버) → 판단(틸) 2계열로 색을 고정 -->
     <div class="evidence reveal">
@@ -2091,14 +2080,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <span style="left:78%;top:86%;font-size:26px">&mu;</span>
       </div>
       <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4ecfb4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석 파이프라인 <span class="ev-badge">7개 기법 · 3단계</span></div>
-
-      <div class="pipe-intro">
-        <p>한 학생의 채점 기록 하나가 <b>그 학생만의 학습 리포트</b>가 되기까지 거치는 경로입니다. 기법의 뼈대는 공개·검증된 방법이지만, <b>각 단계의 로직·가중치·임계값은 배움터닝이 직접 설계해 보유</b>합니다. AI는 이 결과를 문장으로 풀어 쓰는 데만 씁니다. 학습 계획은 학생이 직접 세웁니다.</p>
-        <div class="pipe-legend">
-          <div><i style="background:#dfba85"></i><b style="color:#c8b494">관측</b>기록에서 사실을 집계</div>
-          <div><i style="background:#63d6bd"></i><b style="color:#9dc7bd">판단</b>사실에서 순서를 결정</div>
-        </div>
-      </div>
 
       <div class="pipe-io pipe-in">
         <span class="io-l">INPUT</span><span class="io-bar"></span><b>풀이 · 채점 기록</b>
@@ -2138,12 +2119,12 @@ body{word-break:keep-all;overflow-wrap:break-word}
       </div>
 
 
-      <div class="pipe-note">
-        <p>모든 수치는 <b>본인의 풀이·채점 기록</b>에서만 계산합니다. 타인과의 비교나 외부 추정치를 쓰지 않습니다.</p>
-        <p>합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.</p>
-        <p>가중치·임계값·판정 기준은 검정고시 기출 데이터로 조정한 <b>배움터닝 자체 구현</b>입니다.</p>
+      <div class="pipe-why">
+        <div><b>출제 비중 가중치</b><span>단원별 문항 수 ÷ 과목 총 문항 수 — 기출에서 많이 나오는 단원이 먼저 올라옵니다</span></div>
+        <div><b>개인 임계값</b><span>오답률·연속 오답·재방문 간격으로 복습 시점을 잡고, 표본이 적은 단원은 보정합니다</span></div>
+        <div><b>재료는 내 기록뿐</b><span>남의 평균이나 외부 추정치를 섞지 않습니다</span></div>
       </div>
-    </div>
+      <p class="pipe-fine">합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.</p>
   </div>
 </section>
 
@@ -2155,26 +2136,11 @@ body{word-break:keep-all;overflow-wrap:break-word}
 <!-- ===================== FOOTER ===================== -->
 <footer class="foot" id="contact">
   <div class="wrap">
-    <!-- 마지막 화면 — 자체 분석 로직 어필. 문구는 실제 구현 그대로:
-         가중치는 '기출 데이터'로 조율하고, 계산은 '그 학생의 기록'으로만 한다. -->
-    <div class="foot-pitch">
-      <span class="eyebrow">자체 분석 로직</span>
-      <h2 class="fp-h">검정고시 데이터로 조율한 가중치,<br>내 기록에만 적용됩니다</h2>
-      <p class="fp-lead">기출 <b>2,040문항 · 12회차</b>를 단원 <b>130종</b>으로 분해해 어디서 몇 문제가 나오는지
-      계산하고, 그 비중을 분석 가중치로 씁니다. 여기에 오답률·재방문 간격·표본 크기 보정을 얹어
-      <b>7가지 기법 · 3단계</b>로 순서를 정합니다.</p>
-      <div class="fp-grid">
-        <div><b>출제 비중 가중치</b><span>단원별 문항 수 ÷ 과목 총 문항 수. 기출에서 실제로 많이 나오는 단원이 먼저 올라옵니다.</span></div>
-        <div><b>개인 임계값</b><span>오답률·연속 오답·재방문 간격으로 복습 시점을 정합니다. 표본이 적은 단원은 과대 해석하지 않도록 보정합니다.</span></div>
-        <div><b>계산 재료는 내 기록뿐</b><span>남의 평균이나 외부 추정치를 섞지 않습니다. 들어가는 값은 본인의 풀이·채점 기록입니다.</span></div>
-      </div>
-      <div class="fp-cta"><a class="btn btn-primary" href="app.html">앱 자세히 보기</a><a class="btn" href="launch.html">앱 테스터 신청</a></div>
-    </div>
-
     <div class="foot-top">
       <span class="brand-wm"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
       <p class="foot-desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니.</p>
       <a href="terms.html" class="foot-terms">이용약관</a>
+      <div class="foot-cta"><a class="btn btn-primary" href="app.html">앱 자세히 보기</a><a class="btn" href="launch.html">앱 테스터 신청</a></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 아웃포커스 (OutFocus). All rights reserved.</span>
