@@ -667,7 +667,7 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 .foot::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--s-teal),var(--s-blue),var(--s-purple),var(--s-coral),var(--s-amber))}
 .foot-top .desc{font-size:15.1px;color:var(--text-3);line-height:1.65;max-width:420px;margin-top:14px}
-.biz-info{margin-top:32px;padding-top:22px;border-top:1px solid var(--border);font-size:14px;color:var(--text-3);line-height:1.9}
+.biz-info{margin-top:32px;padding-top:22px;border-top:1px solid var(--border);font-size:15px;color:var(--text-3);line-height:1.9}
 .biz-info b{color:var(--text-2);font-weight:600}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:18px;
   font-size:14px;color:var(--text-4);flex-wrap:wrap;gap:10px}
@@ -777,7 +777,9 @@ body::before{background:
    여기서 165vh 로 줄여 뒀던 것이 뒤 규칙에 밀려 무효였다 — 뒤에서 직접 줄인다. */
 
 /* 푸터 — 로고를 최하단 좌측, 회사 정보는 우측 */
-.foot-desc{font-size:14.6px;color:var(--text-3);line-height:1.65;max-width:420px}
+.foot-desc{font-size:15.6px;color:var(--text-3);line-height:1.6;max-width:460px;
+  /* 워드마크는 아래쪽에 자간 여유가 있어 flex-end 만으로는 18px 떠 보인다 */
+  position:relative;top:16px}
 .foot-id{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;flex-wrap:wrap;
   margin-top:34px;padding-top:24px;border-top:1px solid var(--border)}
 .foot-id .brand-wm{flex-shrink:0}
@@ -1036,20 +1038,27 @@ body::before{background:
    각 구간의 끝색 = 다음 구간의 시작색으로 이어 붙여 경계선을 없앤다. */
 .netsec{background:linear-gradient(180deg,#101d1a 0%,#0e1a18 100%)}
 .analysis{background:linear-gradient(180deg,#0e1a18 0%,#0c1715 100%)}
-.foot{background:linear-gradient(180deg,#0c1715 0%,#0a1413 46%,#0a1413 100%);padding-top:64px}
+/* 마지막 화면도 한 페이지로 떨어지게 — 푸터가 화면보다 낮으면 그 상단이
+   정거장이 될 수 없어(문서 끝에 걸려) 분석 섹션이 잘린 채 마지막 화면이 됐다.
+   푸터를 한 화면 높이로 세우고 내용을 가운데 둔다. */
+.foot{background:linear-gradient(180deg,#0c1715 0%,#0a1413 46%,#0a1413 100%);padding-top:64px;
+  min-height:100vh;display:flex;align-items:center}
+.foot>.wrap{width:100%}
 /* 다크 전환(apfx) 끝색과 첫 다크 섹션 시작색도 일치시킨다 */
 .apfx-dark{background:#101d1a}
 
 /* ── 푸터 아이덴티티 — 로고 확대 + 설명을 같은 줄 우측에 ── */
 /* 로고 · 설명 · 회사정보를 한 행에 (행을 나누면 빈 줄이 생겨 공간만 먹는다) */
-.foot-top{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+/* 소개 문구가 워드마크 한가운데 떠 있어 붕 떴다 — 아랫줄에 맞춘다 */
+.foot-top{display:flex;align-items:flex-end;gap:26px;flex-wrap:wrap}
 .foot-top .brand-wm{font-size:52px!important;flex-shrink:0}
 .foot-desc{margin:0;max-width:300px;font-size:14.6px;line-height:1.6;color:var(--text-3)}
 /* 설명글을 로고 글자 기준선에 맞춰 내린다 (로고는 한글 병기가 아래에 붙어 시각 중심이 낮다) */
 .foot-desc{align-self:center;margin-top:0}
 .foot-top .foot-terms{margin-left:auto;align-self:center;margin-top:0;font-size:13.4px}
 /* 회사정보 2줄은 아래 행 우측으로 */
-.foot-bottom{align-items:flex-start}
+/* 사업자 정보(2줄)가 © 줄보다 아래로 흘렀다 — 아랫줄끼리 맞춘다 */
+.foot-bottom{align-items:flex-end}
 .foot-bottom .biz-info{margin:0;padding:0;border:0;text-align:right;margin-left:auto;
   font-size:12.8px;line-height:1.85;color:var(--text-3)}
 @media (max-width:900px){
@@ -1086,7 +1095,7 @@ body::before{background:
 
 /* 분석 파이프라인 — 입력 → 3단계 → 출력. 아래 상세가 위 단계와 같은 격자에 떨어진다.
    색은 2계열 고정: 앰버(#dfba85)=관측(기록에서 사실을 집계) / 틸=판단(사실에서 순서를 결정) */
-.analysis .evidence{padding:22px 30px 18px;position:relative;overflow:hidden}
+.analysis .evidence{padding:20px 28px 16px;position:relative;overflow:hidden}
 /* 배경 수식 — 통계·분석 지면이라는 인상만 남기고 읽히지는 않게 */
 .pipe-math{position:absolute;inset:0;pointer-events:none;user-select:none;z-index:0}
 .pipe-math span{position:absolute;font-family:'Times New Roman',Georgia,serif;font-style:italic;
@@ -1099,38 +1108,38 @@ body::before{background:
 .pipe-arrow svg{width:52px;height:28px}
 .pipe-vsep{display:flex;justify-content:center;padding:4px 0;color:#63d6bd}
 .pipe-vsep svg{width:24px;height:32px}
-.pipe-intro{display:flex;align-items:flex-end;gap:36px;margin-bottom:20px}
-.pipe-intro>p{flex:1;margin:0;max-width:880px;font-size:15.6px;line-height:1.72;color:#a8bfb8;word-break:keep-all}
+.pipe-intro{display:flex;align-items:flex-end;gap:36px;margin-bottom:16px}
+.pipe-intro>p{flex:1;margin:0;max-width:880px;font-size:16.4px;line-height:1.72;color:#a8bfb8;word-break:keep-all}
 .pipe-legend{margin-left:auto;flex-shrink:0;display:flex;flex-direction:column;gap:9px;padding-bottom:2px}
-.pipe-legend div{display:flex;align-items:center;gap:9px;font-size:13.2px;color:#8aa8a0;white-space:nowrap}
+.pipe-legend div{display:flex;align-items:center;gap:9px;font-size:14px;color:#8aa8a0;white-space:nowrap}
 .pipe-legend i{width:11px;height:11px;border-radius:3px;flex-shrink:0}
 .pipe-legend b{font-weight:700}
-.pipe-io{display:flex;align-items:center;gap:16px;border-radius:12px;padding:12px 18px}
-.pipe-io .io-l{font-family:'Outfit',sans-serif;font-size:11.4px;font-weight:700;letter-spacing:.1em;flex-shrink:0}
+.pipe-io{display:flex;align-items:center;gap:16px;border-radius:12px;padding:11px 18px}
+.pipe-io .io-l{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;flex-shrink:0}
 .pipe-io .io-bar{width:1px;height:18px;background:rgba(255,255,255,.13);flex-shrink:0}
-.pipe-io>b{font-size:15.4px;font-weight:700;color:#eef7f4;letter-spacing:-.01em;flex-shrink:0}
+.pipe-io>b{font-size:16.4px;font-weight:700;color:#eef7f4;letter-spacing:-.01em;flex-shrink:0}
 .pipe-io .io-chips{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
 .pipe-in{background:#101d1a;border:1px dashed rgba(214,178,120,.34)}
 .pipe-in .io-l{color:#dfba85}
 .pipe-out{background:rgba(78,207,180,.09);border:1px solid rgba(78,207,180,.35)}
 .pipe-out .io-l{color:#4ecfb4}
-.chip{font-size:12.4px;font-weight:500;padding:5px 11px;border-radius:7px;white-space:nowrap}
+.chip{font-size:13.6px;font-weight:500;padding:5px 12px;border-radius:7px;white-space:nowrap}
 .chip-w{color:#cdbb9c;background:rgba(214,178,120,.11);border:1px solid rgba(214,178,120,.20)}
 .chip-t{color:#a9c9c0;background:rgba(78,207,180,.10);border:1px solid rgba(78,207,180,.20)}
 .pipe-step{display:flex;flex-direction:column;background:var(--surface-2);border-radius:12px;padding:13px 17px 11px}
 .pipe-step.warm{border:1px solid rgba(214,178,120,.26);border-top:3px solid #dfba85}
 .pipe-step.cool{border:1px solid rgba(78,207,180,.24);border-top:3px solid #63d6bd}
-.pipe-step .st{display:flex;align-items:baseline;gap:9px;margin-bottom:3px}
-.pipe-step .st i{font-family:'Outfit',sans-serif;font-style:normal;font-size:11.4px;font-weight:700;letter-spacing:.1em}
+.pipe-step .st{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;min-height:26px}
+.pipe-step .st i{font-family:'Outfit',sans-serif;font-style:normal;font-size:14.4px;font-weight:700;letter-spacing:.08em}
 .pipe-step.warm .st i,.pipe-col.warm>.chd i,.pipe-m.warm>.n{color:#dfba85}
 .pipe-step.cool .st i,.pipe-col.cool>.chd i,.pipe-m.cool>.n{color:#63d6bd}
-.pipe-step .st span{font-size:16.8px;font-weight:800;color:#eef7f4;letter-spacing:-.02em}
-.pipe-step .q{margin:0 0 10px;font-size:13.2px;line-height:1.55;color:#8fa8a1;word-break:keep-all}
-.pipe-step .tags{display:flex;flex-wrap:wrap;gap:6px;align-content:center;min-height:56px}
-.pipe-step .tags span{font-family:'Outfit',sans-serif;font-size:12.4px;font-weight:600;padding:6px 10px;border-radius:7px}
+.pipe-step .st span{font-size:17.6px;font-weight:800;color:#eef7f4;letter-spacing:-.02em}
+.pipe-step .q{margin:0 0 9px;font-size:14.6px;line-height:1.5;color:#93aca5;word-break:keep-all;min-height:21px}
+.pipe-step .tags{display:flex;flex-wrap:wrap;gap:6px;align-content:center;min-height:52px}
+.pipe-step .tags span{font-family:'Outfit',sans-serif;font-size:13.6px;font-weight:600;padding:6px 11px;border-radius:7px}
 .pipe-step.warm .tags span{color:#e2d3b8;background:rgba(214,178,120,.13);border:1px solid rgba(214,178,120,.24)}
 .pipe-step.cool .tags span{color:#cfe3dd;background:rgba(78,207,180,.11);border:1px solid rgba(78,207,180,.22)}
-.pipe-step .yield{margin-top:auto;padding-top:11px;display:flex;align-items:center;gap:7px;font-size:12.6px;color:#7f9a92}
+.pipe-step .yield{margin-top:auto;padding-top:11px;display:flex;align-items:center;gap:7px;font-size:13.8px;color:#89a49c}
 .pipe-step .yield i{font-style:normal;font-weight:700}
 .pipe-detail{margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12)}
 .pipe-detail>.lbl{font-size:12.4px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7f9a92;margin-bottom:18px}
@@ -1145,9 +1154,9 @@ body::before{background:
 .pipe-m p b{display:inline;font-size:inherit}
 .pipe-m .out{display:inline-block;font-family:'Outfit',sans-serif;font-size:12.2px;font-weight:600;color:#9dbdb4;
   background:var(--surface-3);border:1px solid rgba(255,255,255,.08);padding:4px 9px;border-radius:6px}
-.pipe-note{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:18px;padding-top:14px;
+.pipe-note{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:12px;padding-top:10px;
   border-top:1px dashed rgba(255,255,255,.16)}
-.pipe-note p{margin:0;font-size:12.6px;line-height:1.6;color:#7f9a92;word-break:keep-all}
+.pipe-note p{margin:0;font-size:13.8px;line-height:1.62;color:#7f9a92;word-break:keep-all}
 .pipe-note b{color:#a8bfb8;font-weight:700}
 @media (max-width:1000px){
   .analysis .evidence{padding:28px 24px 24px}
@@ -1420,8 +1429,6 @@ body{background:#0d1917}
 .apfx-in .tt{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif;font-weight:700;
   font-size:clamp(38px,9vw,87px);line-height:1.22;word-break:keep-all;color:#eef7f4;letter-spacing:-.02em}
 .apfx-in .st{font-size:clamp(15px,2vw,19px);color:#8fb5ab}
-.apfx-hint{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:12px;color:#7e968f;
-  opacity:calc(1 - var(--p,0) * 2)}
 @media(prefers-reduced-motion:reduce){
   .apfx{height:auto}
   .apfx-stage{position:relative;height:72vh}
@@ -1500,8 +1507,8 @@ body{background:#0d1917}
 
 /* 좌우 비대칭 — 중앙 정렬 일변도 탈피 */
 .analysis .sec-head h2.h{font-size:clamp(28px,3vw,38px);line-height:1.2}
-.analysis .sec-head{text-align:left;max-width:900px;margin:0 0 20px}
-.analysis .sec-head .lead{margin:10px 0 0;max-width:860px;font-size:15.2px}
+.analysis .sec-head{text-align:left;max-width:900px;margin:0 0 16px}
+.analysis .sec-head .lead{margin:10px 0 0;max-width:860px;font-size:16.4px}
 .an-cols{grid-template-columns:1.02fr 1fr;gap:58px}
 .spot-3d{margin-top:0}
 .features .sec-head{text-align:left;max-width:820px;margin:0 auto 56px 0}
@@ -1646,6 +1653,25 @@ body{word-break:keep-all;overflow-wrap:break-word}
          링크는 이미 flex-wrap 으로 줄바꿈되니 가로 스크롤이 필요 없다.
          좁은 기기에서 줄이 늘면 바가 잘리지 않고 커지도록 높이도 푼다. */
   .nav-bot{overflow:visible;height:auto;min-height:56px}
+}
+/* ── 마지막 화면(푸터 페이지)의 어필 블록 ── */
+.foot-pitch{padding-bottom:38px;margin-bottom:30px;border-bottom:1px solid rgba(255,255,255,.10)}
+.foot-pitch .eyebrow{color:#7fe0c8;background-image:linear-gradient(transparent 62%, rgba(78,207,180,.22) 62%, rgba(78,207,180,.22) 94%, transparent 94%)}
+.fp-h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-serif;font-weight:700;
+  font-size:clamp(26px,2.9vw,38px);line-height:1.24;letter-spacing:-.025em;color:#eef7f4;margin:12px 0 0}
+.fp-lead{margin:14px 0 0;max-width:880px;font-size:16.4px;line-height:1.72;color:#a8bfb8;word-break:keep-all}
+.fp-lead b{color:#d7ece6;font-weight:700}
+.fp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:26px}
+.fp-grid>div{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);
+  border-radius:14px;padding:16px 18px}
+.fp-grid b{display:block;font-size:16.6px;font-weight:700;color:#eef7f4;margin-bottom:7px;letter-spacing:-.01em}
+.fp-grid span{display:block;font-size:14.8px;line-height:1.65;color:#8fa8a1;word-break:keep-all}
+.fp-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.fp-cta .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#dbeae6}
+.fp-cta .btn.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (max-width:860px){
+  .fp-grid{grid-template-columns:1fr;gap:12px}
+  .foot-pitch{padding-bottom:26px;margin-bottom:22px}
 }
 </style>
 </head>
@@ -2007,7 +2033,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
       </div>
     </div>
     <svg class="apfx-iris" viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg>
-    <div class="apfx-hint" id="apfxHint">초점을 맞추는 중 …</div>
   </div>
 </div></div>
 
@@ -2130,6 +2155,22 @@ body{word-break:keep-all;overflow-wrap:break-word}
 <!-- ===================== FOOTER ===================== -->
 <footer class="foot" id="contact">
   <div class="wrap">
+    <!-- 마지막 화면 — 자체 분석 로직 어필. 문구는 실제 구현 그대로:
+         가중치는 '기출 데이터'로 조율하고, 계산은 '그 학생의 기록'으로만 한다. -->
+    <div class="foot-pitch">
+      <span class="eyebrow">자체 분석 로직</span>
+      <h2 class="fp-h">검정고시 데이터로 조율한 가중치,<br>내 기록에만 적용됩니다</h2>
+      <p class="fp-lead">기출 <b>2,040문항 · 12회차</b>를 단원 <b>130종</b>으로 분해해 어디서 몇 문제가 나오는지
+      계산하고, 그 비중을 분석 가중치로 씁니다. 여기에 오답률·재방문 간격·표본 크기 보정을 얹어
+      <b>7가지 기법 · 3단계</b>로 순서를 정합니다.</p>
+      <div class="fp-grid">
+        <div><b>출제 비중 가중치</b><span>단원별 문항 수 ÷ 과목 총 문항 수. 기출에서 실제로 많이 나오는 단원이 먼저 올라옵니다.</span></div>
+        <div><b>개인 임계값</b><span>오답률·연속 오답·재방문 간격으로 복습 시점을 정합니다. 표본이 적은 단원은 과대 해석하지 않도록 보정합니다.</span></div>
+        <div><b>계산 재료는 내 기록뿐</b><span>남의 평균이나 외부 추정치를 섞지 않습니다. 들어가는 값은 본인의 풀이·채점 기록입니다.</span></div>
+      </div>
+      <div class="fp-cta"><a class="btn btn-primary" href="app.html">앱 자세히 보기</a><a class="btn" href="launch.html">앱 테스터 신청</a></div>
+    </div>
+
     <div class="foot-top">
       <span class="brand-wm"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
       <p class="foot-desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니.</p>
@@ -2549,12 +2590,10 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var pin = document.getElementById('apfx');
   var stage = pin && pin.querySelector('.apfx-stage');
   var inr = document.getElementById('apfxIn');
-  var hint = document.getElementById('apfxHint');
   if (!pin || !stage || !inr) return;
   function set(o, p){
     stage.style.setProperty('--o', o.toFixed(4));
     inr.style.setProperty('--p', p.toFixed(4));
-    if (hint) hint.style.setProperty('--p', p.toFixed(4));
   }
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) { set(1.7, 1); return; }
   var ticking = false;
