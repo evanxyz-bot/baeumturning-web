@@ -2450,6 +2450,17 @@ document.querySelectorAll('.hubitem').forEach(function(item){
 <script>
 /* 조리개×초점 전환 — 스크롤 진행률로 정육각 개구부(--o)와 초점(--p)을 구동 */
 (function(){
+  /* 새로고침·뒤로가기로 돌아와도 메인은 첫 화면에서 시작한다.
+     브라우저의 스크롤 복원이 켜져 있으면 중간 화면에 얹혀 시작해
+     조리개 전환이 이미 지나간 상태로 보인다. 앵커(#…)로 들어온 경우는 그대로 둔다. */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!location.hash) {
+    scrollTo(0, 0);
+    addEventListener('load', function(){ if (!location.hash) scrollTo(0, 0); });
+  }
+})();
+
+(function(){
   /* 화면 한 칸씩 넘기는 페이저 — PPT 처럼 휠 한 번에 한 화면.
      섹션이 화면보다 길면 그 안을 화면 높이로 잘라 정거장을 더 만든다.
      내용이 잘려 나가지 않으면서도 늘 화면에 딱 맞게 선다.
@@ -2564,7 +2575,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   }
   if (reduce) { set(1.7, 1); return; }
   set(0, 0);
-  var DUR = 1400, playing = false, done = false, t0 = 0;
+  var DUR = 2600, playing = false, done = false, t0 = 0;   // 열리는 과정이 보이도록 천천히
   function frame(ts){
     if (!t0) t0 = ts;
     var k = Math.min(1, (ts - t0) / DUR);
