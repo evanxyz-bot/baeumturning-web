@@ -667,9 +667,9 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 .foot::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--s-teal),var(--s-blue),var(--s-purple),var(--s-coral),var(--s-amber))}
 .foot-top .desc{font-size:15.1px;color:var(--text-3);line-height:1.65;max-width:420px;margin-top:14px}
-.biz-info{margin-top:32px;padding-top:22px;border-top:1px solid var(--border);font-size:15px;color:var(--text-3);line-height:1.9}
+.biz-info{margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:14.6px;color:var(--text-3);line-height:1.9}
 .biz-info b{color:var(--text-2);font-weight:600}
-.foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:18px;
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px;
   font-size:14px;color:var(--text-4);flex-wrap:wrap;gap:10px}
 .foot-terms{color:var(--text-3);font-weight:600;transition:color .15s}
 .foot-terms:hover{color:var(--text)}
@@ -1042,17 +1042,17 @@ body::before{background:
    너무 컸다. 68vh 로 낮춘다. 마지막 정거장에서는 분석 카드의 '근거 3장 + 고지'
    가 위에 남고 그 아래로 푸터가 붙어, 잘린 느낌 없이 한 화면이 채워진다.
    (68vh 도 여전히 헐거워 54vh 로 한 번 더 낮췄다) */
-.foot{background:linear-gradient(180deg,#0c1715 0%,#0a1413 46%,#0a1413 100%);padding:52px 0 40px;
-  min-height:54vh;display:flex;align-items:center}
+.foot{background:linear-gradient(180deg,#0c1715 0%,#0a1413 46%,#0a1413 100%);padding:34px 0 26px;
+  min-height:0;display:flex;align-items:center}
 .foot>.wrap{width:100%}
-.foot-top .brand-wm{font-size:62px!important}
+.foot-top .brand-wm{font-size:52px!important}
 /* 다크 전환(apfx) 끝색과 첫 다크 섹션 시작색도 일치시킨다 */
 .apfx-dark{background:#101d1a}
 
 /* ── 푸터 아이덴티티 — 로고 확대 + 설명을 같은 줄 우측에 ── */
 /* 로고 · 설명 · 회사정보를 한 행에 (행을 나누면 빈 줄이 생겨 공간만 먹는다) */
 /* 소개 문구가 워드마크 한가운데 떠 있어 붕 떴다 — 아랫줄에 맞춘다 */
-.foot-top{display:flex;align-items:flex-end;gap:26px;flex-wrap:wrap}
+.foot-top{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap}
 .foot-top .brand-wm{font-size:52px!important;flex-shrink:0}
 .foot-desc{margin:0;max-width:300px;font-size:14.6px;line-height:1.6;color:var(--text-3)}
 /* 설명글을 로고 글자 기준선에 맞춰 내린다 (로고는 한글 병기가 아래에 붙어 시각 중심이 낮다) */
@@ -1164,7 +1164,7 @@ body::before{background:
 .pipe-fine{margin:9px 0 0;font-size:13.4px;color:#7f9a92}
 .pipe-fine b{color:#a8bfb8;font-weight:700}
 /* 푸터 닫는 CTA */
-.foot-cta{display:flex;gap:10px;flex-wrap:wrap;width:100%;margin-top:18px}
+.foot-cta{display:flex;gap:10px;flex-wrap:wrap;width:100%;margin-top:14px}
 .foot-cta .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#dbeae6}
 .foot-cta .btn.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
 @media (max-width:1000px){
@@ -2446,27 +2446,34 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var root = document.documentElement, stops = [], locked = false;
 
   function build(){
-    var vh = innerHeight, max = root.scrollHeight - vh, list = [0];
+    var vh = innerHeight, max = root.scrollHeight - vh, list = [{y:0, a:true}];
+    // a(anchor) = 섹션의 시작. 붙어 있는 정거장을 합칠 때 이쪽을 남긴다 —
+    // 앞 섹션에서 기계적으로 쪼갠 칸이 이기면 다음 섹션 상단에 한 번에 서지 못한다.
     document.querySelectorAll('.hero, #apfx, .netsec, .analysis, .foot').forEach(function(sec){
       var top = sec.getBoundingClientRect().top + scrollY;
       var h = sec.offsetHeight;
-      list.push(top);
-      if (sec.id === 'apfx'){ list.push(top + h - vh); return; }   // 시작·끝만
+      list.push({y:top, a:true});
+      if (sec.id === 'apfx'){ list.push({y:top + h - vh, a:false}); return; }   // 시작·끝만
       // 화면보다 긴 섹션은 한 화면씩 끊어서 정거장을 놓는다
-      for (var y = top + vh; y < top + h - vh * 0.25; y += vh) list.push(y);
-      if (h > vh) list.push(top + h - vh);          // 섹션 끝을 화면 아래에 맞춘다
+      for (var y = top + vh; y < top + h - vh * 0.25; y += vh) list.push({y:y, a:false});
+      if (h > vh) list.push({y:top + h - vh, a:false});   // 섹션 끝을 화면 아래에 맞춘다
     });
-    list.push(max);
+    list.push({y:max, a:true});
     // 붙어 있는 정거장은 합친다 — filter 의 세 번째 인자는 '원본' 배열이라
     // 연속 제거가 이어지지 않는다(145 같은 헛칸이 살아남던 원인). 직접 누산한다.
-    var sorted = list.map(function(v){ return Math.max(0, Math.min(max, Math.round(v))); })
-                     .sort(function(a, b){ return a - b; });
-    stops = [];
-    sorted.forEach(function(v){
-      if (!stops.length || v - stops[stops.length - 1] > vh * 0.35) stops.push(v);
+    var sorted = list.map(function(o){ return {y: Math.max(0, Math.min(max, Math.round(o.y))), a: o.a}; })
+                     .sort(function(a, b){ return a.y - b.y; });
+    var kept = [];
+    sorted.forEach(function(o){
+      var last = kept[kept.length - 1];
+      if (!last || o.y - last.y > vh * 0.35) { kept.push(o); return; }
+      if (o.a && !last.a) kept[kept.length - 1] = o;   // 섹션 상단이 이긴다
     });
-    // 맨 끝은 반드시 문서 끝이어야 푸터까지 닿는다
-    if (stops[stops.length - 1] !== max) stops[stops.length - 1] = max;
+    stops = kept.map(function(o){ return o.y; });
+    // 맨 끝은 반드시 문서 끝이어야 푸터까지 닿는다.
+    // 교체하면 바로 앞의 섹션 상단이 사라진다(분석 페이지에 한 번에 못 서던 원인) —
+    // 가깝더라도 덧붙인다. 마지막 한 칸은 푸터를 여는 짧은 이동이 된다.
+    if (stops[stops.length - 1] !== max) stops.push(max);
     // 간격이 한 화면을 넘으면 그 사이 내용이 건너뛰어진다 — 균등하게 쪼갠다.
     // prev+vh 를 그냥 끼우면 다음 정거장과 30px 쯤 떨어진 '헛칸'이 생기므로
     // 개수로 나눠 같은 폭으로 놓는다. 한 화면을 조금(12%) 넘는 정도는 그대로 둔다.
