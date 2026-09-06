@@ -1158,7 +1158,7 @@ body::before{background:
 .pipe-m p b{display:inline;font-size:inherit}
 .pipe-m .out{display:inline-block;font-family:'Outfit',sans-serif;font-size:12.2px;font-weight:600;color:#9dbdb4;
   background:var(--surface-3);border:1px solid rgba(255,255,255,.08);padding:4px 9px;border-radius:6px}
-.pipe-why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:10px;padding-top:12px;
+.pipe-why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:10px;padding-top:12px;
   border-top:1px dashed rgba(255,255,255,.16)}
 .pipe-why>div{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:11px 14px}
 .pipe-why b{display:block;font-size:15.4px;font-weight:700;color:#eef7f4;margin-bottom:5px;letter-spacing:-.01em}
@@ -1496,7 +1496,10 @@ body{background:#0d1917}
 
 /* 섹션 배경 — 아래로 갈수록 깊어진다 */
 /* 한 화면에 담기도록 압축(2026-09-03) */
-.analysis{background:#0d1917;padding:30px 0 10px}
+/* 이 섹션 하나로 한 화면(2026-09-06 대표 지시) — 짧아서 푸터가 같이 보이던 것을 막는다 */
+.analysis{background:#0d1917;padding:30px 0 10px;min-height:100vh;display:flex;align-items:center}
+.analysis>.wrap{width:100%}
+@media (max-width:1024px){.analysis{min-height:0;display:block}}
 .features{background:linear-gradient(180deg,#0d1917 0%,#101d1a 100%);padding:100px 0}
 .strip{background:#101d1a}
 .foot{background:#0a1413}
@@ -2125,7 +2128,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <div class="pipe-why">
         <div><b>출제 비중 가중치</b><span>단원별 문항 수 ÷ 과목 총 문항 수 — 기출에서 많이 나오는 단원이 먼저 올라옵니다</span></div>
         <div><b>개인 임계값</b><span>오답률·연속 오답·재방문 간격으로 복습 시점을 잡고, 표본이 적은 단원은 보정합니다</span></div>
-        <div><b>재료는 내 기록뿐</b><span>남의 평균이나 외부 추정치를 섞지 않습니다</span></div>
       </div>
       <p class="pipe-fine">합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.</p>
   </div>
