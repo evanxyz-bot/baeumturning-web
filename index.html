@@ -1409,7 +1409,9 @@ body{background:#0d1917}
    페이저가 이 구간의 시작으로는 한 번에 데려다 주고(2페이지 자동 이동),
    구간 안에서는 손을 떼 휠이 곧 진행률이 된다. 70vh 면 휠 대여섯 번 —
    215vh(115vh 스크롤) 때처럼 지치지 않으면서 속도를 스스로 정할 수 있다. */
-.apfx{position:relative;height:170vh}
+/* 조리개 전환 구간 길이 = 스크롤 감도. 길수록 같은 휠 양에 덜 변한다(감도 낮음).
+   170vh 는 너무 빨리 열려서 240vh 로 늘렸다(2026-09-06 대표 지시). */
+.apfx{position:relative;height:240vh}
 .apfx-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fbfdfd}
 .apfx-light{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;
   filter:blur(calc(12px * var(--p,0))) brightness(calc(1 - .55 * var(--p,0)))}
