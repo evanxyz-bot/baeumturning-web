@@ -439,6 +439,22 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
   font-size:14px;color:var(--text-4);flex-wrap:wrap;gap:10px}
 .foot-terms{color:var(--text-3);font-weight:600;transition:color .15s}
 .foot-terms:hover{color:var(--text)}
+/* 회사정보 자리를 메인페이지와 통일 — 이용약관은 워드마크 줄 오른쪽, 회사정보는 © 줄
+   오른쪽에 붙인다(2026-09-07 대표 지시). 예전엔 구분선을 두고 통째로 한 줄을 더 먹어
+   푸터만 170px 넘게 길었다. */
+.foot-top{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap}
+.foot-top .desc{margin:0;max-width:420px}
+.foot-top .foot-terms{margin-left:auto;align-self:center;font-size:13.4px}
+.foot-bottom{align-items:flex-end}
+.foot-bottom .biz-info{margin:0;padding:0;border:0;margin-left:auto;text-align:right;
+  font-size:12.8px;line-height:1.85;color:var(--text-3)}
+@media (max-width:900px){
+  .foot-top{gap:16px}
+  .foot-top .foot-terms{margin-left:0}
+  /* 세로로 쌓이면 align-items 가 가로 정렬이 된다 — 위의 flex-end 를 풀어 왼쪽에 맞춘다 */
+  .foot-bottom{flex-direction:column;gap:12px;align-items:flex-start}
+  .foot-bottom .biz-info{margin-left:0;text-align:left}
+}
 
 /* ============ de-AI 오버라이드 (2026-08-17, index.html 과 동일 규칙) ============
    원칙: 헥스·레이아웃 유지. AI 생성물 티(컬러메시·그라데이션 클립·알약 eyebrow)만 걷어내고
@@ -630,7 +646,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <div class="nav-drop">
         <a href="notice.html">고객지원<span class="chev">▾</span></a>
         <div class="drop-menu">
-          <a href="launch.html">출시 알림</a>
           <a href="notice.html">공지사항</a>
           <a href="qna.html">Q&amp;A</a>
           <a href="delete-account.html">계정 삭제</a>
@@ -856,14 +871,14 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="foot-top">
       <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
       <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
-    </div>
-    <div class="biz-info">
-      <b>아웃포커스 (OutFocus)</b> · 대표 양승환<br>
-      이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구
+      <a href="terms.html" class="foot-terms">이용약관</a>
     </div>
     <div class="foot-bottom">
       <span>© 2026 아웃포커스 (OutFocus). All rights reserved.</span>
-      <a href="terms.html" class="foot-terms">이용약관</a>
+      <div class="biz-info">
+        <b>아웃포커스 (OutFocus)</b> · 대표 양승환<br>
+        이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구
+      </div>
     </div>
   </div>
 </footer>

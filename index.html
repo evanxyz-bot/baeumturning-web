@@ -1068,7 +1068,8 @@ body::before{background:
 @media (max-width:900px){
   .foot-top{gap:16px}
   .foot-top .foot-terms{margin-left:0;margin-top:0}
-  .foot-bottom{flex-direction:column;gap:12px}
+  /* 세로로 쌓이면 align-items 가 가로 정렬이 된다 — 위의 flex-end 를 풀어 왼쪽에 맞춘다 */
+  .foot-bottom{flex-direction:column;gap:12px;align-items:flex-start}
   .foot-bottom .biz-info{margin-left:0;text-align:left}
 }
 @media (max-width:640px){
@@ -1717,7 +1718,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <div class="nav-drop">
         <a href="notice.html">고객지원<span class="chev">▾</span></a>
         <div class="drop-menu">
-          <a href="launch.html">출시 알림</a>
           <a href="notice.html">공지사항</a>
           <a href="qna.html">Q&amp;A</a>
           <a href="delete-account.html">계정 삭제</a>
@@ -1747,12 +1747,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
             </svg>
             앱 다운로드
           </button>
-          <a href="app.html" class="btn btn-dl btn-ghost">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/>
-            </svg>
-            앱 자세히 보기
-          </a>
         </div>
         <p class="store-hint">App Store · Google Play</p>
       </div>
