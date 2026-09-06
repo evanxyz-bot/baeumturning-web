@@ -37,7 +37,6 @@
 - [배움터닝 서비스 소개](https://outoffocus-edu.vercel.app/app.html): 기능, 무료 이용 범위, 설계 근거
 - [검정 뉴스](https://outoffocus-edu.vercel.app/news.html): 검정고시·학교 밖 청소년 관련 공식 출처 자료 아카이브 63건(2010~2026). 시험 요강·합격 기준·정부 통계·법령 개정을 출처와 날짜를 붙여 정리했습니다.
 - [자주 묻는 질문](https://outoffocus-edu.vercel.app/qna.html): 검정고시 기본 문답(정의·시행 횟수·합격 기준·시험 과목·학습 시작법)과 배움터닝 이용 문답
-- [출시 알림](https://outoffocus-edu.vercel.app/launch.html): 정식 출시·웹 베타 참여 안내 신청
 - [회사 소개](https://outoffocus-edu.vercel.app/company.html): 미션과 팀
 - [연혁](https://outoffocus-edu.vercel.app/history.html)
 - [협력사](https://outoffocus-edu.vercel.app/partners.html)
