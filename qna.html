@@ -119,12 +119,12 @@ h2.h{font-size:42.6px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 
 /* ── PAGE HEAD ── */
 /* 제목 주변 공백 축소 — 카테고리↔제목 18→10px, 제목↔본문 56→32px (2026-09-07 대표 지시) */
-.page-head{padding:72px 0 32px;text-align:center;background:
+.page-head{padding:48px 0 26px;text-align:center;background:
   radial-gradient(700px 360px at 50% 0%, rgba(230,244,241,.8), transparent 70%)}
 .page-head h1{font-size:49.3px;font-weight:700;letter-spacing:-0.035em;line-height:1.15}
 .page-head h1 .g{background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .page-head .lead{margin:18px auto 0}
-.crumb{font-size:14.6px;color:var(--text-4);margin-bottom:10px}
+.crumb{font-size:17.2px;color:var(--text-3);margin-bottom:12px}
 .crumb a:hover{color:var(--text-2)}
 .crumb b{color:var(--accent-strong);font-weight:600}
 
@@ -210,7 +210,7 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 .notice-empty{text-align:center;font-size:14.6px;color:var(--text-3);margin-top:18px}
 
 /* ── QnA ── */
-.qna{padding:72px 0 96px}
+.qna{padding:34px 0 60px}
 .qna-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
 details.q{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-xs);overflow:hidden;
   transition:box-shadow .2s,border-color .2s}
@@ -333,12 +333,12 @@ body{word-break:keep-all;overflow-wrap:break-word}
    "name": "언제 출시되나요?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "2027년 초 정식 출시를 목표로 준비하고 있어요. 구체적인 날짜가 정해지면 공지사항에 가장 먼저 올리겠습니다."
+    "text": "2026년 10월 중 정식 출시를 목표로 준비하고 있어요. 구체적인 날짜가 정해지면 공지사항에 가장 먼저 올리겠습니다."
    }
   },
   {
    "@type": "Question",
-   "name": "정말 채점이 무료인가요?",
+   "name": "무슨 기능이 있나요? 무료인가요?",
    "acceptedAnswer": {
     "@type": "Answer",
     "text": "네. 기출 CBT 풀이와 자동 채점, 성적 그래프, 복습·오답 정리, 취약 단원 진단은 모두 무료예요. 단원·유형별 문제은행도 무료예요. 학습 보고서는 하루 2회·한 달 5회까지 만들 수 있어요. 해설과 단원 요약집은 과목별 체험 2회까지 열리고, 전체 이용은 2027년 1월 구독과 함께 열려요."
@@ -449,21 +449,37 @@ body{word-break:keep-all;overflow-wrap:break-word}
          좁은 기기에서 줄이 늘면 바가 잘리지 않고 커지도록 높이도 푼다. */
   .nav-bot{overflow:visible;height:auto;min-height:56px}
 }
-/* ── 하단 정보 높이 축소 (2026-09-03) ──
-   브랜드(워드마크 + 한 줄 소개)를 우측 아래로 보내고, 사업자 정보·저작권은
-   왼쪽에 쌓는다. 세로로 세 덩이가 쌓여 있던 것이 두 열로 겹쳐져 높이가 준다. */
-.foot{padding:34px 0 26px}
-.foot .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;
-  grid-template-areas:"info brand" "bottom brand";column-gap:40px;row-gap:8px;align-items:end}
-.foot-top{grid-area:brand;display:flex;flex-direction:column;align-items:flex-end;
-  text-align:right;gap:6px;align-self:end}
-.foot-top .desc{margin-top:0;font-size:13.4px;line-height:1.6;max-width:340px}
-.biz-info{grid-area:info;margin-top:0;padding-top:0;border-top:0}
-.foot-bottom{grid-area:bottom;margin-top:4px;padding-top:12px;border-top:1px solid var(--border)}
-@media (max-width:760px){
-  .foot .wrap{grid-template-columns:1fr;grid-template-areas:"info" "bottom" "brand";row-gap:14px}
-  .foot-top{align-items:flex-start;text-align:left}
-  .foot-top .desc{max-width:none}
+
+/* ── 푸터 = 메인페이지와 같은 회사정보 형식 (2026-09-07 대표 지시) ──
+   "모든 페이지 동일". index.html 푸터의 다크존 토큰·레이아웃·글자 크기를 그대로
+   가져온다. 토큰을 .foot 에 얹어야 인라인 var() 참조(이메일 링크 색)까지 함께
+   전환된다. 예전에 페이지마다 있던 2열 그리드(2026-09-03)는 여기서 되돌린다. */
+.foot{
+  --surface:#152420; --surface-2:#1a2c27; --surface-3:#22352f; --bg:#101d1a;
+  --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
+  --text:#eaf2f0; --text-2:#b2c2bd; --text-3:#8d9e99; --text-4:#6e7e7a;
+  --accent:#4ecfb4; --accent-soft:rgba(78,207,180,.12); --accent-strong:#7fe3cc; --accent-mid:#2fae95;
+  --s-teal:#63d6bd; --s-blue:#93b6de; --s-purple:#b9a9db; --s-coral:#eaa48d; --s-amber:#dfba85;
+  color:var(--text);background:#0a1413;border-top:0;padding:34px 0 26px}
+.foot .wrap{display:block;max-width:1280px}
+.foot-top{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;text-align:left}
+.foot-top .brand-wm{font-size:52px!important;flex-shrink:0}
+.foot-top .desc,.foot-desc{margin:0;max-width:300px;font-size:14.6px;line-height:1.6;
+  color:var(--text-3);align-self:center}
+.foot-top .foot-terms{margin-left:auto;align-self:center;margin-top:0;font-size:13.4px}
+.foot-bottom{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;
+  gap:10px;margin-top:12px;padding-top:0;border-top:0;font-size:14px;color:var(--text-4)}
+.foot-bottom .biz-info,.biz-info{margin:0;padding:0;border:0;margin-left:auto;text-align:right;
+  font-size:12.8px;line-height:1.85;color:var(--text-3)}
+@media (max-width:900px){
+  .foot-top{gap:16px}
+  .foot-top .foot-terms{margin-left:0;margin-top:0}
+  .foot-bottom{flex-direction:column;gap:12px;align-items:flex-start}
+  .foot-bottom .biz-info{margin-left:0;text-align:left}
+}
+@media (max-width:640px){
+  .foot-top .brand-wm{font-size:38px!important}
+  .foot-top .desc,.foot-desc{font-size:13.8px;max-width:none;flex-basis:100%}
 }
 </style>
 </head>
@@ -521,7 +537,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
   <div class="wrap">
     <div class="crumb"><a href="index.html">홈</a> · 고객지원 · <b>Q&amp;A</b></div>
     <h1>자주 묻는 <span class="g">질문</span></h1>
-    <p class="lead">궁금한 점을 모았습니다. 여기에 답이 없다면 메일로 물어봐 주세요.</p>
   </div>
 </header>
 
@@ -534,10 +549,10 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <div class="pin-head"><span class="pin-badge">고정</span><b>배움터닝 서비스</b></div>
         <details class="q">
           <summary><span class="qmark">Q</span>언제 출시되나요?<span class="arrow">▾</span></summary>
-          <div class="a"><b>2027년 초</b> 정식 출시를 목표로 준비하고 있어요. 구체적인 날짜가 정해지면 <a href="notice.html" style="color:#0b7a6a;font-weight:700">공지사항</a>에 가장 먼저 올리겠습니다.</div>
+          <div class="a"><b>2026년 10월 중</b> 정식 출시를 목표로 준비하고 있어요. 구체적인 날짜가 정해지면 <a href="notice.html" style="color:#0b7a6a;font-weight:700">공지사항</a>에 가장 먼저 올리겠습니다.</div>
         </details>
         <details class="q">
-          <summary><span class="qmark">Q</span>정말 채점이 무료인가요?<span class="arrow">▾</span></summary>
+          <summary><span class="qmark">Q</span>무슨 기능이 있나요? 무료인가요?<span class="arrow">▾</span></summary>
           <div class="a">네. 기출 CBT 풀이와 자동 채점, 성적 그래프, 복습·오답 정리, 취약 단원 진단은 모두 무료예요. 단원·유형별 문제은행도 무료예요. 학습 보고서는 하루 2회·한 달 5회까지 만들 수 있어요. 해설과 단원 요약집은 과목별 체험 2회까지 열리고, 전체 이용은 2027년 1월 구독과 함께 열려요.</div>
         </details>
         <details class="q">
@@ -612,7 +627,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
   <div class="wrap">
     <div class="foot-top">
       <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
-      <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니. 검정고시 학습관리 서비스 '배움터닝'을 만듭니다.</p>
+      <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니.</p>
       <a href="terms.html" class="foot-terms">이용약관</a>
     </div>
     <div class="foot-bottom">
