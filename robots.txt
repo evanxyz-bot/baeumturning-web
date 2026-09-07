@@ -1,4 +1,4 @@
-# 아웃포커스 (OutFocus) — https://outoffocus-edu.vercel.app
+# 아웃포커스 (OutFocus) — https://outfocus.co.kr
 # 모든 크롤러 허용. 내부 시연 문서만 색인에서 제외합니다.
 
 User-agent: *
@@ -17,4 +17,4 @@ User-agent: Google-Extended
 Allow: /
 Disallow: /transitions.html
 
-Sitemap: https://outoffocus-edu.vercel.app/sitemap.xml
+Sitemap: https://outfocus.co.kr/sitemap.xml

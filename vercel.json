@@ -1,5 +1,17 @@
 {
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.outfocus.co.kr" }],
+      "destination": "https://outfocus.co.kr/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "outoffocus-edu.vercel.app" }],
+      "destination": "https://outfocus.co.kr/:path*",
+      "permanent": true
+    },
     { "source": "/notice.html", "destination": "/qna.html", "permanent": true },
     { "source": "/contact.html", "destination": "/qna.html", "permanent": true }
   ]

@@ -17,7 +17,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 ROOT = os.path.abspath(ROOT)
 SRC = os.path.join(ROOT, "content", "blog")
 DONOR = os.path.join(ROOT, "qna.html")
-BASE = "https://outoffocus-edu.vercel.app/"
+BASE = "https://outfocus.co.kr/"
 
 # 대표 승인 전에는 색인을 막는다. 승인 후 True 로 바꾸고 다시 빌드하면 noindex 가 빠진다.
 PUBLISHED = False
