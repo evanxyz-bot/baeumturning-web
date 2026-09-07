@@ -49,12 +49,10 @@
   --ease-spring:cubic-bezier(0.2,0.8,0.2,1);
 }
 html{scroll-behavior:smooth}
-/* 터치 기기 — 손가락 스크롤은 그대로 두되 섹션 근처에서 화면이 맞게 붙는다.
+/* 폰·태블릿은 손가락이 미는 대로만 움직인다(2026-09-07 대표 지시).
+   예전엔 scroll-snap 으로 섹션에 붙였는데, 첫 화면부터 히어로 시작점으로
+   끌려가 상단 내비가 잘렸고 스크롤이 제멋대로 한 칸씩 넘어갔다.
    데스크톱(휠·키보드)은 아래 페이저 스크립트가 한 번에 한 칸씩 옮긴다. */
-@media (hover:none){
-  html{scroll-snap-type:y proximity}
-  .hero,.apfx,.netsec,.analysis,.foot{scroll-snap-align:start}
-}
 @media (prefers-reduced-motion:reduce){html{scroll-snap-type:none}}
 /* 헤드라인 전용 폰트 — 지마켓 산스 (무료 상업적 이용 가능, G마켓 배포) */
 @font-face{font-family:'GmarketSans';font-weight:300;font-display:swap;
@@ -1414,6 +1412,9 @@ body{background:#0d1917}
 /* 조리개 전환 구간 길이 = 스크롤 감도. 길수록 같은 휠 양에 덜 변한다(감도 낮음).
    170vh 는 너무 빨리 열려서 240vh 로 늘렸다(2026-09-06 대표 지시). */
 .apfx{position:relative;height:240vh}
+/* 폰은 1vh 가 작아 같은 240vh 라도 손가락 이동량이 적다 — 그만큼 조리개가
+   순식간에 열렸다. 구간을 늘려 감도를 낮춘다(2026-09-07 대표 지시). */
+@media (hover:none) and (max-width:900px){.apfx{height:420vh}}
 .apfx-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fbfdfd}
 .apfx-light{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;
   filter:blur(calc(12px * var(--p,0))) brightness(calc(1 - .55 * var(--p,0)))}
