@@ -602,11 +602,11 @@ body{word-break:keep-all;overflow-wrap:break-word}
           <input type="hidden" name="_cc" value="dol9111@gmail.com">
           <input type="hidden" name="_next" id="mq-next" value="">
           <div class="row">
-            <div><label for="mq-name">이름 (선택)</label><input id="mq-name" name="이름" type="text" placeholder="홍길동"></div>
+            <div><label for="mq-name">이름 (선택)</label><input id="mq-name" name="name" type="text" placeholder="홍길동"></div>
             <div><label for="mq-mail">이메일 * (회신받을 이메일 주소)</label><input id="mq-mail" name="email" type="email" inputmode="email" placeholder="reply@example.com" required></div>
           </div>
           <label for="mq-type">문의 유형 *</label>
-          <select id="mq-type" name="문의유형" required>
+          <select id="mq-type" name="type" required>
             <option value="">선택해 주세요</option>
             <option>서비스 이용 문의</option>
             <option>오류·불편 신고</option>
@@ -614,7 +614,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
             <option>기타</option>
           </select>
           <label for="mq-body">내용 *</label>
-          <textarea id="mq-body" name="내용" placeholder="어떤 점이 궁금하신가요? 화면 이름이나 상황을 함께 적어주시면 더 빠르게 도와드릴 수 있어요." required></textarea>
+          <textarea id="mq-body" name="message" placeholder="어떤 점이 궁금하신가요? 화면 이름이나 상황을 함께 적어주시면 더 빠르게 도와드릴 수 있어요." required></textarea>
           <label for="mq-file">사진 첨부 (선택)</label>
           <input id="mq-file" name="attachment" type="file" accept="image/*">
           <p class="fhint">화면을 캡처해 올려주시면 더 빨리 확인할 수 있어요. 이미지 1장, 5MB 까지.</p>
@@ -713,8 +713,10 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
       body:JSON.stringify({
         _subject:'[배움터닝 문의] ['+ty+']',
         _template:'table', _captcha:'false', _cc:'dol9111@gmail.com',
-        문의유형:ty, 내용:b, email:m,
-        이름:document.getElementById('mq-name').value.trim()||'(미기재)'
+        /* 필드 이름은 반드시 영문 — 한글 키가 하나라도 있으면 formsubmit 이 제목·본문을
+           통째로 버리고 빈 메일만 보낸다(2026-09-08 실측). 화면 라벨은 한글 그대로. */
+        type:ty, message:b, email:m,
+        name:document.getElementById('mq-name').value.trim()||'(미기재)'
       })
     }).then(function(r){ return r.json(); })
       .then(function(d){
