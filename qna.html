@@ -715,10 +715,15 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
       })
     }).then(function(r){ return r.json(); })
       .then(function(d){
-        if(d && String(d.success)==='true'){ f.reset(); say('ok','문의가 접수되었습니다. 남겨주신 메일로 회신드릴게요.'); }
-        else { throw new Error('relay'); }
+        if(d && String(d.success)==='true'){ f.reset(); say('ok','문의가 접수되었습니다. 남겨주신 메일로 회신드릴게요.'); return; }
+        /* 릴레이가 거절한 이유를 그대로 보여준다 — 예전엔 다 '전송 실패'로 뭉뚱그려
+           수신함 활성화가 안 된 것인지 진짜 장애인지 구분할 수 없었다(2026-09-08). */
+        var e=new Error('relay'); e.relay = d && d.message; throw e;
       })
-      .catch(function(){ say('err','전송에 실패했습니다. outfocus.edu@gmail.com 으로 직접 보내주시면 확인하겠습니다.'); })
+      .catch(function(err){
+        var extra = err && err.relay ? ' (' + err.relay + ')' : '';
+        say('err','전송에 실패했습니다. outfocus.edu@gmail.com 으로 직접 보내주시면 확인하겠습니다.'+extra);
+      })
       .finally(function(){ btn.disabled=false; btn.textContent='문의 보내기'; });
   });
 
