@@ -589,18 +589,14 @@ body{word-break:keep-all;overflow-wrap:break-word}
 
       </div><!-- /.qna-col -->
 
-      <!-- 메일로 문의하기 — 그립메이트 촬영문의서 구조(항목형 폼) + FormSubmit 릴레이 -->
+      <!-- 메일로 문의하기 — 항목형 폼 → 우리 백엔드 /api/v1/contact 가 회사 메일로 발송.
+           formsubmit 릴레이는 한글이 섞이면 제출을 통째로 버려서 걷어냈다(2026-09-08). -->
       <div class="qna-side">
       <div class="mailq" id="mailq">
         <h3>메일로 문의하기</h3>
-        <form id="mqform" action="https://formsubmit.co/outfocus.edu@gmail.com" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="_subject" id="mq-subject" value="[배움터닝 문의]">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_captcha" value="false">
-          <!-- 대표 개인 메일로 사본. outfocus.edu 의 Gmail 이 formsubmit 발신을 스팸으로 넣어
-               전달이 막혔던 일이 있어(2026-09-08) 전달에 기대지 않고 직접 받는다. -->
-          <input type="hidden" name="_cc" value="dol9111@gmail.com">
-          <input type="hidden" name="_next" id="mq-next" value="">
+        <form id="mqform" action="https://ged-app.onrender.com/api/v1/contact" method="POST" enctype="multipart/form-data" novalidate>
+          <!-- 허니팟: 사람은 못 보는 칸. 봇이 채우면 서버가 조용히 버린다 -->
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
           <div class="row">
             <div><label for="mq-name">이름 (선택)</label><input id="mq-name" name="name" type="text" placeholder="홍길동"></div>
             <div><label for="mq-mail">이메일 * (회신받을 이메일 주소)</label><input id="mq-mail" name="email" type="email" inputmode="email" placeholder="reply@example.com" required></div>
@@ -677,11 +673,17 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
 });
 </script>
 <script>
-// ── 메일 문의 → FormSubmit 릴레이 (문의하기 페이지를 여기로 합쳤다, 2026-09-07) ──
+// ── 메일 문의 → 우리 백엔드(/api/v1/contact) → 회사 메일 (2026-09-08 formsubmit 걷어냄) ──
 (function(){
   var f=document.getElementById('mqform'); if(!f) return;
+  var API=f.getAttribute('action');
   var msg=document.getElementById('mq-msg'), btn=document.getElementById('mq-send');
   function say(k,t){ msg.className='fmsg '+k; msg.textContent=t; }
+
+  /* Render 무료 플랜은 15분 놀면 잠든다(깨는 데 30~50초). 페이지에 들어온 순간 미리 깨워
+     보내기 버튼을 눌렀을 때 기다리는 시간을 줄인다. 실패해도 상관없음. */
+  try{ fetch(API.replace(/\/api\/v1\/contact$/,'/'),{mode:'no-cors',cache:'no-store'}).catch(function(){}); }catch(e){}
+
   f.addEventListener('submit',function(e){
     e.preventDefault();
     var m=document.getElementById('mq-mail').value.trim(),
@@ -691,53 +693,33 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     if(!m||!b){ say('err','이메일과 내용은 꼭 채워주세요.'); return; }
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){ say('err','이메일 주소를 다시 확인해주세요.'); return; }
     if(!document.getElementById('mq-agree').checked){ say('err','개인정보 수집·이용에 동의해주셔야 접수됩니다.'); return; }
-    btn.disabled=true; btn.textContent='보내는 중…'; say('','');
-
-    /* 첨부가 있으면 AJAX 로는 못 보낸다(FormSubmit 의 ajax 엔드포인트는 파일을 받지 않음).
-       그때만 폼을 통째로 POST 하고, 돌아올 자리를 _next 로 지정해 성공 문구를 띄운다. */
     var fi=document.getElementById('mq-file');
-    if(fi && fi.files && fi.files.length){
-      if(fi.files[0].size > 5*1024*1024){
-        say('err','사진은 5MB 까지 올릴 수 있어요.');
-        btn.disabled=false; btn.textContent='문의 보내기'; return;
-      }
-      document.getElementById('mq-subject').value='[배움터닝 문의] ['+ty+']';
-      document.getElementById('mq-next').value=location.origin+location.pathname+'?sent=1';
-      f.submit();
-      return;
+    if(fi && fi.files && fi.files.length && fi.files[0].size > 5*1024*1024){
+      say('err','첨부 이미지는 5MB 까지 가능해요.'); return;
     }
+    btn.disabled=true; btn.textContent='보내는 중…'; say('','');
+    /* 서버가 자는 중이면 첫 응답까지 오래 걸린다 — 8초 지나면 문구로 알려준다 */
+    var slow=setTimeout(function(){ btn.textContent='보내는 중… (잠깐만요)'; },8000);
 
-    fetch('https://formsubmit.co/ajax/outfocus.edu@gmail.com',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({
-        _subject:'[배움터닝 문의] ['+ty+']',
-        _template:'table', _captcha:'false', _cc:'dol9111@gmail.com',
-        /* 필드 이름은 반드시 영문 — 한글 키가 하나라도 있으면 formsubmit 이 제목·본문을
-           통째로 버리고 빈 메일만 보낸다(2026-09-08 실측). 화면 라벨은 한글 그대로. */
-        type:ty, message:b, email:m,
-        name:document.getElementById('mq-name').value.trim()||'(미기재)'
+    var fd=new FormData();
+    fd.append('type',ty); fd.append('message',b); fd.append('email',m);
+    fd.append('name',document.getElementById('mq-name').value.trim());
+    fd.append('website',f.elements['website'] ? f.elements['website'].value : '');
+    if(fi && fi.files && fi.files.length){ fd.append('attachment',fi.files[0]); }
+
+    fetch(API,{method:'POST',body:fd,headers:{'Accept':'application/json'}})
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ return {ok:r.ok,d:d}; }); })
+      .then(function(x){
+        if(x.ok && x.d && x.d.ok){ f.reset(); say('ok','문의가 접수되었습니다. 남겨주신 메일로 회신드릴게요.'); return; }
+        /* 서버가 준 사유(422 검증·503 미설정)를 그대로 보여준다 */
+        var why = x.d && typeof x.d.detail==='string' ? x.d.detail : '';
+        say('err', why || '전송에 실패했습니다. outfocus.edu@gmail.com 으로 직접 보내주시면 확인하겠습니다.');
       })
-    }).then(function(r){ return r.json(); })
-      .then(function(d){
-        if(d && String(d.success)==='true'){ f.reset(); say('ok','문의가 접수되었습니다. 남겨주신 메일로 회신드릴게요.'); return; }
-        /* 릴레이가 거절한 이유를 그대로 보여준다 — 예전엔 다 '전송 실패'로 뭉뚱그려
-           수신함 활성화가 안 된 것인지 진짜 장애인지 구분할 수 없었다(2026-09-08). */
-        var e=new Error('relay'); e.relay = d && d.message; throw e;
+      .catch(function(){
+        say('err','전송에 실패했습니다. outfocus.edu@gmail.com 으로 직접 보내주시면 확인하겠습니다.');
       })
-      .catch(function(err){
-        var extra = err && err.relay ? ' (' + err.relay + ')' : '';
-        say('err','전송에 실패했습니다. outfocus.edu@gmail.com 으로 직접 보내주시면 확인하겠습니다.'+extra);
-      })
-      .finally(function(){ btn.disabled=false; btn.textContent='문의 보내기'; });
+      .finally(function(){ clearTimeout(slow); btn.disabled=false; btn.textContent='문의 보내기'; });
   });
-
-  /* 첨부 전송(일반 POST)에서 _next 로 돌아온 경우 */
-  if(new URLSearchParams(location.search).get('sent')==='1'){
-    say('ok','문의가 접수되었습니다. 남겨주신 메일로 회신드릴게요.');
-    var box=document.getElementById('mailq');
-    if(box){ box.scrollIntoView({block:'center'}); }
-  }
 })();
 </script>
 <script>
