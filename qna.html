@@ -291,6 +291,10 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .mailq .agree input{width:auto;margin-top:2px}
 .mailq button{width:100%;padding:13px;border:0;border-radius:12px;background:#0b7a6a;color:#fff;font-weight:800;font-size:15.5px;cursor:pointer}
 .mailq button:disabled{opacity:.6}
+.mailq input[type=file]{padding:9px 12px;font-size:14px;background:#fff;cursor:pointer}
+.mailq input[type=file]::file-selector-button{font:inherit;font-size:13px;font-weight:700;margin-right:10px;
+  padding:6px 12px;border:1px solid #d6e0dc;border-radius:8px;background:#f2f7f6;color:#41504b;cursor:pointer}
+.mailq .fhint{font-size:12px;color:#7b8a86;margin-top:6px;line-height:1.5}
 .mailq .fmsg{margin-top:10px;font-size:13.5px}.mailq .fmsg.ok{color:#0b7a6a}.mailq .fmsg.err{color:#c0392b}
 @media(max-width:560px){.mailq .row{grid-template-columns:1fr}}
 
@@ -456,15 +460,15 @@ body{word-break:keep-all;overflow-wrap:break-word}
 /* 색은 페이지를 따른다 — 본문이 흰 페이지에 검은 푸터만 붙으면 따로 논다.
    메인은 마지막 섹션까지 다크라 거기만 어둡고, 나머지는 밝은 배경 그대로.
    (app.html 은 페이지 전체가 다크존이라 .foot.dz 가 계속 이긴다) */
-.foot{padding:34px 0 26px}
+.foot{padding:20px 0 16px}
 .foot .wrap{display:block;max-width:1280px}
 .foot-top{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;text-align:left}
 .foot-top .brand-wm{font-size:52px!important;flex-shrink:0}
 .foot-top .desc,.foot-desc{margin:0;max-width:300px;font-size:14.6px;line-height:1.6;
-  color:var(--text-3);align-self:center}
+  color:var(--text-3);align-self:flex-end;margin-bottom:6px}
 .foot-top .foot-terms{margin-left:auto;align-self:center;margin-top:0;font-size:13.4px}
 .foot-bottom{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;
-  gap:10px;margin-top:12px;padding-top:0;border-top:0;font-size:14px;color:var(--text-4)}
+  gap:8px;margin-top:8px;padding-top:0;border-top:0;font-size:14px;color:var(--text-4)}
 .foot-bottom .biz-info,.biz-info{margin:0;padding:0;border:0;margin-left:auto;text-align:right;
   font-size:12.8px;line-height:1.85;color:var(--text-3)}
 @media (max-width:900px){
@@ -589,13 +593,17 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <div class="qna-side">
       <div class="mailq" id="mailq">
         <h3>메일로 문의하기</h3>
-        <form id="mqform">
+        <form id="mqform" action="https://formsubmit.co/outfocus.edu@gmail.com" method="POST" enctype="multipart/form-data">
+          <input type="hidden" name="_subject" id="mq-subject" value="[배움터닝 문의]">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" id="mq-next" value="">
           <div class="row">
-            <div><label for="mq-name">이름 (선택)</label><input id="mq-name" type="text" placeholder="홍길동"></div>
-            <div><label for="mq-mail">이메일 * (회신받을 이메일 주소)</label><input id="mq-mail" type="email" inputmode="email" placeholder="reply@example.com" required></div>
+            <div><label for="mq-name">이름 (선택)</label><input id="mq-name" name="이름" type="text" placeholder="홍길동"></div>
+            <div><label for="mq-mail">이메일 * (회신받을 이메일 주소)</label><input id="mq-mail" name="email" type="email" inputmode="email" placeholder="reply@example.com" required></div>
           </div>
           <label for="mq-type">문의 유형 *</label>
-          <select id="mq-type" required>
+          <select id="mq-type" name="문의유형" required>
             <option value="">선택해 주세요</option>
             <option>서비스 이용 문의</option>
             <option>오류·불편 신고</option>
@@ -603,7 +611,10 @@ body{word-break:keep-all;overflow-wrap:break-word}
             <option>기타</option>
           </select>
           <label for="mq-body">내용 *</label>
-          <textarea id="mq-body" placeholder="어떤 점이 궁금하신가요? 화면 이름이나 상황을 함께 적어주시면 더 빠르게 도와드릴 수 있어요." required></textarea>
+          <textarea id="mq-body" name="내용" placeholder="어떤 점이 궁금하신가요? 화면 이름이나 상황을 함께 적어주시면 더 빠르게 도와드릴 수 있어요." required></textarea>
+          <label for="mq-file">사진 첨부 (선택)</label>
+          <input id="mq-file" name="attachment" type="file" accept="image/*">
+          <p class="fhint">화면을 캡처해 올려주시면 더 빨리 확인할 수 있어요. 이미지 1장, 5MB 까지.</p>
           <label class="agree"><input type="checkbox" id="mq-agree" required> <span>문의 응대를 위한 개인정보(이름·이메일) 수집·이용에 동의합니다. 응대 완료 후 파기됩니다. (필수)</span></label>
           <button type="submit" id="mq-send">문의 보내기</button>
           <p class="fmsg" id="mq-msg"></p>
@@ -678,6 +689,21 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){ say('err','이메일 주소를 다시 확인해주세요.'); return; }
     if(!document.getElementById('mq-agree').checked){ say('err','개인정보 수집·이용에 동의해주셔야 접수됩니다.'); return; }
     btn.disabled=true; btn.textContent='보내는 중…'; say('','');
+
+    /* 첨부가 있으면 AJAX 로는 못 보낸다(FormSubmit 의 ajax 엔드포인트는 파일을 받지 않음).
+       그때만 폼을 통째로 POST 하고, 돌아올 자리를 _next 로 지정해 성공 문구를 띄운다. */
+    var fi=document.getElementById('mq-file');
+    if(fi && fi.files && fi.files.length){
+      if(fi.files[0].size > 5*1024*1024){
+        say('err','사진은 5MB 까지 올릴 수 있어요.');
+        btn.disabled=false; btn.textContent='문의 보내기'; return;
+      }
+      document.getElementById('mq-subject').value='[배움터닝 문의] ['+ty+']';
+      document.getElementById('mq-next').value=location.origin+location.pathname+'?sent=1';
+      f.submit();
+      return;
+    }
+
     fetch('https://formsubmit.co/ajax/outfocus.edu@gmail.com',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
@@ -695,6 +721,13 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
       .catch(function(){ say('err','전송에 실패했습니다. outfocus.edu@gmail.com 으로 직접 보내주시면 확인하겠습니다.'); })
       .finally(function(){ btn.disabled=false; btn.textContent='문의 보내기'; });
   });
+
+  /* 첨부 전송(일반 POST)에서 _next 로 돌아온 경우 */
+  if(new URLSearchParams(location.search).get('sent')==='1'){
+    say('ok','문의가 접수되었습니다. 남겨주신 메일로 회신드릴게요.');
+    var box=document.getElementById('mailq');
+    if(box){ box.scrollIntoView({block:'center'}); }
+  }
 })();
 </script>
 <script>

@@ -469,15 +469,15 @@ body{word-break:keep-all;overflow-wrap:break-word}
 /* 색은 페이지를 따른다 — 본문이 흰 페이지에 검은 푸터만 붙으면 따로 논다.
    메인은 마지막 섹션까지 다크라 거기만 어둡고, 나머지는 밝은 배경 그대로.
    (app.html 은 페이지 전체가 다크존이라 .foot.dz 가 계속 이긴다) */
-.foot{padding:34px 0 26px}
+.foot{padding:20px 0 16px}
 .foot .wrap{display:block;max-width:1280px}
 .foot-top{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;text-align:left}
 .foot-top .brand-wm{font-size:52px!important;flex-shrink:0}
 .foot-top .desc,.foot-desc{margin:0;max-width:300px;font-size:14.6px;line-height:1.6;
-  color:var(--text-3);align-self:center}
+  color:var(--text-3);align-self:flex-end;margin-bottom:6px}
 .foot-top .foot-terms{margin-left:auto;align-self:center;margin-top:0;font-size:13.4px}
 .foot-bottom{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;
-  gap:10px;margin-top:12px;padding-top:0;border-top:0;font-size:14px;color:var(--text-4)}
+  gap:8px;margin-top:8px;padding-top:0;border-top:0;font-size:14px;color:var(--text-4)}
 .foot-bottom .biz-info,.biz-info{margin:0;padding:0;border:0;margin-left:auto;text-align:right;
   font-size:12.8px;line-height:1.85;color:var(--text-3)}
 @media (max-width:900px){
