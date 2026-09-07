@@ -706,6 +706,21 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
 })();
 </script>
 <script>
+/* 문답 아코디언 — 한 번에 하나만 (2026-09-07 대표 지시)
+   <details name> 로 묶는 방법도 있으나 Firefox 130 이전·Safari 17.2 이전에서
+   무시돼 두 개가 같이 열린다. toggle 이벤트로 직접 닫는다. */
+(function(){
+  var qs=[].slice.call(document.querySelectorAll('details.q'));
+  if(qs.length<2){return;}
+  qs.forEach(function(d){
+    d.addEventListener('toggle',function(){
+      if(!d.open){return;}
+      qs.forEach(function(o){ if(o!==d && o.open){ o.open=false; } });
+    });
+  });
+})();
+</script>
+<script>
 /* 모바일 내비 드롭다운 (2026-08-26)
    서브메뉴가 :hover 로만 열려 터치 기기에서 하위 8개 페이지가 도달 불가였다.
    hover 가 없는 기기에서만 개입한다 — 데스크톱은 기존 hover 그대로. */
