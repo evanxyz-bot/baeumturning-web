@@ -294,6 +294,26 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .mailq .fmsg{margin-top:10px;font-size:13.5px}.mailq .fmsg.ok{color:#0b7a6a}.mailq .fmsg.err{color:#c0392b}
 @media(max-width:560px){.mailq .row{grid-template-columns:1fr}}
 
+/* ── 좌우 2열: 왼쪽 문답 · 오른쪽 메일 문의 (2026-09-07 대표 지시) ──
+   문답은 제목이 짧고 답변은 줄바꿈으로 흘려도 읽히므로 왼쪽을 좁게 잡고,
+   입력 항목이 많은 메일 폼에 넓은 쪽을 준다. 960px 아래에서는 예전처럼 한 줄로 쌓는다. */
+.qna-list{max-width:1180px;display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1fr);
+  align-items:start;gap:36px}
+.qna-col{display:flex;flex-direction:column;gap:12px}
+.qna-col .pin-wrap:last-child{margin-bottom:0}
+.qna-side .mailq{margin:0}
+/* 좁은 칸에서는 문답 제목·답변을 조금 줄여 두 줄 넘김을 줄인다 */
+@media(min-width:961px){
+  details.q summary{font-size:16px;padding:16px 18px;gap:10px}
+  details.q .a{padding:0 18px 18px 56px;font-size:15.2px}
+  /* 이름은 짧고 이메일은 기니까 반반이 아니라 4:6 */
+  .mailq .row{grid-template-columns:.72fr 1.28fr}
+}
+@media(max-width:960px){
+  .qna-list{grid-template-columns:1fr;max-width:760px;gap:0}
+  .qna-side .mailq{margin:30px 0 0}
+}
+
 /* ── 줄바꿈 품질 (2026-08-17 전 페이지 적용) ──
    balance: 제목이 마지막 줄에 한두 글자만 남지 않게 균등 분배
    pretty : 본문 끝줄 고아 단어 방지. keep-all 은 한국어 어절 중간 끊김 방지 */
@@ -509,6 +529,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 <section class="qna sec-focus" id="qna">
   <div class="wrap">
     <div class="qna-list reveal">
+      <div class="qna-col">
       <div class="pin-wrap">
         <div class="pin-head"><span class="pin-badge">고정</span><b>배움터닝 서비스</b></div>
         <details class="q">
@@ -553,7 +574,10 @@ body{word-break:keep-all;overflow-wrap:break-word}
         </details>
       </div>
 
+      </div><!-- /.qna-col -->
+
       <!-- 메일로 문의하기 — 그립메이트 촬영문의서 구조(항목형 폼) + FormSubmit 릴레이 -->
+      <div class="qna-side">
       <div class="mailq" id="mailq">
         <h3>메일로 문의하기</h3>
         <p class="sub">위 문답에 없는 내용은 바로 남겨주세요. 남겨주신 메일로 회신드립니다.</p>
@@ -577,6 +601,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
           <p class="fmsg" id="mq-msg"></p>
         </form>
       </div>
+      </div><!-- /.qna-side -->
 
     </div>
   </div>
