@@ -48,7 +48,6 @@
 - [회사 소개](https://outoffocus-edu.vercel.app/company.html): 미션과 팀
 - [연혁](https://outoffocus-edu.vercel.app/history.html)
 - [협력사](https://outoffocus-edu.vercel.app/partners.html)
-- [공지사항](https://outoffocus-edu.vercel.app/notice.html)
 - [기록](https://outoffocus-edu.vercel.app/stories.html): 개발 기록과 현장 이야기
 - [문의하기](https://outoffocus-edu.vercel.app/contact.html)
 - [개인정보처리방침](https://outoffocus-edu.vercel.app/privacy.html)

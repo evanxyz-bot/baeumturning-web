@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/notice.html", "destination": "/qna.html", "permanent": true }
+  ]
+}

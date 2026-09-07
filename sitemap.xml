@@ -6,7 +6,6 @@
   <url><loc>https://outoffocus-edu.vercel.app/qna.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://outoffocus-edu.vercel.app/company.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://outoffocus-edu.vercel.app/stories.html</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://outoffocus-edu.vercel.app/notice.html</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
   <url><loc>https://outoffocus-edu.vercel.app/history.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://outoffocus-edu.vercel.app/partners.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://outoffocus-edu.vercel.app/contact.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
