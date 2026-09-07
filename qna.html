@@ -597,6 +597,9 @@ body{word-break:keep-all;overflow-wrap:break-word}
           <input type="hidden" name="_subject" id="mq-subject" value="[배움터닝 문의]">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
+          <!-- 대표 개인 메일로 사본. outfocus.edu 의 Gmail 이 formsubmit 발신을 스팸으로 넣어
+               전달이 막혔던 일이 있어(2026-09-08) 전달에 기대지 않고 직접 받는다. -->
+          <input type="hidden" name="_cc" value="dol9111@gmail.com">
           <input type="hidden" name="_next" id="mq-next" value="">
           <div class="row">
             <div><label for="mq-name">이름 (선택)</label><input id="mq-name" name="이름" type="text" placeholder="홍길동"></div>
@@ -709,7 +712,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
         _subject:'[배움터닝 문의] ['+ty+']',
-        _template:'table', _captcha:'false',
+        _template:'table', _captcha:'false', _cc:'dol9111@gmail.com',
         문의유형:ty, 내용:b, email:m,
         이름:document.getElementById('mq-name').value.trim()||'(미기재)'
       })
