@@ -1,5 +1,6 @@
 {
   "redirects": [
-    { "source": "/notice.html", "destination": "/qna.html", "permanent": true }
+    { "source": "/notice.html", "destination": "/qna.html", "permanent": true },
+    { "source": "/contact.html", "destination": "/qna.html", "permanent": true }
   ]
 }

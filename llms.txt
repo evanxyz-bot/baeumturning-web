@@ -49,7 +49,6 @@
 - [연혁](https://outoffocus-edu.vercel.app/history.html)
 - [협력사](https://outoffocus-edu.vercel.app/partners.html)
 - [기록](https://outoffocus-edu.vercel.app/stories.html): 개발 기록과 현장 이야기
-- [문의하기](https://outoffocus-edu.vercel.app/contact.html)
 - [개인정보처리방침](https://outoffocus-edu.vercel.app/privacy.html)
 - [이용약관](https://outoffocus-edu.vercel.app/terms.html)
 
