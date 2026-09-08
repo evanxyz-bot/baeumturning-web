@@ -1021,7 +1021,9 @@ body::before{background:
 /* 좁은 화면 — 폰만 보여주고 플로팅 카드는 접는다(잘림·겹침 방지) */
 @media (max-width:1099px){
   .layer{display:none}
-  .stage{padding:0}
+  .stage{padding:0;flex-direction:column;align-items:stretch;min-width:0}
+  /* 카드 줄(980px)이 grid 칸의 min-content 폭을 밀어 올려 페이지가 옆으로 넘치고 폰이 화면 밖으로 밀렸다 */
+  .hero-grid>*{min-width:0}
   .web3d{display:none}
   /* 분석 섹션 1열 (3열 유지 시 글자가 세로로 깨짐) */
   .an-cols,.analysis .an-cols{grid-template-columns:1fr;gap:36px}
@@ -1207,6 +1209,30 @@ body::before{background:
 @media (max-width:720px){
   .pipe-io{flex-wrap:wrap;gap:10px 14px}
   .pipe-note{grid-template-columns:1fr;gap:13px}
+}
+
+/* ── 폰에서도 PC 와 같은 내용(2026-09-08 대표 지시: 기준은 PC) ──
+   1099px 이하에서는 폰 옆에 떠 있던 카드 4장(.l-chart·.l-pass·.l-bars·.l-weak)과 거미줄 라벨 3개가
+   통째로 사라졌다. 카드는 JS 가 이 상자로 옮겨 폰 아래에서 가로로 넘겨 보게 하고, 라벨은 칩으로 붙인다.
+   (카드를 세로로 쌓으면 첫 화면 제목이 700px 아래로 밀려 가로 줄로 한다) */
+.hero-cards-m{display:none}
+@media (max-width:1099px){
+  .hero-cards-m{display:block;order:2;margin-top:6px;position:relative;z-index:2;width:100%;max-width:100%;min-width:0}
+  .hcm-labels{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 16px 12px}
+  .hcm-labels span{font-size:12.6px;font-weight:700;color:#0b7a6a;background:rgba(11,122,106,.08);
+    border:1px solid rgba(11,122,106,.18);padding:5px 12px;border-radius:999px;white-space:nowrap}
+  .hcm-strip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 24px 16px;width:100%;min-width:0;box-sizing:border-box;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .hcm-strip::-webkit-scrollbar{display:none}
+  .hcm-strip .layer{display:block;position:static;transform:none;flex:0 0 auto;scroll-snap-align:center;pointer-events:auto}
+  .hcm-strip .lf{animation:none!important;opacity:1;transform:none}
+  .hcm-strip .mini-card,.hcm-strip .float-chip{transform:none;transform-origin:center}
+  .hcm-hint{margin:0 0 4px;text-align:center;font-size:12px;color:var(--text-4)}
+}
+@media (min-width:720px) and (max-width:1099px){
+  /* 태블릿은 폭이 있으니 넘기지 않고 두 줄로 다 보여 준다 */
+  .hcm-strip{flex-wrap:wrap;justify-content:center;overflow:visible;scroll-snap-type:none}
+  .hcm-hint{display:none}
 }
 
 /* ============ 반응형 안정화 (2026-08-18) ============
@@ -1640,7 +1666,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
    "brand": {
     "@type": "Brand",
     "name": "배움터닝",
-    "url": "https://outfocus.co.kr/app.html"
+    "url": "https://outfocus.co.kr/"
    }
   },
   {
@@ -1784,6 +1810,12 @@ body{word-break:keep-all;overflow-wrap:break-word}
 
     <div class="stage">
       <div class="glow"></div>
+      <!-- 1099px 이하: 폰 옆 카드 4장을 JS 가 여기로 옮긴다(폰에서도 PC 와 같은 내용, 2026-09-08) -->
+      <div class="hero-cards-m" id="heroCardsM" aria-label="배움터닝 미리보기 카드">
+        <div class="hcm-labels"></div>
+        <div class="hcm-strip"></div>
+        <p class="hcm-hint">← 옆으로 넘겨 보세요 →</p>
+      </div>
       <div class="scene">
         <div class="s3d-scale">
           <div class="s3d" id="scene3d">
@@ -2740,6 +2772,24 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   });
   document.addEventListener('click',function(e){
     if(!e.target.closest||!e.target.closest('.nav-drop')){ closeAll(null); }
+  });
+})();
+</script>
+<script>
+/* 좁은 화면: 3D 무대의 카드 4장을 폰 아래 가로 줄로 옮긴다(2026-09-08). 넓은 화면은 손대지 않는다.
+   창 폭이 바뀌어도 되돌리지 않는다 — 폰은 회전해도 1099 를 안 넘고, PC 는 처음부터 안 옮긴다. */
+(function(){
+  if(!window.matchMedia||!window.matchMedia('(max-width:1099px)').matches) return;
+  var scene=document.getElementById('scene3d'),host=document.getElementById('heroCardsM');
+  if(!scene||!host) return;
+  var labels=host.querySelector('.hcm-labels'),strip=host.querySelector('.hcm-strip');
+  scene.querySelectorAll('.web3d text').forEach(function(t){
+    // tspan 으로 줄을 나눈 라벨('데이터 기반' / '약점 분석')은 띄어쓰기로 잇는다
+    var parts=[].map.call(t.querySelectorAll('tspan'),function(x){return x.textContent.trim()}).filter(Boolean);
+    var sp=document.createElement('span');sp.textContent=(parts.length?parts.join(' '):t.textContent).replace(/\s+/g,' ').trim();labels.appendChild(sp);
+  });
+  ['.l-chart','.l-pass','.l-bars','.l-weak'].forEach(function(sel){
+    var el=scene.querySelector(sel);if(el) strip.appendChild(el);
   });
 })();
 </script>
