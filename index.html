@@ -1228,16 +1228,18 @@ body::before{background:
      오른쪽 3D 폰. 카드 줄은 그 아래 한 단 통으로.
      세로로 쌓던 것을 옆으로 돌린 것이라 노드 이동(문서 끝 스크립트)은 그대로 두고
      자리만 그리드로 지정한다 — DOM 순서와 무관하게 놓인다. */
-  .stage{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto;
+  .stage{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto auto;
     column-gap:10px;row-gap:0;align-items:stretch}
-  .stage .hcm-labels{grid-column:1;grid-row:1;align-self:start}
-  .stage .cta-zone{grid-column:1;grid-row:2;align-self:end;justify-self:stretch}
-  .stage .scene{grid-column:2;grid-row:1 / span 2;align-self:center}
+  /* 왼쪽 3D 폰, 오른쪽 칩·버튼(2026-09-12 대표 지시로 좌우 바꿈) */
+  .stage .scene{grid-column:1;grid-row:1 / span 2;align-self:center}
+  .stage .hcm-labels{grid-column:2;grid-row:1;align-self:center}
+  .stage .cta-zone{grid-column:2;grid-row:2;align-self:end;justify-self:stretch}
   .stage .hero-cards-m{grid-column:1 / -1;grid-row:3}
   /* 칩 — 한 줄에 하나씩, 왼쪽 칸 폭에 맞춰 세로로 */
   .stage .hcm-labels{flex-direction:column;align-items:stretch;gap:6px;margin:0}
   /* 태블릿에선 왼쪽 칸이 700px 까지 벌어진다 — 칩·버튼은 읽기 좋은 폭에서 멈춘다 */
   .stage .hcm-labels,.stage .cta-zone{max-width:260px;justify-self:center;width:100%}
+  .stage .hero-cards-m{grid-column:1 / -1}
   .hcm-labels span{white-space:normal;text-align:center;line-height:1.25;padding:5px 8px}
   /* 설치 버튼 — 한 줄에 하나씩 */
   .cta-row{flex-direction:column;gap:7px}
@@ -1357,9 +1359,9 @@ body::before{background:
   /* 스토어 버튼 둘을 한 줄에 반씩. width:100% 이던 시절 값이라 그대로 두면 세로로 쌓인다.
      320px 폰까지 글자가 안 잘리도록 글자·안여백을 폭에 맞춰 줄인다(2026-09-11). */
   .cta-row{flex-wrap:nowrap;gap:9px}
-  .btn-dl{flex:0 1 auto;width:auto;font-size:clamp(12.6px,3.7vw,17.9px);height:54px;
-    padding:0 clamp(4px,1.8vw,18px);gap:5px;white-space:nowrap}
-  .btn-dl svg{flex:none;width:17px;height:17px}
+  .btn-dl{flex:0 1 auto;width:auto;font-size:clamp(11.8px,3.3vw,16px);height:44px;
+    padding:0 clamp(4px,1.6vw,16px);gap:5px;white-space:nowrap;border-radius:12px}
+  .btn-dl svg{flex:none;width:15px;height:15px}
   .l-bars{right:-66px}
   .l-weak{left:-40px}
   .l-pass{right:-52px}
