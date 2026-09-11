@@ -1263,6 +1263,10 @@ body::before{background:
 @media (max-width:640px){  .s3d-scale{transform:scale(.82)} .scene{height:520px} }
 @media (max-width:480px){  .s3d-scale{transform:scale(.76)} .scene{height:486px} }
 @media (max-width:400px){  .s3d-scale{transform:scale(.70)} .scene{height:452px} }
+/* 세로가 짧은 폰 — 3D 폰을 줄여 '앱 다운로드'가 첫 화면 안에 남게 한다(2026-09-11 대표 지시).
+   기능 칩이 두 줄이 되면서 40px 가 더 필요해졌다. 폭 기준 규칙 뒤에 와야 이긴다. */
+@media (max-width:1099px) and (max-height:800px){ .s3d-scale{transform:scale(.64)} .scene{height:396px} }
+@media (max-width:1099px) and (max-height:720px){ .s3d-scale{transform:scale(.54)} .scene{height:336px} }
 /* 플로팅 레이어 자리(기존 고정 210px)도 폭에 따라 줄인다 */
 @media (min-width:1100px){ .stage{padding-left:clamp(120px,14vw,210px);padding-right:clamp(120px,14vw,210px)} }
 
@@ -1847,7 +1851,9 @@ body{word-break:keep-all;overflow-wrap:break-word}
               <circle class="wn" cx="26" cy="690" r="5" style="animation-delay:1.7s"/>
               <text x="10" y="104">학습 보고서</text>
               <text x="580" y="528"><tspan x="580">데이터 기반</tspan><tspan x="580" dy="21">약점 분석</tspan></text>
-              <text x="40" y="697">학습 알림</text>
+              <!-- 세 번째 라벨 — 학습 알림 → 검정고시 점수 대학별 환산(2026-09-11 대표 지시).
+                   길어서 두 줄로 나눈다. 폰의 칩은 이 글을 읽어 만들므로 두 줄이 한 줄로 합쳐진다. -->
+              <text x="40" y="697"><tspan x="40">검정고시 점수</tspan><tspan x="40" dy="21">대학별 환산</tspan></text>
             </svg>
 
             <!-- tilted phone base -->
