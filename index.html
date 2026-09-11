@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 폰이 다크모드여도 이 사이트는 항상 밝게 (2026-09-11 대표 지시).
+     브라우저 강제 다크(Chrome/삼성인터넷)는 color-scheme 을 보고 비껴간다. -->
+<meta name="color-scheme" content="light only">
 <title>아웃포커스 OutFocus — 배움터닝 · 검정고시 학습 분석</title>
 <meta name="description" content="교육 사각지대를 해소하는 솔루션 컴퍼니 아웃포커스. 검정고시에 특화한 학습 관리 앱 '배움터닝' — 자체 로직으로 계산한 약점 진단과 학습 보고서까지.">
 <meta name="naver-site-verification" content="c39b38e15f44201008bc918807e2c4ee5933f6af" />
@@ -25,6 +28,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
+  color-scheme:light;   /* 폰 다크모드에서도 밝게 고정(2026-09-11 대표 지시) */
   --bg:#f3f7f6; --surface:#fff; --surface-2:#eef4f2; --surface-3:#e3ece9;
   --border:#e6eeeb; --border-strong:#c9d8d3;
   --text:#15181d; --text-2:#4b5260; --text-3:#8b91a0; --text-4:#b0b6c2;
@@ -1206,22 +1210,32 @@ body::before{background:
    (카드를 세로로 쌓으면 첫 화면 제목이 700px 아래로 밀려 가로 줄로 한다) */
 .hero-cards-m{display:none}
 @media (max-width:1099px){
-  .hero-cards-m{display:block;order:2;margin-top:6px;position:relative;z-index:2;width:100%;max-width:100%;min-width:0}
-  .hcm-labels{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 16px 12px}
+  /* 폰 히어로 차례(2026-09-11 대표 지시): 기능 칩 → 3D 폰 → 앱 다운로드 → 카드.
+     앱 다운로드가 첫 화면 안에 들어오도록 위아래를 촘촘히 붙인다. 노드 이동은 문서 끝 스크립트. */
+  .stage .hcm-labels{order:1}
+  .stage .scene{order:2}
+  .stage .cta-zone{order:3}
+  .stage .hero-cards-m{order:4}
+  .hero{padding:22px 0 20px}
+  .cta-zone{margin-top:4px;align-self:center}
+  .hero-cards-m{display:block;margin-top:14px;position:relative;z-index:2;width:100%;max-width:100%;min-width:0}
+  .hcm-labels{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin:0 12px 2px}
   .hcm-labels span{font-size:12.6px;font-weight:700;color:#0b7a6a;background:rgba(11,122,106,.08);
     border:1px solid rgba(11,122,106,.18);padding:5px 12px;border-radius:999px;white-space:nowrap}
-  .hcm-strip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 24px 16px;width:100%;min-width:0;box-sizing:border-box;
-    -webkit-overflow-scrolling:touch;scrollbar-width:none}
-  .hcm-strip::-webkit-scrollbar{display:none}
-  .hcm-strip .layer{display:block;position:static;transform:none;flex:0 0 auto;scroll-snap-align:center;pointer-events:auto}
+  /* 넘겨 보지 않아도 전부 보이게 세로로 쌓는다(2026-09-11 대표 지시: 기능은 언제든 볼 수 있게).
+     폰 목업의 카테고리는 그대로 순환한다 — 고정한 건 이 카드들뿐이다. */
+  .hcm-strip{display:flex;flex-direction:column;align-items:center;gap:12px;padding:6px 16px 4px;
+    width:100%;min-width:0;box-sizing:border-box;overflow:visible}
+  .hcm-strip .layer{display:block;position:static;transform:none;width:min(320px,88vw);pointer-events:auto}
+  .hcm-strip .layer>.lf>*{width:100%!important}
   .hcm-strip .lf{animation:none!important;opacity:1;transform:none}
   .hcm-strip .mini-card,.hcm-strip .float-chip{transform:none;transform-origin:center}
-  .hcm-hint{margin:0 0 4px;text-align:center;font-size:12px;color:var(--text-4)}
+  .hcm-hint{display:none}
 }
 @media (min-width:720px) and (max-width:1099px){
-  /* 태블릿은 폭이 있으니 넘기지 않고 두 줄로 다 보여 준다 */
-  .hcm-strip{flex-wrap:wrap;justify-content:center;overflow:visible;scroll-snap-type:none}
-  .hcm-hint{display:none}
+  /* 태블릿은 폭이 있으니 두 장씩 나란히 */
+  .hcm-strip{flex-direction:row;flex-wrap:wrap;justify-content:center}
+  .hcm-strip .layer{width:300px}
 }
 
 /* ============ 반응형 안정화 (2026-08-18) ============
@@ -2780,6 +2794,14 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   ['.l-chart','.l-pass','.l-bars','.l-weak'].forEach(function(sel){
     var el=scene.querySelector(sel);if(el) strip.appendChild(el);
   });
+  /* 차례 바꾸기(2026-09-11 대표 지시): 기능 칩을 3D 폰 위로, 앱 다운로드를 폰 바로 아래로.
+     CSS order 만으로는 안 된다 — 앱 다운로드는 그리드의 다른 칸(글 블록)에 들어 있다. */
+  var stageEl=host.parentNode, sceneEl=stageEl.querySelector('.scene');
+  var cta=document.querySelector('.hero .cta-zone');
+  if(sceneEl){
+    stageEl.insertBefore(labels, sceneEl);
+    if(cta) stageEl.insertBefore(cta, sceneEl.nextSibling);
+  }
 })();
 </script>
 </body>
