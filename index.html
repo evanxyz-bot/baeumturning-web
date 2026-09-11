@@ -1240,20 +1240,23 @@ body::before{background:
   .hcm-labels{display:flex;justify-content:center;gap:6px;flex-wrap:nowrap;margin:0 6px 2px}
   .hcm-labels span{font-size:clamp(9.4px,2.9vw,12.6px);font-weight:700;color:#0b7a6a;background:rgba(11,122,106,.08);
     border:1px solid rgba(11,122,106,.18);padding:4px clamp(6px,2.2vw,12px);border-radius:999px;white-space:nowrap}
-  /* 넘겨 보지 않아도 전부 보이게 세로로 쌓는다(2026-09-11 대표 지시: 기능은 언제든 볼 수 있게).
-     폰 목업의 카테고리는 그대로 순환한다 — 고정한 건 이 카드들뿐이다. */
-  .hcm-strip{display:flex;flex-direction:column;align-items:center;gap:12px;padding:6px 16px 4px;
-    width:100%;min-width:0;box-sizing:border-box;overflow:visible}
-  .hcm-strip .layer{display:block;position:static;transform:none;width:min(320px,88vw);pointer-events:auto}
-  .hcm-strip .layer>.lf>*{width:100%!important}
+  /* 예전처럼 좌우로 넘겨 본다(2026-09-11 대표 지시). 카드는 흡수되지 않고 늘 떠 있다 —
+     흡수 대상에서 빼는 건 캐러셀 스크립트 쪽(movedToStrip). 폰은 화면이 작아 글자·간격을
+     zoom 으로 한 단계 키운다(카드 안이 전부 px 이라 한 곳에서 비율로 키우는 편이 안전하다). */
+  .hcm-strip{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 22px 18px;
+    width:100%;min-width:0;box-sizing:border-box;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .hcm-strip::-webkit-scrollbar{display:none}
+  .hcm-strip .layer{display:block;position:static;transform:none;flex:0 0 auto;scroll-snap-align:center;
+    pointer-events:auto;zoom:1.18}
   .hcm-strip .lf{animation:none!important;opacity:1;transform:none}
   .hcm-strip .mini-card,.hcm-strip .float-chip{transform:none;transform-origin:center}
-  .hcm-hint{display:none}
+  .hcm-hint{display:block;margin:0 0 4px;text-align:center;font-size:13.4px;color:var(--text-3)}
 }
 @media (min-width:720px) and (max-width:1099px){
-  /* 태블릿은 폭이 있으니 두 장씩 나란히 */
-  .hcm-strip{flex-direction:row;flex-wrap:wrap;justify-content:center}
-  .hcm-strip .layer{width:300px}
+  /* 태블릿은 폭이 있으니 넘기지 않고 두 줄로 다 보여 준다 */
+  .hcm-strip{flex-wrap:wrap;justify-content:center;overflow:visible;scroll-snap-type:none}
+  .hcm-strip .layer{zoom:1}
+  .hcm-hint{display:none}
 }
 
 /* ============ 반응형 안정화 (2026-08-18) ============
@@ -2416,10 +2419,16 @@ document.querySelectorAll('.hubitem').forEach(function(item){
       if(i===0) showCardsOnDash(); else hideCards();
     }
   }
-  var sucked=[].slice.call(scene.querySelectorAll('.l-chart,.l-review,.l-bars,.l-weak,.l-pass,.l-plan'));
+  /* 폰(≤1099px)에서는 이 카드들이 3D 무대 밖 .hcm-strip 으로 옮겨져 **항상 보여야** 한다
+     (2026-09-11 대표 지시: 사라지면서 흡수시키지 말 것). CSS 로 고정해 봐야 소용없다 —
+     아래 absorb/hideCards 가 인라인 style 로 display:none 과 transform 을 박기 때문.
+     그래서 아예 흡수 대상 목록을 비운다. 넓은 화면(PC)은 예전 그대로 흡수 연출을 한다. */
+  var movedToStrip=window.matchMedia&&window.matchMedia('(max-width:1099px)').matches;
+  var sucked=movedToStrip?[]:[].slice.call(scene.querySelectorAll('.l-chart,.l-review,.l-bars,.l-weak,.l-pass,.l-plan'));
   function resetCard(lf){ if(lf){ lf.style.transition='none'; lf.style.transform=''; lf.style.opacity=''; lf.style.filter=''; lf.style.animation=''; } }
   function hideCards(){ sucked.forEach(function(l){ resetCard(l.querySelector('.lf')); l.style.display='none'; }); }
   function absorb(){                 /* 디스플레이 중앙으로 천천히 모여들며 흡수 */
+    if(!sucked.length) return;       /* 폰: 카드가 아래 줄에 고정돼 있다 — 빨아들이지 않는다 */
     var ph=scene.querySelector('.ph3d').getBoundingClientRect();
     var cx=ph.left+ph.width/2, cy=ph.top+ph.height*0.40;   /* 폰 화면 중앙(살짝 위) */
     scene.classList.add('inhale');
@@ -2440,6 +2449,7 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     setTimeout(function(){ scene.classList.remove('inhale'); sucked.forEach(function(l){ l.style.display='none'; }); }, 3700);
   }
   function showCardsOnDash(){        /* 대시보드 진입: 기능 카드 펼침 → 5초 후 흡수 */
+    if(!sucked.length) return;
     sucked.forEach(function(l){ resetCard(l.querySelector('.lf')); l.style.display=''; });
     void scene.offsetWidth;
     cardTimer=setTimeout(absorb, SHOW_MS);
