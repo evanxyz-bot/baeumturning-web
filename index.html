@@ -1232,7 +1232,7 @@ body::before{background:
     column-gap:10px;row-gap:0;align-items:stretch}
   /* 왼쪽 칩·버튼, 오른쪽 3D 폰 (2026-09-12 대표 지시로 되돌림) */
   .stage .hcm-labels{grid-column:1;grid-row:1;align-self:center}
-  .stage .cta-zone{grid-column:1;grid-row:2;align-self:end;justify-self:stretch}
+  .stage .cta-zone{grid-column:1;grid-row:2;align-self:center;justify-self:stretch}
   .stage .scene{grid-column:2;grid-row:1 / span 2;align-self:center}
   .stage .hero-cards-m{grid-column:1 / -1;grid-row:3}
   /* 칩 — 한 줄에 하나씩, 왼쪽 칸 폭에 맞춰 세로로 */
@@ -1240,7 +1240,10 @@ body::before{background:
   /* 태블릿에선 왼쪽 칸이 700px 까지 벌어진다 — 칩·버튼은 읽기 좋은 폭에서 멈춘다 */
   .stage .hcm-labels,.stage .cta-zone{max-width:150px;justify-self:center;width:100%}
   .stage .hero-cards-m{grid-column:1 / -1}
-  .hcm-labels span{white-space:normal;text-align:center;line-height:1.25;padding:5px 8px}
+  /* 네모 상자 + 세 칸 높이 통일(2026-09-12 대표 지시). 한 줄짜리('학습 보고서')와
+     두 줄짜리가 섞여 높이가 달랐다 — 두 줄 기준으로 min-height 를 박고 가운데 정렬. */
+  .stage .hcm-labels span{white-space:normal;text-align:center;line-height:1.25;padding:6px 8px;
+    border-radius:10px;min-height:46px;display:grid;place-items:center}
   /* 설치 버튼 — 한 줄에 하나씩 */
   .cta-row{flex-direction:column;gap:7px}
   .cta-row .btn-dl{width:100%}
