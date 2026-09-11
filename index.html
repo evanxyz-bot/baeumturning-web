@@ -1422,42 +1422,72 @@ body::before{background:
 .cat-slide.on .sblock:nth-child(3),.cat-slide.on .anim-in:nth-child(3){animation-delay:.44s}
 .cat-slide.on .sblock:nth-child(4),.cat-slide.on .anim-in:nth-child(4){animation-delay:.66s}
 .anim-in{opacity:0;transform:translateY(9px)}
-/* 학습달력 — 앱 화면 그대로(Calendar.tsx): 공부 인증 사진이 칸 전체를 채우고(숫자 뒤까지)
-   날짜는 그 위에 흰 동그라미로 올라간다. 사진 없이 메모만 남긴 날은 '기록 N과목' 칩. */
-.wk-ph .wc{position:relative;display:block;overflow:hidden;height:44px;padding:0}
-.wk-ph .wn{position:absolute;left:3px;top:3px;width:17px;height:17px;line-height:17px;text-align:center;
-  border-radius:50%;font-size:11.4px;font-weight:700;color:var(--text-2);background:#fff;
-  box-shadow:0 1px 2px rgba(13,38,33,.14)}
-.wk-ph .wn.plain{background:transparent;box-shadow:none;color:var(--text-3)}
-.wk-ph .wn.tod{background:var(--accent);color:#fff;box-shadow:none}
-.wk-ph .wcim{position:absolute;inset:0;width:100%;height:100%}
-.wk-ph .wmemo{position:absolute;left:2px;right:2px;bottom:3px;font-style:normal;font-size:9.4px;font-weight:700;
-  background:var(--accent-soft);color:var(--accent-strong);border-radius:3px;padding:1px 0;text-align:center;
+/* ── 학습달력 — 앱 화면 그대로(실측 캡처 2026-09-11) ──────────────────
+   월 이동줄 → 일~토 머리글 → 한 달 표 → 고른 날의 '공부 기록' 카드.
+   공부 인증 사진은 칸 전체를 채우고 날짜가 흰 동그라미로 그 위에 올라간다. */
+.mnav{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14.6px;font-weight:800;color:var(--text-2)}
+.mnav .mb{width:22px;height:22px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);
+  display:grid;place-items:center;font-size:11px;color:var(--text-3);font-weight:700}
+.mnav .today{margin-left:auto;font-size:11.4px;font-weight:700;color:var(--text-2);background:var(--surface-2);
+  border:1px solid var(--border);border-radius:7px;padding:3px 8px}
+.cal{border:1px solid var(--border-strong);border-radius:9px;overflow:hidden;background:#fff}
+.cal .hd,.cal .rw{display:grid;grid-template-columns:repeat(7,1fr)}
+.cal .hd div{font-size:10.6px;font-weight:700;color:var(--text-3);text-align:center;padding:4px 0;
+  border-right:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong)}
+.cal .hd div:last-child{border-right:0}
+.cal .hd .sun{color:#e57373}.cal .hd .sat{color:#64a3e0}
+.cal .cd{position:relative;height:33px;overflow:hidden;border-right:1px solid var(--border-strong);
+  border-bottom:1px solid var(--border-strong)}
+.cal .rw .cd:last-child{border-right:0}
+.cal .rw:last-child .cd{border-bottom:0}
+.cal .cd.sel{background:#cbe8f7}
+.cal .n{position:absolute;left:3px;top:3px;width:15px;height:15px;line-height:15px;text-align:center;border-radius:50%;
+  font-size:10.2px;font-weight:700;color:var(--text-2)}
+.cal .n.ph{background:#fff;box-shadow:0 1px 2px rgba(13,38,33,.16)}
+.cal .n.tod{background:var(--accent);color:#fff}
+.cal .wcim{position:absolute;inset:0;width:100%;height:100%}
+.cal .memo{position:absolute;left:2px;right:2px;bottom:2px;font-style:normal;font-size:8.6px;font-weight:700;
+  background:var(--accent-soft);color:var(--accent-strong);border-radius:3px;text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* 고른 날의 기록 — 인증 사진 한 장 + 과목별 한 줄 (StudyLogPanel.tsx) */
-.dlh{font-size:11.8px;font-weight:700;color:var(--text-3)}
-.daylog{display:flex;gap:8px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:7px}
-.daylog .dphoto{width:62px;flex:none;border-radius:7px;overflow:hidden;background:var(--surface-2)}
+/* 고른 날의 공부 기록 — 인증 사진 한 장 + 과목별 한 줄 (StudyLogPanel) */
+.daylog{background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px}
+.daylog .dt{font-size:12.6px;font-weight:800;color:var(--text);margin-bottom:6px}
+.daylog .row{display:flex;gap:8px}
+.daylog .dphoto{width:58px;flex:none;border-radius:7px;overflow:hidden;background:var(--surface-2)}
 .daylog .dphoto svg{display:block;width:100%;height:auto}
-.daylog .dmemos{display:flex;flex-direction:column;gap:5px;justify-content:center;min-width:0;flex:1}
-.daylog .dm{display:flex;align-items:center;gap:6px;font-size:12.6px;font-weight:700;color:var(--text-2);
+.daylog .dmemos{display:flex;flex-direction:column;gap:4px;justify-content:center;min-width:0;flex:1}
+.daylog .dm{display:flex;align-items:center;gap:6px;font-size:11.8px;font-weight:700;color:var(--text-2);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .daylog .dm i{width:6px;height:6px;border-radius:2px;flex:none}
-/* 대입 — 겉화면 대신 실제 환산기 화면(점수 입력 → 대학 찾기 → 등급) */
-.sc-rows{display:flex;flex-direction:column;gap:5px}
-.sc{display:flex;align-items:center;gap:8px;background:var(--surface-2);border-radius:9px;padding:5px 10px;
-  font-size:14px;font-weight:700;color:var(--text-2)}
-.sc b{margin-left:auto;font-size:16px;font-variant-numeric:tabular-nums;color:var(--text)}
-.sc i{font-style:normal;font-size:12px;color:var(--text-4);font-weight:700}
+/* ── 대입 환산기 — 앱 화면 그대로. 7과목 2열(4+3) + 대학 3곳 ────────────── */
+.scbox{background:#fff;border:1px solid var(--border);border-radius:10px;padding:5px 8px}
+.scbox .sct{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px}
+.scbox .sct b{font-size:12.2px;font-weight:800;color:var(--text-2)}
+.scbox .sct span{font-size:10.4px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);
+  border-radius:6px;padding:2px 6px;white-space:nowrap}
+.scbox .avg{font-size:11.4px;font-weight:800;color:var(--accent-strong);margin-bottom:4px}
+.scgrid{display:grid;grid-template-columns:1fr 1fr;gap:3px 6px}
+.scgrid .col{display:flex;flex-direction:column;gap:3px}
+.scv{display:flex;align-items:center;gap:4px;background:var(--surface-2);border-radius:6px;padding:1px 7px}
+.scv span{font-size:11px;font-weight:700;color:var(--text-2)}
+.scv b{margin-left:auto;font-size:12.4px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums}
+.scv i{font-style:normal;font-size:9.6px;font-weight:700;color:var(--text-4)}
 .uv-find{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:9px;
-  padding:6px 10px;font-size:12.8px;color:var(--text-4);font-weight:600}
+  padding:3px 9px;font-size:11.8px;color:var(--text-4);font-weight:600}
 .uv-find svg{flex:none;color:var(--text-3)}
-.uv{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:9px;padding:6px 9px}
+.uchips{display:flex;gap:4px}
+.uchips span{font-size:10.2px;font-weight:700;color:var(--text-3);background:var(--surface-2);border-radius:6px;padding:1px 7px}
+.uchips span.on{background:var(--accent);color:#fff}
+.ures{display:flex;flex-direction:column;gap:3px}
+.cat-slide[data-cat="career"] .cat-body{gap:6px}
+.uv{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:3px 8px}
 .uv .un{display:flex;flex-direction:column;min-width:0}
-.uv .un b{font-size:13.6px;font-weight:800;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.uv .un small{font-size:11px;color:var(--text-4);font-weight:600}
-.uv .gr{margin-left:auto;font-size:18px;font-weight:800;color:var(--accent-strong);font-variant-numeric:tabular-nums;white-space:nowrap}
-.uv .gr span{font-size:11.5px;color:var(--text-3);font-weight:700}
+.uv .un b{font-size:12.2px;font-weight:800;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uv .un small{font-size:9.2px;line-height:1.25;color:var(--text-4);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uv .gr{margin-left:auto;text-align:right;white-space:nowrap}
+.uv .gr b{font-size:15px;font-weight:800;color:var(--accent-strong);font-variant-numeric:tabular-nums}
+.uv .gr b i{font-style:normal;font-size:9.6px;color:var(--text-3);font-weight:700}
+.uv .gr small{display:block;font-size:9.4px;font-weight:700;color:var(--text-3)}
 .weak-list{display:flex;flex-direction:column;gap:10px}
 .weak-row .wt{display:flex;justify-content:space-between;font-size:14.6px;color:var(--text-2);font-weight:600;margin-bottom:5px}
 .weak-row .wt b{color:var(--coral);font-weight:800}
@@ -1946,37 +1976,30 @@ body{word-break:keep-all;overflow-wrap:break-word}
 
                   <!-- 카테고리 2: 학습달력 -->
                   <div class="cat-slide" data-cat="cal">
-                    <div class="ddaybar alt">학습달력 <b>8월 1주</b> <span class="dchip">공부 인증</span></div>
+                    <div class="ddaybar alt"><span class="mnav" style="width:100%"><span class="mb">&lt;</span>2026년 9월<span class="mb">&gt;</span><span class="today">오늘</span></span></div>
                     <div class="cat-body">
-                      <div class="cat-head"><span class="ci" style="background:#5878a0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>학습달력</div>
-                      <!-- 앱의 학습달력 그대로: 공부 인증 사진이 칸을 채우고 날짜가 그 위에 올라간다.
-                           한 달을 훑으면 '내가 뭘 했는지'가 글자가 아니라 그림으로 먼저 보인다는 게 이 화면의 핵심.
+                      <!-- 앱 실제 화면(2026-09-11 실측): 일~토 한 달 표에 공부 인증 사진이 칸을 채우고,
+                           날짜는 그 위 흰 동그라미. 사진 없이 메모만 남긴 날은 'N과목' 칩.
+                           고른 날 아래에 그날의 공부 기록(사진 한 장 + 과목별 한 줄)이 열린다.
                            사진은 실사진 대신 그린 것 — 저작권 걸릴 일 없이 쓰려고. -->
-                      <div class="wk wk-ph">
-                        <div class="wd">월</div><div class="wd">화</div><div class="wd">수</div><div class="wd">목</div><div class="wd">금</div><div class="wd">토</div><div class="wd">일</div>
-                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f4efe4"/><g stroke="#cdc2aa" stroke-width="2" stroke-linecap="round"><path d="M7 14h24M7 22h26M7 30h18M7 38h22"/></g><rect x="7" y="19.5" width="16" height="5" rx="2.5" fill="#f0d68a"/></svg><span class="wn">28</span></div>
-                        <div class="wc"><span class="wn tod">29</span></div>
-                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#eaf0f7"/><g stroke="#d6e0ec" stroke-width="1.4"><path d="M10 0v50M20 0v50M30 0v50M0 14h40M0 28h40M0 42h40"/></g><path d="M6 40q14-26 28 0" fill="none" stroke="#2f9183" stroke-width="3" stroke-linecap="round"/></svg><span class="wn">30</span></div>
-                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f2f0f7"/><g fill="#cfc7de"><rect x="7" y="12" width="12" height="4" rx="2"/><rect x="22" y="12" width="12" height="4" rx="2"/><rect x="7" y="32" width="10" height="4" rx="2"/><rect x="20" y="32" width="14" height="4" rx="2"/></g><rect x="7" y="21" width="15" height="6" rx="3" fill="#9ad7cd"/></svg><span class="wn">31</span></div>
-                        <div class="wc"><span class="wn plain">1</span><em class="wmemo">2과목</em></div>
-                        <div class="wc"><span class="wn plain">2</span></div>
-                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f4efe4"/><g stroke="#cdc2aa" stroke-width="2" stroke-linecap="round"><path d="M7 14h24M7 22h26M7 30h18M7 38h22"/></g><rect x="7" y="19.5" width="16" height="5" rx="2.5" fill="#f0d68a"/></svg><span class="wn">3</span></div>
-                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#eaf0f7"/><g stroke="#d6e0ec" stroke-width="1.4"><path d="M10 0v50M20 0v50M30 0v50M0 14h40M0 28h40M0 42h40"/></g><path d="M6 40q14-26 28 0" fill="none" stroke="#2f9183" stroke-width="3" stroke-linecap="round"/></svg><span class="wn">4</span></div>
-                        <div class="wc"><span class="wn plain">5</span><em class="wmemo">1과목</em></div>
-                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f2f0f7"/><g fill="#cfc7de"><rect x="7" y="12" width="12" height="4" rx="2"/><rect x="22" y="12" width="12" height="4" rx="2"/><rect x="7" y="32" width="10" height="4" rx="2"/><rect x="20" y="32" width="14" height="4" rx="2"/></g><rect x="7" y="21" width="15" height="6" rx="3" fill="#9ad7cd"/></svg><span class="wn">6</span></div>
-                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f4efe4"/><g stroke="#cdc2aa" stroke-width="2" stroke-linecap="round"><path d="M7 14h24M7 22h26M7 30h18M7 38h22"/></g><rect x="7" y="19.5" width="16" height="5" rx="2.5" fill="#f0d68a"/></svg><span class="wn">7</span></div>
-                        <div class="wc"><span class="wn plain">8</span></div>
-                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#eaf0f7"/><g stroke="#d6e0ec" stroke-width="1.4"><path d="M10 0v50M20 0v50M30 0v50M0 14h40M0 28h40M0 42h40"/></g><path d="M6 40q14-26 28 0" fill="none" stroke="#2f9183" stroke-width="3" stroke-linecap="round"/></svg><span class="wn">9</span></div>
-                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f2f0f7"/><g fill="#cfc7de"><rect x="7" y="12" width="12" height="4" rx="2"/><rect x="22" y="12" width="12" height="4" rx="2"/><rect x="7" y="32" width="10" height="4" rx="2"/><rect x="20" y="32" width="14" height="4" rx="2"/></g><rect x="7" y="21" width="15" height="6" rx="3" fill="#9ad7cd"/></svg><span class="wn">10</span></div>
+                      <div class="cal">
+                        <div class="hd"><div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="sat">토</div></div>
+                          <div class="rw"><div class="cd"></div><div class="cd"></div><div class="cd"><span class="n">1</span></div><div class="cd"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f4efe4"/><g stroke="#cdc2aa" stroke-width="2" stroke-linecap="round"><path d="M7 14h24M7 22h26M7 30h18M7 38h22"/></g><rect x="7" y="19.5" width="16" height="5" rx="2.5" fill="#f0d68a"/></svg><span class="n ph">2</span></div><div class="cd"><span class="n">3</span></div><div class="cd"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#eaf0f7"/><g stroke="#d6e0ec" stroke-width="1.4"><path d="M10 0v50M20 0v50M30 0v50M0 14h40M0 28h40M0 42h40"/></g><path d="M6 40q14-26 28 0" fill="none" stroke="#2f9183" stroke-width="3" stroke-linecap="round"/></svg><span class="n ph">4</span></div><div class="cd"><span class="n">5</span></div></div>
+                          <div class="rw"><div class="cd"><span class="n">6</span></div><div class="cd"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f2f0f7"/><g fill="#cfc7de"><rect x="7" y="12" width="12" height="4" rx="2"/><rect x="22" y="12" width="12" height="4" rx="2"/><rect x="7" y="32" width="10" height="4" rx="2"/><rect x="20" y="32" width="14" height="4" rx="2"/></g><rect x="7" y="21" width="15" height="6" rx="3" fill="#9ad7cd"/></svg><span class="n ph">7</span></div><div class="cd"><span class="n">8</span></div><div class="cd"><span class="n">9</span><em class="memo">2과목</em></div><div class="cd"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f4efe4"/><g stroke="#cdc2aa" stroke-width="2" stroke-linecap="round"><path d="M7 14h24M7 22h26M7 30h18M7 38h22"/></g><rect x="7" y="19.5" width="16" height="5" rx="2.5" fill="#f0d68a"/></svg><span class="n ph">10</span></div><div class="cd sel"><span class="n tod">11</span></div><div class="cd"><span class="n">12</span></div></div>
+                          <div class="rw"><div class="cd"><span class="n">13</span></div><div class="cd"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#eaf0f7"/><g stroke="#d6e0ec" stroke-width="1.4"><path d="M10 0v50M20 0v50M30 0v50M0 14h40M0 28h40M0 42h40"/></g><path d="M6 40q14-26 28 0" fill="none" stroke="#2f9183" stroke-width="3" stroke-linecap="round"/></svg><span class="n ph">14</span></div><div class="cd"><span class="n">15</span></div><div class="cd"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f2f0f7"/><g fill="#cfc7de"><rect x="7" y="12" width="12" height="4" rx="2"/><rect x="22" y="12" width="12" height="4" rx="2"/><rect x="7" y="32" width="10" height="4" rx="2"/><rect x="20" y="32" width="14" height="4" rx="2"/></g><rect x="7" y="21" width="15" height="6" rx="3" fill="#9ad7cd"/></svg><span class="n ph">16</span></div><div class="cd"><span class="n">17</span></div><div class="cd"><span class="n">18</span><em class="memo">1과목</em></div><div class="cd"><span class="n">19</span></div></div>
+                          <div class="rw"><div class="cd"><span class="n">20</span></div><div class="cd"><span class="n">21</span></div><div class="cd"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f4efe4"/><g stroke="#cdc2aa" stroke-width="2" stroke-linecap="round"><path d="M7 14h24M7 22h26M7 30h18M7 38h22"/></g><rect x="7" y="19.5" width="16" height="5" rx="2.5" fill="#f0d68a"/></svg><span class="n ph">22</span></div><div class="cd"><span class="n">23</span></div><div class="cd"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#eaf0f7"/><g stroke="#d6e0ec" stroke-width="1.4"><path d="M10 0v50M20 0v50M30 0v50M0 14h40M0 28h40M0 42h40"/></g><path d="M6 40q14-26 28 0" fill="none" stroke="#2f9183" stroke-width="3" stroke-linecap="round"/></svg><span class="n ph">24</span></div><div class="cd"><span class="n">25</span></div><div class="cd"><span class="n">26</span></div></div>
                       </div>
-                      <div class="dlh">8월 1일 (금) · 공부 기록</div>
                       <div class="daylog anim-in">
-                        <div class="dphoto">
-                          <svg viewBox="0 0 80 60" aria-hidden="true"><rect width="80" height="60" fill="#f4efe4"/><rect x="5" y="6" width="70" height="48" rx="3" fill="#fffdf7" stroke="#e6dcc8"/><g stroke="#c9bfa8" stroke-width="1.8" stroke-linecap="round"><path d="M12 17h44M12 25h52M12 33h36M12 41h46"/></g><rect x="12" y="22.4" width="30" height="5.2" rx="2.6" fill="#f0d68a"/><path d="M57 46l14-14 4 4-14 14-6 1.6z" fill="#8fa7c4"/></svg>
-                        </div>
-                        <div class="dmemos">
-                          <div class="dm"><i style="background:#2f9183"></i>국어 · 비문학 지문 5개</div>
-                          <div class="dm"><i style="background:#5878a0"></i>수학 · 이차함수 20문제</div>
+                        <div class="dt">2026. 09. 11 공부 기록</div>
+                        <div class="row">
+                          <div class="dphoto">
+                            <svg viewBox="0 0 80 60" aria-hidden="true"><rect width="80" height="60" fill="#f4efe4"/><rect x="5" y="6" width="70" height="48" rx="3" fill="#fffdf7" stroke="#e6dcc8"/><g stroke="#c9bfa8" stroke-width="1.8" stroke-linecap="round"><path d="M12 17h44M12 25h52M12 33h36M12 41h46"/></g><rect x="12" y="22.4" width="30" height="5.2" rx="2.6" fill="#f0d68a"/><path d="M57 46l14-14 4 4-14 14-6 1.6z" fill="#8fa7c4"/></svg>
+                          </div>
+                          <div class="dmemos">
+                            <div class="dm"><i style="background:#2f9183"></i>국어 · 비문학 지문 5개</div>
+                            <div class="dm"><i style="background:#5878a0"></i>수학 · 이차함수 20문제</div>
+                            <div class="dm"><i style="background:#af9069"></i>한국사 · 근현대사 정리</div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -2005,23 +2028,36 @@ body{word-break:keep-all;overflow-wrap:break-word}
                   <div class="cat-slide" data-cat="career">
                     <div class="ddaybar alt">대입 <b>내신 환산 계산기</b> <span class="dchip" style="background:#8f7faa">전국 306개 대학</span></div>
                     <div class="cat-body">
+                      <!-- 앱 실제 화면(2026-09-11 실측). 숫자는 지어낸 값이 아니라 이 점수로 앱이
+                           실제 계산해 낸 결과 그대로다 — 평균 88.14점 → 대구공업대 390.00점(2.00등급 상당) 등.
+                           대학 이름도 앱과 같이 공개 자료 그대로 쓴다. -->
                       <div class="cat-head"><span class="ci" style="background:#8f7faa"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5 15.5 8.5"/></svg></span>검정고시 내신 환산</div>
-                      <!-- 겉화면 소개 대신 앱에서 실제로 쓰는 순서 그대로(2026-09-11 대표 지시):
-                           과목 점수 입력 → 대학 찾기 → 대학별 환산 등급.
-                           대학 이름은 ○○/△△ 로 둔다 — 실명 옆에 숫자를 붙이면 그 대학의 공식
-                           기준인 것처럼 읽힌다. 앱 안에서는 공개 자료 그대로 실명이 나온다. -->
-                      <div class="sc-rows anim-in">
-                        <div class="sc"><span>국어</span><b>92</b><i>점</i></div>
-                        <div class="sc"><span>수학</span><b>84</b><i>점</i></div>
-                        <div class="sc"><span>영어</span><b>90</b><i>점</i></div>
+                      <div class="scbox anim-in">
+                        <div class="sct"><b>과목별 점수</b><span>최근 점수 불러오기</span></div>
+                        <div class="avg">평균 88.14점</div>
+                        <div class="scgrid">
+                          <div class="col">
+                            <div class="scv"><span>국어</span><b>92</b><i>점</i></div>
+                            <div class="scv"><span>수학</span><b>90</b><i>점</i></div>
+                            <div class="scv"><span>영어</span><b>76</b><i>점</i></div>
+                            <div class="scv"><span>사회</span><b>84</b><i>점</i></div>
+                          </div>
+                          <div class="col">
+                            <div class="scv"><span>과학</span><b>88</b><i>점</i></div>
+                            <div class="scv"><span>한국사</span><b>95</b><i>점</i></div>
+                            <div class="scv"><span>도덕</span><b>92</b><i>점</i></div>
+                          </div>
+                        </div>
                       </div>
                       <div class="uv-find anim-in">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
                         대학 이름·지역으로 찾기
                       </div>
-                      <div class="sched">
-                        <div class="uv anim-in"><span class="un"><b>○○대학교</b><small>4년제 · 서울 · 2026</small></span><span class="gr">1.82<span> 등급</span></span></div>
-                        <div class="uv anim-in"><span class="un"><b>△△대학교</b><small>전문대 · 경기 · 2026</small></span><span class="gr">2.40<span> 등급</span></span></div>
+                      <div class="uchips anim-in"><span class="on">전체</span><span>4년제</span><span>전문대</span></div>
+                      <div class="ures">
+                        <div class="uv anim-in"><span class="un"><b>대구공업대학교</b><small>전문대 · 대구 · 2026학년도</small></span><span class="gr"><b>390.00<i> 점</i></b><small>2.00등급 상당</small></span></div>
+                        <div class="uv anim-in"><span class="un"><b>초당대학교</b><small>4년제 · 전남 · 2027학년도 수시</small></span><span class="gr"><b>2.79<i> 등급</i></b></span></div>
+                        <div class="uv anim-in"><span class="un"><b>가야대학교</b><small>4년제 · 경남 · 2026학년도</small></span><span class="gr"><b>3<i> 등급</i></b></span></div>
                       </div>
                     </div>
                   </div>
