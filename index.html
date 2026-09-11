@@ -1422,13 +1422,27 @@ body::before{background:
 .cat-slide.on .sblock:nth-child(3),.cat-slide.on .anim-in:nth-child(3){animation-delay:.44s}
 .cat-slide.on .sblock:nth-child(4),.cat-slide.on .anim-in:nth-child(4){animation-delay:.66s}
 .anim-in{opacity:0;transform:translateY(9px)}
-/* 학습달력 — 찍어 올린 공부 사진 + 그날 과목 메모 (앱의 실제 사용 방식) */
-.ph-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.ph-shot{margin:0;border-radius:9px;overflow:hidden;background:#fff;border:1px solid var(--border);
-  box-shadow:0 2px 7px rgba(13,38,33,.09)}
-.ph-shot svg{display:block;width:100%;height:auto}
-.ph-shot figcaption{font-size:11.4px;font-weight:700;color:var(--text-2);padding:4px 4px 5px;text-align:center;
+/* 학습달력 — 앱 화면 그대로(Calendar.tsx): 공부 인증 사진이 칸 전체를 채우고(숫자 뒤까지)
+   날짜는 그 위에 흰 동그라미로 올라간다. 사진 없이 메모만 남긴 날은 '기록 N과목' 칩. */
+.wk-ph .wc{position:relative;display:block;overflow:hidden;height:44px;padding:0}
+.wk-ph .wn{position:absolute;left:3px;top:3px;width:17px;height:17px;line-height:17px;text-align:center;
+  border-radius:50%;font-size:11.4px;font-weight:700;color:var(--text-2);background:#fff;
+  box-shadow:0 1px 2px rgba(13,38,33,.14)}
+.wk-ph .wn.plain{background:transparent;box-shadow:none;color:var(--text-3)}
+.wk-ph .wn.tod{background:var(--accent);color:#fff;box-shadow:none}
+.wk-ph .wcim{position:absolute;inset:0;width:100%;height:100%}
+.wk-ph .wmemo{position:absolute;left:2px;right:2px;bottom:3px;font-style:normal;font-size:9.4px;font-weight:700;
+  background:var(--accent-soft);color:var(--accent-strong);border-radius:3px;padding:1px 0;text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 고른 날의 기록 — 인증 사진 한 장 + 과목별 한 줄 (StudyLogPanel.tsx) */
+.dlh{font-size:11.8px;font-weight:700;color:var(--text-3)}
+.daylog{display:flex;gap:8px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:7px}
+.daylog .dphoto{width:62px;flex:none;border-radius:7px;overflow:hidden;background:var(--surface-2)}
+.daylog .dphoto svg{display:block;width:100%;height:auto}
+.daylog .dmemos{display:flex;flex-direction:column;gap:5px;justify-content:center;min-width:0;flex:1}
+.daylog .dm{display:flex;align-items:center;gap:6px;font-size:12.6px;font-weight:700;color:var(--text-2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.daylog .dm i{width:6px;height:6px;border-radius:2px;flex:none}
 /* 대입 — 겉화면 대신 실제 환산기 화면(점수 입력 → 대학 찾기 → 등급) */
 .sc-rows{display:flex;flex-direction:column;gap:5px}
 .sc{display:flex;align-items:center;gap:8px;background:var(--surface-2);border-radius:9px;padding:5px 10px;
@@ -1935,46 +1949,35 @@ body{word-break:keep-all;overflow-wrap:break-word}
                     <div class="ddaybar alt">학습달력 <b>8월 1주</b> <span class="dchip">공부 인증</span></div>
                     <div class="cat-body">
                       <div class="cat-head"><span class="ci" style="background:#5878a0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>학습달력</div>
-                      <div class="wk">
+                      <!-- 앱의 학습달력 그대로: 공부 인증 사진이 칸을 채우고 날짜가 그 위에 올라간다.
+                           한 달을 훑으면 '내가 뭘 했는지'가 글자가 아니라 그림으로 먼저 보인다는 게 이 화면의 핵심.
+                           사진은 실사진 대신 그린 것 — 저작권 걸릴 일 없이 쓰려고. -->
+                      <div class="wk wk-ph">
                         <div class="wd">월</div><div class="wd">화</div><div class="wd">수</div><div class="wd">목</div><div class="wd">금</div><div class="wd">토</div><div class="wd">일</div>
-                        <div class="wc">28</div><div class="wc tod">29</div><div class="wc">30</div><div class="wc">31</div><div class="wc">1</div><div class="wc">2</div><div class="wc">3</div>
+                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f4efe4"/><g stroke="#cdc2aa" stroke-width="2" stroke-linecap="round"><path d="M7 14h24M7 22h26M7 30h18M7 38h22"/></g><rect x="7" y="19.5" width="16" height="5" rx="2.5" fill="#f0d68a"/></svg><span class="wn">28</span></div>
+                        <div class="wc"><span class="wn tod">29</span></div>
+                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#eaf0f7"/><g stroke="#d6e0ec" stroke-width="1.4"><path d="M10 0v50M20 0v50M30 0v50M0 14h40M0 28h40M0 42h40"/></g><path d="M6 40q14-26 28 0" fill="none" stroke="#2f9183" stroke-width="3" stroke-linecap="round"/></svg><span class="wn">30</span></div>
+                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f2f0f7"/><g fill="#cfc7de"><rect x="7" y="12" width="12" height="4" rx="2"/><rect x="22" y="12" width="12" height="4" rx="2"/><rect x="7" y="32" width="10" height="4" rx="2"/><rect x="20" y="32" width="14" height="4" rx="2"/></g><rect x="7" y="21" width="15" height="6" rx="3" fill="#9ad7cd"/></svg><span class="wn">31</span></div>
+                        <div class="wc"><span class="wn plain">1</span><em class="wmemo">2과목</em></div>
+                        <div class="wc"><span class="wn plain">2</span></div>
+                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f4efe4"/><g stroke="#cdc2aa" stroke-width="2" stroke-linecap="round"><path d="M7 14h24M7 22h26M7 30h18M7 38h22"/></g><rect x="7" y="19.5" width="16" height="5" rx="2.5" fill="#f0d68a"/></svg><span class="wn">3</span></div>
+                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#eaf0f7"/><g stroke="#d6e0ec" stroke-width="1.4"><path d="M10 0v50M20 0v50M30 0v50M0 14h40M0 28h40M0 42h40"/></g><path d="M6 40q14-26 28 0" fill="none" stroke="#2f9183" stroke-width="3" stroke-linecap="round"/></svg><span class="wn">4</span></div>
+                        <div class="wc"><span class="wn plain">5</span><em class="wmemo">1과목</em></div>
+                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f2f0f7"/><g fill="#cfc7de"><rect x="7" y="12" width="12" height="4" rx="2"/><rect x="22" y="12" width="12" height="4" rx="2"/><rect x="7" y="32" width="10" height="4" rx="2"/><rect x="20" y="32" width="14" height="4" rx="2"/></g><rect x="7" y="21" width="15" height="6" rx="3" fill="#9ad7cd"/></svg><span class="wn">6</span></div>
+                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f4efe4"/><g stroke="#cdc2aa" stroke-width="2" stroke-linecap="round"><path d="M7 14h24M7 22h26M7 30h18M7 38h22"/></g><rect x="7" y="19.5" width="16" height="5" rx="2.5" fill="#f0d68a"/></svg><span class="wn">7</span></div>
+                        <div class="wc"><span class="wn plain">8</span></div>
+                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#eaf0f7"/><g stroke="#d6e0ec" stroke-width="1.4"><path d="M10 0v50M20 0v50M30 0v50M0 14h40M0 28h40M0 42h40"/></g><path d="M6 40q14-26 28 0" fill="none" stroke="#2f9183" stroke-width="3" stroke-linecap="round"/></svg><span class="wn">9</span></div>
+                        <div class="wc"><svg class="wcim" viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="40" height="50" fill="#f2f0f7"/><g fill="#cfc7de"><rect x="7" y="12" width="12" height="4" rx="2"/><rect x="22" y="12" width="12" height="4" rx="2"/><rect x="7" y="32" width="10" height="4" rx="2"/><rect x="20" y="32" width="14" height="4" rx="2"/></g><rect x="7" y="21" width="15" height="6" rx="3" fill="#9ad7cd"/></svg><span class="wn">10</span></div>
                       </div>
-                      <div class="ai-place"><span class="sp"></span>공부한 걸 사진으로 찍고 과목만 적어 두면 돼요</div>
-                      <!-- 학습달력은 '사진 찍고 과목 메모'가 전부다(2026-09-11 대표 지시).
-                           그림은 실제 사진 대신 그린 것 — 저작권 걸릴 일 없이 쓰려고. -->
-                      <div class="ph-row anim-in">
-                        <figure class="ph-shot">
-                          <svg viewBox="0 0 80 60" aria-hidden="true">
-                            <rect width="80" height="60" fill="#f4efe4"/>
-                            <rect x="6" y="8" width="68" height="44" rx="3" fill="#fffdf7" stroke="#e6dcc8"/>
-                            <g stroke="#c9bfa8" stroke-width="1.6" stroke-linecap="round"><path d="M13 18h42M13 25h50M13 32h36M13 39h46M13 46h28"/></g>
-                            <rect x="13" y="22.6" width="29" height="5" rx="2.5" fill="#f2d98f" opacity=".9"/>
-                            <path d="M57 45l13-13 4 4-13 13-5.5 1.5z" fill="#8fa7c4"/>
-                          </svg>
-                          <figcaption>국어 · 비문학</figcaption>
-                        </figure>
-                        <figure class="ph-shot">
-                          <svg viewBox="0 0 80 60" aria-hidden="true">
-                            <rect width="80" height="60" fill="#eef2f7"/>
-                            <rect x="6" y="8" width="68" height="44" rx="3" fill="#fff" stroke="#dbe3ee"/>
-                            <g stroke="#e3eaf3" stroke-width="1"><path d="M20 8v44M34 8v44M48 8v44M62 8v44M6 22h68M6 36h68"/></g>
-                            <path d="M15 46q25-38 50 0" fill="none" stroke="#2f9183" stroke-width="2.6" stroke-linecap="round"/>
-                          </svg>
-                          <figcaption>수학 · 이차함수</figcaption>
-                        </figure>
-                        <figure class="ph-shot">
-                          <svg viewBox="0 0 80 60" aria-hidden="true">
-                            <rect width="80" height="60" fill="#f3f1f7"/>
-                            <rect x="6" y="8" width="68" height="44" rx="3" fill="#fff" stroke="#e2ddec"/>
-                            <g fill="#cfc7de"><rect x="13" y="16" width="19" height="4" rx="2"/><rect x="38" y="16" width="28" height="4" rx="2"/><rect x="13" y="36" width="17" height="4" rx="2"/><rect x="36" y="36" width="30" height="4" rx="2"/></g>
-                            <rect x="13" y="25" width="25" height="7" rx="3.5" fill="#9ad7cd"/>
-                            <rect x="44" y="26" width="22" height="4" rx="2" fill="#cfc7de"/>
-                          </svg>
-                          <figcaption>영어 · 단어장</figcaption>
-                        </figure>
-                      </div>
-                      <div class="sched">
-                        <div class="sblock"><span class="sd" style="background:#2f9183"></span>오늘 3장 · 이번 주 11장<b>기록됨</b></div>
+                      <div class="dlh">8월 1일 (금) · 공부 기록</div>
+                      <div class="daylog anim-in">
+                        <div class="dphoto">
+                          <svg viewBox="0 0 80 60" aria-hidden="true"><rect width="80" height="60" fill="#f4efe4"/><rect x="5" y="6" width="70" height="48" rx="3" fill="#fffdf7" stroke="#e6dcc8"/><g stroke="#c9bfa8" stroke-width="1.8" stroke-linecap="round"><path d="M12 17h44M12 25h52M12 33h36M12 41h46"/></g><rect x="12" y="22.4" width="30" height="5.2" rx="2.6" fill="#f0d68a"/><path d="M57 46l14-14 4 4-14 14-6 1.6z" fill="#8fa7c4"/></svg>
+                        </div>
+                        <div class="dmemos">
+                          <div class="dm"><i style="background:#2f9183"></i>국어 · 비문학 지문 5개</div>
+                          <div class="dm"><i style="background:#5878a0"></i>수학 · 이차함수 20문제</div>
+                        </div>
                       </div>
                     </div>
                   </div>
