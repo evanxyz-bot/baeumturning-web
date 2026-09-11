@@ -1121,7 +1121,10 @@ body::before{background:
 .pipe-math span{position:absolute;font-family:'Times New Roman',Georgia,serif;font-style:italic;
   color:rgba(120,214,192,.075);white-space:nowrap;line-height:1}
 .analysis .evidence>*:not(.pipe-math){position:relative;z-index:1}
-.pipe-lane{display:grid;grid-template-columns:1fr 52px 1fr 52px 1fr;gap:0 14px}
+/* 칸 높이를 내용에 맞춘다(2026-09-11 대표 지시) — 예전엔 셋이 같은 높이로 늘어나
+   기법이 둘뿐인 STEP 2·3 아래에 빈 칸이 크게 남았다. 화살표만 가운데에 맞춰 둔다. */
+.pipe-lane{display:grid;grid-template-columns:1fr 52px 1fr 52px 1fr;gap:0 14px;align-items:start}
+.pipe-arrow{align-self:center}
 /* 흐름 화살표 — 15px 실선 꺾쇠는 눈에 안 띄어 세 칸이 그냥 나열처럼 보였다.
    점선 꼬리 + 큰 촉으로 바꾸고 브랜드 색을 준다. */
 .pipe-arrow{display:flex;align-items:center;justify-content:center;color:#63d6bd}
@@ -1149,20 +1152,23 @@ body::before{background:
 .chip{font-size:15.6px;font-weight:500;padding:7px 14px;border-radius:8px;white-space:nowrap}
 .chip-w{color:#cdbb9c;background:rgba(214,178,120,.11);border:1px solid rgba(214,178,120,.20)}
 .chip-t{color:#a9c9c0;background:rgba(78,207,180,.10);border:1px solid rgba(78,207,180,.20)}
-.pipe-step{display:flex;flex-direction:column;background:var(--surface-2);border-radius:12px;padding:17px 19px 15px}
+/* 가운데 정렬 + 아래 여백 축소(2026-09-11 대표 지시). 기법 이름 앞 번호(01·04…)도 뺐다 —
+   순서를 뜻하지 않는 식별번호라 읽는 데 방해만 됐다. */
+.pipe-step{display:flex;flex-direction:column;align-items:center;text-align:center;
+  background:var(--surface-2);border-radius:12px;padding:16px 16px 12px}
 .pipe-step.warm{border:1px solid rgba(214,178,120,.26);border-top:3px solid #dfba85}
 .pipe-step.cool{border:1px solid rgba(78,207,180,.24);border-top:3px solid #63d6bd}
-.pipe-step .st{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;min-height:26px}
+.pipe-step .st{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:6px}
 .pipe-step .st i{font-family:'Outfit',sans-serif;font-style:normal;font-size:15.2px;font-weight:700;letter-spacing:.08em}
 .pipe-step.warm .st i,.pipe-col.warm>.chd i,.pipe-m.warm>.n{color:#dfba85}
 .pipe-step.cool .st i,.pipe-col.cool>.chd i,.pipe-m.cool>.n{color:#63d6bd}
 .pipe-step .st span{font-size:19.6px;font-weight:800;color:#eef7f4;letter-spacing:-.02em}
-.pipe-step .q{margin:0 0 12px;font-size:15.8px;line-height:1.5;color:#93aca5;word-break:keep-all;min-height:23px}
-.pipe-step .tags{display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start;min-height:58px}
+.pipe-step .q{margin:0 0 10px;font-size:15.8px;line-height:1.5;color:#93aca5;word-break:keep-all}
+.pipe-step .tags{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;align-content:flex-start}
 .pipe-step .tags span{font-family:'Outfit',sans-serif;font-size:14.6px;font-weight:600;padding:7px 12px;border-radius:8px}
 .pipe-step.warm .tags span{color:#e2d3b8;background:rgba(214,178,120,.13);border:1px solid rgba(214,178,120,.24)}
 .pipe-step.cool .tags span{color:#cfe3dd;background:rgba(78,207,180,.11);border:1px solid rgba(78,207,180,.22)}
-.pipe-step .yield{margin-top:auto;padding-top:12px;display:flex;align-items:center;gap:7px;font-size:15px;color:#89a49c}
+.pipe-step .yield{margin-top:auto;padding-top:8px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:15px;color:#89a49c}
 .pipe-step .yield i{font-style:normal;font-weight:700}
 .pipe-detail{margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12)}
 .pipe-detail>.lbl{font-size:12.4px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7f9a92;margin-bottom:18px}
@@ -2155,21 +2161,21 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <div class="pipe-step warm">
           <div class="st"><i>STEP 1</i><span>맞춤 진단</span></div>
           <p class="q">무엇이 점수를 깎고 있지?</p>
-          <div class="tags"><span>01 파레토 분석</span><span>04 오답 패턴 분석</span><span>06 학습량 보정</span></div>
+          <div class="tags"><span>파레토 분석</span><span>오답 패턴 분석</span><span>학습량 보정</span></div>
           <div class="yield"><i style="color:#dfba85">&rarr;</i>취약 단원 목록</div>
         </div>
         <div class="pipe-arrow"><svg viewBox="0 0 44 24" fill="none" aria-hidden="true"><path d="M2 12h30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 6"/><path d="m30 5 8 7-8 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="pipe-step cool">
           <div class="st"><i>STEP 2</i><span>정밀 분석</span></div>
           <p class="q">지금 어디쯤 와 있지?</p>
-          <div class="tags"><span>05 추세 분석</span><span>07 합격선 마진</span></div>
+          <div class="tags"><span>추세 분석</span><span>합격선 마진</span></div>
           <div class="yield"><i style="color:#63d6bd">&rarr;</i>합격선 기준 위치</div>
         </div>
         <div class="pipe-arrow"><svg viewBox="0 0 44 24" fill="none" aria-hidden="true"><path d="M2 12h30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 6"/><path d="m30 5 8 7-8 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="pipe-step cool">
           <div class="st"><i>STEP 3</i><span>개인별 학습 계획</span></div>
           <p class="q">무엇부터, 언제 다시 공부하지?</p>
-          <div class="tags"><span>03 우선순위 매트릭스</span><span>02 간격 반복</span></div>
+          <div class="tags"><span>우선순위 매트릭스</span><span>간격 반복</span></div>
           <div class="yield"><i style="color:#63d6bd">&rarr;</i>오늘 풀 순서</div>
         </div>
       </div>
