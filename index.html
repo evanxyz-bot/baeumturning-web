@@ -1466,12 +1466,13 @@ body::before{background:
 .scbox .sct span{font-size:10.4px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);
   border-radius:6px;padding:2px 6px;white-space:nowrap}
 .scbox .avg{font-size:11.4px;font-weight:800;color:var(--accent-strong);margin-bottom:4px}
-.scgrid{display:grid;grid-template-columns:1fr 1fr;gap:3px 6px}
-.scgrid .col{display:flex;flex-direction:column;gap:3px}
-.scv{display:flex;align-items:center;gap:4px;background:var(--surface-2);border-radius:6px;padding:1px 7px}
-.scv span{font-size:11px;font-weight:700;color:var(--text-2)}
-.scv b{margin-left:auto;font-size:12.4px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums}
-.scv i{font-style:normal;font-size:9.6px;font-weight:700;color:var(--text-4)}
+/* 한 줄에 4과목, 다음 줄에 3과목(2026-09-11 대표 지시). 300px 목업에서 한 칸이 62px 라
+   이름과 점수를 나란히 놓으면 '한국사 95점'이 잘린다 — 이름 아래 점수로 쌓는다. */
+.scgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.scv{display:flex;flex-direction:column;align-items:center;background:var(--surface-2);border-radius:6px;padding:3px 2px}
+.scv span{font-size:9.4px;font-weight:700;color:var(--text-3);white-space:nowrap;line-height:1.2}
+.scv b{font-size:12.2px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;line-height:1.25}
+.scv i{font-style:normal;font-size:8.6px;font-weight:700;color:var(--text-4);margin-left:1px}
 .uv-find{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:9px;
   padding:3px 9px;font-size:11.8px;color:var(--text-4);font-weight:600}
 .uv-find svg{flex:none;color:var(--text-3)}
@@ -2036,17 +2037,13 @@ body{word-break:keep-all;overflow-wrap:break-word}
                         <div class="sct"><b>과목별 점수</b><span>최근 점수 불러오기</span></div>
                         <div class="avg">평균 88.14점</div>
                         <div class="scgrid">
-                          <div class="col">
-                            <div class="scv"><span>국어</span><b>92</b><i>점</i></div>
-                            <div class="scv"><span>수학</span><b>90</b><i>점</i></div>
-                            <div class="scv"><span>영어</span><b>76</b><i>점</i></div>
-                            <div class="scv"><span>사회</span><b>84</b><i>점</i></div>
-                          </div>
-                          <div class="col">
-                            <div class="scv"><span>과학</span><b>88</b><i>점</i></div>
-                            <div class="scv"><span>한국사</span><b>95</b><i>점</i></div>
-                            <div class="scv"><span>도덕</span><b>92</b><i>점</i></div>
-                          </div>
+                          <div class="scv"><span>국어</span><b>92<i>점</i></b></div>
+                          <div class="scv"><span>수학</span><b>90<i>점</i></b></div>
+                          <div class="scv"><span>영어</span><b>76<i>점</i></b></div>
+                          <div class="scv"><span>사회</span><b>84<i>점</i></b></div>
+                          <div class="scv"><span>과학</span><b>88<i>점</i></b></div>
+                          <div class="scv"><span>한국사</span><b>95<i>점</i></b></div>
+                          <div class="scv"><span>도덕</span><b>92<i>점</i></b></div>
                         </div>
                       </div>
                       <div class="uv-find anim-in">
