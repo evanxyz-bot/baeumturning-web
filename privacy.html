@@ -5,7 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 폰이 다크모드여도 이 사이트는 항상 밝게 (2026-09-11 대표 지시).
      브라우저 강제 다크(Chrome/삼성인터넷)는 color-scheme 을 보고 비껴간다. -->
-<meta name="color-scheme" content="light only">
+<meta name="color-scheme" content="only light">
+<style>/* 폰 다크모드·브라우저 강제 다크(크롬 Auto Dark·삼성인터넷)에서도 항상 밝게.
+  메타만으로는 안 비껴가는 기기가 있어(2026-09-11 대표 제보) 다크 미디어쿼리를 실제로 선언한다 —
+  '이 사이트는 다크를 직접 다룬다'로 인식돼 브라우저가 제 알고리즘을 끄고, 값은 밝은 그대로 둔다. */
+:root{color-scheme:only light}
+@media (prefers-color-scheme:dark){
+  :root{color-scheme:only light}
+  html,body{background:var(--bg,#f3f7f6);color:var(--text,#15181d)}
+}</style>
 <title>개인정보처리방침 — 배움터닝 · 아웃포커스</title>
 <meta name="description" content="배움터닝(아웃포커스) 개인정보처리방침. 만 14세 미만은 가입할 수 없습니다.">
 <meta property="og:type" content="website">

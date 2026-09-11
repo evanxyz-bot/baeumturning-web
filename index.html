@@ -5,7 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 폰이 다크모드여도 이 사이트는 항상 밝게 (2026-09-11 대표 지시).
      브라우저 강제 다크(Chrome/삼성인터넷)는 color-scheme 을 보고 비껴간다. -->
-<meta name="color-scheme" content="light only">
+<meta name="color-scheme" content="only light">
+<style>/* 폰 다크모드·브라우저 강제 다크(크롬 Auto Dark·삼성인터넷)에서도 항상 밝게.
+  메타만으로는 안 비껴가는 기기가 있어(2026-09-11 대표 제보) 다크 미디어쿼리를 실제로 선언한다 —
+  '이 사이트는 다크를 직접 다룬다'로 인식돼 브라우저가 제 알고리즘을 끄고, 값은 밝은 그대로 둔다. */
+:root{color-scheme:only light}
+@media (prefers-color-scheme:dark){
+  :root{color-scheme:only light}
+  html,body{background:var(--bg,#f3f7f6);color:var(--text,#15181d)}
+}</style>
 <title>아웃포커스 OutFocus — 배움터닝 · 검정고시 학습 분석</title>
 <meta name="description" content="교육 사각지대를 해소하는 솔루션 컴퍼니 아웃포커스. 검정고시에 특화한 학습 관리 앱 '배움터닝' — 자체 로직으로 계산한 약점 진단과 학습 보고서까지.">
 <meta name="naver-site-verification" content="c39b38e15f44201008bc918807e2c4ee5933f6af" />
@@ -1222,12 +1230,16 @@ body::before{background:
   .stage .scene{order:2}
   .stage .cta-zone{order:3}
   .stage .hero-cards-m{order:4}
-  .hero{padding:22px 0 20px}
+  /* 위 여백은 카테고리 줄에 바짝 붙인다(2026-09-11 대표 지시). 아래 920px 블록에
+     같은 선택자가 또 있으면 그쪽이 이긴다 — 그래서 거기서 padding 을 뺐다. */
+  .hero{padding:8px 0 20px}
   .cta-zone{margin-top:4px;align-self:center}
   .hero-cards-m{display:block;margin-top:14px;position:relative;z-index:2;width:100%;max-width:100%;min-width:0}
-  .hcm-labels{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin:0 12px 2px}
-  .hcm-labels span{font-size:12.6px;font-weight:700;color:#0b7a6a;background:rgba(11,122,106,.08);
-    border:1px solid rgba(11,122,106,.18);padding:5px 12px;border-radius:999px;white-space:nowrap}
+  /* 기능 칩 3개는 한 줄(2026-09-11 대표 지시). 390px 에서 82+131+152=365px 라 줄바꿈됐다 —
+     nowrap 으로 묶고 글자·안여백을 화면 폭에 따라 줄여 320px 폰까지 한 줄에 넣는다. */
+  .hcm-labels{display:flex;justify-content:center;gap:6px;flex-wrap:nowrap;margin:0 6px 2px}
+  .hcm-labels span{font-size:clamp(9.4px,2.9vw,12.6px);font-weight:700;color:#0b7a6a;background:rgba(11,122,106,.08);
+    border:1px solid rgba(11,122,106,.18);padding:4px clamp(6px,2.2vw,12px);border-radius:999px;white-space:nowrap}
   /* 넘겨 보지 않아도 전부 보이게 세로로 쌓는다(2026-09-11 대표 지시: 기능은 언제든 볼 수 있게).
      폰 목업의 카테고리는 그대로 순환한다 — 고정한 건 이 카드들뿐이다. */
   .hcm-strip{display:flex;flex-direction:column;align-items:center;gap:12px;padding:6px 16px 4px;
@@ -1289,7 +1301,8 @@ body::before{background:
 /* ============ RESPONSIVE ============ */
 @media (max-width:920px){
   h2.h{font-size:35.8px}
-  .hero{padding:52px 0 64px}
+  /* .hero padding 은 위 1099px 블록이 정본 — 여기 있던 52px/64px 가 뒤에 와서 그걸 덮어
+     폰에서 카테고리 줄과 기능 칩 사이가 52px 로 벌어져 있었다(2026-09-11 실측). */
   .hero h1{font-size:42.6px}
   .hero-grid,.spot-grid,.spot.rev .spot-grid,.mission-grid,.an-grid,.an-cols,.co-grid,.up-grid,.upcoming.alt .up-grid{grid-template-columns:1fr;gap:40px;direction:ltr}
   .stage{order:-1}
