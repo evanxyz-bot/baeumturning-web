@@ -65,10 +65,11 @@ html{scroll-behavior:smooth}
 body{font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,-apple-system,sans-serif;
   color:var(--text);background:#fbfdfd;-webkit-font-smoothing:antialiased;line-height:1.62;letter-spacing:-0.01em;overflow-x:hidden;word-break:keep-all}
 body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:
-  radial-gradient(42% 34% at 12% 14%, rgba(154,215,205,.2), transparent 70%),
-  radial-gradient(36% 28% at 88% 8%,  rgba(243,191,183,.16), transparent 70%),
-  radial-gradient(34% 30% at 86% 72%, rgba(182,196,224,.16), transparent 70%),
-  radial-gradient(30% 26% at 8% 82%,  rgba(232,216,188,.14), transparent 70%)}
+  linear-gradient(to right, rgba(11,122,106,.038) 1px, transparent 1px),
+  linear-gradient(to bottom, rgba(11,122,106,.038) 1px, transparent 1px),
+  radial-gradient(42% 34% at 12% 14%, rgba(154,215,205,.18), transparent 70%),
+  radial-gradient(30% 26% at 88% 78%, rgba(232,216,188,.12), transparent 70%);
+  background-size:26px 26px,26px 26px,100% 100%,100% 100%}
 a{color:inherit;text-decoration:none}
 .tnum{font-variant-numeric:tabular-nums}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
@@ -420,6 +421,31 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 @media (max-width:640px){
   .foot-top .brand-wm{font-size:38px!important}
   .foot-top .desc,.foot-desc{font-size:13.8px;max-width:none;flex-basis:100%}
+}
+
+/* ── de-AI 오버라이드 (2026-09-11 대표 지시) ─────────────────────────────
+   홈(index.html)은 2026-08-17 에 이미 '종이 시험지·문방구' 질감으로 바꿨는데 이 페이지들은
+   예전 그대로라 서로 이질적이었다. 색은 그대로 두고 **AI 생성물 티**만 걷는다:
+   브랜드 그라데이션 → 단색, 컬러 글로우 → 옅은 중성 그림자, 알약 라벨 → 형광펜. */
+:root{--accent-grad:#0b7a6a;--shadow-accent:0 2px 8px rgba(13,38,33,.10)}
+.eyebrow{background-color:transparent;border:0;padding:0 3px;border-radius:0;box-shadow:none;
+  color:var(--accent-strong);font-weight:800;letter-spacing:.03em;
+  background-image:linear-gradient(transparent 62%, rgba(154,215,205,.5) 62%, rgba(154,215,205,.5) 94%, transparent 94%)}
+.eyebrow:hover{transform:none}
+
+/* 대표 카드 — 그라데이션·컬러 글로우·흰 블롭(전형적인 AI 티)을 걷고 단색 + 얇은 테두리로.
+   이름은 오른쪽 끝에서 왼쪽(아래 문단 위)으로 옮기고, 인용문 오른쪽에 남던 빈 자리는
+   카드 폭을 글에 맞춰 줄여 없앤다. 사진칸도 세로형 사진에 맞게 좁힌다(2026-09-11 대표 지시). */
+.ceo-card{background:#0b7a6a;box-shadow:none;border:1px solid rgba(255,255,255,.16)}
+.ceo-card::before{display:none}
+.ceo-card .who{justify-content:flex-start;margin-top:16px}
+.ceo-row{display:flex;justify-content:center;gap:22px;align-items:stretch}
+.ceo-photo{flex:0 0 clamp(240px,26vw,340px);width:auto;height:auto;align-self:stretch}
+.mission .ceo-card{flex:0 1 clamp(300px,34vw,412px);max-width:none;margin:0}
+@media (max-width:920px){
+  .ceo-row{flex-direction:column}
+  .ceo-photo{flex:none}
+  .mission .ceo-card{flex:none;width:100%}
 }
 </style>
 </head>
