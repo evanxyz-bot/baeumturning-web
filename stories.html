@@ -314,6 +314,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .post h2{font-size:23.5px;font-weight:700;letter-spacing:-0.022em;line-height:1.4;margin-bottom:12px}
 .post p{font-size:16.4px;color:var(--text-2);line-height:1.78;margin-bottom:12px}
 .post p:last-child{margin-bottom:0}
+.post p a{color:var(--accent-strong);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .pthumb{border-radius:14px;overflow:hidden;margin:16px 0;background:var(--surface-2)}
 .pthumb img{width:100%;display:block}
 .pempty{max-width:760px;margin:0 auto;text-align:center;background:#fff;border:2px dashed var(--border-strong);
@@ -503,7 +504,16 @@ body{word-break:keep-all;overflow-wrap:break-word}
     </article>
     -->
 
-    <div class="plist" id="plist"></div>
+    <div class="plist" id="plist">
+    <article class="post reveal" data-cat="개발">
+      <div class="pmeta"><span class="ptag dev">개발</span><time datetime="2026-09-17">2026. 09. 17</time></div>
+      <h2>배움터닝, App Store에 올라갔습니다</h2>
+      <p>오늘 애플 심사가 끝나고 배움터닝 1.0이 App Store에 공개됐습니다. 5월에 개발을 시작해 넉 달 만입니다. 아이폰에서 '배움터닝'을 검색하거나 <a href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener">App Store 페이지</a>에서 받을 수 있습니다.</p>
+      <p>심사는 한 번에 끝나지 않았습니다. 세 번 냈습니다. 처음 두 번은 "앱을 끝까지 확인할 정보가 부족하다"는 이유였고, 실제 아이폰에서 앱을 처음 켜 채점까지 가는 과정을 영상으로 찍어 보냈습니다. 마지막은 로그인 화면이 있는데 심사용 계정이 없다는 자동 확인이었습니다. 배움터닝은 구글·카카오 계정으로만 들어가고 '가입 없이 둘러보기'가 따로 있어서, 그 사실을 심사 메모에 적어 다시 냈고 하루 만에 통과했습니다.</p>
+      <p>이번 판에서 할 수 있는 것은 세 가지입니다. 고졸 검정고시 기출 12회차(2021~2026년, 2,040문항)를 실제 시험처럼 풀고, 답을 입력하면 과목별 점수가 바로 나오고, 틀린 기록으로 약한 단원을 골라 복습하는 것. 전부 무료입니다.</p>
+      <p>Google Play 판은 비공개 테스트를 마치는 대로 공개할 예정입니다. 안드로이드를 쓰시는 분들은 조금만 더 기다려 주세요.</p>
+    </article>
+    </div>
 
     <div class="pempty reveal" id="pempty">
       <span class="eic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2f9183" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7M9 11h5"/></svg></span>
