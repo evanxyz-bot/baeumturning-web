@@ -135,6 +135,9 @@ a:hover .brand-wm .ap svg{transform:rotate(120deg)}
 .badge-dl{display:inline-flex;align-items:center;height:60px;flex:none;transition:transform .16s var(--ease-spring)}
 .badge-dl img{height:100%;width:auto;display:block}
 .badge-dl:hover{transform:translateY(-1px)}
+/* 구글 배지 PNG 는 위아래 29px 투명 여백 포함(646×250, 보이는 부분 192px). 보이는 높이를 애플과 맞춘다 */
+.badge-gp{background:none;border:0;padding:0;cursor:pointer;font:inherit}
+.badge-gp img{height:calc(100% * 250 / 192)}
 /* 보조 CTA — 다운로드와 같은 크기, 다른 색(흰 배경 + teal 보더) */
 .btn-ghost{background:#fff!important;color:var(--accent-strong)!important;border:2px solid var(--accent-mid);
   box-shadow:0 4px 16px rgba(13,38,33,.08)!important;animation:heroUp .6s .55s both!important}
@@ -1966,13 +1969,14 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <div class="cta-zone">
         <!-- 스토어별로 나눈 다운로드 버튼(2026-09-11 대표 지시).
              App Store 는 2026-09-17 출시돼 애플 공식 배지(brand/badges/appstore-ko.svg, 수정 금지·최소 40px)로
-             스토어에 연결. Google Play 는 아직 '출시 준비 중' 팝업 — 사과·플레이 아이콘을 직접 그려 넣는 건
-             양쪽 브랜드 가이드라인 위반이라 뺐다(2026-09-17). Play 공개되면 구글 공식 배지
-             (play.google.com/intl/ko/badges)로 바꾸되, 배지는 반드시 스토어 링크에만 쓴다.
+             스토어에 연결. Google Play 도 구글 공식 배지(brand/badges/googleplay-ko.png, 원본 PNG 그대로 —
+             위아래 투명 여백 29px 이 배지의 '여백 규정'이라 자르지 않고 CSS 로 250/192 배 키워 보이는 높이를
+             애플 배지와 맞춘다). 아직 '출시 준비 중' 팝업이며, Play 공개되면 <a href> 로 바꾼다.
+             사과·플레이 아이콘을 직접 그려 넣는 건 양쪽 브랜드 가이드라인 위반이라 뺐다(2026-09-17).
              아래에 있던 'App Store · Google Play' 안내 줄은 버튼이 그 말을 하므로 뺐다. -->
         <div class="cta-row">
-          <button type="button" id="appDownloadBtn" class="btn btn-primary btn-dl js-app-dl">
-            Google Play
+          <button type="button" id="appDownloadBtn" class="badge-dl badge-gp js-app-dl" aria-label="Google Play에서 다운로드 (출시 준비 중)">
+            <img src="brand/badges/googleplay-ko.png" alt="Google Play에서 다운로드" width="202" height="78">
           </button>
           <a href="https://apps.apple.com/kr/app/id6807482640" id="appDownloadBtnIos" class="badge-dl" target="_blank" rel="noopener">
             <img src="brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="195" height="60">
