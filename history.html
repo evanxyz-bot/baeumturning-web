@@ -192,7 +192,7 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 .tl-item{position:relative;padding-bottom:22px}
 .tl-item:last-child{padding-bottom:4px}
 /* 점 — ::before 는 * 의 border-box 를 안 받아 예전엔 3px 오른쪽으로 삐뚤었다. 선 중심(x=10)에 맞춘다 */
-.tl-item::before{content:'';position:absolute;box-sizing:border-box;left:-33px;top:4px;width:14px;height:14px;border-radius:50%;
+.tl-item::before{content:'';position:absolute;z-index:1;box-sizing:border-box;left:-33px;top:4px;width:14px;height:14px;border-radius:50%;
   background:#fff;border:2.5px solid var(--accent-mid);box-shadow:0 0 8px rgba(11,122,106,.35)}
 .tl-item.now::before{background:var(--accent);border-color:#fff;
   box-shadow:0 0 0 3px rgba(11,122,106,.22),0 0 12px 2px rgba(11,122,106,.6),0 0 28px 6px rgba(11,122,106,.25);
@@ -202,13 +202,14 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
   50%{box-shadow:0 0 0 5px rgba(11,122,106,.14),0 0 18px 4px rgba(11,122,106,.75),0 0 40px 10px rgba(11,122,106,.32)}
 }
 /* 현재 점에서 3초마다 퍼지는 파동 — 경계선 링이 아니라 그라데이션 원이 커지며 옅어진다 (2026-09-17 대표 지시) */
-.tl-item.now::after{content:'';position:absolute;box-sizing:border-box;left:-33px;top:4px;width:14px;height:14px;border-radius:50%;
-  background:radial-gradient(circle,rgba(11,122,106,.55) 0%,rgba(11,122,106,.28) 40%,rgba(11,122,106,.08) 65%,rgba(11,122,106,0) 72%);
-  opacity:0;pointer-events:none;animation:tlRipple 3s ease-out infinite}
+.tl-item.now::after{content:'';position:absolute;z-index:0;box-sizing:border-box;left:-33px;top:4px;width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle,rgba(11,122,106,.95) 0%,rgba(11,122,106,.7) 30%,rgba(11,122,106,.35) 55%,rgba(11,122,106,.1) 70%,rgba(11,122,106,0) 74%);
+  opacity:0;pointer-events:none;animation:tlRipple 3s cubic-bezier(.2,.7,.3,1) infinite}
 @keyframes tlRipple{
-  0%{transform:scale(1);opacity:.9}
-  75%{transform:scale(4);opacity:0}
-  100%{transform:scale(4);opacity:0}
+  0%{transform:scale(1);opacity:1}
+  25%{opacity:.95}
+  80%{transform:scale(5);opacity:0}
+  100%{transform:scale(5);opacity:0}
 }
 @media (prefers-reduced-motion:reduce){.tl-item.now::before,.tl-item.now::after{animation:none}}
 .tl-item.now .tl-date{text-shadow:0 0 12px rgba(11,122,106,.35)}
@@ -216,6 +217,9 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 .tl-item h4{font-size:17.9px;font-weight:700;letter-spacing:-0.01em;margin:2px 0 3px}
 .tl-item p{font-size:14.6px;color:var(--text-3);line-height:1.55}
 .tl-item p a{color:var(--accent-strong);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.tl-badges{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:8px}
+.tl-badges img{height:40px;width:auto;display:block}
+.tl-badges span{font-size:14px;color:var(--text-3)}
 .tl-note{text-align:center;font-size:14.6px;color:var(--text-3);margin-top:20px}
 
 /* ── PARTNERS ── */
@@ -466,7 +470,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <div class="tl-item now">
           <div class="tl-date">2026. 09. 17</div>
           <h4>배움터닝 앱 출시</h4>
-          <p>iOS 앱 App Store 정식 출시 (<a href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener">App Store에서 보기</a>) · Google Play 출시 준비 중</p>
+          <div class="tl-badges"><a href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener"><img src="brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="130" height="40"></a><span>Google Play 출시 준비 중</span></div>
         </div>
         <div class="tl-item">
           <div class="tl-date">2026. 05</div>
