@@ -201,13 +201,14 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
   0%,100%{box-shadow:0 0 0 3px rgba(11,122,106,.22),0 0 12px 2px rgba(11,122,106,.6),0 0 28px 6px rgba(11,122,106,.25)}
   50%{box-shadow:0 0 0 5px rgba(11,122,106,.14),0 0 18px 4px rgba(11,122,106,.75),0 0 40px 10px rgba(11,122,106,.32)}
 }
-/* 현재 점에서 주기적으로 퍼지는 파동 — 점과 같은 자리에서 링이 커지며 사라진다 (2026-09-17 대표 지시) */
+/* 현재 점에서 3초마다 퍼지는 파동 — 경계선 링이 아니라 그라데이션 원이 커지며 옅어진다 (2026-09-17 대표 지시) */
 .tl-item.now::after{content:'';position:absolute;box-sizing:border-box;left:-33px;top:4px;width:14px;height:14px;border-radius:50%;
-  border:2px solid var(--accent);opacity:0;pointer-events:none;animation:tlRipple 2.8s ease-out infinite}
+  background:radial-gradient(circle,rgba(11,122,106,.55) 0%,rgba(11,122,106,.28) 40%,rgba(11,122,106,.08) 65%,rgba(11,122,106,0) 72%);
+  opacity:0;pointer-events:none;animation:tlRipple 3s ease-out infinite}
 @keyframes tlRipple{
-  0%{transform:scale(1);opacity:.75}
-  70%{transform:scale(3.4);opacity:0}
-  100%{transform:scale(3.4);opacity:0}
+  0%{transform:scale(1);opacity:.9}
+  75%{transform:scale(4);opacity:0}
+  100%{transform:scale(4);opacity:0}
 }
 @media (prefers-reduced-motion:reduce){.tl-item.now::before,.tl-item.now::after{animation:none}}
 .tl-item.now .tl-date{text-shadow:0 0 12px rgba(11,122,106,.35)}
