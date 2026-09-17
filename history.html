@@ -136,6 +136,7 @@ h2.h{font-size:42.6px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .page-head h1{font-size:49.3px;font-weight:700;letter-spacing:-0.035em;line-height:1.15}
 .page-head h1 .g{background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .page-head .lead{margin:18px auto 0}
+.page-head.compact{padding:56px 0 36px}
 .crumb{font-size:14.6px;color:var(--text-4);margin-bottom:18px}
 .crumb a:hover{color:var(--text-2)}
 .crumb b{color:var(--accent-strong);font-weight:600}
@@ -181,15 +182,27 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 
 /* ── HISTORY ── */
 .history{padding:72px 0;background:linear-gradient(180deg,rgba(238,241,248,.55),rgba(242,240,248,.4))}
-.tl-card{max-width:680px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:22px;padding:30px 30px 22px;box-shadow:var(--shadow-md)}
-.tl{position:relative;padding-left:30px}
-.tl::before{content:'';position:absolute;left:8px;top:8px;bottom:14px;width:2px;
-  background:linear-gradient(180deg,var(--accent),var(--accent-mid))}
-.tl-item{position:relative;padding-bottom:20px}
+.tl-card{max-width:680px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:22px;padding:30px 30px 22px;
+  box-shadow:var(--shadow-md),0 0 0 1px rgba(11,122,106,.05),0 0 48px rgba(11,122,106,.09)}
+.tl{position:relative;padding-left:36px}
+/* 세로선 — 위는 진하고 아래로 갈수록 옅어지며, 얇은 네온 글로우 (2026-09-17 대표 지시) */
+.tl::before{content:'';position:absolute;left:9px;top:10px;bottom:14px;width:2px;border-radius:2px;
+  background:linear-gradient(180deg,var(--accent) 0%,var(--accent-mid) 55%,rgba(11,122,106,.12) 100%);
+  box-shadow:0 0 6px rgba(11,122,106,.55),0 0 16px rgba(11,122,106,.22)}
+.tl-item{position:relative;padding-bottom:22px}
 .tl-item:last-child{padding-bottom:4px}
-.tl-item::before{content:'';position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;
-  background:#fff;border:3px solid var(--accent-mid)}
-.tl-item.now::before{border-color:var(--accent);background:var(--accent);box-shadow:0 0 0 5px rgba(11,122,106,.14)}
+/* 점 — ::before 는 * 의 border-box 를 안 받아 예전엔 3px 오른쪽으로 삐뚤었다. 선 중심(x=10)에 맞춘다 */
+.tl-item::before{content:'';position:absolute;box-sizing:border-box;left:-33px;top:4px;width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2.5px solid var(--accent-mid);box-shadow:0 0 8px rgba(11,122,106,.35)}
+.tl-item.now::before{background:var(--accent);border-color:#fff;
+  box-shadow:0 0 0 3px rgba(11,122,106,.22),0 0 12px 2px rgba(11,122,106,.6),0 0 28px 6px rgba(11,122,106,.25);
+  animation:tlGlow 2.8s ease-in-out infinite}
+@keyframes tlGlow{
+  0%,100%{box-shadow:0 0 0 3px rgba(11,122,106,.22),0 0 12px 2px rgba(11,122,106,.6),0 0 28px 6px rgba(11,122,106,.25)}
+  50%{box-shadow:0 0 0 5px rgba(11,122,106,.14),0 0 18px 4px rgba(11,122,106,.75),0 0 40px 10px rgba(11,122,106,.32)}
+}
+@media (prefers-reduced-motion:reduce){.tl-item.now::before{animation:none}}
+.tl-item.now .tl-date{text-shadow:0 0 12px rgba(11,122,106,.35)}
 .tl-date{font-size:14px;font-weight:800;color:var(--accent-strong);font-variant-numeric:tabular-nums}
 .tl-item h4{font-size:17.9px;font-weight:700;letter-spacing:-0.01em;margin:2px 0 3px}
 .tl-item p{font-size:14.6px;color:var(--text-3);line-height:1.55}
@@ -430,10 +443,9 @@ body{word-break:keep-all;overflow-wrap:break-word}
 </nav>
 
 <!-- ===================== PAGE HEAD ===================== -->
-<header class="page-head">
+<header class="page-head compact">
   <div class="wrap">
-    <h1>아웃포커스가<br><span class="g">걸어온 길</span></h1>
-    <p class="lead">이제 막 첫 발을 뗐습니다. 앞으로의 걸음을 이곳에 하나씩 기록해 가겠습니다.</p>
+    <h1><span class="g">연혁</span></h1>
   </div>
 </header>
 
