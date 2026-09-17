@@ -132,6 +132,9 @@ a:hover .brand-wm .ap svg{transform:rotate(120deg)}
 .btn-dl{height:60px;padding:0 36px;font-size:20.2px;border-radius:var(--r-xl);white-space:nowrap;
   box-shadow:0 6px 24px rgba(11,122,106,.3)}
 .btn-dl:hover{transform:translateY(-1px)}
+.badge-dl{display:inline-flex;align-items:center;height:60px;flex:none;transition:transform .16s var(--ease-spring)}
+.badge-dl img{height:100%;width:auto;display:block}
+.badge-dl:hover{transform:translateY(-1px)}
 /* 보조 CTA — 다운로드와 같은 크기, 다른 색(흰 배경 + teal 보더) */
 .btn-ghost{background:#fff!important;color:var(--accent-strong)!important;border:2px solid var(--accent-mid);
   box-shadow:0 4px 16px rgba(13,38,33,.08)!important;animation:heroUp .6s .55s both!important}
@@ -1404,6 +1407,7 @@ body::before{background:
   .btn-dl{flex:0 1 auto;width:auto;font-size:clamp(11.8px,3.3vw,16px);height:44px;
     padding:0 clamp(4px,1.6vw,16px);gap:5px;white-space:nowrap;border-radius:12px}
   .btn-dl svg{flex:none;width:15px;height:15px}
+  .badge-dl{height:44px}
   .l-bars{right:-66px}
   .l-weak{left:-40px}
   .l-pass{right:-52px}
@@ -1961,22 +1965,17 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <p class="sub">아웃포커스는 교육 사각지대를 해소하는 솔루션을 만듭니다. <b>배움터닝</b>은 <b>검정고시 기출문제</b>를 실전처럼 풀고 <b>무료로 채점</b>하는 학습 솔루션<br>— 모두에게 같은 문제가 아닌 <b>개인의 오답 기록</b>으로 <b>약점 단원</b>을 <span style="white-space:nowrap">분석&amp;진단</span>하고, <b>맞춤 문제</b>를 추천합니다</p>
       <div class="cta-zone">
         <!-- 스토어별로 나눈 다운로드 버튼(2026-09-11 대표 지시).
-             App Store 는 2026-09-17 출시돼 실제 링크, Google Play 는 아직 '출시 준비 중' 팝업 —
-             Play 공개 링크가 생기면 아래 버튼도 같은 식으로 <a href> 로 바꾼다.
+             App Store 는 2026-09-17 출시돼 애플 공식 배지(brand/badges/appstore-ko.svg, 수정 금지·최소 40px)로
+             스토어에 연결. Google Play 는 아직 '출시 준비 중' 팝업 — 사과·플레이 아이콘을 직접 그려 넣는 건
+             양쪽 브랜드 가이드라인 위반이라 뺐다(2026-09-17). Play 공개되면 구글 공식 배지
+             (play.google.com/intl/ko/badges)로 바꾸되, 배지는 반드시 스토어 링크에만 쓴다.
              아래에 있던 'App Store · Google Play' 안내 줄은 버튼이 그 말을 하므로 뺐다. -->
         <div class="cta-row">
           <button type="button" id="appDownloadBtn" class="btn btn-primary btn-dl js-app-dl">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M5.5 2.2 19.8 12 5.5 21.8Z"/>
-            </svg>
             Google Play
           </button>
-          <a href="https://apps.apple.com/kr/app/id6807482640" id="appDownloadBtnIos" class="btn btn-primary btn-dl" target="_blank" rel="noopener" aria-label="App Store에서 배움터닝 받기">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M16.4 12.6c0-2.4 2-3.5 2.1-3.6-1.1-1.7-2.9-1.9-3.6-1.9-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.8-1.7 0-3.2 1-4.1 2.5-1.7 3-.4 7.5 1.3 9.9.8 1.2 1.8 2.5 3.1 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.1-1.2 2.9-2.4.9-1.4 1.3-2.7 1.3-2.8-.1 0-2.3-.9-2.3-3.6Z"/>
-              <path d="M14.3 5.5c.7-.8 1.1-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4Z"/>
-            </svg>
-            App Store
+          <a href="https://apps.apple.com/kr/app/id6807482640" id="appDownloadBtnIos" class="badge-dl" target="_blank" rel="noopener">
+            <img src="brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="195" height="60">
           </a>
         </div>
       </div>
