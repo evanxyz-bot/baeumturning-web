@@ -1,0 +1,57 @@
+/* 대입 환산 페이지 공통 — 250장이 이 파일 하나를 공유한다(인라인하면 50MB) */
+:root{
+  color-scheme:light;
+  --bg:#f3f7f6; --surface:#fff; --surface-2:#eef4f2;
+  --border:#e6eeeb; --border-strong:#c9d8d3;
+  --text:#15181d; --text-2:#4b5260; --text-3:#8b91a0;
+  --accent:#0b7a6a; --accent-soft:#e6f4f1; --accent-strong:#075c50;
+  --r-md:10px; --r-lg:14px;
+  --shadow-sm:0 1px 2px rgba(13,38,33,.04),0 2px 10px rgba(13,38,33,.05);
+}
+@font-face{font-family:'GmarketSans';font-weight:700;font-display:swap;
+  src:url('../fonts/GmarketSansBold.woff2') format('woff2')}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);
+  font-family:'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  word-break:keep-all;overflow-wrap:break-word}
+h1,h2{font-family:'GmarketSans','Pretendard Variable',sans-serif;letter-spacing:-.02em}
+.top{display:flex;gap:14px;align-items:center;padding:14px 16px;
+  background:var(--surface);border-bottom:1px solid var(--border)}
+.top a{color:var(--text-2);text-decoration:none;font-weight:600;font-size:14px}
+.top .home{color:var(--accent-strong)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 56px}
+.crumb{font-size:13px;color:var(--text-3);margin:0 0 14px}
+.crumb a{color:var(--text-3);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:0 0 12px}
+h2{font-size:19px;margin:32px 0 10px}
+.lead{font-size:16px;line-height:1.7;margin:0 0 10px;color:var(--text)}
+.meta{font-size:13px;color:var(--text-3);margin:0 0 6px}
+.sub{font-size:13.5px;color:var(--text-2);margin:0 0 10px}
+.note{background:var(--accent-soft);border-radius:var(--r-md);padding:10px 12px;
+  font-size:14px;color:var(--accent-strong);margin:12px 0 0}
+.t{width:100%;border-collapse:collapse;background:var(--surface);
+  border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);font-size:15px}
+.t th{background:var(--surface-2);color:var(--text-2);font-size:13.5px;
+  text-align:left;padding:10px 14px;font-weight:700}
+.t td{padding:9px 14px;border-top:1px solid var(--border)}
+.t td.v{font-weight:700;color:var(--accent-strong);text-align:right;
+  font-variant-numeric:tabular-nums}
+.t th:last-child{text-align:right}
+.formula{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+  padding:12px 14px;font-size:14px;line-height:1.65;color:var(--text-2);margin:0}
+.src{margin:0;padding-left:18px;font-size:14px;line-height:1.8;color:var(--text-2)}
+.src a{color:var(--accent-strong)}
+.warn{margin:14px 0 0;font-size:13.5px;line-height:1.7;color:var(--text-2);
+  background:#fbf0ee;border-radius:var(--r-md);padding:12px 14px}
+.cta{margin:36px 0 0;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:20px 18px;box-shadow:var(--shadow-sm)}
+.cta h2{margin:0 0 8px;font-size:18px}
+.cta p{margin:0 0 14px;font-size:14.5px;line-height:1.7;color:var(--text-2)}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+  font-weight:700;font-size:15px;padding:11px 18px;border-radius:var(--r-md);
+  box-shadow:0 3px 0 var(--accent-strong)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--accent-strong)}
+.foot{border-top:1px solid var(--border);background:var(--surface);
+  padding:18px 16px;text-align:center;font-size:13px;color:var(--text-3)}
+.foot a{color:var(--accent-strong)}
+@media (max-width:420px){ h1{font-size:22px} .t{font-size:14px} }
