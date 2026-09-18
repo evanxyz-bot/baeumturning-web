@@ -283,9 +283,13 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 @media (max-width:920px){
   h2.h{font-size:33.6px}
   .page-head h1{font-size:38.1px}
-  .vgrid{grid-template-columns:1fr}
-  .ceo-row{grid-template-columns:1fr;gap:20px}
-  .ceo-photo{min-height:0;aspect-ratio:4/3}
+  /* 믿는 것 3장은 폰에서도 가로 한 줄 (2026-09-18 대표 지시) */
+  .vgrid{grid-template-columns:repeat(3,1fr);gap:10px}
+  .vcard{padding:16px 10px 14px;border-radius:16px}
+  .vcard .vic{width:40px;height:40px;border-radius:12px;margin-bottom:10px}
+  .vcard .vic svg{width:20px;height:20px}
+  .vcard h3{font-size:14.2px;line-height:1.35;margin-bottom:7px;word-break:keep-all}
+  .vcard p{font-size:12.3px;line-height:1.55;text-align:left;word-break:normal;overflow-wrap:anywhere}
   .foot-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:560px){
@@ -445,9 +449,18 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .ceo-photo{flex:0 0 clamp(240px,26vw,340px);width:auto;height:auto;align-self:stretch}
 .mission .ceo-card{flex:0 1 clamp(300px,34vw,412px);max-width:none;margin:0}
 @media (max-width:920px){
-  .ceo-row{flex-direction:column}
-  .ceo-photo{flex:none}
-  .mission .ceo-card{flex:none;width:100%}
+  /* 대표 사진 + 문구는 폰에서도 좌우 배치 (2026-09-18 대표 지시). 사진 38% · 카드 나머지 */
+  .ceo-row{flex-direction:row;gap:12px;align-items:stretch}
+  .ceo-photo{flex:0 0 38%;min-height:0;height:auto;aspect-ratio:auto;border-radius:16px}
+  .ceo-photo .ph-mark{width:52px;height:52px}
+  .mission .ceo-card{flex:1 1 0;min-width:0;width:auto;padding:16px 15px 15px;border-radius:18px}
+  .ceo-card .qm{font-size:26px;margin-bottom:2px}
+  .ceo-card .qt{font-size:14.6px;line-height:1.42}
+  .ceo-card .qt br{content:'';}
+  .ceo-card .qt br::after{content:' '}   /* 줄바꿈을 띄어쓰기로 — '교육.배움이' 붙지 않게 */
+  .ceo-card .who{margin-top:10px}
+  .ceo-card .who b{font-size:13.5px}
+  .ceo-card .sub{font-size:12.4px;line-height:1.6;margin-top:10px;padding-top:10px}
 }
 </style>
 </head>
