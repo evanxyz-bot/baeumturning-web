@@ -666,13 +666,28 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
 });
 </script>
 <script>
-/* 모바일 내비 드롭다운 (2026-08-26)
+/* 모바일 내비 드롭다운 (2026-08-26 · 2026-09-18 개정)
    서브메뉴가 :hover 로만 열려 터치 기기에서 하위 8개 페이지가 도달 불가였다.
-   hover 가 없는 기기에서만 개입한다 — 데스크톱은 기존 hover 그대로. */
+
+   2026-09-18 대표 실기기 제보: 폰에서 '회사'를 눌러도 드롭다운이 안 열리고 회사 페이지로
+   이동해 버린다. 에뮬레이터(iPhone 13·Galaxy S9+)에서는 정상이었다 — 원인은 기기 판별이다.
+   스타일러스·마우스를 지원하는 일부 안드로이드(삼성 등)는 '(hover: none)' 을 false 로 보고해
+   스크립트가 통째로 빠져나갔고, 그러면 그냥 링크라 페이지가 이동한다.
+   → 기기를 판별하지 않고 **그 탭이 실제로 손가락/펜으로 온 것인지**(pointerType)로 판단한다.
+     마우스 사용자는 종전대로 hover 로 열린다.
+
+   두 번째 탭도 이동시키지 않고 '닫기'로 바꿨다 — 드롭다운 안에 같은 링크(회사 소개·Q&A)가
+   이미 있어 도달 경로가 막히지 않고, 대표가 겪은 '눌렀더니 새로고침'이 원천적으로 사라진다. */
 (function(){
-  if(!window.matchMedia||!window.matchMedia('(hover: none)').matches){return;}
   var drops=[].slice.call(document.querySelectorAll('.nav-drop'));
   if(!drops.length){return;}
+  var mq=window.matchMedia;
+  var coarse=!!mq&&(mq('(hover: none)').matches||mq('(pointer: coarse)').matches);
+  var touched=false;
+  document.addEventListener('pointerdown',function(e){
+    if(e.pointerType){ touched=(e.pointerType==='touch'||e.pointerType==='pen'); }
+  },true);
+  document.addEventListener('touchstart',function(){ touched=true; },{passive:true,capture:true});
   function closeAll(keep){
     for(var i=0;i<drops.length;i++){ if(drops[i]!==keep){ drops[i].classList.remove('open'); } }
   }
@@ -680,8 +695,9 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     var a=d.querySelector('a');
     if(!a){return;}
     a.addEventListener('click',function(e){
-      if(d.classList.contains('open')){return;}   /* 두 번째 탭은 부모 페이지로 이동 */
-      e.preventDefault();
+      if(!(coarse||touched)){return;}            /* 마우스는 기존 hover 그대로 */
+      e.preventDefault();                        /* 상위 링크는 여는/닫는 버튼으로만 쓴다 */
+      if(d.classList.contains('open')){ d.classList.remove('open'); return; }
       closeAll(d);
       d.classList.add('open');
     });
