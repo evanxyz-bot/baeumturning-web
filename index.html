@@ -923,7 +923,7 @@ body::before{background:
    dash 를 여러 겹 쌓으면 겹 수만큼 계단이 생긴다. 대신 빛줄기 엘리먼트 하나를
    offset-path 로 곡선 위에 태우고, 그 안을 linear-gradient 로 채운다.
    가운데가 가장 밝고 양 끝이 완전히 투명 → 머리·몸통·꼬리가 이어진 대칭 발광 */
-.spark{position:absolute;left:0;top:0;width:88px;height:6px;pointer-events:none;
+.spark{position:absolute;left:0;top:0;width:64px;height:6px;pointer-events:none;
   border-radius:999px;opacity:0;
   background:linear-gradient(90deg,
     transparent 0%,
@@ -936,12 +936,14 @@ body::before{background:
   filter:blur(1.7px) drop-shadow(0 0 5px var(--bc));
   offset-rotate:auto;offset-distance:0%;
   animation:sparkRun 4s linear infinite;animation-delay:var(--bd,0s)}
+/* 스파크는 경로 점을 중심으로 그려져 끝점에서 절반이 선 밖으로 튀어나왔다(2026-09-20 대표 지적)
+   → 길이 88→64, 경로 96% 에서 멈추고 그 전에 꺼진다 */
 @keyframes sparkRun{
-  0%{offset-distance:0%;opacity:0}
+  0%{offset-distance:2%;opacity:0}
   7%{opacity:1}
-  30%{opacity:1}
-  37%{offset-distance:100%;opacity:0}
-  100%{offset-distance:100%;opacity:0}
+  29%{opacity:1}
+  36%{offset-distance:96%;opacity:0}
+  100%{offset-distance:96%;opacity:0}
 }
 /* 제목 강조 — 흩어진(진분홍) → 데이터(초록)로 모이는 흐름을 색으로 보여준다 */
 .netsec .w-pink{color:#f4649e}
