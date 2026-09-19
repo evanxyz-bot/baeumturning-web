@@ -110,6 +110,9 @@ h2{font-size:19px;margin:32px 0 10px}
 .bt th[scope=row]{position:sticky;left:0;z-index:1;background:var(--surface-2);
   color:var(--text-2);font-size:12.5px;font-weight:700;text-align:left;
   min-width:0;width:1px;border-left:0}
+/* 미지수 기호(U+1D465)는 Pretendard 에 없다 — 수학 폰트로 떨어지게 스택을 깐다.
+   글자별 폴백이라 숫자·부등호는 그대로 Pretendard 로 그려진다. */
+.bt td,.bt th{font-family:'Pretendard Variable',Pretendard,'Cambria Math','STIX Two Math','Noto Sans Math','Segoe UI Symbol',system-ui,sans-serif}
 .bt td.v{font-weight:700;color:var(--accent-strong)}
 .bt td.g{color:var(--text-3);font-size:12.5px}
 .btcap{font-size:12.5px;line-height:1.6;color:var(--text-3);margin:0 0 7px}
