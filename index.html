@@ -1135,10 +1135,13 @@ body::before{background:
      글자는 왼쪽에 붙어 보인다(2026-09-12 실측). */
   width:max-content;max-width:calc(100% - 32px);flex-wrap:nowrap;
   margin:0;padding:0 12px;line-height:1;
-  /* 테두리 선(2px)이 지나는 띠만 가린다 — 위는 섹션 색, 아래는 카드 색. 나머지는 투명이라
-     폰의 미세한 배경 그라데이션 위에서도 패치가 안 보인다(2026-09-20) */
-  background:linear-gradient(180deg,transparent calc(50% - 1px),#0d1917 calc(50% - 1px),#0d1917 50%,
-    var(--surface) 50%,var(--surface) calc(50% + 3px),transparent calc(50% + 3px))}
+  /* 테두리 선이 지나는 띠만 가린다. ★절대배치 기준은 패딩 박스라 2px 테두리는 이 요소의
+     중심보다 2px '위'에 있다 — 띠를 중심 아래로만 깔면 선이 글자를 그대로 통과한다
+     (2026-09-20 실측). 중심 -6px~+4px 만 칠하고 나머지는 투명이라 패치가 안 보인다. */
+  background:linear-gradient(180deg,transparent calc(50% - 2px),
+    #0d1917 calc(50% - 2px),#0d1917 calc(50% - 1px),
+    var(--surface) calc(50% - 1px),var(--surface) 50%,
+    transparent 50%)}
 /* 배경 수식은 카드 밖으로 새면 안 되므로 자기 상자에서 자른다 */
 .analysis .pipe-math{overflow:hidden;border-radius:14px}
 /* 배경 수식 — 통계·분석 지면이라는 인상만 남기고 읽히지는 않게 */
