@@ -174,6 +174,9 @@ h1{font-size:30px;margin:0 0 10px}
    카드 안에서 쓰지 않는다. 배경(가로 스크롤 그림자)은 style.css 것 그대로. (2026-09-20 대표 지시) */
 .detail .btwrap{border-radius:var(--r-md);max-width:100%}
 .detail .bt{font-size:12px}
+/* 미지수 기호(U+1D465)는 Pretendard 에 없다 — 수학 폰트로 떨어지게 스택을 깐다.
+   글자별 폴백이라 숫자·부등호는 그대로 Pretendard 로 그려진다. */
+.bt td,.bt th{font-family:'Pretendard Variable',Pretendard,'Cambria Math','STIX Two Math','Noto Sans Math','Segoe UI Symbol',system-ui,sans-serif}
 .detail .bt th,.detail .bt td{padding:6px 4px}
 .detail .bt th[scope=row]{font-size:11.5px;background:var(--surface-2)}
 .detail .btcap{font-size:11.5px;margin:0 0 6px;color:var(--text-3)}
@@ -951,28 +954,30 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var GLYPH = { '.': 3.1, '<': 7.5, '>': 7.5, '≤': 7.5, '≥': 7.5, '=': 7.5, 'x': 6.2 };
   function cellW(s) {
     var w = 0;
+    s = s.replace(/𝑥/g, 'x');   // 미지수 기호는 서로게이트 쌍이라 폭만 영문 x 로 센다
     for (var i = 0; i < s.length; i++) {
       var c = s.charAt(i);
       w += s.charCodeAt(i) > 0x2000 ? 10.4 : (GLYPH[c] || 7.4);
     }
     return w;
   }
-  // 구간을 부등호로 — '91≤x<100'. (2026-09-20 대표 지시)
+  // 구간을 부등호로 — '100>𝑥≥91'. 높은 점수가 왼쪽(표의 열 순서와 같은 방향). (2026-09-20 대표 지시)
   // 끝자리가 9 인 상한·1 인 하한은 옆 경계로 옮기고 등호를 떼어 소수점을 지운다(뜻은 같다).
   // 정적 페이지 build_admission_pages.py band_spans() 와 같은 규칙이라 두 화면이 어긋나지 않는다.
+  var MX = '𝑥';   // 미지수 U+1D465 — 영문 x 와 구분되는 수학 이탤릭 기호
   function edge(v, upper) {
     var c = Math.round(v * 100);
-    if (upper && c % 10 === 9) { return ['<', fmtNum((c + 1) / 100)]; }
-    if (!upper && c % 10 === 1) { return ['<', fmtNum((c - 1) / 100)]; }
-    return ['≤', fmtNum(v)];
+    if (upper && c % 10 === 9) { return ['>', fmtNum((c + 1) / 100)]; }
+    if (!upper && c % 10 === 1) { return ['>', fmtNum((c - 1) / 100)]; }
+    return ['≥', fmtNum(v)];
   }
   function fmtNum(v) { return String(Math.round(v * 100) / 100); }
   function bandSpan(b) {
-    if (b.min === b.max) { return 'x=' + fmtNum(b.min); }
+    if (b.min === b.max) { return MX + '=' + fmtNum(b.min); }
     var h = edge(b.max, true), l = edge(b.min, false);
-    if (b.min <= 0) { return 'x' + h[0] + h[1]; }        // '0≤x' 는 자명하다
-    if (b.max >= 100) { return l[1] + l[0] + 'x'; }      // 만점이 상한
-    return l[1] + l[0] + 'x' + h[0] + h[1];
+    if (b.min <= 0) { return h[1] + h[0] + MX; }         // '𝑥≥0' 은 자명하다
+    if (b.max >= 100) { return MX + l[0] + l[1]; }       // 만점이 상한
+    return h[1] + h[0] + MX + l[0] + l[1];
   }
   function bandTableHtml(u, bands) {
     var isScore = G.bandValueIsScore(u);
