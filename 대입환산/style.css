@@ -110,9 +110,11 @@ h2{font-size:19px;margin:32px 0 10px}
 .bt th[scope=row]{position:sticky;left:0;z-index:1;background:var(--surface-2);
   color:var(--text-2);font-size:12.5px;font-weight:700;text-align:left;
   min-width:0;width:1px;border-left:0}
-/* 미지수 기호(U+1D465)는 Pretendard 에 없다 — 수학 폰트로 떨어지게 스택을 깐다.
-   글자별 폴백이라 숫자·부등호는 그대로 Pretendard 로 그려진다. */
-.bt td,.bt th{font-family:'Pretendard Variable',Pretendard,'Cambria Math','STIX Two Math','Noto Sans Math','Segoe UI Symbol',system-ui,sans-serif}
+/* 수학 조판처럼 — 미지수는 이탤릭으로 키우고(숫자보다 작아 보였다), 부등호는 앞뒤 여백을 준다.
+   U+1D465 기호 대신 마크업을 쓴다: 폰트 폴백에 기대지 않으므로 글리프가 없는 기기가 없다
+   (2026-09-20 대표 지시 "모든 기기 문제없게"). 평문은 'x' 라 AI·JSON-LD 도 그대로 읽는다. */
+.bt .mx,.btcap .mx{font-style:italic;font-size:1.18em;font-weight:500;letter-spacing:.01em}
+.bt .op{padding:0 .1em;color:var(--text-2)}
 .bt td.v{font-weight:700;color:var(--accent-strong)}
 .bt td.g{color:var(--text-3);font-size:12.5px}
 .btcap{font-size:12.5px;line-height:1.6;color:var(--text-3);margin:0 0 7px}
