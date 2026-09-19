@@ -169,11 +169,14 @@ h1{font-size:30px;margin:0 0 10px}
 .persub li span{font-weight:600;color:var(--text-2)}
 .persub li b{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
 .persub li b i{font-style:normal;color:var(--text-3)}
-.bandtbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;background:transparent}
-.bandtbl th{text-align:left;font-weight:700;color:var(--text-3);padding:3px 0}
-.bandtbl th+th,.bandtbl td+td{text-align:right}
-.bandtbl td{padding:3px 0;border-top:1px solid var(--border);color:var(--text-2)}
-.bandtbl td.v{font-weight:700;color:var(--text)}
+/* 구간표는 style.css 의 가로표(.btwrap/.bt)를 그대로 쓴다 — 정적 대학 페이지와 같은 형식.
+   카드 펼침 패널은 폭이 좁아 글자만 한 단계 줄이고, 읽기 폭 밖으로 넓히는 PC 브레이크아웃은
+   카드 안에서 쓰지 않는다. 배경(가로 스크롤 그림자)은 style.css 것 그대로. (2026-09-20 대표 지시) */
+.detail .btwrap{border-radius:var(--r-md);max-width:100%}
+.detail .bt{font-size:12px}
+.detail .bt th,.detail .bt td{padding:6px 8px}
+.detail .bt th[scope=row]{font-size:11.5px;background:var(--surface-2)}
+.detail .btcap{font-size:11.5px;margin:0 0 6px;color:var(--text-3)}
 .detail p{font-size:12.5px;line-height:1.65;color:var(--text-3);margin:0}
 .detail p+p{margin-top:4px}
 .src-note{font-size:12.5px;color:var(--text-3);margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
@@ -755,7 +758,9 @@ h1{font-size:30px;margin:0 0 10px}
   <aside class="cta">
     <h2>배움터닝 앱에서는</h2>
     <p>과목 점수를 한 번 넣어 두면 전국 대학의 환산 결과를 한 화면에서 비교하고 정렬해 볼 수 있습니다. 앱에 기록한 과목별 최근 점수를 그대로 불러와 계산하며, 검정고시 기출 풀이·오답 복습·성적 그래프와 함께 무료로 쓸 수 있습니다.</p>
-    <a class="btn" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener">App Store에서 배움터닝 받기</a>
+    <!-- 애플 공식 배지(brand/badges/appstore-ko.svg, 129.7×40 원본) — 비율·색·테두리 변형 금지.
+         텍스트 버튼은 눈에 안 띈다는 2026-09-20 대표 지시로 배지로 교체. 폰에서도 같은 크기. -->
+    <a class="badge-dl" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="App Store에서 배움터닝 받기"><img src="../brand/badges/appstore-ko.svg" alt="App Store에서 다운로드하기" width="182" height="56"></a>
   </aside>
   </div><!-- /.prose -->
 </main>
@@ -937,6 +942,56 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     return '<span class="tag">' + tag + '</span>';
   }
 
+  // 구간표는 가로 2행 — 1행 구간 / 2행 등급·점수, 9칸 넘으면 9칸씩 아래로 쌓는다.
+  // (2026-09-20 대표 지시 · 정적 대학 페이지 build_admission_pages.py band_table() 과 같은 형식)
+  // 세로 2열 × N행이면 구간 121개인 대학에서 카드 하나가 화면을 다 먹는다.
+  var BAND_CHUNK = 9;
+  // 12px tabular-nums 기준 글자 폭 — 블록끼리 열을 맞추려고 칸 최소폭을 미리 계산한다
+  // (정적 페이지는 13.5px 이라 값이 다르다: build_admission_pages.py _GLYPH)
+  var GLYPH = { '.': 4.3, '~': 10.1 };
+  function cellW(s) {
+    var w = 0;
+    for (var i = 0; i < s.length; i++) {
+      var c = s.charAt(i);
+      w += s.charCodeAt(i) > 0x2000 ? 12.5 : (GLYPH[c] || 6.7);
+    }
+    return w;
+  }
+  function bandTableHtml(u, bands) {
+    var isScore = G.bandValueIsScore(u);
+    // '등급 상당' 행은 값과 다를 때만 — 같으면 같은 줄이 두 번 나온다
+    var hasGrade = bands.some(function (x) { return x.grade != null; })
+      && bands.some(function (x) { return x.grade !== x.value; });
+    var suffix = isScore ? '점' : '등급';
+    var spans = [], vals = [], grades = [], bw = 64;
+    bands.forEach(function (x) {
+      spans.push(x.min === x.max ? String(x.max) : x.min + '~' + x.max);
+      vals.push(x.value + suffix);
+      grades.push(x.grade != null ? x.grade + '등급' : '-');
+    });
+    spans.concat(vals, hasGrade ? grades : []).forEach(function (t) {
+      bw = Math.max(bw, cellW(t) + 17);  // 좌우 padding 8 + 보더 1
+    });
+    var html = '';
+    for (var i = 0; i < bands.length; i += BAND_CHUNK) {
+      var s = spans.slice(i, i + BAND_CHUNK), v = vals.slice(i, i + BAND_CHUNK),
+        g = grades.slice(i, i + BAND_CHUNK);
+      html += '<table class="bt"><tbody><tr><th scope="row">구간</th>' +
+        s.map(function (t) { return '<td>' + esc(t) + '</td>'; }).join('') + '</tr>' +
+        '<tr><th scope="row">' + (isScore ? '환산점수' : '등급') + '</th>' +
+        v.map(function (t) { return '<td class="v">' + esc(t) + '</td>'; }).join('') + '</tr>' +
+        (hasGrade ? '<tr><th scope="row">등급 상당</th>' +
+          g.map(function (t) { return '<td class="g">' + esc(t) + '</td>'; }).join('') + '</tr>' : '') +
+        '</tbody></table>';
+    }
+    var cap = '가로로 읽습니다 — 윗줄이 검정고시 점수(점), 아랫줄이 ' +
+      (isScore ? '환산점수' : '환산 등급') + '입니다.' +
+      (bands.length > BAND_CHUNK
+        ? ' 구간이 ' + bands.length + '개라 ' + BAND_CHUNK + '칸씩 끊어 아래로 이었습니다.' : '');
+    return '<p class="btcap">' + cap + '</p><div class="btwrap" style="--bw:' +
+      Math.round(bw) + 'px">' + html + '</div>';
+  }
+
   function detailHtml(r) {
     var u = r.univ, out = '';
     if (r.perSubject) {
@@ -947,16 +1002,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       }).join('') + '</ul></section>';
     }
     if (u.bands && u.bands.length) {
-      var isScore = G.bandValueIsScore(u);
-      var hasGrade = u.bands.some(function (x) { return x.grade != null; });
-      out += '<section><h4>대학 공개 환산표</h4><table class="bandtbl"><thead><tr>' +
-        '<th>검정고시 점수</th><th>' + (isScore ? '환산점수' : '등급') + '</th>' +
-        (hasGrade ? '<th>등급 상당</th>' : '') + '</tr></thead><tbody>' +
-        u.bands.map(function (x) {
-          return '<tr><td>' + (x.min === x.max ? x.max + '점' : x.min + ' ~ ' + x.max + '점') + '</td>' +
-            '<td class="v">' + x.value + (isScore ? '점' : '등급') + '</td>' +
-            (hasGrade ? '<td>' + (x.grade != null ? x.grade + '등급' : '-') + '</td>' : '') + '</tr>';
-        }).join('') + '</tbody></table></section>';
+      out += '<section><h4>대학 공개 환산표</h4>' + bandTableHtml(u, u.bands) + '</section>';
     }
     if (u.formula) { out += '<section><h4>대학 산출식</h4><p>' + esc(u.formula) + '</p></section>'; }
     var subjects = '';
