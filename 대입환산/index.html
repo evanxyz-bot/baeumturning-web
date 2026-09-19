@@ -999,6 +999,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   }
   function bandTableHtml(u, bands) {
     var isScore = G.bandValueIsScore(u);
+    // 높은 점수가 항상 왼쪽에(2026-09-20 대표 지시). 대구보건대만 데이터가 오름차순이라
+    // 그 표만 뒤집혀 있었다. 원본을 건드리지 않게 복사해서 정렬한다.
+    bands = bands.slice().sort(function (a, z) { return z.min - a.min || z.max - a.max; });
     // '등급 상당' 행은 값과 다를 때만 — 같으면 같은 줄이 두 번 나온다
     var hasGrade = bands.some(function (x) { return x.grade != null; })
       && bands.some(function (x) { return x.grade !== x.value; });
