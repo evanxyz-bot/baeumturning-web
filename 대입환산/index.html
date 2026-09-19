@@ -174,7 +174,7 @@ h1{font-size:30px;margin:0 0 10px}
    카드 안에서 쓰지 않는다. 배경(가로 스크롤 그림자)은 style.css 것 그대로. (2026-09-20 대표 지시) */
 .detail .btwrap{border-radius:var(--r-md);max-width:100%}
 .detail .bt{font-size:12px}
-.detail .bt th,.detail .bt td{padding:6px 8px}
+.detail .bt th,.detail .bt td{padding:6px 4px}
 .detail .bt th[scope=row]{font-size:11.5px;background:var(--surface-2)}
 .detail .btcap{font-size:11.5px;margin:0 0 6px;color:var(--text-3)}
 .detail p{font-size:12.5px;line-height:1.65;color:var(--text-3);margin:0}
@@ -948,14 +948,31 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var BAND_CHUNK = 9;
   // 12px tabular-nums 기준 글자 폭 — 블록끼리 열을 맞추려고 칸 최소폭을 미리 계산한다
   // (정적 페이지는 13.5px 이라 값이 다르다: build_admission_pages.py _GLYPH)
-  var GLYPH = { '.': 4.3, '~': 10.1 };
+  var GLYPH = { '.': 3.1, '<': 7.5, '>': 7.5, '≤': 7.5, '≥': 7.5, '=': 7.5, 'x': 6.2 };
   function cellW(s) {
     var w = 0;
     for (var i = 0; i < s.length; i++) {
       var c = s.charAt(i);
-      w += s.charCodeAt(i) > 0x2000 ? 12.5 : (GLYPH[c] || 6.7);
+      w += s.charCodeAt(i) > 0x2000 ? 10.4 : (GLYPH[c] || 7.4);
     }
     return w;
+  }
+  // 구간을 부등호로 — '91≤x<100'. (2026-09-20 대표 지시)
+  // 끝자리가 9 인 상한·1 인 하한은 옆 경계로 옮기고 등호를 떼어 소수점을 지운다(뜻은 같다).
+  // 정적 페이지 build_admission_pages.py band_spans() 와 같은 규칙이라 두 화면이 어긋나지 않는다.
+  function edge(v, upper) {
+    var c = Math.round(v * 100);
+    if (upper && c % 10 === 9) { return ['<', fmtNum((c + 1) / 100)]; }
+    if (!upper && c % 10 === 1) { return ['<', fmtNum((c - 1) / 100)]; }
+    return ['≤', fmtNum(v)];
+  }
+  function fmtNum(v) { return String(Math.round(v * 100) / 100); }
+  function bandSpan(b) {
+    if (b.min === b.max) { return 'x=' + fmtNum(b.min); }
+    var h = edge(b.max, true), l = edge(b.min, false);
+    if (b.min <= 0) { return 'x' + h[0] + h[1]; }        // '0≤x' 는 자명하다
+    if (b.max >= 100) { return l[1] + l[0] + 'x'; }      // 만점이 상한
+    return l[1] + l[0] + 'x' + h[0] + h[1];
   }
   function bandTableHtml(u, bands) {
     var isScore = G.bandValueIsScore(u);
@@ -963,14 +980,14 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     var hasGrade = bands.some(function (x) { return x.grade != null; })
       && bands.some(function (x) { return x.grade !== x.value; });
     var suffix = isScore ? '점' : '등급';
-    var spans = [], vals = [], grades = [], bw = 64;
+    var spans = [], vals = [], grades = [], bw = 46;
     bands.forEach(function (x) {
-      spans.push(x.min === x.max ? String(x.max) : x.min + '~' + x.max);
+      spans.push(bandSpan(x));
       vals.push(x.value + suffix);
       grades.push(x.grade != null ? x.grade + '등급' : '-');
     });
     spans.concat(vals, hasGrade ? grades : []).forEach(function (t) {
-      bw = Math.max(bw, cellW(t) + 17);  // 좌우 padding 8 + 보더 1
+      bw = Math.max(bw, cellW(t) + 9);  // 좌우 padding 4 + 보더 1
     });
     var html = '';
     for (var i = 0; i < bands.length; i += BAND_CHUNK) {
