@@ -1016,7 +1016,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     for (var i = 0; i < bands.length; i += BAND_CHUNK) {
       var s = spans.slice(i, i + BAND_CHUNK), v = vals.slice(i, i + BAND_CHUNK),
         g = grades.slice(i, i + BAND_CHUNK);
-      html += '<table class="bt"><tbody><tr><th scope="row">구간</th>' +
+      html += '<table class="bt"><tbody><tr><th scope="row">점수 구간</th>' +
         s.map(function (t) { return '<td>' + spanHtml(t) + '</td>'; }).join('') + '</tr>' +
         '<tr><th scope="row">' + (isScore ? '환산점수' : '등급') + '</th>' +
         v.map(function (t) { return '<td class="v">' + esc(t) + '</td>'; }).join('') + '</tr>' +
@@ -1080,7 +1080,11 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       '<div class="uval">' + valueHtml(r) + '</div></div>' +
       (r.ok && r.final ? '<p class="ufinal">대학 최종 득점 ' + esc(r.final.value) + esc(r.final.unit) +
         '<em> · ' + esc(r.final.formula) + '</em></p>' : '') +
-      (!r.ok && r.reason ? '<p class="ureason">' + esc(r.reason) + '</p>' : '') +
+      // 점수 입력 전에는 306곳 전부에 '점수를 입력하면 계산할 수 있어요'가 깔린다 —
+      // 첫 화면이 늘 그 상태라 안내가 아니라 잡음이다(2026-09-20 대표 지시로 삭제).
+      // 앱(gedAdmission.ts)의 문구는 그대로 두고 이 화면에서만 감춘다.
+      (!r.ok && r.reason && !/점수를 입력하면/.test(r.reason)
+        ? '<p class="ureason">' + esc(r.reason) + '</p>' : '') +
       (canOpen ? '<div class="urow"><button type="button" class="more-btn" data-open="' + esc(u.id) + '">' +
         (open ? '접기' : '환산표·상세정보 보기') + '</button>' + warn + '</div>' : (warn ? '<div class="urow">' + warn + '</div>' : '')) +
       (canOpen && open ? '<div class="detail">' + detailHtml(r) + '</div>' : '') +
