@@ -104,8 +104,8 @@ h2{font-size:19px;margin:32px 0 10px}
     var(--surface)}
 .bt{border-collapse:collapse;width:max-content;font-size:13.5px;font-variant-numeric:tabular-nums}
 .bt+.bt{border-top:2px solid var(--border-strong)}  /* 블록 경계 — 행 구분선보다 진하게 */
-.bt th,.bt td{padding:8px;white-space:nowrap;text-align:center;
-  min-width:var(--bw,64px);border-left:1px solid var(--border)}
+.bt th,.bt td{padding:8px 4px;white-space:nowrap;text-align:center;
+  min-width:var(--bw,52px);border-left:1px solid var(--border)}
 .bt tr+tr td,.bt tr+tr th{border-top:1px solid var(--border)}
 .bt th[scope=row]{position:sticky;left:0;z-index:1;background:var(--surface-2);
   color:var(--text-2);font-size:12.5px;font-weight:700;text-align:left;
