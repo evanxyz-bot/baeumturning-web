@@ -90,26 +90,22 @@ h2{font-size:19px;margin:32px 0 10px}
 .t a{color:var(--accent-strong);font-weight:700;text-decoration:none}
 .t a:hover{text-decoration:underline}
 
-/* ── 구간표는 가로로 눕힌다 (2026-09-20 대표 지시) ──
-   1행 구간 / 2행 등급·점수, 9칸을 넘으면 9칸씩 블록으로 아래에 쌓는다.
-   세로 2열 × N행이면 구간 121개인 대구보건대에서 표 하나가 화면 몇 개를 먹는다.
-   폰에서도 세우지 않는다 — 세로 길이를 아끼는 게 목적이라 가로 스크롤로 둔다.
-   --bw 는 생성기가 칸 내용 중 가장 긴 것에 맞춰 넣는다(블록끼리 열이 어긋나지 않게). */
+/* ── 구간표는 세로 (2026-09-20 대표 지시 "다시 좌우에서 상하 방향으로") ──
+   열이 '점수 구간 | 환산점수 | (등급 상당)', 행이 구간 하나씩. 같은 날 아침 가로로
+   눕혔다가 되돌린 것이다 — 값·표기는 그대로고 방향만 바뀌었다.
+   --sw 는 생성기가 구간 표기 중 가장 긴 것에 맞춰 넣는다(행마다 폭이 달라 보이지 않게). */
 .btwrap{display:block;width:fit-content;max-width:100%;overflow-x:auto;
   -webkit-overflow-scrolling:touch;border-radius:var(--r-lg);box-shadow:var(--shadow-sm);
-  /* 오른쪽에 더 있다는 표시 — local 레이어가 내용과 함께 움직여 끝까지 밀면 그림자를 덮는다 */
-  background:
-    linear-gradient(to left,var(--surface) 55%,rgba(255,255,255,0)) right center/34px 100% no-repeat local,
-    linear-gradient(to left,rgba(13,38,33,.22),rgba(13,38,33,0)) right center/22px 100% no-repeat,
-    var(--surface)}
+  background:var(--surface)}
 .bt{border-collapse:collapse;width:max-content;font-size:13.5px;font-variant-numeric:tabular-nums}
-.bt+.bt{border-top:2px solid var(--border-strong)}  /* 블록 경계 — 행 구분선보다 진하게 */
-.bt th,.bt td{padding:8px 4px;white-space:nowrap;text-align:center;
-  min-width:var(--bw,52px);border-left:1px solid var(--border)}
-.bt tr+tr td,.bt tr+tr th{border-top:1px solid var(--border)}
-.bt th[scope=row]{position:sticky;left:0;z-index:1;background:var(--surface-2);
-  color:var(--text-2);font-size:12.5px;font-weight:700;text-align:left;
-  min-width:0;width:1px;border-left:0}
+.bt th,.bt td{padding:7px 12px;white-space:nowrap;text-align:center;
+  border-left:1px solid var(--border)}
+.bt th:first-child,.bt td:first-child{border-left:0;min-width:var(--sw,64px)}
+.bt thead th{position:sticky;top:0;z-index:1;background:var(--surface-2);
+  color:var(--text-2);font-size:12.5px;font-weight:700;
+  box-shadow:inset 0 -1px 0 var(--border-strong)}
+.bt tbody tr+tr td{border-top:1px solid var(--border)}
+.bt tbody tr:nth-child(even) td{background:var(--surface-2)}
 /* 수학 조판처럼 — 미지수는 이탤릭으로 키우고(숫자보다 작아 보였다), 부등호는 앞뒤 여백을 준다.
    U+1D465 기호 대신 마크업을 쓴다: 폰트 폴백에 기대지 않으므로 글리프가 없는 기기가 없다
    (2026-09-20 대표 지시 "모든 기기 문제없게"). 평문은 'x' 라 AI·JSON-LD 도 그대로 읽는다. */
@@ -126,6 +122,9 @@ h2{font-size:19px;margin:32px 0 10px}
 .lst th:last-child{text-align:right}
 .lst td:first-child{font-weight:600;color:var(--text)}
 .lst td.g{text-align:right;font-weight:700;color:var(--accent-strong)}
+/* 2열('4년제 · 경기' / '전 과목 평균 구간표')은 한 줄로 — 접히면 행 높이가 두 배가 된다
+   (2026-09-20 대표 지시 "N년제, 지역 부분을 1열로 배치해야 공간을 아끼지"). */
+.lst th:nth-child(2),.lst td:nth-child(2){white-space:nowrap}
 .formula{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
   padding:12px 14px;font-size:14px;line-height:1.7;color:var(--text-2);margin:0}
 .src{margin:0;padding-left:18px;font-size:14px;line-height:1.8;color:var(--text-2)}
@@ -190,7 +189,7 @@ h2{font-size:19px;margin:32px 0 10px}
   h1{font-size:23px}
   .t{font-size:14px}
   .t th,.t td{padding:9px 11px}
-  /* 구간표는 폰에서도 가로표 그대로 — 가로 스크롤로 본다 */
   .bt{font-size:13px}
+  .bt th,.bt td{padding:7px 10px}
   .univindex{columns:2;font-size:13.5px}
 }
