@@ -158,8 +158,11 @@ h1{font-size:30px;margin:0 0 10px}
 .kmap .dot{fill:var(--text-3);pointer-events:none;transition:fill .15s,r .15s}
 .kmap .dot.on{fill:var(--accent-strong);r:6.5}
 .kmap .dot.hl{fill:var(--accent);r:7}
-.metrochips{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
-.metrochips .chip{padding:5px 9px;font-size:13px}
+/* 광역시 이름을 지도 왼쪽에 세로로 — 아래 가로로 두면 지도를 키운 만큼 또 길어진다 */
+.mapwrap{display:flex;gap:14px;align-items:flex-start}
+.metrochips{display:flex;flex-direction:column;gap:6px;flex:none}
+.metrochips .chip{padding:7px 10px;font-size:13.5px;text-align:center}
+.mapwrap .kmap{flex:1;min-width:0}
 .maphint{margin:8px 0 0;font-size:12px;line-height:1.5;color:var(--text-3)}
 .toggle{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;font-weight:600;color:var(--text-2);cursor:pointer}
 .toggle input{width:17px;height:17px;accent-color:var(--accent);flex:none}
@@ -253,15 +256,22 @@ h1{font-size:30px;margin:0 0 10px}
    폰(<1024px)은 지금 그대로 세로 1단이다 — 이 블록은 min-width 로만 걸린다. */
 @media (min-width:1024px){
   main.wrap{max-width:1120px}
-  /* 3단 — 성적 | 지도 | 조건. 성적이 2열이 되며 344px 로는 칸이 눌려 넓혔고,
-     지도를 조건 칸 안에 넣었더니 그 칸 오른쪽이 통째로 비어 제 단으로 뺐다. */
-  .panes{display:grid;grid-template-columns:428px minmax(0,1fr);gap:24px;align-items:start}
-  .hasmap .panes{grid-template-columns:400px 252px minmax(0,1fr)}
+  /* 좌열(과목점수 위·조건 아래) | 우열(지도). 2026-09-20 대표 지시:
+         과목점수  지도
+         조건      지도
+     3단(성적|지도|조건)으로 뒀더니 지도가 좁아 키울 자리가 없었다. */
+  .panes{display:grid;gap:24px;align-items:start}
+  .colL{display:grid;gap:24px;align-items:start}
+  /* 지도가 없으면 예전대로 성적 | 조건 가로 2단 — 세로로 쌓으면 허전하다 */
+  .colL{grid-template-columns:428px minmax(0,1fr)}
   /* 지도가 실제로 떴을 때만 칩을 감춘다 — JSON 이 실패하면 칩으로 계속 고를 수 있어야 한다 */
+  .hasmap .panes{grid-template-columns:minmax(0,1fr) 466px}
+  .hasmap .colL{grid-template-columns:minmax(0,1fr)}
   .hasmap #regionChipRow{display:none}
   .hasmap .pane-map{display:block}
-  .panes>section{min-width:0}
-  .panes>section>h2{margin-top:26px}
+  .panes section{min-width:0}
+  .panes section>h2{margin-top:26px}
+  .colL>section:first-child>h2{margin-top:0}
   /* 입력행 좌우 여백을 절반 이하로(14px → 7px) — 라벨과 값 사이 빈 공간이 줄어든다 */
   .pane-scores .srow{padding:7px 7px;gap:6px}
   .pane-scores .srow span.nm{width:44px}
@@ -435,18 +445,13 @@ h1{font-size:30px;margin:0 0 10px}
 
   <!-- PC(≥1024px)에서는 좌 성적입력 / 우 조건 2단. 폰은 그대로 세로로 쌓인다 -->
   <div class="panes">
+  <div class="colL">
   <section class="pane-scores">
   <h2>과목별 점수</h2>
   <div class="card">
     <div class="avgline"><span id="avg">점수를 입력해 주세요</span><button type="button" class="clear" id="clear">지우기</button></div>
     <div class="scores" id="scores"></div>
   </div>
-  </section>
-
-  <!-- 지도는 PC 에서만 제 단을 갖는다. 폰에서는 숨고 조건 칸의 지역 칩으로 고른다. -->
-  <section class="pane-map" hidden>
-  <h2>지역</h2>
-  <div class="card"><div class="mapbox" id="mapbox"></div></div>
   </section>
 
   <section class="pane-filter">
@@ -463,7 +468,14 @@ h1{font-size:30px;margin:0 0 10px}
     <label class="toggle"><input type="checkbox" id="showNone" checked>검정고시 점수 내신 미반영 대학 표시</label>
   </div>
   </section>
-  </div>
+  </div><!-- /colL -->
+
+  <!-- 지도는 PC 에서만 제 단을 갖는다. 폰에서는 숨고 조건 칸의 지역 칩으로 고른다. -->
+  <section class="pane-map" hidden>
+  <h2>지역</h2>
+  <div class="card"><div class="mapbox" id="mapbox"></div></div>
+  </section>
+  </div><!-- /panes -->
 
   <div class="listhead">
     <h2 id="univ-list">대학별 환산 결과</h2>
@@ -1024,12 +1036,14 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       if (!p) { return; }
       svg += '<circle class="dot" data-r="' + esc(r) + '" cx="' + p[0] + '" cy="' + p[1] + '" r="5"/>';
     });
-    box.innerHTML = svg + '</svg>' +
+    // 광역시 이름은 지도 **왼쪽에 세로로** 쌓는다 (2026-09-20 대표 지시).
+    // 지도 아래 가로로 두면 지도를 키운 만큼 세로가 또 길어진다.
+    box.innerHTML = '<div class="mapwrap">' +
       '<div class="metrochips" id="metroChips">' + m.metroOrder.map(function (r) {
         return '<button type="button" class="chip mc" aria-pressed="false" data-r="' +
           esc(r) + '">' + esc(r) + '</button>';
-      }).join('') + '</div>' +
-      '<p class="maphint">지도나 아래 이름을 눌러 고릅니다. 여러 곳을 고를 수 있어요.</p>';
+      }).join('') + '</div>' + svg + '</svg></div>' +
+      '<p class="maphint">지도나 왼쪽 이름을 눌러 고릅니다. 여러 곳을 고를 수 있어요.</p>';
     document.body.classList.add('hasmap');
     box.addEventListener('click', function (e) {
       var t = e.target.closest ? (e.target.closest('.rg') || e.target.closest('.mc')) : null;
