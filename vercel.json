@@ -1,5 +1,18 @@
 {
+  "trailingSlash": true,
   "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.outfocus.co.kr" }],
+      "destination": "https://outfocus.co.kr/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "outoffocus-edu.vercel.app" }],
+      "destination": "https://outfocus.co.kr/",
+      "permanent": true
+    },
     {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "www.outfocus.co.kr" }],
@@ -12,6 +25,8 @@
       "destination": "https://outfocus.co.kr/:path*",
       "permanent": true
     },
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/:dir+/index.html", "destination": "/:dir+/", "permanent": true },
     { "source": "/notice.html", "destination": "/qna.html", "permanent": true },
     { "source": "/contact.html", "destination": "/qna.html", "permanent": true },
     { "source": "/app.html", "destination": "/", "permanent": true }
