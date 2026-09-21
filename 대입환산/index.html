@@ -114,6 +114,9 @@ h1{font-size:30px;margin:0 0 10px}
   grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:8px}
 /* 폰에서 한 칸이 ~150px 라 여백·라벨 폭을 줄인다 — 가장 긴 '한국사'(38.4px)가 44px 칸에 들어간다 */
 .srow{display:flex;align-items:center;gap:6px;background:var(--surface-2);border-radius:var(--r-md);padding:7px 9px}
+/* 입력칸+'점'을 묶는 상자. 폰에서는 display:contents 라 없는 셈 치고 예전 3항목 가로배치 그대로,
+   PC 에서만 실제 상자가 돼 과목명이 그 위(박스 밖)로 올라간다 (2026-09-22 대표 지시). */
+.srow .val{display:contents}
 .srow span.nm{font-size:15px;font-weight:700;color:var(--text-2);width:44px;flex:none}
 .srow input{flex:1;min-width:0;background:transparent;border:0;text-align:right;font:inherit;
   font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--text)}
@@ -123,9 +126,30 @@ h1{font-size:30px;margin:0 0 10px}
 .srow span.unit{font-size:13px;font-weight:600;color:var(--text-3);flex:none}
 .avgline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px;
   font-size:14.5px;font-weight:700;color:var(--accent-strong);font-variant-numeric:tabular-nums}
-.avgline .clear{background:var(--surface-2);border:0;border-radius:var(--r-md);padding:6px 12px;
-  font:inherit;font-size:13px;font-weight:700;color:var(--text-2);cursor:pointer}
+/* '지우기' 글자 대신 되돌림(↺) 기호 하나 — 정사각 34px (2026-09-22 대표 지시) */
+.avgline .clear{background:var(--surface-2);border:0;border-radius:var(--r-md);
+  width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center;
+  flex:none;font:inherit;color:var(--text-2);cursor:pointer}
 .avgline .clear:hover{background:var(--surface-3)}
+.avgline .clear svg{display:block}
+/* 제목 줄 — 오른쪽에 도움말(?) 버튼이 붙는다. PC 에서는 아래 미디어쿼리가 가운데로 옮긴다. */
+.intro h1{display:flex;align-items:center;justify-content:flex-start;gap:10px}
+.help{flex:none;width:28px;height:28px;padding:0;border:1.5px solid var(--accent);border-radius:50%;
+  background:transparent;color:var(--accent);font:inherit;font-size:16px;font-weight:800;line-height:1;
+  display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:background .15s,color .15s}
+.help:hover{background:var(--accent-soft)}
+/* 설명 팝업 — '검정고시 대입 환산이란' 두 문단을 여기로 옮겼다 (2026-09-22 대표 지시) */
+.helpdlg{position:relative;max-width:560px;width:calc(100% - 32px);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:22px;background:var(--surface);color:var(--text);
+  box-shadow:0 18px 44px rgba(13,38,33,.22)}
+.helpdlg::backdrop{background:rgba(13,38,33,.44)}
+.helpdlg h2{margin:0 40px 10px 0;font-size:20px}
+.helpdlg .para:last-of-type{margin-bottom:0}
+.helpdlg .x{position:absolute;top:12px;right:12px;width:32px;height:32px;padding:0;border:0;
+  border-radius:var(--r-md);background:var(--surface-2);color:var(--text-2);font:inherit;
+  font-size:17px;font-weight:700;line-height:1;cursor:pointer}
+.helpdlg .x:hover{background:var(--surface-3)}
 
 /* 필터 */
 .frow{display:flex;gap:10px;align-items:flex-start;margin-top:12px}
@@ -145,13 +169,13 @@ h1{font-size:30px;margin:0 0 10px}
    PC 에서만 보이고 폰에서는 칩을 쓴다 — 서울·세종은 손가락으로 찍기엔 너무 작다. */
 /* 라벨 후광이 지도 가장자리를 살짝 넘어도 잘리지 않게 — 카드까지 overflow 를 연다 */
 .mapbox{width:100%;overflow:visible}
-.pane-map .card{overflow:visible}
 .kmap{display:block;width:100%;height:auto;overflow:visible}
-.kmap .rg{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:1.1;
+/* 기본은 연노랑 — 고른 지역(accent 초록)과 대비가 크게 (2026-09-22 대표 지시) */
+.kmap .rg{fill:#fff4bf;stroke:#d9c66f;stroke-width:1.1;
   stroke-linejoin:round;cursor:pointer;
   transform-box:fill-box;transform-origin:center;
   transition:fill .15s,transform .18s var(--ease-spring),filter .18s}
-.kmap .rg:hover{fill:var(--accent-soft);stroke:var(--accent);transform:scale(1.06);
+.kmap .rg:hover{fill:#ffe98d;stroke:var(--accent);transform:scale(1.06);
   filter:drop-shadow(0 2px 5px rgba(13,38,33,.22))}
 .kmap .rg[aria-pressed="true"]{fill:var(--accent);stroke:var(--accent-strong)}
 .kmap .rg[aria-pressed="true"]:hover{fill:var(--accent-strong)}
@@ -159,7 +183,7 @@ h1{font-size:30px;margin:0 0 10px}
    도 위에 네모가 떴다. 링 대신 테두리를 굵혀 어디에 초점이 있는지 보인다. */
 .kmap .rg:focus{outline:none}
 .kmap .rg:focus-visible{stroke:var(--accent-strong);stroke-width:2.6}
-.kmap .rg.hl{fill:var(--accent-soft);stroke:var(--accent);transform:scale(1.06)}
+.kmap .rg.hl{fill:#ffe98d;stroke:var(--accent);transform:scale(1.06)}
 /* 울릉도·독도는 커지면 점이 튀어 보인다 — 호버 확대 없이 색만 */
 .kmap .rg.isl:hover{transform:none}
 /* 이름은 지도가 작아도 읽히게 크게 — 면을 넘어가도 괜찮다 (2026-09-21 대표 지시).
@@ -169,14 +193,13 @@ h1{font-size:30px;margin:0 0 10px}
 .kmap .lb.on{fill:#fff;stroke:none}   /* 면 안 이름(도)만 — 면이 accent 로 칠해지니 흰 글자 */
 /* 서울·세종처럼 면이 작은 광역시는 점을 찍고 이름을 점 옆에 쓴다 — 이름도 눌러 고를 수 있다.
    면 밖이라 흰 글자는 안 보인다 → 골랐을 땐 진한 accent 로. */
-.kmap .lb.mlb{font-size:20px;pointer-events:auto;cursor:pointer}
+.kmap .lb.mlb{font-size:26px;pointer-events:auto;cursor:pointer}
 .kmap .mlb.on{fill:var(--accent-strong);stroke:var(--surface)}
 .kmap .mlb.hl,.kmap .mlb:hover{fill:var(--accent)}
 .kmap .lb.small{font-size:15px;font-weight:600}
 .kmap .dot{fill:var(--text-3);pointer-events:none;transition:fill .15s,r .15s}
-.kmap .dot.on{fill:var(--accent-strong);r:6.5}
-.kmap .dot.hl{fill:var(--accent);r:7}
-.maphint{margin:8px 0 0;font-size:12px;line-height:1.5;color:var(--text-3)}
+.kmap .dot.on{fill:var(--accent-strong);r:7.5}
+.kmap .dot.hl{fill:var(--accent);r:8}
 .toggle{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;font-weight:600;color:var(--text-2);cursor:pointer}
 .toggle input{width:17px;height:17px;accent-color:var(--accent);flex:none}
 
@@ -283,13 +306,10 @@ h1{font-size:30px;margin:0 0 10px}
      '한국사' 라벨 여유가 3.9px 밖에 안 남았다(540px 이면 67.1px·19.9px). */
   .colL{grid-template-columns:540px minmax(0,1fr)}
   /* 지도가 실제로 떴을 때만 칩을 감춘다 — JSON 이 실패하면 칩으로 계속 고를 수 있어야 한다 */
-  /* 지도 열 396px — 이 폭이 지도 카드 높이를 정한다(지도는 폭 × 964/664, 1px 넓히면 1.45px 길어진다).
-     점수 입력이 7칸 한 줄(2줄 접기)이 되고 조건 제목이 18px 로 붙으면서 좌열이 또 짧아져,
-     424px 이던 것을 그대로 두면 지도가 조건 카드보다 54.1px 더 내려간다(실측 2026-09-21).
-     376~428px 을 4px 씩 쓸어 396px 채택 — 1280px·1024px 둘 다 지도 카드 아래 끝이
-     조건 카드보다 13.4px 아래(20px 이내). 1024px 에서 좌열 556px, 한 칸 71.7px 로 7칸이 안 깨진다.
-     412px 이상이면 1024px 에서 종류 칩이 한 줄 더 접혀 좌열이 되레 길어진다. */
-  .hasmap .panes{grid-template-columns:minmax(0,1fr) min(396px,50%)}
+  /* 지도 열 520px — 2026-09-22 대표 지시로 396px 에서 키웠다. 이 폭이 지도 높이를 정한다
+     (지도는 폭 × 964/664). 이번엔 좌우 카드 아래 끝을 맞추지 않는다 — 대표가 크기를 먼저 봤다.
+     1024px 에서는 min(...,50%) 가 512px 로 잡혀 좌열이 488px 남는다(한 칸 62.3px). */
+  .hasmap .panes{grid-template-columns:minmax(0,1fr) min(520px,50%)}
   .hasmap .colL{grid-template-columns:minmax(0,1fr)}
   .hasmap #regionChipRow{display:none}
   .hasmap .pane-map{display:block}
@@ -299,23 +319,30 @@ h1{font-size:30px;margin:0 0 10px}
      지도가 못 뜬 폴백(좌열 2단)에서는 안내문이 두 칸을 가로질러 맨 윗줄에 온다. */
   .colL>.intro{grid-column:1/-1;margin-top:0}
   .colL>section:first-of-type>h2{margin-top:0}
-  /* 지도 제목은 좌열 h1 첫 줄과 나란히 — 위 26px 규칙이 밀지 않게(같은 특정도 이상으로) */
-  .panes .pane-map>h2{margin-top:0}
+  /* 제목('지역')과 카드를 걷어내 지도만 남겼다 — 지도 윗선이 h1 윗선과 같은 줄에 온다
+     (2026-09-22 대표 지시). h1 의 위 광학 여백만큼만 내려 맞춘다. */
+  .panes .pane-map{margin-top:0}
+  /* 제목 '검정고시 대입 환산' 은 좌열 안에서 가운데 (폰은 기본 규칙의 왼쪽 정렬 그대로).
+     그냥 center 로 두면 오른쪽 ? 버튼(28px)+gap(10px)까지 포함해 가운데를 잡아서
+     글자 중심이 19px 왼쪽으로 밀린다(실측) → 왼쪽에 같은 폭의 빈 칸을 세워 상쇄한다. */
+  .intro h1{justify-content:center}
+  .intro h1::before{content:'';flex:none;width:28px}
   /* 점수 카드가 2줄짜리 한 줄로 짧아진 만큼 조건도 위로 붙인다 (2026-09-21 대표 지시
      "조건을 남는 공백 위로 당기고") — colL 의 24px gap 위에 26px 이 더 붙던 것을 18px 로 */
   .colL .pane-filter>h2{margin-top:18px}
   /* 점수 입력은 PC 에서 7과목 한 줄 — "과목 그냥 1열 안에 다 넣어봐" (2026-09-21 대표 지시).
      폰(<1024px)은 위 기본 규칙의 2열(국/수/영/사 · 과/한/도) 그대로다.
-     한 칸이 1280px 창에서 ≈105px, 1024px 창에서 ≈65px 로 좁아서 가로형(이름|입력|점)이
-     안 들어간다 → 칸 안을 2줄로 접는다. HTML 은 그대로 두고(폰 배치가 같은 마크업을 쓴다)
-     .srow 를 grid 로만 바꾼다: 윗줄에 과목명이 두 칸을 가로지르고, 아랫줄에 입력칸과 '점'. */
+     한 칸이 1280px 창에서 ≈105px 로 좁아 가로형(이름|입력|점)이 안 들어간다 → 2줄로 접는다.
+     2026-09-22 대표 지시로 과목명을 상자 밖 위 가운데로 뺐다: .srow 가 배경 없는 세로 스택이 되고
+     회색 상자는 .val(입력+'점')만 두른다. 폰은 .srow .val{display:contents} 라 이 변화가 없다. */
   .pane-scores .scores{grid-template-columns:repeat(7,minmax(0,1fr));
     grid-template-rows:auto;grid-auto-flow:row;gap:6px}
-  .pane-scores .srow{display:grid;grid-template-columns:minmax(0,1fr) auto;
-    align-items:center;column-gap:3px;row-gap:2px;padding:7px 7px}
-  .pane-scores .srow span.nm{grid-column:1/-1;width:auto;font-size:13px;line-height:1.35}
-  .pane-scores .srow input{grid-column:1;width:100%;font-size:15px}
-  .pane-scores .srow span.unit{grid-column:2;font-size:12px}
+  .pane-scores .srow{background:none;padding:0;display:flex;flex-direction:column;
+    align-items:stretch;gap:5px}
+  .pane-scores .srow span.nm{width:auto;text-align:center;font-size:13.5px}
+  .pane-scores .srow .val{display:flex;align-items:center;gap:3px;background:var(--surface-2);
+    border-radius:var(--r-md);padding:8px 8px}
+  .pane-scores .srow input{width:100%;min-width:0;font-size:15px}
   /* 결과 목록은 그 아래 전폭 — 1280px 한 줄에 카드 하나면 도로 빈 공간이 생긴다 */
   .ulist{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
     gap:12px;align-items:start}
@@ -490,7 +517,7 @@ h1{font-size:30px;margin:0 0 10px}
        h1 을 .intro 밖 grid 항목으로 두면 colL 의 24px gap 이 h1 아래에 붙어 되레 내려간다.
        폰에서는 .panes 가 block 이라 h1 → 안내 → 점수 → 조건 순서가 예전 그대로다. -->
   <div class="intro">
-  <h1>검정고시 대입 환산</h1>
+  <h1><span>검정고시 대입 환산</span><button type="button" class="help" id="helpBtn" aria-label="검정고시 대입 환산이란" aria-haspopup="dialog">?</button></h1>
   <p class="lead">과목 점수를 넣으면 전국 306개 대학의 환산 결과를 한 번에 봅니다. 대학 공개 자료 기준.</p>
   <p class="topwarn"><b>이 계산은 참고용입니다.</b> 지원 전에 반드시 해당 대학 입학처의 모집요강을 직접 확인하세요.</p>
   </div>
@@ -498,7 +525,7 @@ h1{font-size:30px;margin:0 0 10px}
   <section class="pane-scores">
   <h2>과목별 점수</h2>
   <div class="card">
-    <div class="avgline"><span id="avg">점수를 입력해 주세요</span><button type="button" class="clear" id="clear">지우기</button></div>
+    <div class="avgline"><span id="avg">점수를 입력해 주세요</span><button type="button" class="clear" id="clear" aria-label="다시 쓰기" title="다시 쓰기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 1 0 2.64-6.36"/><polyline points="3 4 3 10 9 10"/></svg></button></div>
     <div class="scores" id="scores"></div>
   </div>
   </section>
@@ -520,9 +547,9 @@ h1{font-size:30px;margin:0 0 10px}
   </div><!-- /colL -->
 
   <!-- 지도는 PC 에서만 제 단을 갖는다. 폰에서는 숨고 조건 칸의 지역 칩으로 고른다. -->
+  <!-- 제목·카드 없이 지도만 (2026-09-22 대표 지시) -->
   <section class="pane-map" hidden>
-  <h2>지역</h2>
-  <div class="card"><div class="mapbox" id="mapbox"></div></div>
+  <div class="mapbox" id="mapbox"></div>
   </section>
   </div><!-- /panes -->
 
@@ -539,11 +566,9 @@ h1{font-size:30px;margin:0 0 10px}
   <!-- ── 여기부터는 계산기와 무관한 정적 설명. 검색·답변 엔진이 읽는 부분이라 JS 로 채우지 않는다.
        숫자는 scripts/build_admission_calc.py 가 정본 데이터에서 센 값이고,
        `python scripts/build_admission_calc.py --check` 가 데이터와 대조한다. ── -->
+  <!-- '검정고시 대입 환산이란' 두 문단은 제목 옆 ? 버튼의 설명 팝업(#helpDlg)으로 옮겼다
+       (2026-09-22 대표 지시). 문서에는 그대로 남아 있어 검색·답변 엔진이 계속 읽는다. -->
   <div class="prose">
-  <h2>검정고시 대입 환산이란</h2>
-  <p class="para">대학은 수시·정시에서 학교생활기록부 교과성적을 봅니다. 검정고시 출신 지원자는 학교생활기록부가 없기 때문에, 대학이 검정고시 과목 점수를 자기 대학의 내신 등급이나 환산점수로 바꿔서 그 자리에 넣습니다. 이 변환 기준을 대학마다 따로 정해 모집요강이나 입학처 성적산출 프로그램으로 공개합니다.</p>
-  <p class="para">따라서 같은 검정고시 점수라도 어느 대학에 지원하느냐에 따라 환산 결과가 달라집니다. 이 페이지는 각 대학이 공개한 기준을 그대로 옮겨 한 화면에서 비교할 수 있게 만든 계산기입니다.</p>
-
   <h2>수록 범위</h2>
   <ul class="facts">
     <li>전국 <b data-stat="total">306</b>개 대학 — 4년제 <b data-stat="univ4">182</b>곳, 전문대 <b data-stat="univ2">124</b>곳</li>
@@ -894,6 +919,14 @@ h1{font-size:30px;margin:0 0 10px}
     <a class="badge-dl" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="App Store에서 배움터닝 받기"><img src="../brand/badges/appstore-ko.svg" alt="App Store에서 다운로드하기" width="182" height="56"></a>
   </aside>
   </div><!-- /.prose -->
+
+  <!-- 제목 옆 ? 버튼이 여는 설명 팝업 — 예전 .prose 맨 위 '검정고시 대입 환산이란' 을 옮긴 것 -->
+  <dialog class="helpdlg" id="helpDlg" aria-labelledby="helpDlgTitle">
+    <button type="button" class="x" id="helpClose" aria-label="닫기">&#10005;</button>
+    <h2 id="helpDlgTitle">검정고시 대입 환산이란</h2>
+    <p class="para">대학은 수시·정시에서 학교생활기록부 교과성적을 봅니다. 검정고시 출신 지원자는 학교생활기록부가 없기 때문에, 대학이 검정고시 과목 점수를 자기 대학의 내신 등급이나 환산점수로 바꿔서 그 자리에 넣습니다. 이 변환 기준을 대학마다 따로 정해 모집요강이나 입학처 성적산출 프로그램으로 공개합니다.</p>
+    <p class="para">따라서 같은 검정고시 점수라도 어느 대학에 지원하느냐에 따라 환산 결과가 달라집니다. 이 페이지는 각 대학이 공개한 기준을 그대로 옮겨 한 화면에서 비교할 수 있게 만든 계산기입니다.</p>
+  </dialog>
 </main>
 
 <footer class="foot">
@@ -991,9 +1024,11 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   // ── 점수 입력 (국어부터 1열, 순서는 GED_SUBJECTS 정본) ──
   var box = document.getElementById('scores');
   box.innerHTML = G.GED_SUBJECTS.map(function (s) {
+    // .val 은 PC 에서만 실제 상자가 된다(폰은 display:contents) — 과목명을 상자 밖 위로 빼기 위한 묶음
     return '<label class="srow"><span class="nm">' + esc(SUB[s]) + '</span>' +
+      '<span class="val">' +
       '<input type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="-" data-s="' + s + '" aria-label="' + esc(SUB[s]) + ' 점수">' +
-      '<span class="unit">점</span></label>';
+      '<span class="unit">점</span></span></label>';
   }).join('');
   box.addEventListener('input', function (e) {
     var el = e.target, s = el.getAttribute('data-s');
@@ -1012,6 +1047,28 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     [].forEach.call(box.querySelectorAll('input'), function (i) { i.value = ''; });
     render();
   });
+
+  // ── 제목 옆 ? — '검정고시 대입 환산이란' 설명 팝업 (2026-09-22 대표 지시) ──
+  (function () {
+    var dlg = document.getElementById('helpDlg');
+    var btn = document.getElementById('helpBtn');
+    if (!dlg || !btn) { return; }
+    function open() {
+      // <dialog> 미지원 구형 웹뷰는 open 속성만 세워 본문 안에 펼친다
+      if (dlg.showModal) { dlg.showModal(); } else { dlg.setAttribute('open', ''); }
+    }
+    function close() {
+      if (dlg.close) { dlg.close(); } else { dlg.removeAttribute('open'); }
+    }
+    btn.addEventListener('click', open);
+    document.getElementById('helpClose').addEventListener('click', close);
+    // 배경(::backdrop) 클릭 — 클릭 좌표가 대화상자 바깥이면 닫는다
+    dlg.addEventListener('click', function (e) {
+      if (e.target !== dlg) { return; }
+      var r = dlg.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) { close(); }
+    });
+  }());
 
   // ── 필터 칩 ──
   function chips(el, items, get, set) {
@@ -1062,7 +1119,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   // 이름끼리 겹치면 JSON 을 다시 굽지 않고 이 숫자만 고치면 된다. 도 이름은 면 안 최심점이라
   // 건드리지 않고, 겹침은 항상 이 표로 푼다.
   var METRO_LABEL = {
-    '서울': [9, -9, 'start'], '인천': [-9, 4, 'end'], '세종': [-9, -8, 'end'], '대전': [9, 6, 'start'],
+    // 세종 — 라벨이 26px 로 커지면서 왼쪽의 '충남'과 1.4px 겹쳤다(2026-09-22 실측).
+    // 점 왼쪽엔 더 물러날 자리가 없어 오른쪽 위(충북 면)로 옮겼다. 대전 라벨과 15.9px 떨어진다.
+    '서울': [9, -9, 'start'], '인천': [-9, 4, 'end'], '세종': [9, -14, 'start'], '대전': [9, 6, 'start'],
     '광주': [-9, -6, 'end'], '대구': [9, 6, 'start'], '울산': [9, 5, 'start'], '부산': [9, 6, 'start']
   };
   // 지도는 PC 전용 — 폰에서 48KB 를 받아 봐야 CSS 가 감춘다. 창을 넓히면 그때 받는다.
@@ -1102,7 +1161,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     m.metroOrder.forEach(function (r) {
       var p = m.metro[r];
       if (!p) { return; }
-      svg += '<circle class="dot" data-r="' + esc(r) + '" cx="' + p[0] + '" cy="' + p[1] + '" r="5"/>';
+      svg += '<circle class="dot" data-r="' + esc(r) + '" cx="' + p[0] + '" cy="' + p[1] + '" r="6"/>';
     });
     m.metroOrder.forEach(function (r) {
       var p = m.metro[r], o = METRO_LABEL[r] || [9, 0, 'start'];
@@ -1118,8 +1177,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     });
     // 이름이 전부 지도 안에 들어가므로 별도 이름 칩 열은 없다 (2026-09-21 — 전날의 "왼쪽 세로 칩"
     // 은 이름을 지도에 못 넣던 때의 차선책이었다).
-    box.innerHTML = svg + '</svg>' +
-      '<p class="maphint">지도를 눌러 고릅니다. 여러 곳을 고를 수 있어요.</p>';
+    box.innerHTML = svg + '</svg>';
     document.body.classList.add('hasmap');
     box.addEventListener('click', function (e) {
       var t = e.target.closest ? (e.target.closest('.rg') || e.target.closest('.mlb')) : null;
@@ -1278,11 +1336,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     var html = '<table class="bt"><thead><tr><th>점수 구간</th><th>' +
       (isScore ? '환산점수' : '등급') + '</th>' +
       (hasGrade ? '<th>등급 상당</th>' : '') + '</tr></thead><tbody>' + rows + '</tbody></table>';
-    // 2026-09-20 대표 지시로 가로표에서 되돌렸다 — 값·표기는 그대로, 방향만 세로
-    var cap = '세로로 읽습니다 — 왼쪽이 검정고시 점수(점), 오른쪽이 ' +
-      (isScore ? '환산점수' : '환산 등급') + '입니다.' +
-      (bands.length > BAND_CHUNK ? ' 구간이 ' + bands.length + '개라 표가 깁니다.' : '');
-    return '<p class="btcap">' + cap + '</p><div class="btwrap' +
+    // 읽는 방향 설명은 뺐다 (2026-09-22 대표 지시) — 표가 길 때의 안내만 남긴다
+    var cap = (bands.length > BAND_CHUNK ? '구간이 ' + bands.length + '개라 표가 깁니다.' : '');
+    return (cap ? '<p class="btcap">' + cap + '</p>' : '') + '<div class="btwrap' +
       (bands.length > 12 ? ' long' : '') + '" style="--sw:' +
       Math.round(bw) + 'px">' + html + '</div>';
   }
