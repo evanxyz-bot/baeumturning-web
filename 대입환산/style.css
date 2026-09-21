@@ -29,6 +29,16 @@ h1,h2,h3{font-family:'GmarketSans','Pretendard Variable',sans-serif;letter-spaci
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
 .nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1160px;margin:0 auto;padding:0 24px}
 .nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
+/* 헤더 우측 배움터닝 앱 묶음 */
+.nav-app{position:absolute;right:24px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-app-ic{width:34px;height:34px;border-radius:9px;background:#fff;border:1px solid var(--border);display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.nav-app-ic svg{width:24px;height:24px;color:var(--accent)}
+.nav-app-nm{font-weight:800;font-size:15px;color:var(--text);letter-spacing:-.01em}
+.nav-app-badge{display:block;height:32px;width:auto}
+@media (max-width:920px){.nav-app-nm{display:none}}
+@media (max-width:767px){.nav-top{justify-content:flex-start;padding:0 14px}.nav-top .brand-wm{font-size:min(65px,10.4vw)!important}}
+@media (max-width:560px){.nav-app{right:12px;gap:6px}.nav-app-ic{display:none}.nav-app-badge{height:28px}}
+@media (max-width:359px){.nav-top .brand-wm .wm-ko{display:none}}
 .navlinks{position:relative;display:flex;gap:15px;font-size:20.9px;font-weight:700}
 .navlinks a{position:relative;z-index:1;color:var(--text-2);padding:10px 22px;border-radius:var(--r-md);
   text-decoration:none;transition:color .18s,transform .18s var(--ease-spring)}
@@ -181,8 +191,8 @@ h2{font-size:19px;margin:32px 0 10px}
   .foot-top .desc{font-size:13.8px;max-width:none;flex-basis:100%}
 }
 @media (max-width:560px){
-  .nav-top{height:72px}
-  .nav-top .brand-wm{font-size:47px!important}
+  .nav-top{height:72px;justify-content:flex-start;padding:0 14px}
+  .nav-top .brand-wm{font-size:min(42px,10.4vw)!important}
   .nav-bot{justify-content:flex-start;overflow:visible;height:auto;min-height:56px}
   .navlinks{gap:2px;font-size:12.6px;margin:0 auto;flex-wrap:wrap;justify-content:center;row-gap:1px}
   .navlinks a{padding:6px 8px;white-space:nowrap}

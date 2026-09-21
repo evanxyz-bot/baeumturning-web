@@ -58,6 +58,16 @@ h3{font-family:'GmarketSans','Pretendard Variable',sans-serif}
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
 .nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1160px;margin:0 auto;padding:0 24px}
 .nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
+/* 헤더 우측 배움터닝 앱 묶음 */
+.nav-app{position:absolute;right:24px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-app-ic{width:34px;height:34px;border-radius:9px;background:#fff;border:1px solid var(--border);display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.nav-app-ic svg{width:24px;height:24px;color:var(--accent)}
+.nav-app-nm{font-weight:800;font-size:15px;color:var(--text);letter-spacing:-.01em}
+.nav-app-badge{display:block;height:32px;width:auto}
+@media (max-width:920px){.nav-app-nm{display:none}}
+@media (max-width:767px){.nav-top{justify-content:flex-start;padding:0 14px}.nav-top .brand-wm{font-size:min(65px,10.4vw)!important}}
+@media (max-width:560px){.nav-app{right:12px;gap:6px}.nav-app-ic{display:none}.nav-app-badge{height:28px}}
+@media (max-width:359px){.nav-top .brand-wm .wm-ko{display:none}}
 .navlinks{position:relative;display:flex;gap:15px;font-size:20.9px;font-weight:700}
 .navlinks a{position:relative;z-index:1;color:var(--text-2);padding:10px 22px;border-radius:var(--r-md);
   text-decoration:none;transition:color .18s,transform .18s var(--ease-spring)}
@@ -381,8 +391,8 @@ h1{font-size:30px;margin:0 0 10px}
   input,textarea,select{font-size:16px!important}
 }
 @media (max-width:560px){
-  .nav-top{height:72px}
-  .nav-top .brand-wm{font-size:47px!important}
+  .nav-top{height:72px;justify-content:flex-start;padding:0 14px}
+  .nav-top .brand-wm{font-size:min(42px,10.4vw)!important}
   .nav-bot{justify-content:flex-start;overflow:visible;height:auto;min-height:56px}
   .navlinks{gap:2px;font-size:12.6px;margin:0 auto;flex-wrap:wrap;justify-content:center;row-gap:1px}
   .navlinks a{padding:6px 8px;white-space:nowrap}
@@ -483,7 +493,13 @@ h1{font-size:30px;margin:0 0 10px}
       <span class="brand-wm" style="font-size:65px">
         <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span>
       </span>
-    </a>  </div>
+    </a>
+    <a class="nav-app" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="배움터닝 App Store 에서 다운로드">
+      <span class="nav-app-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg></span>
+      <span class="nav-app-nm">배움터닝</span>
+      <img class="nav-app-badge" src="/brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="104" height="32" loading="lazy">
+    </a>
+  </div>
   <div class="nav-bot">
     <div class="navlinks">
       <div class="nav-drop">
@@ -521,7 +537,7 @@ h1{font-size:30px;margin:0 0 10px}
   <div class="intro">
   <h1><span>검정고시 대입 환산</span><button type="button" class="help" id="helpBtn" aria-label="검정고시 대입 환산이란" aria-haspopup="dialog">?</button></h1>
   <p class="lead">과목 점수를 넣으면 전국 306개 대학의 환산 결과를 한 번에 봅니다. 대학 공개 자료 기준.</p>
-  <p class="topwarn"><b>이 계산은 참고용입니다.</b> 지원 전에 반드시 해당 대학 입학처의 모집요강을 직접 확인하세요.</p>
+  <p class="topwarn">※ 위 환산 결과는 각 대학이 공개한 자료를 옮긴 참고 자료이며, <b>지원과 합격을 보장하지 않습니다.</b> 입시 기준은 해마다 바뀌고 전형·모집단위에 따라서도 달라집니다. 최종 반영 방식은 지원하려는 대학 입학처의 해당 학년도 모집요강을 기준으로 하며, 모집요강과 다를 경우 모집요강이 우선합니다. 이 정보를 바탕으로 한 지원 결정과 그 결과는 지원자 본인의 책임입니다.</p>
   </div>
 
   <section class="pane-scores">
