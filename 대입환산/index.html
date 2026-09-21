@@ -104,15 +104,16 @@ h1{font-size:30px;margin:0 0 10px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
   padding:16px 16px 18px;box-shadow:var(--shadow-sm)}
 
-/* 성적 입력 — 국어부터 1열 (2026-09-18 대표 지시) */
-.scores{display:grid;grid-template-columns:1fr;gap:8px}
-/* PC 는 2열 — 세로로 읽어 국/수/영/사 · 과/한/도 (2026-09-20 대표 지시).
-   7행이던 것이 4행이 돼 우측 필터 높이와 얼추 맞는다. 폰은 1열 그대로. */
-@media (min-width:1024px){
-  .scores{grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column}
-}
-.srow{display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:var(--r-md);padding:7px 14px}
-.srow span.nm{font-size:15px;font-weight:700;color:var(--text-2);width:52px;flex:none}
+/* 성적 입력 — 국어부터 (2026-09-18 대표 지시).
+   폰·PC 모두 2열 — 세로로 읽어 국/수/영/사 · 과/한/도 (2026-09-21 대표 지시).
+   7행이던 것이 4행이 돼 카드가 짧아지고, PC 에서는 우측 필터 높이와 얼추 맞는다. */
+/* minmax(0,1fr) 여야 한다 — 그냥 1fr 이면 number 입력칸의 기본 너비(≈74px)가 열의 최소폭이 돼
+   360px 폰에서 두 열 합이 330px 로 넘쳐 가로 스크롤이 생겼다(실측). */
+.scores{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:8px}
+/* 폰에서 한 칸이 ~150px 라 여백·라벨 폭을 줄인다 — 가장 긴 '한국사'(38.4px)가 44px 칸에 들어간다 */
+.srow{display:flex;align-items:center;gap:6px;background:var(--surface-2);border-radius:var(--r-md);padding:7px 9px}
+.srow span.nm{font-size:15px;font-weight:700;color:var(--text-2);width:44px;flex:none}
 .srow input{flex:1;min-width:0;background:transparent;border:0;text-align:right;font:inherit;
   font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--text)}
 .srow input:focus{outline:2px solid var(--accent-mid);outline-offset:2px;border-radius:6px}
@@ -264,9 +265,12 @@ h1{font-size:30px;margin:0 0 10px}
 
 /* ── PC 2단 (2026-09-20 대표 지시) ──────────────────────────────────────────
    "과목별 점수 입력칸 여백이 많으니 좌우칸 줄이고 좌측배치, 우측에 필터창."
-   폰(<1024px)은 지금 그대로 세로 1단이다 — 이 블록은 min-width 로만 걸린다. */
+   폰(<1024px)은 카드가 세로로 쌓인다 — 이 블록은 min-width 로만 걸린다
+   (점수 입력 2열은 폰에도 걸리므로 이 블록 밖 기본 규칙에 있다). */
 @media (min-width:1024px){
-  main.wrap{max-width:1120px}
+  /* 푸터(.foot .wrap)와 같은 1280px — 안내문 오른쪽 빈 자리를 지도가 쓴다 (2026-09-21 대표 지시).
+     상단 내비(.nav-top 1160px)는 그대로 둔다. */
+  main.wrap{max-width:1280px}
   /* 좌열(과목점수 위·조건 아래) | 우열(지도). 2026-09-20 대표 지시:
          과목점수  지도
          조건      지도
@@ -276,20 +280,23 @@ h1{font-size:30px;margin:0 0 10px}
   /* 지도가 없으면 예전대로 성적 | 조건 가로 2단 — 세로로 쌓으면 허전하다 */
   .colL{grid-template-columns:428px minmax(0,1fr)}
   /* 지도가 실제로 떴을 때만 칩을 감춘다 — JSON 이 실패하면 칩으로 계속 고를 수 있어야 한다 */
-  /* 지도 열 540px — 광역시 이름 칩 열을 없애고 그 자리를 지도가 먹는다 (2026-09-21).
-     1024px 창에서도 좌열이 ~420px 남아 점수 입력행이 안 깨진다(실측). */
-  .hasmap .panes{grid-template-columns:minmax(0,1fr) 540px}
+  /* 지도 열 480px — 이 폭이 지도 카드 높이를 정한다(지도는 폭 × 920/664).
+     1280px 창에서 좌열(안내+점수+조건) 아래 끝과 지도 카드 아래 끝 차이 16.5px (실측 2026-09-21).
+     1024px 창에서도 좌열이 488px 남아 점수 입력 2열이 안 깨진다. */
+  .hasmap .panes{grid-template-columns:minmax(0,1fr) min(480px,50%)}
   .hasmap .colL{grid-template-columns:minmax(0,1fr)}
   .hasmap #regionChipRow{display:none}
   .hasmap .pane-map{display:block}
   .panes section{min-width:0}
   .panes section>h2{margin-top:26px}
-  .colL>section:first-child>h2{margin-top:0}
-  /* 입력행 좌우 여백을 절반 이하로(14px → 7px) — 라벨과 값 사이 빈 공간이 줄어든다 */
-  .pane-scores .srow{padding:7px 7px;gap:6px}
-  .pane-scores .srow span.nm{width:44px}
+  /* 좌열 첫 자식은 이제 안내문(.intro) — 그 다음 섹션 제목의 윗여백만 없앤다.
+     지도가 못 뜬 폴백(좌열 2단)에서는 안내문이 두 칸을 가로질러 맨 윗줄에 온다. */
+  .colL>.intro{grid-column:1/-1;margin-top:0}
+  .colL>section:first-of-type>h2{margin-top:0}
+  /* 지도 제목은 좌열 안내문 첫 줄과 나란히 — 위 26px 규칙이 밀지 않게(같은 특정도 이상으로) */
+  .panes .pane-map>h2{margin-top:0}
   .pane-scores .srow input{font-size:16px}
-  /* 결과 목록은 그 아래 전폭 — 1120px 한 줄에 카드 하나면 도로 빈 공간이 생긴다 */
+  /* 결과 목록은 그 아래 전폭 — 1280px 한 줄에 카드 하나면 도로 빈 공간이 생긴다 */
   .ulist{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
     gap:12px;align-items:start}
   /* 정적 설명은 읽기 폭 유지 */
@@ -456,12 +463,17 @@ h1{font-size:30px;margin:0 0 10px}
 
 <main class="wrap">
   <h1>검정고시 대입 환산</h1>
-  <p class="lead">과목 점수를 넣으면 전국 306개 대학의 환산 결과를 한 번에 봅니다. 대학 공개 자료 기준.</p>
-  <p class="topwarn"><b>이 계산은 참고용입니다.</b> 지원 전에 반드시 해당 대학 입학처의 모집요강을 직접 확인하세요.</p>
 
   <!-- PC(≥1024px)에서는 좌 성적입력 / 우 조건 2단. 폰은 그대로 세로로 쌓인다 -->
   <div class="panes">
   <div class="colL">
+  <!-- 안내문은 좌열 첫 자식 — PC 에서 그 오른쪽 빈 자리로 지도가 올라온다 (2026-09-21 대표 지시).
+       폰에서는 .panes 가 block 이라 h1 → 안내 → 점수 → 조건 순서가 예전 그대로다. -->
+  <div class="intro">
+  <p class="lead">과목 점수를 넣으면 전국 306개 대학의 환산 결과를 한 번에 봅니다. 대학 공개 자료 기준.</p>
+  <p class="topwarn"><b>이 계산은 참고용입니다.</b> 지원 전에 반드시 해당 대학 입학처의 모집요강을 직접 확인하세요.</p>
+  </div>
+
   <section class="pane-scores">
   <h2>과목별 점수</h2>
   <div class="card">
