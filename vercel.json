@@ -1,5 +1,11 @@
 {
   "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/(docs|scripts|content|approvals|design|fair)/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ],
   "redirects": [
     {
       "source": "/",
