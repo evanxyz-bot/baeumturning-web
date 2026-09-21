@@ -164,6 +164,18 @@ def main() -> int:
     parts.append("</rss>")
 
     doc = "\n".join(parts) + "\n"
+
+    # 내용이 그대로면 파일을 건드리지 않는다. lastBuildDate 는 돌릴 때마다 달라지므로
+    # 그것만 빼고 비교한다 — 안 그러면 사이트맵을 안 고친 확인 실행도 매번 변경으로 잡혀
+    # (작업 트리를 여러 세션이 공유한다) 빈 커밋을 만들거나 진짜 변경과 헷갈린다.
+    if OUT.exists():
+        strip = lambda s: "\n".join(
+            ln for ln in s.splitlines() if "<lastBuildDate>" not in ln)
+        if strip(OUT.read_text(encoding="utf-8")) == strip(doc):
+            print("[skip] %s — 내용 동일, 그대로 둠 (item %d 건)"
+                  % (OUT.name, len(entries)))
+            return 0
+
     OUT.write_text(doc, encoding="utf-8")
 
     ET.parse(OUT)  # well-formed 확인
