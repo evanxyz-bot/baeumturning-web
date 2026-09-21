@@ -171,11 +171,11 @@ h1{font-size:30px;margin:0 0 10px}
 .mapbox{width:100%;overflow:visible}
 .kmap{display:block;width:100%;height:auto;overflow:visible}
 /* 기본은 연노랑 — 고른 지역(accent 초록)과 대비가 크게 (2026-09-22 대표 지시) */
-.kmap .rg{fill:#fff4bf;stroke:#d9c66f;stroke-width:1.1;
+.kmap .rg{fill:#fffae6;stroke:#e2d59c;stroke-width:1.1;
   stroke-linejoin:round;cursor:pointer;
   transform-box:fill-box;transform-origin:center;
   transition:fill .15s,transform .18s var(--ease-spring),filter .18s}
-.kmap .rg:hover{fill:#ffe98d;stroke:var(--accent);transform:scale(1.06);
+.kmap .rg:hover{fill:#fff0b3;stroke:var(--accent);transform:scale(1.06);
   filter:drop-shadow(0 2px 5px rgba(13,38,33,.22))}
 .kmap .rg[aria-pressed="true"]{fill:var(--accent);stroke:var(--accent-strong)}
 .kmap .rg[aria-pressed="true"]:hover{fill:var(--accent-strong)}
@@ -183,7 +183,7 @@ h1{font-size:30px;margin:0 0 10px}
    도 위에 네모가 떴다. 링 대신 테두리를 굵혀 어디에 초점이 있는지 보인다. */
 .kmap .rg:focus{outline:none}
 .kmap .rg:focus-visible{stroke:var(--accent-strong);stroke-width:2.6}
-.kmap .rg.hl{fill:#ffe98d;stroke:var(--accent);transform:scale(1.06)}
+.kmap .rg.hl{fill:#fff0b3;stroke:var(--accent);transform:scale(1.06)}
 /* 울릉도·독도는 커지면 점이 튀어 보인다 — 호버 확대 없이 색만 */
 .kmap .rg.isl:hover{transform:none}
 /* 이름은 지도가 작아도 읽히게 크게 — 면을 넘어가도 괜찮다 (2026-09-21 대표 지시).
@@ -525,7 +525,7 @@ h1{font-size:30px;margin:0 0 10px}
   <section class="pane-scores">
   <h2>과목별 점수</h2>
   <div class="card">
-    <div class="avgline"><span id="avg">점수를 입력해 주세요</span><button type="button" class="clear" id="clear" aria-label="다시 쓰기" title="다시 쓰기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 1 0 2.64-6.36"/><polyline points="3 4 3 10 9 10"/></svg></button></div>
+    <div class="avgline"><span id="avg">점수를 입력해 주세요</span><button type="button" class="clear" id="clear" aria-label="다시 쓰기" title="다시 쓰기"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button></div>
     <div class="scores" id="scores"></div>
   </div>
   </section>
