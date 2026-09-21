@@ -141,7 +141,9 @@ h1{font-size:30px;margin:0 0 10px}
 /* ── 지역 지도 (2026-09-20 대표 지시 "지도 호버링시 지역 살짝 커지고 클릭하면 필터링") ──
    통계청 2018 시도 경계를 깎아 만든 경로(korea-map.json, build_korea_map_svg.py).
    PC 에서만 보이고 폰에서는 칩을 쓴다 — 서울·세종은 손가락으로 찍기엔 너무 작다. */
-.mapbox{width:100%}
+/* 라벨 후광이 지도 가장자리를 살짝 넘어도 잘리지 않게 — 카드까지 overflow 를 연다 */
+.mapbox{width:100%;overflow:visible}
+.pane-map .card{overflow:visible}
 .kmap{display:block;width:100%;height:auto;overflow:visible}
 .kmap .rg{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:1.1;
   stroke-linejoin:round;cursor:pointer;
@@ -156,18 +158,22 @@ h1{font-size:30px;margin:0 0 10px}
 .kmap .rg:focus{outline:none}
 .kmap .rg:focus-visible{stroke:var(--accent-strong);stroke-width:2.6}
 .kmap .rg.hl{fill:var(--accent-soft);stroke:var(--accent);transform:scale(1.06)}
-.kmap .lb{font-size:16px;font-weight:700;fill:var(--text-2);pointer-events:none;
-  paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
-.kmap .lb.on{fill:#fff;stroke:none}
-/* 서울·세종처럼 면이 작은 광역시는 점만 찍고 이름은 아래 칩이 맡는다 */
+/* 울릉도·독도는 커지면 점이 튀어 보인다 — 호버 확대 없이 색만 */
+.kmap .rg.isl:hover{transform:none}
+/* 이름은 지도가 작아도 읽히게 크게 — 면을 넘어가도 괜찮다 (2026-09-21 대표 지시).
+   후광(stroke)이 경계선을 덮어 글자가 선 위에서도 읽힌다. */
+.kmap .lb{font-size:24px;font-weight:700;fill:var(--text-2);pointer-events:none;
+  paint-order:stroke;stroke:var(--surface);stroke-width:5px;stroke-linejoin:round}
+.kmap .lb.on{fill:#fff;stroke:none}   /* 면 안 이름(도)만 — 면이 accent 로 칠해지니 흰 글자 */
+/* 서울·세종처럼 면이 작은 광역시는 점을 찍고 이름을 점 옆에 쓴다 — 이름도 눌러 고를 수 있다.
+   면 밖이라 흰 글자는 안 보인다 → 골랐을 땐 진한 accent 로. */
+.kmap .lb.mlb{font-size:20px;pointer-events:auto;cursor:pointer}
+.kmap .mlb.on{fill:var(--accent-strong);stroke:var(--surface)}
+.kmap .mlb.hl,.kmap .mlb:hover{fill:var(--accent)}
+.kmap .lb.small{font-size:15px;font-weight:600}
 .kmap .dot{fill:var(--text-3);pointer-events:none;transition:fill .15s,r .15s}
 .kmap .dot.on{fill:var(--accent-strong);r:6.5}
 .kmap .dot.hl{fill:var(--accent);r:7}
-/* 광역시 이름을 지도 왼쪽에 세로로 — 아래 가로로 두면 지도를 키운 만큼 또 길어진다 */
-.mapwrap{display:flex;gap:14px;align-items:flex-start}
-.metrochips{display:flex;flex-direction:column;gap:6px;flex:none}
-.metrochips .chip{padding:7px 10px;font-size:13.5px;text-align:center}
-.mapwrap .kmap{flex:1;min-width:0}
 .maphint{margin:8px 0 0;font-size:12px;line-height:1.5;color:var(--text-3)}
 .toggle{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;font-weight:600;color:var(--text-2);cursor:pointer}
 .toggle input{width:17px;height:17px;accent-color:var(--accent);flex:none}
@@ -270,7 +276,9 @@ h1{font-size:30px;margin:0 0 10px}
   /* 지도가 없으면 예전대로 성적 | 조건 가로 2단 — 세로로 쌓으면 허전하다 */
   .colL{grid-template-columns:428px minmax(0,1fr)}
   /* 지도가 실제로 떴을 때만 칩을 감춘다 — JSON 이 실패하면 칩으로 계속 고를 수 있어야 한다 */
-  .hasmap .panes{grid-template-columns:minmax(0,1fr) 466px}
+  /* 지도 열 540px — 광역시 이름 칩 열을 없애고 그 자리를 지도가 먹는다 (2026-09-21).
+     1024px 창에서도 좌열이 ~420px 남아 점수 입력행이 안 깨진다(실측). */
+  .hasmap .panes{grid-template-columns:minmax(0,1fr) 540px}
   .hasmap .colL{grid-template-columns:minmax(0,1fr)}
   .hasmap #regionChipRow{display:none}
   .hasmap .pane-map{display:block}
@@ -1001,8 +1009,8 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     REGIONS.forEach(function (r) {
       var on = regions.indexOf(r) >= 0;
       box.querySelectorAll('[data-r="' + r + '"]').forEach(function (el) {
-        // path 와 칩(button)은 aria-pressed, 글자·점은 클래스로 칠한다
-        if (el.tagName === 'path' || el.tagName === 'BUTTON') {
+        // 면·섬(.rg — path 도 circle 도)과 칩(button)은 aria-pressed, 글자·점은 클래스로 칠한다
+        if (el.classList.contains('rg') || el.tagName === 'BUTTON') {
           el.setAttribute('aria-pressed', on ? 'true' : 'false');
         } else { el.classList.toggle('on', on); }
       });
@@ -1017,7 +1025,14 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     shown = STEP;
     render();
   }
-  // 지도는 PC 전용 — 폰에서 47KB 를 받아 봐야 CSS 가 감춘다. 창을 넓히면 그때 받는다.
+  // 광역시 이름을 점 옆에 쓸 때의 [dx, dy, text-anchor]. 생성기(JSON)가 아니라 여기 두는 이유:
+  // 이름끼리 겹치면 JSON 을 다시 굽지 않고 이 숫자만 고치면 된다. 도 이름은 면 안 최심점이라
+  // 건드리지 않고, 겹침은 항상 이 표로 푼다.
+  var METRO_LABEL = {
+    '서울': [9, -9, 'start'], '인천': [-9, 4, 'end'], '세종': [-9, -8, 'end'], '대전': [9, 6, 'start'],
+    '광주': [-9, -6, 'end'], '대구': [9, 6, 'start'], '울산': [9, 5, 'start'], '부산': [9, 6, 'start']
+  };
+  // 지도는 PC 전용 — 폰에서 48KB 를 받아 봐야 CSS 가 감춘다. 창을 넓히면 그때 받는다.
   var wide = window.matchMedia('(min-width:1024px)');
   var mapLoaded = false;
   function loadMap() {
@@ -1025,6 +1040,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     mapLoaded = true;
     fetch('korea-map.json').then(function (r) { return r.json(); }).then(function (m) {
     var box = document.getElementById('mapbox');
+    var isl = m.islands || {};   // 옛 JSON 엔 없다 — 없어도 그냥 섬 없이 그린다
     var svg = '<svg class="kmap" viewBox="' + m.viewBox + '" role="group" aria-label="지역 선택 지도">';
     REGIONS.forEach(function (r) {
       if (!m.paths[r]) { return; }
@@ -1032,29 +1048,48 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         ' role="button" tabindex="0" aria-pressed="false" aria-label="' + esc(r) + '"><title>' +
         esc(r) + '</title></path>';
     });
+    // 울릉도·독도 — 대학은 없지만 지도라면 있어야 한다 (2026-09-21 대표 지시). 울릉군은 경북이라
+    // 누르면 경북이 골라진다. 독도는 이 축척에서 0.5px 라 점으로.
+    if (isl['울릉도'] && isl['울릉도'].path) {
+      svg += '<path class="rg isl" d="' + isl['울릉도'].path + '" data-r="경북" role="button" tabindex="0"' +
+        ' aria-pressed="false" aria-label="경북 울릉군 울릉도"><title>울릉도</title></path>';
+    }
+    if (isl['독도'] && isl['독도'].point) {
+      svg += '<circle class="rg isl dokdo" data-r="경북" cx="' + isl['독도'].point[0] + '" cy="' +
+        isl['독도'].point[1] + '" r="3.4" role="button" tabindex="0" aria-pressed="false"' +
+        ' aria-label="경북 울릉군 독도"><title>독도</title></circle>';
+    }
     // 넓은 도는 면 안에 이름을 쓴다
     Object.keys(m.labels).forEach(function (r) {
       var p = m.labels[r];
       svg += '<text class="lb" data-r="' + esc(r) + '" x="' + p[0] + '" y="' + p[1] +
         '" text-anchor="middle" dominant-baseline="middle">' + esc(r) + '</text>';
     });
-    // 광역시는 점만 — 이름은 지도 밖으로 빼면 잘리고 서로 겹친다(실측). 아래 칩이 이름을 맡는다.
+    // 광역시는 점 + 점 옆 이름. 이름도 눌러 고를 수 있다(.mlb).
     m.metroOrder.forEach(function (r) {
       var p = m.metro[r];
       if (!p) { return; }
       svg += '<circle class="dot" data-r="' + esc(r) + '" cx="' + p[0] + '" cy="' + p[1] + '" r="5"/>';
     });
-    // 광역시 이름은 지도 **왼쪽에 세로로** 쌓는다 (2026-09-20 대표 지시).
-    // 지도 아래 가로로 두면 지도를 키운 만큼 세로가 또 길어진다.
-    box.innerHTML = '<div class="mapwrap">' +
-      '<div class="metrochips" id="metroChips">' + m.metroOrder.map(function (r) {
-        return '<button type="button" class="chip mc" aria-pressed="false" data-r="' +
-          esc(r) + '">' + esc(r) + '</button>';
-      }).join('') + '</div>' + svg + '</svg></div>' +
-      '<p class="maphint">지도나 왼쪽 이름을 눌러 고릅니다. 여러 곳을 고를 수 있어요.</p>';
+    m.metroOrder.forEach(function (r) {
+      var p = m.metro[r], o = METRO_LABEL[r] || [9, 0, 'start'];
+      if (!p) { return; }
+      svg += '<text class="lb mlb" data-r="' + esc(r) + '" x="' + (p[0] + o[0]) + '" y="' + (p[1] + o[1]) +
+        '" text-anchor="' + o[2] + '" dominant-baseline="middle">' + esc(r) + '</text>';
+    });
+    ['울릉도', '독도'].forEach(function (n) {
+      var l = isl[n] && isl[n].label;
+      if (!l) { return; }
+      svg += '<text class="lb small" x="' + l[0] + '" y="' + l[1] +
+        '" text-anchor="middle" dominant-baseline="middle">' + n + '</text>';
+    });
+    // 이름이 전부 지도 안에 들어가므로 별도 이름 칩 열은 없다 (2026-09-21 — 전날의 "왼쪽 세로 칩"
+    // 은 이름을 지도에 못 넣던 때의 차선책이었다).
+    box.innerHTML = svg + '</svg>' +
+      '<p class="maphint">지도를 눌러 고릅니다. 여러 곳을 고를 수 있어요.</p>';
     document.body.classList.add('hasmap');
     box.addEventListener('click', function (e) {
-      var t = e.target.closest ? (e.target.closest('.rg') || e.target.closest('.mc')) : null;
+      var t = e.target.closest ? (e.target.closest('.rg') || e.target.closest('.mlb')) : null;
       if (t) { toggleRegion(t.getAttribute('data-r')); }
     });
     box.addEventListener('keydown', function (e) {
@@ -1071,16 +1106,16 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       var last = p.parentNode.querySelector('.rg:last-of-type');
       if (last !== p) { p.parentNode.insertBefore(p, last.nextSibling); }
     });
-    // 칩에 마우스를 얹으면 지도에서 그 자리가 어딘지 보여 준다
+    // 광역시 이름에 마우스를 얹으면 그 점과 면도 같이 밝힌다 — 이름·점이 한 몸인 걸 보여 준다
     box.addEventListener('pointerover', function (e) {
-      var c = e.target.closest ? e.target.closest('.mc') : null;
+      var c = e.target.closest ? e.target.closest('.mlb') : null;
       if (!c) { return; }
       var r = c.getAttribute('data-r');
       box.querySelectorAll('.rg[data-r="' + r + '"],.dot[data-r="' + r + '"]')
         .forEach(function (el) { el.classList.add('hl'); });
     });
     box.addEventListener('pointerout', function (e) {
-      var c = e.target.closest ? e.target.closest('.mc') : null;
+      var c = e.target.closest ? e.target.closest('.mlb') : null;
       if (!c) { return; }
       box.querySelectorAll('.hl').forEach(function (el) { el.classList.remove('hl'); });
     });
