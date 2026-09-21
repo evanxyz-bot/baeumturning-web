@@ -16,8 +16,12 @@ python website/scripts/gen_news_static.py
 실행 후 `git diff website/news.html` 로 정적 블록이 갱신됐는지 확인하고 커밋하세요.
 
 ## build_rss.py
-`sitemap.xml` 의 loc·lastmod 를 읽어 각 페이지의 `<title>`·meta description 으로
-RSS 2.0 피드 `rss.xml` 을 만듭니다(lastmod 내림차순, 최대 100건).
+`sitemap.xml` 의 loc·lastmod·priority 를 읽어 각 페이지의 `<title>`·meta description 으로
+RSS 2.0 피드 `rss.xml` 을 만듭니다. **사이트맵에 있는 주소를 전부 담습니다**(priority 내림차순
+→ lastmod 내림차순 → 주소 오름차순). '최신 N건' 으로 자르면 lastmod 가 전부 같은 날일 때
+정작 색인이 필요한 대입환산 페이지가 통째로 빠집니다.
+
+사이트맵이나 페이지 제목·설명을 고치면 다시 돌려야 피드가 따라옵니다.
 
 **왜 필요한가** — 네이버 서치어드바이저는 사이트맵과 **별개로 RSS 제출**을 받습니다.
 

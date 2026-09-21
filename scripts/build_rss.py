@@ -24,7 +24,10 @@ SITEMAP = ROOT / "sitemap.xml"
 OUT = ROOT / "rss.xml"
 SITE = "https://outfocus.co.kr/"
 KST = timezone(timedelta(hours=9))
-MAX_ITEMS = 100
+# 사이트맵에 있는 주소를 전부 담는다. 색인이 필요한 것은 갓 올라간 대입환산 262장인데,
+# '최신 N건' 으로 자르면 그게 통째로 빠진다 — lastmod 가 전부 같은 날이라 무엇이 최신인지
+# 가릴 수 없기 때문이다(2026-09-21 실측: 289개 전부 같은 날짜, 279개가 같은 priority).
+MAX_ITEMS = None
 
 CHANNEL_TITLE = "아웃포커스 · 배움터닝"
 
@@ -46,6 +49,12 @@ def rfc822(date_str: str) -> str:
     return "%s, %02d %s %04d %02d:%02d:%02d +0900" % (
         WDAY[d.weekday()], d.day, MON[d.month - 1], d.year,
         d.hour, d.minute, d.second)
+
+
+def _desc(lastmod: str) -> int:
+    """'2026-09-21' → -20260921. 정렬 키로 쓰면 최신이 앞에 온다(없으면 맨 뒤)."""
+    digits = lastmod.replace("-", "")
+    return -int(digits) if digits.isdigit() else 0
 
 
 def local_path(loc: str) -> Path | None:
@@ -92,12 +101,17 @@ def main() -> int:
         loc = loc_el.text.strip()
         lm_el = url.find("s:lastmod", ns)
         lastmod = (lm_el.text or "").strip() if lm_el is not None else ""
+        pr_el = url.find("s:priority", ns)
+        try:
+            priority = float((pr_el.text or "").strip()) if pr_el is not None else 0.5
+        except ValueError:
+            priority = 0.5
         p = local_path(loc)
         if p is None:
             missing.append(loc)
             continue
         title, desc = extract(p)
-        entries.append({"loc": loc, "lastmod": lastmod,
+        entries.append({"loc": loc, "lastmod": lastmod, "priority": priority,
                         "title": title, "desc": desc})
 
     if missing:
@@ -105,8 +119,11 @@ def main() -> int:
         for loc in missing[:5]:
             print("  -", loc)
 
-    entries.sort(key=lambda e: (e["lastmod"], e["loc"]), reverse=True)
-    entries = entries[:MAX_ITEMS]
+    # 중요한 것부터: priority 내림차순 → lastmod 내림차순 → 주소 오름차순.
+    # 주소를 마지막 기준으로 둬야 lastmod 가 같아도 결과가 매번 같다.
+    entries.sort(key=lambda e: (-e["priority"], _desc(e["lastmod"]), e["loc"]))
+    if MAX_ITEMS:
+        entries = entries[:MAX_ITEMS]
 
     index = ROOT / "index.html"
     _, channel_desc = extract(index)
