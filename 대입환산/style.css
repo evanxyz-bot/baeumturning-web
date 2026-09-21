@@ -85,6 +85,8 @@ a:hover .brand-wm{transform:scale(1.03)}
 .crumb a:hover{color:var(--accent-strong)}
 h1{font-size:28px;line-height:1.35;margin:0 0 12px}
 h2{font-size:19px;margin:32px 0 10px}
+/* h3 는 전년도 입시결과 섹션의 전형 이름에만 쓴다 — h2 보다 한 단 작게 */
+h3{font-size:16px;margin:24px 0 8px;color:var(--text)}
 /* 자주 묻는 질문 — FAQPage 마크업과 같은 문장을 화면에도 낸다.
    구조화 데이터는 화면에 보이는 내용만 담아야 한다(구글 구조화 데이터 정책). */
 .faq{margin:0;padding:0}
@@ -137,6 +139,12 @@ h2{font-size:19px;margin:32px 0 10px}
 .bt td.v{font-weight:700;color:var(--accent-strong)}
 .bt td.g{color:var(--text-3);font-size:12.5px}
 .btcap{font-size:12.5px;line-height:1.6;color:var(--text-3);margin:0 0 7px}
+/* 전년도 입시결과 표 — 구간표(.bt)와 같은 틀을 쓰되 모집단위 이름은 왼쪽 정렬이다.
+   폰에서 지표 열이 늘어나면 .btwrap 이 가로 스크롤을 준다(본문은 안 넘친다). */
+.rt td:first-child{text-align:left;white-space:normal;min-width:120px;max-width:260px;
+  font-weight:600;color:var(--text)}
+.rt th:first-child{text-align:left}
+.rt td:first-child .tk{font-weight:600;color:var(--text-3);font-size:.86em;margin-left:3px}
 /* 구간 9칸이 표준(203곳 중 117곳)이라 PC 에서 잘리면 안 된다 — 본문 읽기 폭(720px)을 넘어
    .wrap 오른쪽 빈 자리까지 쓴다. 뷰포트 밖으로는 안 나가게 max-width 로 잡는다:
    본문 왼쪽 끝에서 화면 오른쪽 여백(24px)까지 = 50vw + 320px. */
