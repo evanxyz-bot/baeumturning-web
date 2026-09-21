@@ -19,6 +19,11 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
+# 윈도우 콘솔 기본 코드페이지(cp949)에서 '—' 가 깨져 죽는다 — rss.xml 을 다 쓰고 나서
+# 마지막 print 에서 UnicodeEncodeError 로 종료코드 1 을 내던 것(2026-09-21).
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 ROOT = Path(__file__).resolve().parent.parent
 SITEMAP = ROOT / "sitemap.xml"
 OUT = ROOT / "rss.xml"
