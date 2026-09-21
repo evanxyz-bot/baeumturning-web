@@ -70,6 +70,12 @@ a:hover .brand-wm{transform:scale(1.03)}
 .crumb a:hover{color:var(--accent-strong)}
 h1{font-size:28px;line-height:1.35;margin:0 0 12px}
 h2{font-size:19px;margin:32px 0 10px}
+/* 자주 묻는 질문 — FAQPage 마크업과 같은 문장을 화면에도 낸다.
+   구조화 데이터는 화면에 보이는 내용만 담아야 한다(구글 구조화 데이터 정책). */
+.faq{margin:0;padding:0}
+.faq dt{font-size:15.5px;font-weight:700;color:var(--text);margin:14px 0 4px}
+.faq dt:first-child{margin-top:0}
+.faq dd{margin:0;font-size:14.6px;line-height:1.75;color:var(--text-2)}
 .lead{font-size:16.5px;line-height:1.75;margin:0 0 10px;color:var(--text)}
 .meta{font-size:13px;color:var(--text-3);margin:0 0 14px}
 .sub{font-size:13.5px;color:var(--text-2);margin:0 0 10px}
