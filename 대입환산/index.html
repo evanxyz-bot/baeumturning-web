@@ -105,8 +105,9 @@ h1{font-size:30px;margin:0 0 10px}
   padding:16px 16px 18px;box-shadow:var(--shadow-sm)}
 
 /* 성적 입력 — 국어부터 (2026-09-18 대표 지시).
-   폰·PC 모두 2열 — 세로로 읽어 국/수/영/사 · 과/한/도 (2026-09-21 대표 지시).
-   7행이던 것이 4행이 돼 카드가 짧아지고, PC 에서는 우측 필터 높이와 얼추 맞는다. */
+   폰(<1024px)은 2열 — 세로로 읽어 국/수/영/사 · 과/한/도 (2026-09-21 대표 지시).
+   7행이던 것이 4행이 돼 카드가 짧아진다.
+   PC(>=1024px)는 아래 미디어쿼리에서 3열(국수영 | 사과 | 한도)로 덮는다 — 같은 날 대표 지시 "4·3 → 3·2·2". */
 /* minmax(0,1fr) 여야 한다 — 그냥 1fr 이면 number 입력칸의 기본 너비(≈74px)가 열의 최소폭이 돼
    360px 폰에서 두 열 합이 330px 로 넘쳐 가로 스크롤이 생겼다(실측). */
 .scores{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -280,12 +281,13 @@ h1{font-size:30px;margin:0 0 10px}
   /* 지도가 없으면 예전대로 성적 | 조건 가로 2단 — 세로로 쌓으면 허전하다 */
   .colL{grid-template-columns:428px minmax(0,1fr)}
   /* 지도가 실제로 떴을 때만 칩을 감춘다 — JSON 이 실패하면 칩으로 계속 고를 수 있어야 한다 */
-  /* 지도 열 460px — 이 폭이 지도 카드 높이를 정한다(지도는 폭 × 964/664).
+  /* 지도 열 424px — 이 폭이 지도 카드 높이를 정한다(지도는 폭 × 964/664).
      제주를 본토 아래로 떼면서 viewBox 가 920→964 로 세로로 커져, 480px 이면 카드가 44px 더
-     길어진다. 460px 로 줄여 1280px 창에서 좌열(안내+점수+조건) 아래 끝과 지도 카드 아래 끝
-     차이 17.1px 유지 (실측 2026-09-21).
-     1024px 창에서도 좌열이 508px 남아 점수 입력 2열이 안 깨진다. */
-  .hasmap .panes{grid-template-columns:minmax(0,1fr) min(460px,50%)}
+     길어진다. 460px 일 때 1280px 창에서 좌열(안내+점수+조건) 아래 끝과 지도 카드 아래 끝
+     차이 17.1px 였는데, 점수 입력이 4행→3행(PC 3열)이 되며 좌열이 한 줄 짧아져 66.9px 로 벌어졌다.
+     424px 로 줄여 1280px 에서 +14.7px, 1024px 에서 -14.1px (실측 2026-09-21).
+     1024px 창에서도 좌열이 544px 남아 점수 입력 3열이 안 깨진다. */
+  .hasmap .panes{grid-template-columns:minmax(0,1fr) min(424px,50%)}
   .hasmap .colL{grid-template-columns:minmax(0,1fr)}
   .hasmap #regionChipRow{display:none}
   .hasmap .pane-map{display:block}
@@ -298,6 +300,17 @@ h1{font-size:30px;margin:0 0 10px}
   /* 지도 제목은 좌열 안내문 첫 줄과 나란히 — 위 26px 규칙이 밀지 않게(같은 특정도 이상으로) */
   .panes .pane-map>h2{margin-top:0}
   .pane-scores .srow input{font-size:16px}
+  /* 점수 입력은 PC 에서만 3열 — "4·3 밀고 3·2·2" (2026-09-21 대표 지시).
+         1열 국어·수학·영어 | 2열 사회·과학 | 3열 한국사·도덕
+     폰(<1024px)은 위 기본 규칙의 2열(국/수/영/사 · 과/한/도) 그대로다.
+     grid-auto-flow:column 자동 배치는 3·3·1(…사회까지 2열)을 만드니,
+     뒤 4칸(사회·과학·한국사·도덕)만 자리를 못 박는다. 앞 3칸은 1열에 자동으로 떨어진다. */
+  .pane-scores .scores{grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-rows:repeat(3,auto)}
+  .pane-scores .srow:nth-child(4){grid-area:1/2}
+  .pane-scores .srow:nth-child(5){grid-area:2/2}
+  .pane-scores .srow:nth-child(6){grid-area:1/3}
+  .pane-scores .srow:nth-child(7){grid-area:2/3}
   /* 결과 목록은 그 아래 전폭 — 1280px 한 줄에 카드 하나면 도로 빈 공간이 생긴다 */
   .ulist{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
     gap:12px;align-items:start}
