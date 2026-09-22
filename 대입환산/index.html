@@ -1461,7 +1461,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   render();
 
   // 번들이 커져 빌드가 입결을 results.json 으로 떼어 낸 경우에만 따로 받는다
-  // (지금은 calc.js 안에 있어 이 요청이 나가지 않는다 — scripts/build_admission_calc.py).
+  // (입결 데이터가 gzip 150KB 한계를 넘어 results.json 으로 분리돼 있으면 이 요청이 나간다 — scripts/build_admission_calc.py 가 결정).
   if (!CUTS && window.fetch) {
     fetch('results.json').then(function (res) { return res.ok ? res.json() : null; })
       .then(function (j) { if (j) { CUTS = j; render(); } })
