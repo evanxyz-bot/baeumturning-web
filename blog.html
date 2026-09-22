@@ -111,16 +111,17 @@ h2.h{font-size:42.6px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   background:rgba(255,255,255,.88);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
   border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
-.nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1160px;margin:0 auto;padding:0 24px}.nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
+.nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1400px;margin:0 auto;padding:0 24px}.nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
 /* 헤더 우측 배움터닝 앱 묶음 */
-.nav-app{position:absolute;right:24px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-app-ic{width:34px;height:34px;border-radius:9px;background:#fff;border:1px solid var(--border);display:grid;place-items:center;box-shadow:var(--shadow-sm)}
-.nav-app-ic svg{width:24px;height:24px;color:var(--accent)}
-.nav-app-nm{font-weight:800;font-size:15px;color:var(--text);letter-spacing:-.01em}
-.nav-app-badge{display:block;height:32px;width:auto}
-@media (max-width:920px){.nav-app-nm{display:none}}
+.nav-app{position:absolute;right:24px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-app-ic{width:44px;height:44px;border-radius:9px;background:#fff;border:1px solid var(--border);display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.nav-app-ic svg{width:32px;height:32px;color:var(--accent)}
+.nav-app-nm{font-weight:800;font-size:17px;color:var(--text);letter-spacing:-.01em}
+.nav-app-badge{display:block;height:40px;width:auto}
+@media (max-width:1339px){.nav-app-nm{display:none}}
 @media (max-width:767px){.nav-top{justify-content:flex-start;padding:0 14px}.nav-top .brand-wm{font-size:min(65px,10.4vw)!important}}
-@media (max-width:560px){.nav-app{right:12px;gap:6px}.nav-app-ic{display:none}.nav-app-badge{height:28px}}
+@media (max-width:860px){.nav-app-ic{display:none}}
+@media (max-width:560px){.nav-app{right:12px;gap:6px}.nav-app-badge{height:32px}}
 @media (max-width:359px){.nav-top .brand-wm .wm-ko{display:none}}
 .navlinks{position:relative;display:flex;gap:15px;font-size:20.9px;font-weight:700}
 .navlinks a{position:relative;z-index:1;color:var(--text-2);padding:10px 22px;border-radius:var(--r-md);
@@ -213,7 +214,6 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 .partners{padding:72px 0}
 .partner-empty{max-width:680px;margin:0 auto;text-align:center;background:#fff;border:1.5px dashed var(--border-strong);
   border-radius:22px;padding:48px 32px;box-shadow:var(--shadow-xs)}
-.partner-empty .pic{width:64px;height:64px;border-radius:18px;background:var(--p-blue);display:grid;place-items:center;margin:0 auto 18px}
 .partner-empty b{display:block;font-size:21.3px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
 .partner-empty p{font-size:16.2px;color:var(--text-2);line-height:1.7;max-width:440px;margin:0 auto 22px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;
@@ -560,9 +560,9 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span>
       </span>
     </a>
-    <a class="nav-app" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="배움터닝 App Store 에서 다운로드">
+    <a class="nav-app" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="배움터닝-검정고시 학습 앱 App Store 에서 내려받기">
       <span class="nav-app-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg></span>
-      <span class="nav-app-nm">배움터닝</span>
+      <span class="nav-app-nm">배움터닝-검정고시 학습 앱 내려받기</span>
       <img class="nav-app-badge" src="/brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="104" height="32" loading="lazy">
     </a>
   </div>
