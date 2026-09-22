@@ -150,6 +150,7 @@ h2.h{font-size:42.6px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   radial-gradient(700px 360px at 50% 0%, rgba(230,244,241,.8), transparent 70%)}
 .page-head h1{font-size:49.3px;font-weight:700;letter-spacing:-0.035em;line-height:1.15}
 .page-head h1 .g{background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.page-head h1 .r{background:linear-gradient(90deg,#c4584a,#e0937f 55%,#f4649e);-webkit-background-clip:text;background-clip:text;color:transparent}
 .page-head .lead{margin:18px auto 0}
 .crumb{font-size:14.6px;color:var(--text-4);margin-bottom:18px}
 .crumb a:hover{color:var(--text-2)}
@@ -316,7 +317,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
    ========================================================== */
 
 /* [1] 터치 기기에는 hover 가 없어 .nav-drop:hover 서브메뉴가 영영 안 열렸다.
-       연혁·협력사·출시알림·Q&A·개인정보처리방침·문의하기 등 8개 페이지가
+       연혁·협력사/협력기관·출시알림·Q&A·개인정보처리방침·문의하기 등 8개 페이지가
        폰 내비에서 도달 불가였다. .open 은 문서 끝 스크립트가 탭에 붙인다. */
 .nav-drop.open .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .nav-drop.open>a .chev{transform:rotate(180deg)}
@@ -441,7 +442,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <div class="drop-menu">
           <a href="company.html">회사 소개</a>
           <a href="history.html">연혁</a>
-          <a href="partners.html">협력사</a>
+          <a href="partners.html">협력사/협력기관</a>
         </div>
       </div>
       <a href="stories.html">소식</a>
@@ -463,8 +464,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 <!-- ===================== PAGE HEAD ===================== -->
 <header class="page-head">
   <div class="wrap">
-    <h1>함께 사각지대를 밝힐<br><span class="g">파트너</span>를 찾습니다</h1>
-    <p class="lead">교육기관, 검정고시 학원, 청소년 지원기관, 콘텐츠 제작사 — 함께할 곳을 기다리고 있습니다.</p>
+    <h1>함께 <span class="r">사각지대</span>를 밝힐<br><span class="g">파트너</span>를 찾습니다</h1>
   </div>
 </header>
 

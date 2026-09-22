@@ -47,7 +47,7 @@
 - [자주 묻는 질문](https://outfocus.co.kr/qna.html): 검정고시 기본 문답(정의·시행 횟수·합격 기준·시험 과목·학습 시작법)과 배움터닝 이용 문답
 - [회사 소개](https://outfocus.co.kr/company.html): 미션과 팀
 - [연혁](https://outfocus.co.kr/history.html)
-- [협력사](https://outfocus.co.kr/partners.html)
+- [협력사/협력기관](https://outfocus.co.kr/partners.html)
 - [기록](https://outfocus.co.kr/stories.html): 개발 기록과 현장 이야기
 - [개인정보처리방침](https://outfocus.co.kr/privacy.html)
 - [이용약관](https://outfocus.co.kr/terms.html)
