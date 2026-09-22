@@ -145,6 +145,10 @@ h3{font-size:16px;margin:24px 0 8px;color:var(--text)}
   font-weight:600;color:var(--text)}
 .rt th:first-child{text-align:left}
 .rt td:first-child .tk{font-weight:600;color:var(--text-3);font-size:.86em;margin-left:3px}
+/* 학과 태그 칩(PLAN §13 dept_tags.json) — 계산기의 학과·태그 검색과 같은 말이 여기 보이게.
+   '간호'·'보건' 같은 말로 이 표를 찾아온 사람이 자기가 찾던 학과인지 바로 알아본다. */
+.rt td:first-child .dtag{display:inline-block;font-weight:700;font-size:.8em;line-height:1.5;
+  color:var(--text-3);background:var(--surface-2);border-radius:999px;padding:1px 7px;margin:2px 0 0 4px}
 /* 구간 9칸이 표준(203곳 중 117곳)이라 PC 에서 잘리면 안 된다 — 본문 읽기 폭(720px)을 넘어
    .wrap 오른쪽 빈 자리까지 쓴다. 뷰포트 밖으로는 안 나가게 max-width 로 잡는다:
    본문 왼쪽 끝에서 화면 오른쪽 여백(24px)까지 = 50vw + 320px. */

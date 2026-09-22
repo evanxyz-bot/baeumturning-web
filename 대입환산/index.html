@@ -417,6 +417,199 @@ h1{font-size:30px;margin:0 0 10px}
   .prose{max-width:760px}
 }
 
+/* ── 학과별 합격 가능성 레이아웃 (PLAN §16 · §16-1 대표 디자인 지시) ────────────
+   PC(≥1024px) 좌 1열 대학 카드 + 우 sticky 상세(1 : 1.6, 오른쪽에 스크롤 여유).
+   폰은 카드 목록 + 탭하면 전체 시트.
+   상자·배지·표는 shadcn/ui 의 값을 그대로 쓴다(§16-1-3) — 테두리 hsl(240 5.9% 90%),
+   반경 0.5rem, 그림자 0 1px 2px rgba(0,0,0,.05), 그라데이션은 카드 배경 4~6%,
+   아이콘·이모지 없음. 사이트 초록 토큰은 내비·푸터·기존 카드가 그대로 쓴다. */
+:root{
+  /* 5단계 색 (§16-1-2) — 주황·하늘 금지. admissionCut.ts BAND_COLOR 와 같은 값이어야 한다 */
+  --b1:#1D4ED8;   /* 매우 하향 */
+  --b2:#3B82F6;   /* 하향 */
+  --b3:#16A34A;   /* 적정 */
+  --b4:#EF4444;   /* 상향 */
+  --b5:#B91C1C;   /* 매우 상향 */
+  --b0:#a1a1aa;   /* 판정 불가·미수집 */
+  --band-a:5%;
+  /* shadcn/ui neutral */
+  --sc-border:hsl(240 5.9% 90%);
+  --sc-muted:hsl(240 4.8% 95.9%);
+  --sc-mutedfg:hsl(240 3.8% 46.1%);
+  --sc-fg:hsl(240 10% 3.9%);
+  --sc-radius:.5rem;
+  --sc-shadow:0 1px 2px rgba(0,0,0,.05);
+  --grid:hsl(240 5.9% 86%);
+  --mark:hsl(240 5% 40%);
+}
+.sortrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.sortrow .lbl{font-size:12px;font-weight:600;color:var(--sc-mutedfg);margin-right:2px}
+.sortrow button{background:#fff;border:1px solid var(--sc-border);color:var(--sc-fg);
+  border-radius:.375rem;padding:5px 12px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.sortrow button:hover{background:var(--sc-muted)}
+.sortrow button[aria-pressed="true"]{background:var(--sc-fg);border-color:var(--sc-fg);color:#fff}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+.subhead{margin:16px 0 8px;font-size:11.5px;font-weight:600;color:var(--sc-mutedfg)}
+.pill{display:inline-flex;align-items:center;border-radius:.375rem;padding:2px 10px;
+  font-size:12px;font-weight:600;line-height:1.34;white-space:nowrap}
+.pill.band{color:#fff;background:var(--bandc,var(--b0))}
+.pill.muted{background:var(--sc-muted);color:var(--sc-mutedfg)}
+.pill.outline{border:1px solid var(--sc-border);color:var(--sc-mutedfg);padding:1px 9px}
+
+/* 대학 카드 — 현행 높이(112)는 지키고 테두리·반경·그림자는 shadcn 값으로 */
+.ucard{position:relative;display:flex;flex-direction:column;min-height:112px;width:100%;text-align:left;
+  background:#fff;border:1px solid var(--sc-border);border-radius:var(--sc-radius);
+  padding:15px 16px 15px 19px;box-shadow:var(--sc-shadow);cursor:pointer;overflow:hidden;
+  font:inherit;color:var(--sc-fg);--bandc:var(--b0);transition:border-color .15s}
+.ucard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--bandc);z-index:2}
+.ucard::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,color-mix(in srgb,var(--bandc) var(--band-a),transparent),transparent 60%)}
+.ucard>*{position:relative;z-index:1}
+.ucard:hover{border-color:hsl(240 5.9% 78%)}
+.ucard[aria-current="true"]{border-color:var(--bandc)}
+.ucard:focus-visible{outline:2px solid var(--sc-fg);outline-offset:2px}
+.uc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.uc-nm{min-width:0}
+.uc-nm b{display:block;font-size:15.5px;font-weight:600;color:var(--sc-fg);letter-spacing:-.01em}
+.uc-nm span{display:block;font-size:12px;color:var(--sc-mutedfg);margin-top:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uc-val{flex:none;text-align:right;min-width:0}
+.uc-val .big{font-size:22px;font-weight:600;color:var(--sc-fg);letter-spacing:-.02em}
+.uc-val .big i{font-style:normal;font-size:12px;font-weight:600;color:var(--sc-mutedfg)}
+.uc-val .sub{font-size:11.5px;font-weight:500;color:var(--sc-mutedfg);margin-top:2px;
+  font-variant-numeric:tabular-nums}
+.uc-bot{margin-top:auto;padding-top:11px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.uc-cnt{font-size:12px;font-weight:500;color:var(--sc-mutedfg);font-variant-numeric:tabular-nums}
+.uc-why{flex-basis:100%;font-size:11.5px;line-height:1.55;color:var(--sc-mutedfg);word-break:keep-all}
+.uc-hit{font-size:11.5px;font-weight:600;color:var(--sc-fg);background:var(--sc-muted);
+  border-radius:.375rem;padding:2px 8px}
+.col-list .morewrap button{width:100%;border-radius:var(--sc-radius);border-color:var(--sc-border);
+  background:#fff;font-weight:600}
+
+/* ── 상세 패널 ─────────────────────────────────────────────────────────────── */
+.dpanel{background:#fff;border:1px solid var(--sc-border);border-radius:var(--sc-radius);
+  box-shadow:var(--sc-shadow);overflow:hidden;--bandc:var(--b0);color:var(--sc-fg)}
+.dh{padding:24px;border-bottom:1px solid var(--sc-border);
+  background:linear-gradient(100deg,color-mix(in srgb,var(--bandc) var(--band-a),transparent),transparent 60%)}
+.dh-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.dh h3{margin:0;font-family:inherit;font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--sc-fg)}
+.dh .sub{margin:3px 0 0;font-size:12.5px;color:var(--sc-mutedfg)}
+.dh-val{flex:none;text-align:right}
+.dh-val .big{font-size:28px;font-weight:600;color:var(--sc-fg);letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums}
+.dh-val .big i{font-style:normal;font-size:13px;font-weight:600;color:var(--sc-mutedfg)}
+.dh-val .lbl{font-size:11.5px;font-weight:500;color:var(--sc-mutedfg);margin-top:3px}
+.dh-badges{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+.dh-conv{margin:10px 0 0;font-size:12.5px;line-height:1.65;color:var(--sc-mutedfg);word-break:keep-all}
+.dh-conv b{color:var(--sc-fg);font-weight:600}
+.dsec{padding:24px;border-bottom:1px solid var(--sc-border)}
+.dsec:last-child{border-bottom:0}
+.dsec>h4{margin:0 0 6px;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:-.01em;
+  color:var(--sc-fg)}
+.dsec>.hint{margin:0 0 14px;font-size:12px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.dsec .detail{margin-top:0;background:var(--sc-muted);border-radius:var(--sc-radius);padding:16px}
+.dsec .detail h4{color:var(--sc-fg)}
+.dsec .detail p,.dsec .detail .src-note{color:var(--sc-mutedfg)}
+.admchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.admchips button{max-width:100%;background:#fff;border:1px solid var(--sc-border);color:var(--sc-fg);
+  border-radius:.375rem;padding:4px 10px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admchips button:hover{background:var(--sc-muted)}
+.admchips button.on{background:var(--sc-fg);border-color:var(--sc-fg);color:#fff}
+/* 대학이 모집단위별 수치를 안 낸 전형(종합·논술·실기 등) — 눌러 볼 수는 있되 옅게 */
+.admchips button[data-none="1"]{color:var(--sc-mutedfg)}
+.admchips button[data-none="1"].on{color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:11px;color:var(--sc-mutedfg);margin-bottom:12px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{display:inline-block;flex:none}
+.lg-sw{width:16px;height:6px;border-radius:3px;background:var(--sc-muted);border:1px solid var(--sc-border)}
+.lg-cut{width:2px;height:11px;background:var(--mark)}
+.lg-mean{width:0;height:11px;border-left:2px dashed var(--mark)}
+.lg-me{width:9px;height:9px;border-radius:999px;background:var(--sc-fg)}
+.tblhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  font-size:11px;font-weight:600;color:var(--sc-mutedfg);margin-bottom:8px}
+.tblhead span:last-child{flex:none;font-variant-numeric:tabular-nums}
+
+/* 학과 한 줄 */
+.dep{border:1px solid var(--sc-border);border-radius:var(--sc-radius);background:#fff;
+  padding:12px 14px;margin-bottom:8px}
+.dep.hit{background:var(--sc-muted)}
+.dep-r1{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dep-nm{min-width:0;font-size:13px;font-weight:600;color:var(--sc-fg);letter-spacing:-.01em}
+.dep-nm em{font-style:normal;font-size:10.5px;font-weight:500;color:var(--sc-mutedfg);margin-left:6px}
+.dep-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.dep-tags i{font-style:normal;font-size:10.5px;font-weight:500;color:var(--sc-mutedfg);
+  background:var(--sc-muted);border-radius:.375rem;padding:1px 7px}
+.dep.hit .dep-tags i{background:#fff}
+/* 검색어와 같은 태그는 채워서 — .dep.hit 규칙보다 선택자를 무겁게 둬야 흰 바탕에 지지 않는다 */
+.dep-tags i.on,.dep.hit .dep-tags i.on{background:var(--sc-fg);color:#fff}
+.dep-diff{margin:6px 0 0;font-size:11.5px;font-weight:500;color:var(--sc-mutedfg);
+  font-variant-numeric:tabular-nums;word-break:keep-all}
+.dep-diff b{color:var(--sc-fg);font-weight:600}
+/* 미니 바 — 폭만 늘어나는 좌표계라 눈금 숫자·거리 숫자는 HTML 로 얹는다 */
+.dep-chart{position:relative;margin-top:10px;padding:0 1px}
+.dep-chart svg{display:block;width:100%;height:34px}
+.dep-dist{position:absolute;top:-3px;transform:translateX(-50%);font-size:10.5px;font-weight:600;
+  color:var(--sc-fg);background:#fff;padding:0 4px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dep.hit .dep-dist{background:var(--sc-muted)}
+.dep-ax{position:relative;height:13px;margin-top:1px}
+.dep-ax i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:9.5px;
+  font-weight:500;color:var(--sc-mutedfg);font-variant-numeric:tabular-nums;white-space:nowrap}
+.dep-why{margin:6px 0 0;font-size:11px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.dep-rule{margin:4px 0 0;font-size:10.5px;color:var(--sc-mutedfg)}
+
+.nojudge{border:1px solid var(--sc-border);border-radius:var(--sc-radius);background:var(--sc-muted);
+  padding:20px;text-align:center}
+.nojudge b{display:block;font-size:13px;font-weight:600;color:var(--sc-fg);margin-bottom:5px}
+.nojudge span{font-size:12px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.dline{margin:10px 0 0;font-size:12px;line-height:1.7;color:var(--sc-mutedfg);word-break:keep-all}
+.dline b{color:var(--sc-fg);font-weight:600}
+.dfold{border:1px solid var(--sc-border);border-radius:var(--sc-radius);background:#fff;margin-top:12px}
+.dfold>summary{cursor:pointer;list-style:none;padding:10px 14px;font-size:12.5px;font-weight:600;
+  color:var(--sc-fg)}
+.dfold>summary::-webkit-details-marker{display:none}
+.dfold>summary:focus-visible{outline:2px solid var(--sc-fg);outline-offset:2px}
+.dfold[open]>summary{border-bottom:1px solid var(--sc-border)}
+.dfold .dbody{padding:14px;font-size:12px;line-height:1.75;color:var(--sc-mutedfg)}
+.dfold .dbody p{margin:0 0 8px;word-break:keep-all}
+.dfold .dbody p:last-child{margin-bottom:0}
+.dfold .dbody p b{color:var(--sc-fg);font-weight:600}
+.dcheck{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.dcheck li{font-size:12px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.disc{margin:0;font-size:11.5px;line-height:1.75;color:var(--sc-mutedfg);word-break:keep-all}
+.disc b{color:var(--sc-fg);font-weight:600}
+.dask{margin:12px 0 0;font-size:11.5px;font-weight:600;color:var(--sc-fg)}
+.dmore{background:#fff;border:1px solid var(--sc-border);border-radius:var(--sc-radius);
+  padding:7px 14px;margin-top:8px;font:inherit;font-size:12px;font-weight:600;color:var(--sc-fg);cursor:pointer}
+.dmore:hover{background:var(--sc-muted)}
+
+/* 폰 — 상세는 전체 시트 (PC 규칙보다 뒤에 둬야 1023px 이하에서 이긴다) */
+.sheetbar{display:none}
+@media (min-width:1024px){
+  /* 좌 1 : 우 1.6 — 패널을 줄여 오른쪽에 스크롤 여유를 둔다 (§16-1-5) */
+  .layout{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:18px;max-width:1090px}
+  .col-list{min-width:0}
+  /* 위 내비(.nav-top 88 + .nav-bot 56 = 144)가 sticky 라, 패널을 top:16 에 붙이면
+     대학 이름·환산값 줄이 내비 밑으로 들어가 안 보인다. 내비 높이만큼 내려 붙인다. */
+  .col-detail{min-width:0;position:sticky;top:156px;max-height:calc(100vh - 172px);overflow:auto}
+  /* 좌열은 한 줄에 카드 하나 — 위쪽 PC 블록의 auto-fill 격자를 덮는다 */
+  .col-list .ulist{display:flex;flex-direction:column;gap:10px}
+}
+@media (max-width:1023px){
+  .col-detail{position:fixed;inset:0;z-index:100;background:#fff;overflow-y:auto;display:none}
+  body.sheet-open{overflow:hidden}
+  body.sheet-open .col-detail{display:block}
+  .sheetbar{display:flex;position:sticky;top:0;z-index:2;align-items:center;gap:8px;
+    padding:10px 14px;background:#fff;border-bottom:1px solid var(--sc-border)}
+  .sheetbar button{background:#fff;border:1px solid var(--sc-border);border-radius:.375rem;
+    padding:7px 13px;font:inherit;font-size:13px;font-weight:600;color:var(--sc-fg);cursor:pointer}
+  .dpanel{border:0;border-radius:0;box-shadow:none;min-height:100%}
+}
+@media (max-width:560px){
+  .dh,.dsec{padding:18px 16px}
+  .dsec .detail{padding:14px}
+}
+
 /* ── FOOTER (다른 페이지와 같은 것) ── */
 .foot{border-top:1px solid var(--border);background:var(--surface-2);position:relative;
   padding:20px 0 16px;text-align:left;font-size:14px;color:var(--text-4)}
@@ -613,7 +806,7 @@ h1{font-size:30px;margin:0 0 10px}
   <h2>조건</h2>
   <div class="card">
     <form class="search" id="searchForm">
-      <input id="q" type="search" placeholder="대학 이름·지역으로 찾기" enterkeyhint="search" aria-label="대학 이름·지역으로 찾기">
+      <input id="q" type="search" placeholder="대학·학과·태그로 찾기 (예: 간호)" enterkeyhint="search" aria-label="대학 이름·학과 이름·계열 태그로 찾기">
       <button type="submit">찾기</button>
     </form>
     <!-- 지역은 PC 에서 지도로, 폰에서 칩으로 고른다 (2026-09-20 대표 지시).
@@ -633,11 +826,26 @@ h1{font-size:30px;margin:0 0 10px}
   </div><!-- /panes -->
 
   <div class="listhead">
-    <h2 id="univ-list">대학별 환산 결과</h2>
+    <h2 id="univ-list">대학별 환산 결과 · 학과별 합격 가능성</h2>
     <span class="n" id="count">가나다순</span>
   </div>
-  <div class="ulist" id="list"></div>
-  <div class="morewrap" id="morewrap" hidden><button type="button" id="more">더 보기</button></div>
+  <div class="sortrow">
+    <span class="lbl">정렬</span>
+    <button type="button" data-sort="name" aria-pressed="true">가나다</button>
+    <button type="button" data-sort="fit" aria-pressed="false">적정에 가까운 순</button>
+  </div>
+  <!-- PC(≥1024px) 좌 1열 카드 / 우 2칸 sticky 상세. 폰은 카드 목록만 보이고 탭하면 상세가
+       전체 시트로 덮는다 (PLAN §16). -->
+  <div class="layout">
+    <div class="col-list">
+      <div class="ulist" id="list"></div>
+      <div class="morewrap" id="morewrap" hidden><button type="button" id="more">더 보기</button></div>
+    </div>
+    <div class="col-detail" id="colDetail">
+      <div class="sheetbar"><button type="button" id="sheetClose">대학 목록</button></div>
+      <div class="dpanel" id="detail"></div>
+    </div>
+  </div>
   <noscript>
     <p class="empty">계산기는 브라우저에서 동작합니다. 자바스크립트를 켜면 대학별 환산 결과가 표시됩니다. 아래 수록 범위와 환산 방식 설명은 그대로 보실 수 있습니다.</p>
   </noscript>
@@ -773,18 +981,13 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
                  '강원','충북','충남','전북','전남','경북','경남','제주'];
   var KINDS = ['4년제','전문대'];
   var STEP = 40;
-  // 펼친 패널 맨 아래 '접기' 화살표 (2026-09-20 대표 지시). currentColor 라 버튼 색을 따라간다.
-  var CHEV = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">' +
-    '<path d="M4 12.5 10 6.5l6 6" fill="none" stroke="currentColor" stroke-width="2.2"' +
-    ' stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
   var scores = {};
   var regions = [];      // 다중 선택, 비면 전체
   var kinds = [];
   var showNone = true;   // 앱 목록과 같게 기본은 보임
   var q = '';
   var shown = STEP;
-  var openId = null;
+  var openId = null;     // 고른 대학 id — 우 상세 패널에 뜬다
   var hasScores = false;
 
   // ── 전년도 합격선 비교 ──
@@ -792,20 +995,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var CUTS = G.ADMISSION_RESULTS || null;
   var CUT_ROWS = 12;          // 한 전형에서 먼저 보여 줄 모집단위 수 (앱과 같은 값)
   var cutKey = null;          // 고른 전형 key
-  var cutHow = false;         // '기준 보기' 펼침
-  var cutAll = false;         // 모집단위 전체 보기
-  var cutBlocked = false;     // '검정고시 지원 불가 전형' 펼침
-  // 앱 AdmissionConverter.tsx 의 RULE_HOWTO / W_HOWTO / CUT_CHECKLIST 와 같은 문장
-  var RULE_HOWTO = {
-    1: '주 컷은 대학이 공개한 백분위 컷입니다(70%컷 → 75%컷 → 80%컷 → 90%컷 순으로 있는 것을 씁니다). '
-      + '70%컷은 전년도 등록자를 성적순으로 세웠을 때 상위 70% 지점의 값입니다. '
-      + '적정 = 주 컷 ± w, 상향 = 그 바깥 0.5등급 이내, 매우 하향 = 50%컷 안(50%컷이 없으면 주 컷 − w − 0.5).',
-    2: '이 대학은 백분위 컷 대신 합격자 평균·최저를 공개했습니다. '
-      + '하향 = 합격자 평균 이상, 적정 = 평균~최저 사이, 상향 = 최저 아래 0.5등급 이내, '
-      + '매우 하향 = 합격자 최고 이상(최고가 미공개면 네 단계만 나옵니다).'
-  };
-  var W_HOWTO = 'w = 그 모집단위 주 컷의 연도별 (최대 − 최소) ÷ 2 를 0.15~0.5 로 맞춘 값입니다. '
-    + '공개된 연도가 하나뿐이면 임시 폭 0.3 을 씁니다.';
+  var cutAll = false;         // 모집단위 전체 보기 ('기준 보기'·'지원 불가 전형'은 <details> 가 맡는다)
+  // 판정 규칙과 연도별 변동 폭은 화면에 쓰지 않는다 (PLAN §16-1-1, 2026-09-22 대표 지시) —
+  // 내부 문서(PLAN §5)에만 남긴다. 화면에는 기준 명단·지표·학년도·출처·자격 원문만 낸다.
   var CUT_CHECKLIST = [
     '대입전형자료 온라인 제공 신청 — 시·도 교육청에 검정고시 성적을 대학으로 보내 달라고 신청했는지',
     '수능 원서 — 수능 최저학력기준이 있는 전형은 수능에 응시해야 합니다',
@@ -1027,47 +1219,6 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   });
   document.getElementById('more').addEventListener('click', function () { shown += STEP; render(); });
 
-  // ── 결과 ──
-  function valueHtml(r) {
-    var u = r.univ;
-    if (r.byTrack) {
-      var rows = G.TRACK_ORDER.filter(function (t) { return r.byTrack[t]; }).map(function (t) {
-        var tr = r.byTrack[t], val = '-';
-        if (tr.ok) {
-          if (tr.grade != null) { val = (u.conv === 'average_band' ? tr.grade : n2(tr.grade)) + '등급'; }
-          else if (tr.score != null) {
-            val = n2(tr.score) + '점' + (tr.gradeEquivalent != null ? ' (' + n2(tr.gradeEquivalent) + '등급 상당)' : '');
-          }
-        }
-        return '<span class="tk"><em>' + esc(G.TRACK_LABELS[t]) + '</em> <b>' + esc(val) + '</b></span>';
-      }).join('');
-      return '<div class="tracks"><span class="lbl">계열별 반영</span>' + rows + '</div>';
-    }
-    // 계산식 대학은 대학이 정한 소수 처리(절사·올림 등)를 이미 마친 값이라 그대로 쓰고,
-    // 값 아래에 어느 전형·만점 기준인지 한 줄 붙인다(2026-09-22 대표 지시)
-    var snote = (r.ok && r.scoreNote) ? '<div class="snote">' + esc(r.scoreNote) + '</div>' : '';
-    if (r.ok && r.grade != null) {
-      return '<div class="big">' + esc(u.calc || u.conv === 'average_band' ? r.grade : n2(r.grade)) +
-        '<i> 등급</i></div>' + snote;
-    }
-    if (r.ok && r.score != null) {
-      return '<div class="big">' + esc(u.calc ? r.score : n2(r.score)) +
-        '<i> ' + esc((u.calc && u.calc.unit) || '점') + '</i></div>' +
-        (r.gradeEquivalent != null ? '<div class="sub2">' + n2(r.gradeEquivalent) + '등급 상당</div>' : '') + snote;
-    }
-    var tag = u.status === 'unknown' ? '확인 필요'
-      : u.status === 'none' ? '교과 미반영'
-      : u.conv === 'formula' ? '계산식'
-      : u.conv === 'comparative' ? '비교내신' : '계산 불가';
-    // 점수를 아직 안 넣은 첫 화면에서 306곳이 모두 '계산 불가'로 보이면 뜻이 정반대로 읽힌다 —
-    // 환산표가 있는 대학은 할 일을 말해 준다(2026-09-20 대표 지시로 '점수 입력 전'에서 바꿈)
-    if (!hasScores && tag === '계산 불가') { tag = '점수를 입력하세요'; }
-    // 계산식 대학은 값을 낼 수 있는 곳이라 '왜 못 냈는지'가 곧 할 일이 된다 —
-    // 빠진 과목·산출식 범위 밖을 태그 아래 한 줄로 적는다(앱 AdmissionConverter 와 같은 취지).
-    var why = (hasScores && u.calc && r.reason) ? '<div class="snote">' + esc(r.reason) + '</div>' : '';
-    return '<span class="tag">' + tag + '</span>' + why;
-  }
-
   // 구간표는 가로 2행 — 1행 구간 / 2행 등급·점수, 9칸 넘으면 9칸씩 아래로 쌓는다.
   // (2026-09-20 대표 지시 · 정적 대학 페이지 build_admission_pages.py band_table() 과 같은 형식)
   // 세로 2열 × N행이면 구간 121개인 대학에서 카드 하나가 화면을 다 먹는다.
@@ -1151,91 +1302,443 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       Math.round(bw) + 'px">' + html + '</div>';
   }
 
-  // ── 전년도 합격선 비교 (앱과 같은 구조·문구) ────────────────────────────────
-  function fmtVal(v, unit) { return fmtNum(v) + (unit === 'grade' ? '등급' : '점'); }
+  // ── 전년도 합격선 비교 · 학과별 합격 가능성 (PLAN §16 · §16-1) ────────────────
+  // 판정은 calc.js 안의 judge()(= 앱 lib/admissionCut.ts) 가 하고 여기서는 그리기만 한다.
+  // 규칙 설명과 연도별 변동 폭은 화면에 쓰지 않는다(§16-1-1) — 내부 문서(PLAN §5)에만 둔다.
+
+  var detail = document.getElementById('detail');
+  var colDetail = document.getElementById('colDetail');
+  var sortMode = 'name';            // 'name' 가나다(기본) · 'fit' 적정에 가까운 순
+  var wideMQ = window.matchMedia('(min-width:1024px)');
+
+  // 표시 반올림 — 소수 둘째 자리까지(PLAN §5). 정본은 admissionCut 의 fmt2 다.
+  var fmt2 = G.fmt2 || function (v) { return String(Math.round(v * 100) / 100); };
+  function fv(v, unit) { return fmt2(v) + (unit === 'grade' ? '등급' : '점'); }
+
+  // 5단계 → 수치(매우 하향 1 … 매우 상향 5). G.BAND_ORDER 가 정본 순서다.
+  var BAND_VAL = {};
+  G.BAND_ORDER.forEach(function (b, i) { BAND_VAL[b] = i + 1; });
+  function bandOfVal(v) { return G.BAND_ORDER[Math.min(4, Math.max(0, Math.round(v) - 1))]; }
+  // 색은 CSS 토큰(§16-1-2) 하나만 본다 — 카드 띠·배지·미니 바가 같은 값을 쓰게
+  var BAND_CSS = { '매우 하향': 'var(--b1)', '하향': 'var(--b2)', '적정': 'var(--b3)',
+                   '상향': 'var(--b4)', '매우 상향': 'var(--b5)' };
+
+  var CONV_LABEL = {
+    subject_grade: '과목별 등급 환산', subject_score: '과목별 점수 환산',
+    average_band: '전 과목 평균 구간표', formula: '대학 고유 계산식',
+    comparative: '비교내신', unknown: '기준 미확인'
+  };
+
+  // 판정 불가 사유 — PLAN §15 고정 문구. 정본은 admissionCut 의 NO_BAND_REASON 이고
+  // 아래는 번들이 아직 그것을 싣지 않았을 때 쓰는 같은 문구 사본이다.
+  var REASON = {
+    no_results: '2026학년도 입시결과 미공개 — 전형 목록만 확보',
+    not_collected: '입결 미수집 — 확대 예정',
+    no_conv: '이 대학 환산표가 없어 내 등급을 낼 수 없음',
+    unit_mismatch: '내 환산 단위(점수)와 합격선 단위(등급)가 달라 비교 불가 — 대학이 등급별 환산점수 표를 공개하지 않음',
+    mean_only: '대학이 합격자 평균만 공개 — 단계를 나눌 수 없음',
+    first_pass: '대학이 최초합격자 기준만 공개 — 충원 후 합격선과 다를 수 있어 판정하지 않음',
+    basis_unknown: '합격자 기준(최종등록/최초합격)을 읽지 못함 — 요강 확인 필요',
+    csat_unknown: '수능최저 확인 안 됨 — 요강 확인 필요',
+    no_ged_track: '검정고시가 지원할 수 있는 교과 전형에 공개 수치 없음',
+    no_score: '점수를 입력하면 판정이 나옵니다'
+  };
+  if (G.NO_BAND_REASON) {
+    Object.keys(G.NO_BAND_REASON).forEach(function (k) { REASON[k] = G.NO_BAND_REASON[k]; });
+  }
+  // judge() 가 §15 밖에서 쓰는 코드 — 사유를 한 줄로 적는다
+  var REASON_EXTRA = {
+    ged_no: '검정고시 출신자가 지원할 수 없는 전형',
+    ged_unknown: '검정고시 지원자격 미확인 — 요강 확인 필요',
+    no_w: '연도별 자료가 모자라 단계를 나누지 않음'
+  };
+  function reasonOf(j, mine) {
+    if (mine && mine.convReason) { return mine.convReason; }
+    var c = j && j.reasonCode;
+    if (c && c !== 'basis_unspecified') { return REASON[c] || REASON_EXTRA[c] || (j && j.reason) || null; }
+    return (j && !j.band && j.reason) ? j.reason : null;
+  }
 
   /** 내 환산값을 그 모집단위의 단위에 맞춰 꺼낸다 (앱 myValueFor 와 같은 규칙) */
   function myValueFor(r, unit, track) {
     var c = (track && r.byTrack && r.byTrack[track]) ? r.byTrack[track] : r;
-    if (!c.ok) { return { value: null, mismatch: false, convReason: c.reason || null }; }
+    if (!c.ok) { return { value: null, mismatch: false, convReason: c.reason || null, score: null }; }
     if (unit === 'grade') {
       var g = c.grade != null ? c.grade : (c.gradeEquivalent != null ? c.gradeEquivalent : null);
-      return { value: g, mismatch: g == null && c.score != null, convReason: null };
+      return { value: g, mismatch: g == null && c.score != null, convReason: null,
+               score: c.score != null ? c.score : null };
     }
     var s = c.score != null ? c.score : null;
-    return { value: s, mismatch: s == null && (c.grade != null || c.gradeEquivalent != null), convReason: null };
+    return { value: s, mismatch: s == null && (c.grade != null || c.gradeEquivalent != null),
+             convReason: null, score: s };
   }
 
-  function cutRowHtml(r, d, adm, row) {
+  /** 이 전형이 쓸 등급별 환산점수 표 (PLAN §14). admissionCut 의 resolveGradeMap 이 정본. */
+  function gradeMapFor(d, adm) {
+    if (!d || !d.gradeMap) { return null; }
+    if (G.resolveGradeMap) { return G.resolveGradeMap(d.gradeMap, adm && adm.gradeMapKey); }
+    return d.gradeMap.rows ? d.gradeMap : null;
+  }
+
+  /**
+   * 한 모집단위 판정.
+   * 내 환산이 점수인데 대학 컷이 등급이고 그 대학이 등급별 환산점수 표를 공개했으면,
+   * 점수를 그대로 넘긴다 — judge() 가 그 표로 '등급 상당'을 읽어 판정한다(PLAN §14).
+   */
+  function judgeRow(r, d, adm, row) {
     var mine = myValueFor(r, adm.unit, row.track);
-    var j = G.judge(mine.value, adm, row, { resultYear: d.resultYear, unitMismatch: mine.mismatch });
-    var chip = j.band
-      ? '<span class="ac-band" style="background:' + esc(G.BAND_COLOR[j.band]) + '" title="' +
-        esc(G.BAND_MEANING[j.band]) + '">' + esc(j.band) + '</span>'
-      : '<span class="ac-need" title="' + esc(j.reason || '') + '">요강 확인 필요</span>';
-    var cut = j.mainCut != null && j.mainCutKind
-      ? G.METRIC_LABEL[j.mainCutKind] + ' ' + fmtVal(j.mainCut, adm.unit) + ' · ' + d.resultYear
-      : (row.stats && row.stats.mean != null
-          ? G.METRIC_LABEL.mean + ' ' + fmtVal(row.stats.mean, adm.unit) + ' · ' + d.resultYear
-          : '공개 수치 없음');
-    var me = mine.mismatch ? '단위 다름'
-      : (mine.value != null ? '내 ' + fmtVal(mine.value, adm.unit)
-        : (mine.convReason ? '환산 불가' : '내 값 없음'));
-    var why = !j.band && (mine.convReason || j.reason)
-      ? '<p class="ac-why">' + esc(mine.convReason || j.reason) + '</p>' : '';
-    var rule = j.band && j.rule
-      ? '<p class="ac-rule">' + esc(G.RULE_LABEL[j.rule]) +
-        (j.rule === 1 && j.mainCutKind ? ' (' + esc(G.METRIC_LABEL[j.mainCutKind]) + ')' : '') +
-        (adm.basis === 'unspecified' ? ' · 기준 명단 미표기' : '') + '</p>' : '';
-    return '<li><div class="ac-r1"><span class="ac-nm">' + esc(row.name) +
-      (row.track ? '<em>' + esc(G.TRACK_LABELS[row.track]) + '</em>' : '') + '</span>' + chip + '</div>' +
-      '<div class="ac-r2"><span class="ac-cut">' + esc(cut) + '</span>' +
-      '<span class="ac-me">' + esc(me) + '</span></div>' + why + rule + '</li>';
+    var gm = gradeMapFor(d, adm);
+    var val = mine.value, mismatch = mine.mismatch;
+    if (mismatch && gm && adm.unit === 'grade' && mine.score != null) {
+      val = mine.score;
+      mismatch = false;
+    }
+    return { mine: mine, gm: gm, j: G.judge(val, adm, row, {
+      resultYear: d.resultYear, unitMismatch: mismatch, gradeMap: gm, univName: d.name }) };
   }
 
-  function cutHtml(r) {
+  /** 그 판정에서 '내 값'으로 쓴 수치 — gradeMap 을 탔으면 등급 상당이다 */
+  function myShown(o) {
+    var gf = o.j.detail && o.j.detail.gradeFromScore;
+    return gf ? gf.grade : o.mine.value;
+  }
+
+  // ── 학과 태그 ───────────────────────────────────────────────────────────────
+  // 정본은 데이터의 units[].tags(빌드가 dept_tags.json 으로 채운 것). 데이터에 아직 없으면
+  // 같은 사전을 화면에서 한 번 돌려 같은 결과를 낸다 — 사전이 없으면 이름만으로 찾는다.
+  var DEPT_TAGS = G.DEPT_TAGS || null;
+  var tagCache = {};
+  function tagsOf(row) {
+    if (row.tags && row.tags.length) { return row.tags; }
+    if (!DEPT_TAGS || !DEPT_TAGS.categories) { return []; }
+    var nm = row.name || '';
+    if (tagCache[nm]) { return tagCache[nm]; }
+    var out = [];
+    DEPT_TAGS.categories.forEach(function (c) {
+      for (var i = 0; i < c.patterns.length; i++) {
+        if (nm.indexOf(c.patterns[i]) >= 0) { out.push(c.tag); return; }
+      }
+    });
+    if (!out.length) { out.push('기타'); }
+    tagCache[nm] = out;
+    return out;
+  }
+
+  // ── 검색 (대학명·별칭·지역·학과명·태그) ──────────────────────────────────────
+  function norm(s) { return String(s == null ? '' : s).replace(/\s/g, '').toLowerCase(); }
+  /** q 가 이 대학에 어떻게 걸렸는지 — 이름으로 걸렸나, 어느 학과가 걸렸나 */
+  function matchOf(r, d) {
+    if (!q) { return { ok: true, name: true, deps: null, n: 0 }; }
+    var u = r.univ;
+    var nameHit = norm(u.name).indexOf(q) >= 0 || norm(u.region).indexOf(q) >= 0;
+    if (!nameHit && d && d.nameAliases) {
+      nameHit = d.nameAliases.some(function (a) { return norm(a).indexOf(q) >= 0; });
+    }
+    var deps = {}, n = 0;
+    if (d) {
+      d.admissions.forEach(function (a) {
+        (a.units || []).forEach(function (x) {
+          var hit = norm(x.name).indexOf(q) >= 0 ||
+            tagsOf(x).some(function (t) { return norm(t).indexOf(q) >= 0; });
+          if (!hit) { return; }
+          var k = x.name + '|' + (x.track || '');
+          if (!deps[k]) { deps[k] = true; n++; }
+        });
+      });
+    }
+    return { ok: nameHit || n > 0, name: nameHit, deps: n ? deps : null, n: n };
+  }
+  function depHit(m, row) {
+    return !!(m && m.deps && m.deps[row.name + '|' + (row.track || '')]);
+  }
+
+  // ── 대학 단위 밴드 ──────────────────────────────────────────────────────────
+  // 카드 색 = 그 대학에서 판정 가능한 학과들의 5단계 평균. 학과(모집단위명+계열) 하나가 여러
+  // 전형에 나오면 그 학과 안에서 먼저 평균을 내고, 그 학과 값들을 다시 평균한다(PLAN §5).
+  function univBand(r) {
     var d = cutOf(r.univ.id);
-    // 데이터 없는 대학은 섹션 자체를 내지 않는다 — 전형 목록만 있고 수치가 한 줄도 없는 대학
-    // (강남대처럼 대학이 입시결과를 공개하지 않은 곳)도 여기서 빠진다. 빈 표를 띄우지 않는다.
-    if (!d || !d.admissions.some(G.admissionHasNumbers)) { return ''; }
+    if (!d) { return { kind: 'nodata', why: REASON.not_collected }; }
+    if (!d.admissions.some(G.admissionHasNumbers)) {
+      return { kind: 'blocked', year: d.resultYear, why: REASON.no_results };
+    }
+    var elig = d.admissions.filter(function (a) {
+      return (a.gedEligible === 'yes' || a.gedEligible === 'conditional') && G.admissionHasNumbers(a);
+    });
+    if (!elig.length) { return { kind: 'blocked', year: d.resultYear, why: REASON.no_ged_track }; }
+    var convOk = r.ok || (r.byTrack && G.TRACK_ORDER.some(function (t) {
+      return r.byTrack[t] && r.byTrack[t].ok;
+    }));
+    if (!convOk) {
+      var u0 = r.univ;
+      var why0 = !hasScores ? REASON.no_score
+        : u0.status === 'none' ? '검정고시 교과성적을 반영하지 않는 대학'
+        : u0.status === 'unknown' ? '대학이 환산 기준을 공개하지 않음'
+        : u0.conv === 'comparative' ? '비교내신 대학 — 검정고시 점수만으로는 산출되지 않음'
+        : u0.conv === 'formula' ? '대학이 계산식만 공개'
+        : REASON.no_conv;
+      return { kind: 'blocked', year: d.resultYear, why: why0 };
+    }
+    var byDep = {}, reasons = {}, depOrder = [];
+    elig.forEach(function (a) {
+      (a.units || []).forEach(function (row) {
+        if (!row.stats || !Object.keys(row.stats).length) { return; }
+        var o = judgeRow(r, d, a, row);
+        var k = row.name + '|' + (row.track || '');
+        if (o.j.band) {
+          if (!byDep[k]) { byDep[k] = []; depOrder.push(k); }
+          byDep[k].push(BAND_VAL[o.j.band]);
+        } else {
+          var why = reasonOf(o.j, o.mine) || '판정 근거 부족';
+          reasons[why] = (reasons[why] || 0) + 1;
+        }
+      });
+    });
+    if (!depOrder.length) {
+      var top = null, n = 0;
+      Object.keys(reasons).forEach(function (k) { if (reasons[k] > n) { n = reasons[k]; top = k; } });
+      return { kind: 'blocked', year: d.resultYear, why: top || '판정 근거 부족' };
+    }
+    var vals = depOrder.map(function (k) {
+      return Math.round(byDep[k].reduce(function (x, y) { return x + y; }, 0) / byDep[k].length);
+    });
+    var mean = vals.reduce(function (x, y) { return x + y; }, 0) / vals.length;
+    var fit = vals.filter(function (v) { return v <= 3; }).length;
+    return { kind: 'ok', band: bandOfVal(mean), mean: mean, total: vals.length,
+             fit: fit, year: d.resultYear };
+  }
+
+  /** 카드·패널 머리에 띄울 내 환산값 한 덩이 */
+  function myHeadline(r) {
+    var u = r.univ;
+    function one(c, tl) {
+      if (!c.ok) { return null; }
+      if (c.grade != null) {
+        return { big: (u.calc || u.conv === 'average_band' ? String(c.grade) : fmt2(c.grade)),
+                 unit: '등급', sub: tl };
+      }
+      if (c.score != null) {
+        return { big: (u.calc ? String(c.score) : fmt2(c.score)),
+                 unit: (u.calc && u.calc.unit) || '점',
+                 sub: [tl, c.gradeEquivalent != null ? fmt2(c.gradeEquivalent) + '등급 상당' : null]
+                        .filter(Boolean).join(' · ') || null };
+      }
+      return null;
+    }
+    if (r.byTrack) {
+      // 계열이 갈리는 대학은 '하나의 등급'이 없다 — 첫 계열 값을 내고 계열명을 같이 적는다.
+      var first = null;
+      G.TRACK_ORDER.forEach(function (t) {
+        if (first || !r.byTrack[t]) { return; }
+        first = one(r.byTrack[t], G.TRACK_LABELS[t] + ' 기준');
+      });
+      if (first) { return first; }
+    }
+    var o = one(r, null);
+    if (o) { return o; }
+    var tag = u.status === 'unknown' ? '기준 미확인'
+      : u.status === 'none' ? '교과 미반영'
+      : u.conv === 'formula' ? '계산식만 공개'
+      : u.conv === 'comparative' ? '비교내신' : (hasScores ? '환산 불가' : '점수를 입력하세요');
+    return { tag: tag };
+  }
+
+  // ── 미니 바 (인라인 SVG + HTML 눈금) ────────────────────────────────────────
+  var gid = 0;
+  /** 축 — 등급은 1~9 고정, 점수는 그 모집단위 수치 범위(만점이 학과마다 달라 축을 공유하지 않는다) */
+  function domainFor(unit, row, myVal) {
+    if (unit === 'grade') { return { lo: 1, hi: 9, unit: unit }; }
+    var vs = [];
+    Object.keys(row.stats || {}).forEach(function (k) {
+      var v = row.stats[k]; if (typeof v === 'number') { vs.push(v); }
+    });
+    if (myVal != null) { vs.push(myVal); }
+    if (vs.length < 2) { return null; }
+    var lo = Math.min.apply(null, vs), hi = Math.max.apply(null, vs);
+    var pad = (hi - lo) * 0.12 || Math.max(1, Math.abs(hi) * 0.02);
+    return { lo: lo - pad, hi: hi + pad, unit: unit };
+  }
+  /** 눈금 값 — 등급은 1~9 전부, 점수는 축을 5칸으로 (§16-1-5: 눈금 숫자를 다 적는다) */
+  function ticksOf(dom) {
+    var t = [], i;
+    if (dom.unit === 'grade') { for (i = 1; i <= 9; i++) { t.push(i); } }
+    else { for (i = 0; i <= 4; i++) { t.push(dom.lo + (dom.hi - dom.lo) * i / 4); } }
+    return t;
+  }
+  // 가로만 늘어나는 좌표계(preserveAspectRatio="none") — 굵기는 non-scaling-stroke 로 고정한다
+  var X0 = 3, X1 = 97, SPAN = X1 - X0;
+  /** 왼쪽이 늘 유리한 쪽 — 등급은 1등급, 점수는 만점 쪽 */
+  function xOf(dom, v) {
+    var t = dom.unit === 'grade'
+      ? (v - dom.lo) / (dom.hi - dom.lo)
+      : (dom.hi - v) / (dom.hi - dom.lo);
+    return X0 + SPAN * Math.min(1, Math.max(0, t));
+  }
+  function ln(x1, y1, x2, y2, stroke, w, extra) {
+    return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 +
+      '" stroke="' + stroke + '" stroke-width="' + w + '" vector-effect="non-scaling-stroke"' +
+      (extra || '') + '/>';
+  }
+  /**
+   * 미니 바. 위쪽에는 합격선(주 컷)과 내 점수를 잇는 선을, 아래에는 눈금 숫자를 둔다.
+   * 거리 숫자는 HTML(.dep-dist)로 얹는다 — SVG 안의 글자는 폭이 늘어나면 같이 늘어난다.
+   */
+  function chartSvg(dom, j, myVal, color) {
+    var dt = j.detail, id = 'g' + (++gid);
+    var pts = [dt.best, dt.worst, dt.mean, dt.cut50, j.mainCut].filter(function (v) { return v != null; });
+    var s = '<svg viewBox="0 0 100 34" preserveAspectRatio="none" role="img" aria-hidden="true" focusable="false">';
+    ticksOf(dom).forEach(function (v) {
+      var x = xOf(dom, v).toFixed(2);
+      s += ln(x, 17, x, 27, 'var(--grid)', 1);
+    });
+    s += ln(X0, 22, X1, 22, 'var(--sc-muted)', 8, ' stroke-linecap="round"');
+    if (pts.length >= 2) {
+      var xs = pts.map(function (v) { return xOf(dom, v); });
+      var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs);
+      s += '<defs><linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' + x0.toFixed(2) +
+        '" y1="0" x2="' + x1.toFixed(2) + '" y2="0">' +
+        '<stop offset="0" stop-color="' + color + '" stop-opacity=".34"/>' +
+        '<stop offset="1" stop-color="' + color + '" stop-opacity=".14"/></linearGradient></defs>';
+      s += ln(x0.toFixed(2), 22, x1.toFixed(2), 22, 'url(#' + id + ')', 8, ' stroke-linecap="round"');
+    }
+    if (dt.mean != null) {
+      var xm = xOf(dom, dt.mean).toFixed(2);
+      s += ln(xm, 17, xm, 27, 'var(--mark)', 1.4, ' stroke-dasharray="2.6 2.4"');
+    }
+    if (j.mainCut != null) {
+      var xc = xOf(dom, j.mainCut).toFixed(2);
+      s += ln(xc, 15, xc, 29, 'var(--mark)', 2, '');
+    }
+    // 합격선 ↔ 내 점수 — 거리 자체를 선으로 보여 준다(§16-1-6). 숫자는 HTML 로 얹는다.
+    var dist = null;
+    if (myVal != null) {
+      var xme = xOf(dom, myVal);
+      if (j.mainCut != null) {
+        var xcut = xOf(dom, j.mainCut);
+        var a = Math.min(xcut, xme), b = Math.max(xcut, xme);
+        s += ln(a.toFixed(2), 10, b.toFixed(2), 10, color, 1.4, '');
+        s += ln(a.toFixed(2), 7.5, a.toFixed(2), 12.5, color, 1.4, '');
+        s += ln(b.toFixed(2), 7.5, b.toFixed(2), 12.5, color, 1.4, '');
+        dist = { mid: (a + b) / 2, v: Math.abs(j.mainCut - myVal) };
+      }
+      // 내 값 — 길이 0 선의 둥근 끝이 곧 점이다(가로로 늘어나도 원 모양이 유지된다)
+      s += ln(xme.toFixed(2), 22, xme.toFixed(2), 22, '#fff', 11.4, ' stroke-linecap="round"');
+      s += ln(xme.toFixed(2), 22, xme.toFixed(2), 22, color, 8.4, ' stroke-linecap="round"');
+    }
+    s += '</svg>';
+    var lab = dist
+      ? '<span class="dep-dist" style="left:' + dist.mid.toFixed(2) + '%">' + esc(fmt2(dist.v)) + '</span>'
+      : '';
+    var ax = ticksOf(dom).map(function (v) {
+      return '<i style="left:' + xOf(dom, v).toFixed(2) + '%">' + esc(fmt2(v)) + '</i>';
+    }).join('');
+    return s + lab + '<div class="dep-ax">' + ax + '</div>';
+  }
+
+  // ── 학과 한 줄 ──────────────────────────────────────────────────────────────
+  function depHtml(r, d, adm, row, hit) {
+    var o = judgeRow(r, d, adm, row), j = o.j, mine = o.mine;
+    var color = j.band ? BAND_CSS[j.band] : 'var(--b0)';
+    var badge = j.band
+      ? '<span class="pill band" style="--bandc:' + color + '">' + esc(j.band) + '</span>'
+      : '<span class="pill muted">판정 불가</span>';
+    var out = '<div class="dep' + (hit ? ' hit' : '') + '"><div class="dep-r1"><span class="dep-nm">' +
+      esc(row.name) + (row.track ? '<em>' + esc(G.TRACK_LABELS[row.track]) + '</em>' : '') +
+      '</span>' + badge + '</div>';
+
+    var tags = tagsOf(row);
+    if (tags.length) {
+      out += '<div class="dep-tags">' + tags.map(function (t) {
+        return '<i' + (q && norm(t).indexOf(q) >= 0 ? ' class="on"' : '') + '>' + esc(t) + '</i>';
+      }).join('') + '</div>';
+    }
+
+    // 학과 행 글은 '작년 70%컷 3.2 · 내 2.9' 정도만 (§16-1-6) — 거리는 아래 미니 바가 보여 준다
+    var unit = adm.unit, g = myShown(o), bits = [];
+    if (j.mainCut != null && j.mainCutKind) {
+      bits.push('작년 ' + G.METRIC_LABEL[j.mainCutKind] + ' <b>' + esc(fv(j.mainCut, unit)) + '</b>');
+      if (j.rule === 2) {
+        if (j.detail.mean != null) { bits.push('평균 ' + esc(fv(j.detail.mean, unit))); }
+        if (j.detail.best != null) { bits.push('최고 ' + esc(fv(j.detail.best, unit))); }
+      }
+    } else if (row.stats && row.stats.mean != null) {
+      bits.push('작년 ' + G.METRIC_LABEL.mean + ' <b>' + esc(fv(row.stats.mean, unit)) + '</b>');
+    } else {
+      bits.push('공개 수치 없음');
+    }
+    if (g != null) { bits.push('내 <b>' + esc(fv(g, unit)) + '</b>'); }
+    out += '<p class="dep-diff">' + bits.join(' · ') + '</p>';
+
+    var why = !j.band ? reasonOf(j, mine) : null;
+    if (why) { out += '<p class="dep-why">' + esc(why) + '</p>'; }
+    // 점수를 대학 표로 등급 상당으로 읽었으면 그 내역을 그대로 노출한다(PLAN §14)
+    var gf = j.detail && j.detail.gradeFromScore;
+    if (gf) { out += '<p class="dep-why">' + esc(gf.note) + '</p>'; }
+
+    var dom = domainFor(unit, row, g);
+    if (dom && (j.mainCut != null || j.detail.mean != null)) {
+      out += '<div class="dep-chart">' + chartSvg(dom, j, g, color) + '</div>';
+    }
+    if (j.band && j.rule && j.mainCutKind) {
+      out += '<p class="dep-rule">' + esc(G.METRIC_LABEL[j.mainCutKind] + ' 기준') +
+        (adm.basis === 'unspecified' ? ' · 기준 명단 미표기' : '') + '</p>';
+    }
+    return out + '</div>';
+  }
+
+  // ── 학과별 합격 가능성 섹션 ────────────────────────────────────────────────
+  function cutSectionHtml(r, ub, m) {
+    var d = cutOf(r.univ.id);
+    var out = '<div class="dsec"><h4>학과별 합격 가능성</h4>';
+    if (!d) {
+      return out + '<p class="hint">전년도 입시결과를 아직 수집하지 않은 대학입니다.</p>' +
+        '<div class="nojudge"><b>판정 불가</b><span>' + esc(REASON.not_collected) +
+        '</span></div></div>';
+    }
+    out += '<p class="hint">' + esc(d.resultYear +
+      ' 입시결과 기준 · 아래 단계는 대학이 공개한 수치와 내 환산등급의 거리입니다. 확률을 계산하지 않습니다.') +
+      '</p>';
+
     var elig = [], blocked = [];
     d.admissions.forEach(function (a) {
       if (a.gedEligible === 'yes' || a.gedEligible === 'conditional') { elig.push(a); }
       else { blocked.push(a); }
     });
-    // 수치가 있는 전형을 먼저 — 칩을 눌렀는데 빈 표만 나오는 일이 없게 (앱과 같은 정렬)
+    // 수치가 있는 전형을 먼저 — 칩을 눌렀는데 빈 표만 나오는 일이 없게
     var chipsList = elig.slice().sort(function (a, b) {
       return (b.units ? b.units.length : 0) - (a.units ? a.units.length : 0);
     });
-    var adm = null;
-    for (var i = 0; i < chipsList.length; i++) { if (chipsList[i].key === cutKey) { adm = chipsList[i]; } }
+    // 학과·태그로 찾았으면 그 학과가 있는 전형을 먼저 고른다
+    if (m && m.deps) {
+      chipsList = chipsList.slice().sort(function (a, b) {
+        function n(x) {
+          return (x.units || []).filter(function (y) { return depHit(m, y); }).length;
+        }
+        return n(b) - n(a);
+      });
+    }
+    var adm = null, said = false, i;
+    for (i = 0; i < chipsList.length; i++) { if (chipsList[i].key === cutKey) { adm = chipsList[i]; } }
     if (!adm) { adm = chipsList[0] || null; }
 
-    var out = '<section class="ac"><div class="ac-head"><h4>전년도 합격선 비교</h4>' +
-      '<span class="yr">' + esc(d.resultYear) + ' 입시결과</span></div>' +
-      // 면책 A — 섹션 상단 고정 (기획서 §6 문구 그대로)
-      '<p class="ac-note"><b>※ 전년도 결과 대비 참고 정보입니다.</b> ' +
-      '각 대학이 공개한 전년도 입시결과(학년도·전형·지표는 아래에 표기)와 내 환산등급을 단순 비교한 것입니다. ' +
-      '합격 여부를 예측하지 않으며, 올해 경쟁률·모집인원·전형 변경은 반영되지 않습니다. ' +
-      '지원 전에 반드시 해당 대학 입학처의 그 해 모집요강을 직접 확인하세요. ' +
-      '지원 결정과 그 결과는 지원자 본인의 책임입니다.</p>';
-
-    if (!chipsList.length) {
-      out += '<p class="ac-line">검정고시 출신자가 지원할 수 있는 전형의 전년도 결과를 아직 확보하지 못했어요.</p>';
+    if (!adm) {
+      said = true;
+      out += '<div class="nojudge"><b>판정 불가</b><span>' +
+        esc(ub.kind === 'blocked' ? ub.why : REASON.no_ged_track) + '</span></div>';
     } else {
-      out += '<div class="ac-chips">' + chipsList.map(function (a) {
+      out += '<div class="admchips">' + chipsList.map(function (a) {
         return '<button type="button" data-cut="' + esc(a.key) + '"' +
+          (G.admissionHasNumbers(a) ? '' : ' data-none="1"') +
           (a.key === adm.key ? ' class="on"' : '') + '>' +
           esc((a.round ? a.round + ' ' : '') + a.label) +
           (a.gedEligible === 'conditional' ? ' ·조건부' : '') + '</button>';
       }).join('') + '</div>';
 
       if (adm.gedEligible === 'conditional' && adm.gedEligibleNote) {
-        out += '<p class="ac-line"><b>지원자격</b> ' + esc(adm.gedEligibleNote) + '</p>';
+        out += '<p class="dline"><b>지원자격</b> ' + esc(adm.gedEligibleNote) + '</p>';
       }
-      // 대학이 기준 명단을 안 적은 전형 — 칩 옆에 반드시 붙는 단서(PLAN §5). 접히지 않는다.
+      // 대학이 기준 명단을 안 적은 전형 — 단계 옆에 반드시 붙는 단서(PLAN §5). 접히지 않는다.
       if (adm.basis === 'unspecified') {
-        out += '<p class="ac-line"><b>기준 명단</b> ' + esc(G.BASIS_UNSPECIFIED_NOTE) +
+        out += '<p class="dline"><b>기준 명단</b> ' + esc(G.BASIS_UNSPECIFIED_NOTE) +
           ' — 아래 단계는 대학이 낸 그 수치만으로 잰 것입니다.</p>';
       }
 
@@ -1243,101 +1746,108 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         return x.stats && Object.keys(x.stats).length > 0;
       });
       var hidden = (adm.units ? adm.units.length : 0) - rows.length;
-      out += '<div class="ac-tblhead"><span>모집단위 · 전년도 합격선 · 내 환산등급</span>' +
-        '<span>' + rows.length + '곳' + (hidden > 0 ? ' · 미공개 ' + hidden + '곳 제외' : '') + '</span></div>';
+      if (m && m.deps) {
+        // 찾은 학과를 먼저 (원래 순서는 그 안에서 유지)
+        var hitRows = [], restRows = [];
+        rows.forEach(function (x) { (depHit(m, x) ? hitRows : restRows).push(x); });
+        rows = hitRows.concat(restRows);
+      }
       if (!rows.length) {
-        out += '<p class="ac-line">이 전형은 대학이 모집단위별 수치를 공개하지 않았어요.</p>';
+        said = true;
+        out += '<div class="nojudge"><b>판정 불가</b><span>' +
+          esc(ub.kind === 'blocked' ? ub.why : '이 전형은 대학이 모집단위별 수치를 공개하지 않았습니다.') +
+          '</span></div>';
       } else {
+        // 범례의 '합격선'은 그 전형이 실제로 쓴 지표 이름으로 적는다(70%컷·합격자 최저 …)
+        var mk = G.judge(null, adm, rows[0], { resultYear: d.resultYear }).mainCutKind;
+        out += '<div class="legend">' +
+          '<span><i class="lg-sw"></i>전년도 합격자 분포</span>' +
+          '<span><i class="lg-cut"></i>' + esc(G.METRIC_LABEL[mk] || '합격선') + '</span>' +
+          '<span><i class="lg-mean"></i>합격자 평균</span>' +
+          '<span><i class="lg-me"></i>내 환산등급</span></div>';
+        out += '<div class="tblhead"><span>모집단위 · 전년도 합격선 · 내 환산등급</span><span>' +
+          rows.length + '곳' + (hidden > 0 ? ' · 미공개 ' + hidden + '곳 제외' : '') + '</span></div>';
         var show = cutAll ? rows : rows.slice(0, CUT_ROWS);
-        out += '<ul class="ac-list">' + show.map(function (x) { return cutRowHtml(r, d, adm, x); }).join('') + '</ul>';
+        out += show.map(function (x) { return depHtml(r, d, adm, x, depHit(m, x)); }).join('');
         if (rows.length > CUT_ROWS) {
-          out += '<button type="button" class="ac-more" data-cutall="1">' +
+          out += '<button type="button" class="dmore" data-cutall="1">' +
             (cutAll ? '접기' : '모집단위 ' + rows.length + '곳 모두 보기') + '</button>';
         }
       }
 
-      out += '<p class="ac-line"><b>수능 최저학력기준</b> ' +
-        esc(adm.minCsat.status === 'none' ? '없음'
-          : adm.minCsat.status === 'has' ? (adm.minCsat.text || '있음 — 요강 원문을 확인해 주세요')
+      var mc = adm.minCsat || {};
+      out += '<p class="dline"><b>수능 최저학력기준</b> ' +
+        esc(mc.status === 'none' ? '없음'
+          : mc.status === 'has' ? (mc.text || '있음 — 요강 원문을 확인해 주세요')
           : '미확인 — 요강을 확인해 주세요') + '</p>';
 
-      // '기준 보기' — 산식·w·기준 명단·성적 반영·지원자격 원문·출처를 그대로 편다
-      out += '<div class="ac-how"><button type="button" class="ac-more" data-cuthow="1">' +
-        (cutHow ? '기준 접기' : '기준 보기') + '</button>';
-      if (cutHow) {
-        // 첫 줄 기준의 예시 — 모집단위마다 w 가 달라질 수 있어 예시로 적는다(앱과 같다)
-        var sample = rows.length ? G.judge(0, adm, rows[0], { resultYear: d.resultYear }) : null;
-        var h = '';
-        if (sample && sample.rule) { h += '<p><b>산식</b> ' + esc(RULE_HOWTO[sample.rule]) + '</p>'; }
-        h += '<p><b>변동 폭 w</b> ' + esc(W_HOWTO);
-        if (sample && sample.w != null) {
-          h += esc(' 이 전형 첫 모집단위 기준 w = ' + fmtNum(sample.w) +
-            (sample.wSource === 'default' ? ' (임시 폭 — 공개 연도 1개년)'
-              : ' (근거 학년도 ' + sample.detail.wYears.join('·') + ')'));
-        }
-        h += '</p>';
-        if (sample && sample.detail.formula) {
-          h += '<p><b>예시</b> ' + esc(rows[0].name + ' — ' + sample.detail.formula) + '</p>';
-        }
-        h += '<p><b>기준 명단</b> ' + esc(G.BASIS_LABEL[adm.basis] + ' · ' + d.resultYear + ' · 단위 ' +
-          (adm.unit === 'grade' ? '등급(작을수록 좋음)' : '점수(클수록 좋음)')) + '</p>';
-        if (adm.basis === 'unspecified') {
-          h += '<p>' + esc(G.BASIS_UNSPECIFIED_NOTE) +
-            '. 최종등록자 분포인지 최초합격자 분포인지 알 수 없어, 같은 단계라도 다른 대학과 나란히 견주지 마세요.</p>';
-        }
-        if (adm.unit === 'score') {
-          h += '<p>모집단위마다 만점이 다를 수 있어 학과끼리 점수를 나란히 견주지 않습니다.</p>';
-        }
-        if (sample && sample.detail.bestMissing) {
-          h += '<p>합격자 최고 등급이 미공개라 &#39;매우 하향&#39; 없이 네 단계만 나옵니다.</p>';
-        }
-        if (sample && sample.detail.swapped) {
-          h += '<p>원문 표의 최고·최저 표기가 엇갈려, 수치 크기로 최고(작은 등급)·최저(큰 등급)를 가렸습니다.</p>';
-        }
-        if (adm.convNote) { h += '<p><b>성적 반영</b> ' + esc(adm.convNote) + '</p>'; }
-        if (adm.gedEligibleNote) { h += '<p><b>지원자격 원문</b> ' + esc(adm.gedEligibleNote) + '</p>'; }
-        if (d.retakeNote) { h += '<p><b>재응시 회차</b> ' + esc(d.retakeNote) + '</p>'; }
-        // 출처는 링크로 걸지 않는다 — 위 src-note 와 같은 규칙(2026-09-18 대표 지시)
-        var rs = null, gs = null;
-        (d.sources || []).forEach(function (s) {
-          if (s.role === 'results' && !rs) { rs = s; }
-          if (s.role === 'guide' && !gs) { gs = s; }
+      // 기준 보기 — 기준 명단·지표·학년도·출처·자격 원문만 (§16-1-1: 규칙·변동 폭은 쓰지 않는다)
+      var h = '';
+      h += '<p><b>기준 명단</b> ' + esc(G.BASIS_LABEL[adm.basis]) + '</p>';
+      var metrics = [];
+      rows.forEach(function (x) {
+        Object.keys(x.stats || {}).forEach(function (k) {
+          if (x.stats[k] != null && G.METRIC_LABEL[k] && metrics.indexOf(G.METRIC_LABEL[k]) < 0) {
+            metrics.push(G.METRIC_LABEL[k]);
+          }
         });
-        var src = [];
-        if (rs) {
-          src.push('입시결과 ' + (rs.type === 'adiga' ? '대학어디가' : d.name + ' 입학처') +
-            ' 공개 자료(' + rs.format + ') · 확인일 ' + rs.checkedAt);
-        }
-        if (gs) { src.push(d.applyYear + ' 모집요강 · 확인일 ' + gs.checkedAt); }
-        if (src.length) { h += '<p><b>출처</b> ' + esc(src.join(' · ')) + '</p>'; }
-        out += '<div>' + h + '</div>';
+      });
+      if (metrics.length) { h += '<p><b>공개 지표</b> ' + esc(metrics.join(' · ')) + '</p>'; }
+      h += '<p><b>학년도</b> ' + esc(d.resultYear + ' 입시결과 · 단위 ' +
+        (adm.unit === 'grade' ? '등급(숫자가 작을수록 좋음)' : '점수(클수록 좋음)')) + '</p>';
+      if (adm.basis === 'unspecified') {
+        h += '<p>' + esc(G.BASIS_UNSPECIFIED_NOTE) +
+          '. 최종등록자 분포인지 최초합격자 분포인지 알 수 없어, 같은 단계라도 다른 대학과 나란히 견주지 마세요.</p>';
       }
-      out += '</div>';
-
-      out += '<p class="ac-line" style="margin-top:12px"><b>지원 전 체크리스트</b></p><ul class="ac-check">' +
-        CUT_CHECKLIST.map(function (c) {
-          return '<li><span aria-hidden="true">□</span><span>' + esc(c) + '</span></li>';
-        }).join('') + '</ul>';
+      if (adm.unit === 'score') {
+        h += '<p>모집단위마다 만점이 다를 수 있어 학과끼리 점수를 나란히 견주지 않습니다.</p>';
+      }
+      var gm = gradeMapFor(d, adm);
+      if (gm) {
+        h += '<p><b>등급 환산</b> ' + esc('내 환산점수는 ' + d.name +
+          ' 요강의 등급별 환산점수 표로 등급 상당을 읽습니다' +
+          (gm.source ? ' (' + gm.source + ')' : '') +
+          (gm.method === 'midpoint'
+            ? '. ' + (G.GRADE_MAP_MIDPOINT_NOTE || '등급 경계는 대학 표의 인접 점수 중간값') + '입니다'
+            : '') + '.') + '</p>';
+      }
+      if (adm.convNote) { h += '<p><b>성적 반영</b> ' + esc(adm.convNote) + '</p>'; }
+      if (adm.gedEligibleNote) { h += '<p><b>지원자격 원문</b> ' + esc(adm.gedEligibleNote) + '</p>'; }
+      if (d.retakeNote) { h += '<p><b>재응시 회차</b> ' + esc(d.retakeNote) + '</p>'; }
+      // 출처는 링크로 걸지 않는다 — 대학 사이트 개편으로 깨지는 주소를 관리하지 않는다
+      var rs = null, gs = null;
+      (d.sources || []).forEach(function (s) {
+        if (s.role === 'results' && !rs) { rs = s; }
+        if (s.role === 'guide' && !gs) { gs = s; }
+      });
+      var src = [];
+      if (rs) {
+        src.push('입시결과 ' + (rs.type === 'adiga' ? '대학어디가' : d.name + ' 입학처') +
+          ' 공개 자료(' + rs.format + ') · 확인일 ' + rs.checkedAt);
+      }
+      if (gs) { src.push(d.applyYear + ' 모집요강 · 확인일 ' + gs.checkedAt); }
+      if (src.length) { h += '<p><b>출처</b> ' + esc(src.join(' · ')) + '</p>'; }
+      out += '<details class="dfold"><summary>기준 보기 — 기준 명단 · 지표 · 학년도 · 출처</summary>' +
+        '<div class="dbody">' + h + '</div></details>';
     }
 
+    if (ub.kind === 'blocked' && !said) {
+      out += '<div class="nojudge" style="margin-top:12px"><b>판정 불가</b><span>' +
+        esc(ub.why) + '</span></div>';
+    }
     if (blocked.length) {
-      out += '<div style="margin-top:10px"><button type="button" class="ac-more" data-cutblocked="1">' +
-        (cutBlocked ? '접기' : '검정고시 지원 불가·요강 확인 필요 전형 ' + blocked.length + '개 보기') + '</button>';
-      if (cutBlocked) {
-        out += '<ul class="ac-check" style="margin-top:6px">' + blocked.map(function (a) {
-          return '<li><span>·</span><span><b>' + esc((a.round ? a.round + ' ' : '') + a.label) + '</b>' +
+      out += '<details class="dfold"><summary>검정고시 지원 불가·요강 확인 필요 전형 ' +
+        blocked.length + '개</summary><div class="dbody">' + blocked.map(function (a) {
+          return '<p><b>' + esc((a.round ? a.round + ' ' : '') + a.label) + '</b>' +
             esc((a.gedEligible === 'unknown' ? ' — 요강 확인 필요' : '') +
-              (a.gedEligibleNote ? ' · ' + a.gedEligibleNote : '')) + '</span></li>';
-        }).join('') + '</ul>';
-      }
-      out += '</div>';
+              (a.gedEligibleNote ? ' · ' + a.gedEligibleNote : '')) + '</p>';
+        }).join('') + '</div></details>';
     }
-
-    out += '<p class="ac-ask">담당 선생님·꿈드림 상담사와 함께 확인하세요.</p></section>';
-    return out;
+    return out + '</div>';
   }
 
-  function detailHtml(r) {
+  // ── 환산 기준(기존 카드 펼침 내용) ─────────────────────────────────────────
+  function convDetailHtml(r) {
     var u = r.univ, out = '';
     if (r.perSubject) {
       out += '<section><h4>과목별 환산</h4><ul class="persub">' + r.perSubject.map(function (p) {
@@ -1363,105 +1873,234 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         (subjects ? '<p><b>반영</b> ' + esc(subjects) + '</p>' : '') +
         (u.note && u.note !== r.reason ? '<p>' + esc(u.note) + '</p>' : '') + '</section>';
     }
-    // 출처는 링크로 걸지 않는다 — 대학 사이트 개편으로 깨지는 주소를 관리하지 않는다(2026-09-18 대표 지시)
+    // 출처는 링크로 걸지 않는다 (2026-09-18 대표 지시)
     out += '<p class="src-note">출처: ' + esc(u.name) +
       (u.origin === 'calculator' ? ' 입학처 성적산출 프로그램' : ' 입학처 공개 자료') +
       ' · ' + esc(u.year) + ' 기준 · 확인일 ' + esc(u.checkedAt) + '</p>';
-    // 전년도 합격선 비교 — 환산표·근거 아래(앱 AdmissionConverter.tsx 와 같은 자리)
-    out += cutHtml(r);
     return out;
   }
 
-  function cardHtml(r) {
-    var u = r.univ;
-    var warn = u.note && u.note.indexOf('⚠') >= 0
-      ? '<span class="warnbadge">' + (u.note.indexOf('학자금 지원 제한') >= 0
-          ? '⚠ 학자금 지원 제한' + (u.note.indexOf('(전면)') >= 0 ? '·전면' : u.note.indexOf('(일부)') >= 0 ? '·일부' : '')
-          : '⚠ 확인 필요') + '</span>'
-      : '';
-    var cut = cutOf(u.id);
-    if (cut && !cut.admissions.some(G.admissionHasNumbers)) { cut = null; }
-    var canOpen = (r.ok && r.perSubject) || (u.bands && u.bands.length) || u.formula || u.subjectsNote || u.note || !!cut;
-    var open = openId === u.id;
-    // 전년도 입시결과를 확보한 대학은 접힌 상태에서도 표시한다(앱과 같다)
-    var cutbadge = cut ? '<span class="cutbadge">전년도 합격선 ' + esc(cut.resultYear) + '</span>' : '';
-    return '<article class="u">' +
-      '<div class="uhead"><div class="uname"><b>' + esc(u.name) + '</b>' +
-      // 2026-09-24 개편 — '·' 로 이은 한 줄을 두 줄로 나눈다(삭제 없음, 줄만 나눔)
-      '<span>' + esc(u.kind) + ' · ' + esc(u.region) + '</span>' +
-      '<span class="uyear">' + esc(u.year) + '</span></div>' +
-      '<div class="uval">' + valueHtml(r) + '</div></div>' +
-      (r.ok && r.final ? '<p class="ufinal">대학 최종 득점 ' + esc(r.final.value) + esc(r.final.unit) +
-        '<em> · ' + esc(r.final.formula) + '</em></p>' : '') +
-      // 사유 문구('이 대학은 … 바꾸지 않아요', '대학이 계산식으로 공개했어요')는 대학마다 길이가
-      // 달라 카드 높이가 제각각이 된다 — 삭제해 팻말 높이를 맞춘다(2026-09-20 대표 지시).
-      // 뜻은 우측 배지(교과 미반영·계산식·확인 필요)가 그대로 전한다.
-      (canOpen ? '<div class="urow"><button type="button" class="more-btn" data-open="' + esc(u.id) + '"' +
-        ' aria-expanded="' + (open ? 'true' : 'false') + '">' +
-        (cut ? '환산표·전년도 합격선 보기' : '환산표·상세정보 보기') + '</button>' + cutbadge + warn + '</div>'
-        : ((warn || cutbadge) ? '<div class="urow">' + cutbadge + warn + '</div>' : '')) +
-      // 접기는 펼친 패널 맨 아래 화살표 버튼으로 — 긴 표를 다 내려 읽고 그 자리에서 닫는다
-      // (2026-09-20 대표 지시). 위쪽 '환산표·상세정보 보기' 는 라벨이 바뀌지 않는다.
-      (canOpen && open ? '<div class="detail">' + detailHtml(r) + '</div>' +
-        '<div class="foldrow"><button type="button" class="fold-btn" data-open="' + esc(u.id) + '"' +
-        ' aria-expanded="true" aria-label="' + esc(u.name) + ' 상세정보 접기">' + CHEV + '</button></div>' : '') +
-      '</article>';
+  function convLine(u, r) {
+    var bits = ['<b>' + esc(CONV_LABEL[u.conv] || '기준 미확인') + '</b>'];
+    if (u.subjectsNote && !r.byTrack) { bits.push(esc(u.subjectsNote)); }
+    if (r.byTrack && u.tracks) {
+      bits.push(G.TRACK_ORDER.filter(function (t) { return u.tracks[t]; }).map(function (t) {
+        return esc(G.TRACK_LABELS[t] + ' ' + u.tracks[t].map(function (x) { return SUB[x]; }).join('·'));
+      }).join(' / '));
+    }
+    return bits.join(' · ');
   }
 
+  /** 카드·패널이 같이 쓰는 한 줄 — '적정 이상 학과 33/37' (§16-1-4) */
+  function fitLine(ub) {
+    return '적정 이상 학과 ' + ub.fit + '/' + ub.total;
+  }
+
+  // ── 상세 패널 ──────────────────────────────────────────────────────────────
+  function panelHtml(r, m) {
+    var u = r.univ, ub = univBand(r);
+    var color = ub.kind === 'ok' ? BAND_CSS[ub.band] : 'var(--b0)';
+    var head = myHeadline(r);
+    var out = '<div class="dh" style="--bandc:' + color + '"><div class="dh-top"><div>' +
+      '<h3>' + esc(u.name) + '</h3><p class="sub">' +
+      esc(u.kind + ' · ' + u.region + ' · 환산 기준 ' + u.year) + '</p></div><div class="dh-val">' +
+      (head.tag
+        ? '<span class="pill muted">' + esc(head.tag) + '</span>'
+        : '<div class="big">' + esc(head.big) + '<i> ' + esc(head.unit) + '</i></div>' +
+          '<div class="lbl">' + esc(head.sub || '내 환산등급') + '</div>') +
+      '</div></div>';
+    out += '<div class="dh-badges" style="--bandc:' + color + '">' +
+      (ub.kind === 'ok'
+        ? '<span class="pill band">' + esc(ub.band) + '</span><span class="uc-cnt">' +
+          esc(fitLine(ub)) + '</span>'
+        : ub.kind === 'blocked'
+          ? '<span class="pill muted">판정 불가</span><span class="uc-cnt">' + esc(ub.why) + '</span>'
+          : '<span class="pill outline">입결 미수집</span><span class="uc-cnt">' +
+            esc(REASON.not_collected) + '</span>') + '</div>';
+    out += '<p class="dh-conv">' + convLine(u, r) + '</p>';
+    if (r.byTrack) {
+      out += '<p class="dh-conv">' + G.TRACK_ORDER.filter(function (t) { return r.byTrack[t]; })
+        .map(function (t) {
+          var c = r.byTrack[t], v = '-';
+          if (c.ok) {
+            if (c.grade != null) { v = (u.conv === 'average_band' ? c.grade : fmt2(c.grade)) + '등급'; }
+            else if (c.score != null) {
+              v = fmt2(c.score) + '점' +
+                (c.gradeEquivalent != null ? ' (' + fmt2(c.gradeEquivalent) + '등급 상당)' : '');
+            }
+          }
+          return '<b>' + esc(G.TRACK_LABELS[t]) + '</b> ' + esc(v);
+        }).join(' · ') + '</p>';
+    }
+    if (r.ok && r.final) {
+      out += '<p class="dh-conv">대학 최종 득점 <b>' + esc(r.final.value) + esc(r.final.unit) +
+        '</b> · ' + esc(r.final.formula) + '</p>';
+    }
+    out += '</div>';
+
+    out += '<div class="dsec"><h4>환산 기준</h4><div class="detail">' + convDetailHtml(r) + '</div></div>';
+    out += cutSectionHtml(r, ub, m);
+    out += '<div class="dsec"><h4>지원 전 체크리스트</h4><ul class="dcheck">' +
+      CUT_CHECKLIST.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div>';
+    out += '<div class="dsec"><p class="disc"><b>※ 전년도 결과 대비 참고 정보입니다.</b> ' +
+      '각 대학이 공개한 전년도 입시결과(학년도·전형·지표는 위에 표기)와 내 환산등급을 단순 비교한 것입니다. ' +
+      '합격 여부를 예측하지 않으며, 올해 경쟁률·모집인원·전형 변경은 반영되지 않습니다. ' +
+      '지원 전에 반드시 해당 대학 입학처의 그 해 모집요강을 직접 확인하세요. ' +
+      '지원 결정과 그 결과는 지원자 본인의 책임입니다.</p>' +
+      '<p class="dask">담당 선생님·꿈드림 상담사와 함께 확인하세요.</p></div>';
+    return out;
+  }
+
+  // ── 카드 ───────────────────────────────────────────────────────────────────
+  function cardHtml(r) {
+    var u = r.univ, ub = r._ub, m = r._m, head = myHeadline(r);
+    var color = ub.kind === 'ok' ? BAND_CSS[ub.band] : 'var(--b0)';
+    var warn = u.note && u.note.indexOf('⚠') >= 0
+      ? '<span class="pill outline">' + (u.note.indexOf('학자금 지원 제한') >= 0
+          ? '학자금 지원 제한' + (u.note.indexOf('(전면)') >= 0 ? ' 전면'
+              : u.note.indexOf('(일부)') >= 0 ? ' 일부' : '')
+          : '확인 필요') + '</span>'
+      : '';
+    var badge, line = '';
+    if (ub.kind === 'ok') {
+      badge = '<span class="pill band">' + esc(ub.band) + '</span>';
+      line = '<span class="uc-cnt">' + esc(fitLine(ub)) + '</span>';
+    } else if (ub.kind === 'blocked') {
+      badge = '<span class="pill muted">판정 불가</span>';
+      line = '<span class="uc-why">' + esc(ub.why) + '</span>';
+    } else {
+      badge = '<span class="pill outline">입결 미수집</span>';
+      line = '';
+    }
+    var hit = (m && m.n) ? '<span class="uc-hit">일치 학과 ' + m.n + '개</span>' : '';
+    return '<button type="button" class="ucard" data-id="' + esc(u.id) + '" style="--bandc:' + color + '"' +
+      (openId === u.id ? ' aria-current="true"' : '') + '>' +
+      '<div class="uc-top"><div class="uc-nm"><b>' + esc(u.name) + '</b><span>' +
+      esc(u.kind + ' · ' + u.region + ' · ' + u.year) + '</span></div><div class="uc-val">' +
+      (head.tag ? '<span class="pill muted">' + esc(head.tag) + '</span>'
+        : '<div class="big">' + esc(head.big) + '<i> ' + esc(head.unit) + '</i></div>' +
+          (head.sub ? '<div class="sub">' + esc(head.sub) + '</div>' : '')) +
+      '</div></div><div class="uc-bot">' + badge + hit + warn + line + '</div></button>';
+  }
+
+  // ── 렌더 ───────────────────────────────────────────────────────────────────
+  var RANK = { ok: 0, blocked: 1, nodata: 2 };
   function render() {
     var all = G.convertAll(scores, RULES);
-    // 정렬은 앱의 '등급 좋은 순'이 아니라 가나다순 — 필터 전후 모두 (2026-09-18 대표 지시)
-    all.sort(function (a, b) { return a.univ.name.localeCompare(b.univ.name, 'ko'); });
-    var rows = all.filter(function (r) {
-      var u = r.univ;
-      if (kinds.length && kinds.indexOf(u.kind) < 0) { return false; }
-      if (regions.length && regions.indexOf(u.region) < 0) { return false; }
-      if (!showNone && u.status === 'none') { return false; }
-      if (q && u.name.replace(/\s/g, '').indexOf(q) < 0 && u.region.indexOf(q) < 0) { return false; }
-      return true;
-    });
-
     var entered = G.GED_SUBJECTS.filter(function (s) { return typeof scores[s] === 'number'; });
     hasScores = entered.length > 0;
+
+    var rows = [];
+    all.forEach(function (r) {
+      var u = r.univ;
+      if (kinds.length && kinds.indexOf(u.kind) < 0) { return; }
+      if (regions.length && regions.indexOf(u.region) < 0) { return; }
+      if (!showNone && u.status === 'none') { return; }
+      var d = cutOf(u.id);
+      var m = matchOf(r, d);
+      if (!m.ok) { return; }
+      r._m = q ? m : null;
+      r._ub = univBand(r);
+      rows.push(r);
+    });
+    if (sortMode === 'fit') {
+      // 판정 가능 → 판정 불가 → 입결 미수집. 판정 가능은 '적정'(3)에 가까운 순.
+      rows.sort(function (a, b) {
+        var ra = RANK[a._ub.kind], rb = RANK[b._ub.kind];
+        if (ra !== rb) { return ra - rb; }
+        if (ra === 0) {
+          var da = Math.abs(a._ub.mean - 3), db = Math.abs(b._ub.mean - 3);
+          if (Math.abs(da - db) > 1e-9) { return da - db; }
+          if (a._ub.mean !== b._ub.mean) { return a._ub.mean - b._ub.mean; }
+        }
+        return a.univ.name.localeCompare(b.univ.name, 'ko');
+      });
+    } else {
+      rows.sort(function (a, b) { return a.univ.name.localeCompare(b.univ.name, 'ko'); });
+    }
+
     var avg = entered.length
       ? entered.reduce(function (a, s) { return a + scores[s]; }, 0) / entered.length : null;
     document.getElementById('avg').textContent = avg != null ? '평균 ' + n2(avg) + '점' : '점수를 입력해 주세요';
 
+    var okN = 0;
+    rows.forEach(function (r) { if (r._ub.kind === 'ok') { okN++; } });
     var cut = rows.slice(0, shown);
-    document.getElementById('count').textContent = rows.length + '곳 · 가나다순' +
+    document.getElementById('count').textContent = rows.length + '곳 · 판정 ' + okN + '곳 · ' +
+      (sortMode === 'fit' ? '적정에 가까운 순' : '가나다순') +
       (rows.length > cut.length ? ' · ' + cut.length + '곳 표시' : '');
-    list.innerHTML = cut.length
-      ? cut.map(cardHtml).join('')
-      : '<div class="empty">조건에 맞는 대학이 없어요. 지역·종류를 다시 골라 주세요.</div>';
+
+    var html = '', prev = null;
+    cut.forEach(function (r) {
+      if (sortMode === 'fit') {
+        var k = r._ub.kind;
+        if (k !== prev) {
+          if (k === 'blocked') { html += '<div class="subhead">판정 불가 — 대학이 공개한 수치로는 단계를 나눌 수 없음</div>'; }
+          if (k === 'nodata') { html += '<div class="subhead">입결 미수집 — 수집 확대 예정</div>'; }
+          prev = k;
+        }
+      }
+      html += cardHtml(r);
+    });
+    list.innerHTML = cut.length ? html
+      : '<div class="empty">조건에 맞는 대학이 없어요. 대학·학과 이름이나 지역·종류를 다시 골라 주세요.</div>';
     var mw = document.getElementById('morewrap');
     mw.hidden = rows.length <= cut.length;
     document.getElementById('more').textContent = '더 보기 (' + (rows.length - cut.length) + '곳 남음)';
+
+    // 고른 대학이 목록에서 사라지면 맨 위 대학으로
+    var sel = null;
+    for (var i = 0; i < rows.length; i++) { if (rows[i].univ.id === openId) { sel = rows[i]; } }
+    if (!sel && rows.length) { sel = rows[0]; openId = sel.univ.id; cutKey = null; cutAll = false; }
+    if (!rows.length) { openId = null; }
+    detail.innerHTML = sel ? panelHtml(sel, sel._m)
+      : '<div class="empty">왼쪽에서 대학을 고르면 학과별 합격 가능성이 여기에 나옵니다.</div>';
+    if (sel) {
+      [].forEach.call(list.querySelectorAll('.ucard'), function (b) {
+        if (b.getAttribute('data-id') === sel.univ.id) { b.setAttribute('aria-current', 'true'); }
+      });
+    }
   }
 
+  // ── 입력 ───────────────────────────────────────────────────────────────────
   list.addEventListener('click', function (e) {
-    if (!e.target.closest) { return; }
-    var c = e.target.closest('[data-cut],[data-cuthow],[data-cutall],[data-cutblocked]');
-    if (c) {
-      if (c.hasAttribute('data-cut')) { cutKey = c.getAttribute('data-cut'); cutAll = false; }
-      else if (c.hasAttribute('data-cuthow')) { cutHow = !cutHow; }
-      else if (c.hasAttribute('data-cutall')) { cutAll = !cutAll; }
-      else { cutBlocked = !cutBlocked; }
-      render();
-      return;
-    }
-    var b = e.target.closest('[data-open]');
+    var b = e.target.closest ? e.target.closest('.ucard') : null;
     if (!b) { return; }
-    var id = b.getAttribute('data-open');
-    openId = openId === id ? null : id;
-    // 대학을 바꿔 펼치면 합격선 섹션은 처음 상태로 — 앞 대학의 전형 key 가 남으면 안 된다
-    cutKey = null; cutHow = false; cutAll = false; cutBlocked = false;
+    var id = b.getAttribute('data-id');
+    if (id !== openId) { openId = id; cutKey = null; cutAll = false; }
+    if (!wideMQ.matches) { document.body.classList.add('sheet-open'); }
     render();
+    if (!wideMQ.matches && colDetail) { colDetail.scrollTop = 0; }
+  });
+  detail.addEventListener('click', function (e) {
+    var c = e.target.closest ? e.target.closest('[data-cut],[data-cutall]') : null;
+    if (!c) { return; }
+    if (c.hasAttribute('data-cut')) { cutKey = c.getAttribute('data-cut'); cutAll = false; }
+    else { cutAll = !cutAll; }
+    render();
+  });
+  document.getElementById('sheetClose').addEventListener('click', function () {
+    document.body.classList.remove('sheet-open');
+  });
+  document.querySelector('.sortrow').addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-sort]') : null;
+    if (!b) { return; }
+    sortMode = b.getAttribute('data-sort');
+    [].forEach.call(this.querySelectorAll('[data-sort]'), function (x) {
+      x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+    });
+    shown = STEP;
+    render();
+  });
+  // 폰에서 시트가 열려 있으면 Esc 로 닫는다
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { document.body.classList.remove('sheet-open'); }
   });
 
   render();
 
   // 번들이 커져 빌드가 입결을 results.json 으로 떼어 낸 경우에만 따로 받는다
-  // (입결 데이터가 gzip 150KB 한계를 넘어 results.json 으로 분리돼 있으면 이 요청이 나간다 — scripts/build_admission_calc.py 가 결정).
+  // (scripts/build_admission_calc.py 가 gzip 150KB 한계로 결정한다)
   if (!CUTS && window.fetch) {
     fetch('results.json').then(function (res) { return res.ok ? res.json() : null; })
       .then(function (j) { if (j) { CUTS = j; render(); } })
