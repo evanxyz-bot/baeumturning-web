@@ -2452,7 +2452,10 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       line = '';
     }
     var hit = (m && m.n) ? '<span class="uc-hit">일치 학과 ' + m.n + '개</span>' : '';
+    // 카드는 오른쪽(폰은 시트) 상세 패널을 여닫는 버튼이다 — 옛 '환산표·상세정보 보기'
+    // 버튼이 달고 있던 aria-expanded 를 그대로 잇는다(스크린리더가 열림 상태를 읽는다).
     return '<button type="button" class="ucard" data-id="' + esc(u.id) + '" style="--bandc:' + color + '"' +
+      ' aria-expanded="' + (openId === u.id ? 'true' : 'false') + '" aria-controls="detail"' +
       (openId === u.id ? ' aria-current="true"' : '') + '>' +
       '<div class="uc-top"><div class="uc-nm"><b>' + esc(u.name) + '</b><span>' +
       esc(u.kind + ' · ' + u.region + ' · ' + u.year) + '</span></div><div class="uc-val">' +
