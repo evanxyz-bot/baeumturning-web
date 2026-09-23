@@ -483,11 +483,11 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .ceo-card .who .role-pre{font-size:.72em;font-weight:500;opacity:.75;letter-spacing:.06em;margin-right:7px}
 /* 2026-09-24 대표 지시 — 왼쪽 사진 자리를 되살린다. 빈 조리개가 아니라 '사진 프레임':
    brand/ceo.jpg 를 넣으면 프레임 안에 그대로 차고, 파일이 없으면 프레임과 캡션만 남는다.
-   사진칸은 세로형 인물 사진 크기(300×400)로 고정한다 — 단을 비율로 나누면 3:4 가 660px 까지 커진다. */
-.ceo-row{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:stretch}
+   사진칸은 세로형 인물 사진 크기 300×400(3:4)로 고정한다 — 단을 비율로 나누면 3:4 가 660px 까지
+   커져 첫 화면을 다 먹는다. 두 칸은 위로 정렬하고, 인용 카드는 자기 내용 높이만 쓴다. */
+.ceo-row{display:grid;grid-template-columns:300px minmax(0,1fr);gap:22px;align-items:start}
 .mission .ceo-card{max-width:none;margin:0}
-/* 프레임만 3:4 를 지키고(align-self:start), 인용 카드는 그 높이에 맞춰 늘어난다 */
-.ceo-photo{position:relative;align-self:start;margin:0;width:100%;height:auto;min-height:0;aspect-ratio:3/4;
+.ceo-photo{position:relative;margin:0;width:100%;max-width:300px;height:auto;min-height:0;aspect-ratio:3/4;
   background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-lg);
   box-shadow:var(--shadow-sm);overflow:hidden;display:block}
 .ceo-photo img{width:100%;height:100%;object-fit:cover;display:block}
