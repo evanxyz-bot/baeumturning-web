@@ -1094,23 +1094,76 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var cutPending = {};                    // 받는 중인 대학
   var cutFailed = {};                     // 못 받은 대학
   var cutTimer = null;
+  // 일괄 로딩 — 단계 필터·상향/하향 정렬은 목록에 오른 대학의 판정이 **전부** 있어야 수가 맞는다.
+  // 늦게 받는 판에서는 아직 안 받은 대학이 '미수집'으로 잡혀 '282/306' 같은 도중 값이 나왔다.
+  // 그래서 그 조건이 켜지면 목록의 대학을 전부 먼저 받고, 받는 동안에는 거르지도 정렬하지도
+  // 않고 진행 힌트만 띄운다(2026-09-24). 이미 받은 것은 다시 받지 않는다.
+  var CUT_PARALLEL = 6;                   // 한 번에 날리는 요청 수
+  var cutActive = 0;                      // 지금 날아가 있는 요청 수
+  var cutQueue = [];                      // 차례를 기다리는 대학
+  var cutQueued = {};                     // 줄에 이미 선 대학
 
   function cutRerender() {
     if (cutTimer) { return; }
-    cutTimer = setTimeout(function () { cutTimer = null; render(); }, 60);
+    // 일괄 로딩 중에는 뜸하게 — 파일 250개를 60ms 마다 다시 그리면 폰에서 버벅인다
+    var wait = (cutQueue.length || cutActive > 1) ? 250 : 60;
+    cutTimer = setTimeout(function () { cutTimer = null; render(); }, wait);
+  }
+  /** 아직 안 받았고 받을 수 있는 대학인가 */
+  function cutNeeded(id) {
+    if (!CUT_SPLIT || !id || CUTS[id] || cutPending[id] || cutFailed[id] || !window.fetch) { return false; }
+    if (CUT_META && !CUT_META[id]) { return false; }   // 수집하지 않은 대학
+    return true;
   }
   /** 그 대학 입결을 받아 둔다. 이미 있거나 받는 중이면 아무것도 하지 않는다. */
   function loadCut(id) {
-    if (!CUT_SPLIT || !id || CUTS[id] || cutPending[id] || cutFailed[id] || !window.fetch) { return; }
-    if (CUT_META && !CUT_META[id]) { return; }     // 수집하지 않은 대학
+    if (!cutNeeded(id)) { return; }
     cutPending[id] = true;
+    cutActive++;
     fetch('results/' + encodeURIComponent(id) + '.json')
       .then(function (res) { return res.ok ? res.json() : null; })
       .then(function (j) {
         delete cutPending[id];
-        if (j) { CUTS[id] = j; cutRerender(); } else { cutFailed[id] = true; }
+        if (j) { CUTS[id] = j; } else { cutFailed[id] = true; }
+        cutSettled();
       })
-      .catch(function () { delete cutPending[id]; cutFailed[id] = true; });
+      .catch(function () { delete cutPending[id]; cutFailed[id] = true; cutSettled(); });
+  }
+  /** 요청 하나가 끝났다 — 기다리는 대학을 그만큼 채워 보내고 화면을 다시 그린다 */
+  function cutSettled() {
+    cutActive--;
+    cutPump();
+    cutRerender();
+  }
+  function cutPump() {
+    while (cutQueue.length && cutActive < CUT_PARALLEL) {
+      var id = cutQueue.shift();
+      delete cutQueued[id];
+      loadCut(id);                       // 그 사이에 받았으면 loadCut 이 알아서 넘어간다
+    }
+  }
+  function queueCut(id) {
+    if (cutQueued[id] || !cutNeeded(id)) { return; }
+    cutQueued[id] = true; cutQueue.push(id);
+  }
+  /**
+   * 목록에 오른 대학 입결을 전부 받는다(목록 차례대로라 보이는 카드부터 찬다).
+   * 다 받았으면 null, 받는 중이면 [받은 수, 받을 수] — 그동안은 필터·정렬을 걸지 않는다.
+   */
+  function bulkCuts(rows) {
+    if (!CUT_SPLIT) { return null; }              // 한 판에 다 든 빌드 — 받을 게 없다
+    if (!CUT_META) { return [0, 0]; }             // 색인부터 오는 중
+    var ids = [], done = 0;
+    for (var i = 0; i < rows.length; i++) {
+      var id = rows[i].univ.id;
+      if (!CUT_META[id]) { continue; }            // 수집하지 않은 대학 — 받을 게 없다
+      ids.push(id);
+      if (CUTS[id] || cutFailed[id]) { done++; }
+    }
+    if (done >= ids.length) { return null; }
+    for (var k = 0; k < ids.length; k++) { queueCut(ids[k]); }
+    cutPump();
+    return [done, ids.length];
   }
   /** 학과·태그 검색 색인 — 검색어를 처음 넣을 때만 받는다 */
   function loadDepts() {
@@ -2421,16 +2474,23 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       var m = matchOf(r, d);
       if (!m.ok) { return; }
       r._m = q ? m : null;
-      r._ub = univBand(r);
-      // 판정 단계 필터 — 카드의 단계(학과 평균 단계)로 거른다. 판정 불가·미수집·불러오는 중은
-      // '판정 불가·미수집 포함' 토글을 따른다 (2026-09-24 대표 지시).
-      if (!keepBand(r._ub.kind === 'ok' ? r._ub.band : null)) { return; }
       rows.push(r);
     });
+    // 판정으로 거르거나 줄 세우려면 목록에 오른 대학 입결이 전부 있어야 한다 — 없으면 먼저 받는다.
+    // 받는 동안(cutLoading)에는 가나다순 그대로 두고 아무것도 거르지 않는다. 다 받은 뒤 적용한다.
+    var cutLoading = (bandFilterOn() || sortMode !== 'name' || !showOther) ? bulkCuts(rows) : null;
+    rows.forEach(function (r) { r._ub = univBand(r); });
+    if (!cutLoading) {
+      // 판정 단계 필터 — 카드의 단계(학과 평균 단계)로 거른다. 판정 불가·미수집은
+      // '판정 불가·미수집 포함' 토글을 따른다 (2026-09-24 대표 지시).
+      rows = rows.filter(function (r) {
+        return keepBand(r._ub.kind === 'ok' ? r._ub.band : null);
+      });
+    }
     // 정렬 — 가나다(기본)·상향순·하향순 셋뿐이고, 판정 가능·불가·미수집을 그룹으로
     // 나누지 않는다(2026-09-24 대표 지시로 '적정에 가까운 순'과 그룹 머리글을 없앴다).
     var byName = function (a, b) { return a.univ.name.localeCompare(b.univ.name, 'ko'); };
-    rows.sort(sortMode === 'name' ? byName : function (a, b) {
+    rows.sort((cutLoading || sortMode === 'name') ? byName : function (a, b) {
       var c = bandCmp(sortMode,
         a._ub.kind === 'ok' ? BAND_VAL[a._ub.band] : null,
         b._ub.kind === 'ok' ? BAND_VAL[b._ub.band] : null);
@@ -2443,8 +2503,10 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
     paintBandChips();
     var cut = rows.slice(0, shown);
-    // 머리 줄은 'N개 검색됨' 하나 (2026-09-24 대표 지시) — 판정 수·정렬 표기는 뺐다
-    document.getElementById('count').textContent = rows.length + '개 검색됨';
+    // 머리 줄은 'N개 검색됨' 하나 (2026-09-24 대표 지시) — 판정 수·정렬 표기는 뺐다.
+    // 단계 필터·상향/하향 정렬 때문에 입결을 전부 받는 중이면 그 진행만 뒤에 붙인다.
+    document.getElementById('count').textContent = rows.length + '개 검색됨'
+      + (cutLoading ? ' · 입결 불러오는 중' + (cutLoading[1] ? ' ' + cutLoading[0] + '/' + cutLoading[1] : '') : '');
 
     var html = '';
     cut.forEach(function (r) { html += cardHtml(r); });
@@ -2470,7 +2532,8 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     }
     // 화면에 뜬 카드 몇 곳은 미리 받아 둔다 — 카드 색이 차례로 채워진다.
     // 한 번에 여섯 곳까지만 보낸다(작은 파일 253개를 한꺼번에 부르지 않게).
-    if (CUT_SPLIT && CUT_META) {
+    // 일괄 로딩이 도는 중이면 그 줄이 이미 목록 차례대로 받고 있으니 건드리지 않는다.
+    if (CUT_SPLIT && CUT_META && !cutLoading) {
       var budget = 6;
       for (var pi = 0; pi < cut.length && budget > 0; pi++) {
         var pid = cut[pi].univ.id;
