@@ -503,6 +503,9 @@ h1{font-size:30px;margin:0 0 10px}
 .uc-nm b{display:block;font-size:15.5px;font-weight:600;color:var(--sc-fg);letter-spacing:-.01em}
 .uc-nm span{display:block;font-size:12px;color:var(--sc-mutedfg);margin-top:2px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 부제는 '종류 · 지역' / 학년도 두 줄이다 — 한 줄로 이으면 폰에서 학년도가 잘린다
+   (2026-09-24 개편). 둘째 줄은 한 단계 더 연하게. */
+.uc-nm .uyear{margin-top:1px;color:hsl(240 3.8% 60%)}
 /* 내 환산값은 카드에서 제일 먼저 읽히게 크게 (2026-09-24 대표 지시, 22 → 30px).
    단위 글자는 그대로 작게 두고, 폰에서 대학명과 자리가 다투면 아래 미디어쿼리가
    숫자와 '등급 상당'을 두 줄로 내린다. */
@@ -2457,8 +2460,10 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     return '<button type="button" class="ucard" data-id="' + esc(u.id) + '" style="--bandc:' + color + '"' +
       ' aria-expanded="' + (openId === u.id ? 'true' : 'false') + '" aria-controls="detail"' +
       (openId === u.id ? ' aria-current="true"' : '') + '>' +
-      '<div class="uc-top"><div class="uc-nm"><b>' + esc(u.name) + '</b><span>' +
-      esc(u.kind + ' · ' + u.region + ' · ' + u.year) + '</span></div><div class="uc-val">' +
+      // 부제는 '·' 로 이은 한 줄이 아니라 두 줄이다(삭제 없음, 줄만 나눔) — master 허브와 같게
+      '<div class="uc-top"><div class="uc-nm"><b>' + esc(u.name) + '</b>' +
+      '<span>' + esc(u.kind + ' · ' + u.region) + '</span>' +
+      '<span class="uyear">' + esc(u.year) + '</span></div><div class="uc-val">' +
       (head.tag ? '<span class="pill muted">' + esc(head.tag) + '</span>'
         : '<div class="big">' + esc(head.big) + '<i> ' + esc(head.unit) + '</i></div>' +
           (head.sub ? '<div class="sub">' + esc(head.sub) + '</div>' : '')) +
