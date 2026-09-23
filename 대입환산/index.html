@@ -519,6 +519,12 @@ h1{font-size:30px;margin:0 0 10px}
 /* 대학이 모집단위별 수치를 안 낸 전형(종합·논술·실기 등) — 눌러 볼 수는 있되 옅게 */
 .admchips button[data-none="1"]{color:var(--sc-mutedfg)}
 .admchips button[data-none="1"].on{color:#fff}
+/* 검정고시 출신자만 따로 집계해 공개한 입결 전형 — 칩 맨 앞에 두고 배지를 세운다 */
+.admchips button.gedonly{line-height:1.5}
+.admchips button .gedb{display:inline-block;font-style:normal;font-size:10px;font-weight:700;
+  line-height:1.5;border-radius:.25rem;padding:0 5px;margin-right:5px;
+  background:var(--sc-fg);color:#fff}
+.admchips button.gedonly.on .gedb{background:#fff;color:var(--sc-fg)}
 .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:11px;color:var(--sc-mutedfg);margin-bottom:12px}
 .legend span{display:inline-flex;align-items:center;gap:5px}
 .legend i{display:inline-block;flex:none}
@@ -557,6 +563,9 @@ h1{font-size:30px;margin:0 0 10px}
   font-weight:500;color:var(--sc-mutedfg);font-variant-numeric:tabular-nums;white-space:nowrap}
 .dep-why{margin:6px 0 0;font-size:11px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
 .dep-rule{margin:4px 0 0;font-size:10.5px;color:var(--sc-mutedfg)}
+/* 그 모집단위에만 걸리는 수능 최저학력기준 (전형 단위 표시와 중복하지 않는다) */
+.dep-csat{margin:6px 0 0;font-size:11px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.dep-csat b{color:var(--sc-fg);font-weight:600}
 
 .nojudge{border:1px solid var(--sc-border);border-radius:var(--sc-radius);background:var(--sc-muted);
   padding:20px;text-align:center}
@@ -564,6 +573,9 @@ h1{font-size:30px;margin:0 0 10px}
 .nojudge span{font-size:12px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
 .dline{margin:10px 0 0;font-size:12px;line-height:1.7;color:var(--sc-mutedfg);word-break:keep-all}
 .dline b{color:var(--sc-fg);font-weight:600}
+/* '공개 분포에 검정고시 출신자 제외' 각주 — 접지 않고 학과 표 위에 고정 노출 */
+.dline.gedx{margin:12px 0 2px;padding:9px 11px;border:1px solid var(--sc-border);
+  border-radius:var(--sc-radius);background:var(--sc-muted)}
 .dfold{border:1px solid var(--sc-border);border-radius:var(--sc-radius);background:#fff;margin-top:12px}
 .dfold>summary{cursor:pointer;list-style:none;padding:10px 14px;font-size:12.5px;font-weight:600;
   color:var(--sc-fg)}
@@ -861,8 +873,8 @@ h1{font-size:30px;margin:0 0 10px}
     <li>전국 <b data-stat="total">306</b>개 대학 — 4년제 <b data-stat="univ4">182</b>곳, 전문대 <b data-stat="univ2">124</b>곳</li>
     <li>환산 기준을 확보한 곳 <b data-stat="found">258</b>곳, 검정고시 성적을 교과점수로 반영하지 않는 곳 <b data-stat="none">46</b>곳, 대학이 기준을 공개하지 않아 미확인으로 남긴 곳 <b data-stat="unknown">2</b>곳</li>
     <li>지역 <b data-stat="regions">17</b>개 시·도 전체</li>
-    <li>기준 학년도 — 2027학년도 <b data-stat="year-2027">273</b>곳, 2026학년도 <b data-stat="year-2026">30</b>곳, 나머지 3곳은 대학이 학년도를 표기하지 않은 입학처 상시 게시 자료</li>
-    <li>확인일 2026-08-15 ~ 2026-09-07 · 출처는 대학 입학처 모집요강과 성적산출 프로그램</li>
+    <li>기준 학년도 — 2027학년도 <b data-stat="year-2027">274</b>곳, 2026학년도 <b data-stat="year-2026">30</b>곳, 나머지 2곳은 대학이 학년도를 표기하지 않은 입학처 상시 게시 자료</li>
+    <li>확인일 2026-08-15 ~ 2026-09-22 · 출처는 대학 입학처 모집요강과 성적산출 프로그램</li>
     <li>추정·평균·관행으로 채운 값은 한 건도 없습니다. 근거를 찾지 못한 대학은 미확인으로 남겼습니다.</li>
   </ul>
 
@@ -1359,6 +1371,79 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     return (j && !j.band && j.reason) ? j.reason : null;
   }
 
+  // ── 화면 부가 표시 (FOLLOWUP '화면·표시', 2026-09-23) ────────────────────────
+  // 여기서 새 수치를 만들지 않는다. 데이터에 이미 있는 것을 눈에 띄게 옮길 뿐이다.
+
+  /** 이 입결이 2026학년도가 아니면 카드·상세 머리에 학년도 배지(색 없음)를 세운다 */
+  function yearBadge(ub) {
+    return (ub && ub.year && ub.year !== '2026학년도')
+      ? '<span class="pill outline">' + esc(ub.year + ' 입결') + '</span>' : '';
+  }
+
+  /** 문장 단위로 자른다 — 마침표 뒤가 공백일 때만(소수점·약어를 자르지 않게) */
+  function sentences(t) {
+    var out = [], buf = '', i, c;
+    for (i = 0; i < t.length; i++) {
+      c = t.charAt(i);
+      buf += c;
+      if (c === '.' && (i + 1 >= t.length || /\s/.test(t.charAt(i + 1)))) {
+        if (buf.trim()) { out.push(buf.trim()); }
+        buf = '';
+      }
+    }
+    if (buf.trim()) { out.push(buf.trim()); }
+    return out;
+  }
+
+  // '공개 분포에 검정고시 출신자는 들어가지 않는다'는 대학 각주. 우리가 문장을 짓지 않고
+  // convNote 에 옮겨 둔 원문 문장을 그대로 꺼낸다. 판정에는 영향이 없고 표시만 한다.
+  //  - NEAR: '검정고시' 바로 뒤(50자 이내)에 제외·미반영 말이 있어야 한다
+  //  - CTX : 그 문장이 입결 표 이야기여야 한다(교과 반영방법의 '~ 제외'가 걸리지 않게)
+  //  - BARE: 각주만 한 줄로 옮겨 적은 경우(※ 검정고시 … 성적 제외)
+  var GEDX_NEAR = /검정고시[^.]{0,50}?(제외|미포함|반영하지 ?않|반영되지 ?않|들어가지 ?않|포함되지 ?않|뺀)/;
+  var GEDX_CTX = /(입시결과|입결|각주|분포|등록자|통계)/;
+  var GEDX_BARE = /^[ ※★*]*검정고시[^.]{0,60}(제외|미포함|반영하지 ?않)[ .]*$/;
+  var gedxCache = {};
+  function gedExcludeNote(adm) {
+    var cn = (adm && adm.convNote) || '';
+    if (!cn) { return null; }
+    if (Object.prototype.hasOwnProperty.call(gedxCache, cn)) { return gedxCache[cn]; }
+    var best = null;
+    sentences(cn).forEach(function (s) {
+      if (!GEDX_NEAR.test(s)) { return; }
+      if (!GEDX_CTX.test(s) && !GEDX_BARE.test(s)) { return; }
+      if (best === null || s.length < best.length) { best = s; }
+    });
+    gedxCache[cn] = best;
+    return best;
+  }
+
+  /**
+   * 검정고시 출신자만 따로 집계해 낸 입결 전형(신안산대·동의과학대·대구보건대).
+   * 전국에서 몇 곳뿐이라 목록 맨 앞에 두고 배지를 붙인다 — 우리 학생에게 가장 가까운 수치다.
+   */
+  function gedOnlyAdm(a) {
+    var l = (a && a.label) || '';
+    return l.indexOf('검정고시') >= 0 && l.indexOf('불가') < 0 && !!(a.units && a.units.length);
+  }
+
+  /**
+   * 이 모집단위에 실제로 걸리는 수능 최저학력기준 — 모집단위에 따로 적혀 있으면 그것이
+   * 전형 값을 덮어쓴다(admissionCut.ts 의 effectiveMinCsat 과 같은 규칙. 번들이 그 함수를
+   * 내보내지 않아 같은 두 줄을 여기 둔다).
+   */
+  function effectiveMinCsat(adm, row) {
+    var own = row && row.minCsat;
+    if (own && own.status) { return { status: own.status, text: own.text || null, fromUnit: true }; }
+    var a = (adm && adm.minCsat) || {};
+    return { status: a.status || 'unknown', text: a.text || null, fromUnit: false };
+  }
+  function csatText(c) {
+    return c.text || (c.status === 'none' ? '없음'
+      : c.status === 'has' ? '있음 — 요강 원문을 확인해 주세요'
+      : '미확인 — 요강을 확인해 주세요');
+  }
+
   /** 내 환산값을 그 모집단위의 단위에 맞춰 꺼낸다 (앱 myValueFor 와 같은 규칙) */
   function myValueFor(r, unit, track) {
     var c = (track && r.byTrack && r.byTrack[track]) ? r.byTrack[track] : r;
@@ -1673,6 +1758,12 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     // 점수를 대학 표로 등급 상당으로 읽었으면 그 내역을 그대로 노출한다(PLAN §14)
     var gf = j.detail && j.detail.gradeFromScore;
     if (gf) { out += '<p class="dep-why">' + esc(gf.note) + '</p>'; }
+    // 이 모집단위만 수능 최저가 다른 대학(간호·물리치료 등) — 그 학과 줄에만 원문을 붙인다.
+    // 전형 단위 표시(아래 '수능 최저학력기준' 줄)와 문장이 같으면 두 번 적지 않는다.
+    var ec = effectiveMinCsat(adm, row);
+    if (ec.fromUnit && csatText(ec) !== ((adm.minCsat && adm.minCsat.text) || null)) {
+      out += '<p class="dep-csat"><b>수능최저</b> ' + esc(csatText(ec)) + '</p>';
+    }
 
     var dom = domainFor(unit, row, g);
     if (dom && (j.mainCut != null || j.detail.mean != null)) {
@@ -1716,6 +1807,11 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         return n(b) - n(a);
       });
     }
+    // 검정고시 출신자 전용 입결 전형은 늘 맨 앞 — 대학이 우리 학생만 따로 집계한 수치다.
+    // (정렬은 안정적이라 앞의 순서는 그 안에서 유지된다)
+    chipsList = chipsList.slice().sort(function (a, b) {
+      return (gedOnlyAdm(b) ? 1 : 0) - (gedOnlyAdm(a) ? 1 : 0);
+    });
     var adm = null, said = false, i;
     for (i = 0; i < chipsList.length; i++) { if (chipsList[i].key === cutKey) { adm = chipsList[i]; } }
     if (!adm) { adm = chipsList[0] || null; }
@@ -1726,9 +1822,12 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         esc(ub.kind === 'blocked' ? ub.why : REASON.no_ged_track) + '</span></div>';
     } else {
       out += '<div class="admchips">' + chipsList.map(function (a) {
+        var ged = gedOnlyAdm(a);
+        var cls = [a.key === adm.key ? 'on' : '', ged ? 'gedonly' : ''].filter(Boolean).join(' ');
         return '<button type="button" data-cut="' + esc(a.key) + '"' +
           (G.admissionHasNumbers(a) ? '' : ' data-none="1"') +
-          (a.key === adm.key ? ' class="on"' : '') + '>' +
+          (cls ? ' class="' + cls + '"' : '') + '>' +
+          (ged ? '<i class="gedb">검정고시 출신자 기준</i>' : '') +
           esc((a.round ? a.round + ' ' : '') + a.label) +
           (a.gedEligible === 'conditional' ? ' ·조건부' : '') + '</button>';
       }).join('') + '</div>';
@@ -1740,6 +1839,12 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       if (adm.basis === 'unspecified') {
         out += '<p class="dline"><b>기준 명단</b> ' + esc(G.BASIS_UNSPECIFIED_NOTE) +
           ' — 아래 단계는 대학이 낸 그 수치만으로 잰 것입니다.</p>';
+      }
+      // 대학이 '공개 분포에서 검정고시 출신자는 뺐다'고 각주를 단 전형 — 학과 표 바로 위에
+      // 고정으로 낸다(접지 않는다). 아래 수치가 검정고시 출신자를 뺀 분포라는 뜻이다.
+      var gedx = gedExcludeNote(adm);
+      if (gedx) {
+        out += '<p class="dline gedx"><b>검정고시 제외 각주</b> ' + esc(gedx) + '</p>';
       }
 
       var rows = (adm.units || []).filter(function (x) {
@@ -1916,7 +2021,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         : ub.kind === 'blocked'
           ? '<span class="pill muted">판정 불가</span><span class="uc-cnt">' + esc(ub.why) + '</span>'
           : '<span class="pill outline">입결 미수집</span><span class="uc-cnt">' +
-            esc(REASON.not_collected) + '</span>') + '</div>';
+            esc(REASON.not_collected) + '</span>') + yearBadge(ub) + '</div>';
     out += '<p class="dh-conv">' + convLine(u, r) + '</p>';
     if (r.byTrack) {
       out += '<p class="dh-conv">' + G.TRACK_ORDER.filter(function (t) { return r.byTrack[t]; })
@@ -1980,7 +2085,8 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       (head.tag ? '<span class="pill muted">' + esc(head.tag) + '</span>'
         : '<div class="big">' + esc(head.big) + '<i> ' + esc(head.unit) + '</i></div>' +
           (head.sub ? '<div class="sub">' + esc(head.sub) + '</div>' : '')) +
-      '</div></div><div class="uc-bot">' + badge + hit + warn + line + '</div></button>';
+      '</div></div><div class="uc-bot">' + badge + yearBadge(ub) + hit + warn + line +
+      '</div></button>';
   }
 
   // ── 렌더 ───────────────────────────────────────────────────────────────────
