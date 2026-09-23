@@ -1691,12 +1691,17 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
    * 한 모집단위 판정.
    * 내 환산이 점수인데 대학 컷이 등급이고 그 대학이 등급별 환산점수 표를 공개했으면,
    * 점수를 그대로 넘긴다 — judge() 가 그 표로 '등급 상당'을 읽어 판정한다(PLAN §14).
+   *
+   * 표가 있으면 **mismatch 여부와 상관없이 언제나 점수**를 넘긴다(앱 judgeRow 와 같은 규칙).
+   * 환산기가 '등급 상당'(gradeEquivalent)을 함께 주는 대학은 mine.value 에 그 등급이 들어와
+   * mismatch 가 서지 않는데, 그 값을 넘기면 judge() 가 그것을 다시 **점수**로 보고 표를 태운다 —
+   * 가톨릭꽃동네대 450점(2등급 상당)이 "환산점수 2 → 9등급 상당"으로 뒤집힌 이중 변환이다.
    */
   function judgeRow(r, d, adm, row) {
     var mine = myValueFor(r, adm.unit, row.track);
     var gm = gradeMapFor(d, adm);
     var val = mine.value, mismatch = mine.mismatch;
-    if (mismatch && gm && adm.unit === 'grade' && mine.score != null) {
+    if (gm && adm.unit === 'grade' && mine.score != null) {
       val = mine.score;
       mismatch = false;
     }
