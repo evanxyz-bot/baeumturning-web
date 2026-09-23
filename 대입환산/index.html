@@ -1003,8 +1003,42 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var hasScores = false;
 
   // ── 전년도 합격선 비교 ──
-  // 대학이 공개한 전년도 입시결과. 번들이 커지면 빌드 스크립트가 results.json 으로 떼어 낸다.
-  var CUTS = G.ADMISSION_RESULTS || null;
+  // 대학이 공개한 전년도 입시결과. 번들이 커지면 빌드 스크립트가 대학 하나씩 떼어
+  // results/<id>.json 으로 두고, 첫 화면은 results-index.json(메타만)만 받는다.
+  // 카드를 고르면 그 대학 파일 하나를 받아 CUTS 에 담아 둔다(같은 대학은 다시 받지 않는다).
+  var CUTS = G.ADMISSION_RESULTS || {};   // id -> 그 대학 입결 (받은 것만)
+  var CUT_META = null;                    // id -> {y, a, n, al}  (results-index.json)
+  var CUT_DEPTS = null;                   // id -> [[학과명, 계열, [태그]]] (학과 검색용)
+  var CUT_SPLIT = !G.ADMISSION_RESULTS;   // 떼어 낸 판인가
+  var cutPending = {};                    // 받는 중인 대학
+  var cutFailed = {};                     // 못 받은 대학
+  var cutTimer = null;
+
+  function cutRerender() {
+    if (cutTimer) { return; }
+    cutTimer = setTimeout(function () { cutTimer = null; render(); }, 60);
+  }
+  /** 그 대학 입결을 받아 둔다. 이미 있거나 받는 중이면 아무것도 하지 않는다. */
+  function loadCut(id) {
+    if (!CUT_SPLIT || !id || CUTS[id] || cutPending[id] || cutFailed[id] || !window.fetch) { return; }
+    if (CUT_META && !CUT_META[id]) { return; }     // 수집하지 않은 대학
+    cutPending[id] = true;
+    fetch('results/' + encodeURIComponent(id) + '.json')
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (j) {
+        delete cutPending[id];
+        if (j) { CUTS[id] = j; cutRerender(); } else { cutFailed[id] = true; }
+      })
+      .catch(function () { delete cutPending[id]; cutFailed[id] = true; });
+  }
+  /** 학과·태그 검색 색인 — 검색어를 처음 넣을 때만 받는다 */
+  function loadDepts() {
+    if (!CUT_SPLIT || CUT_DEPTS || cutPending.__depts || !window.fetch) { return; }
+    cutPending.__depts = true;
+    fetch('results-depts.json').then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (j) { delete cutPending.__depts; if (j) { CUT_DEPTS = j; cutRerender(); } })
+      .catch(function () { delete cutPending.__depts; });
+  }
   var CUT_ROWS = 12;          // 한 전형에서 먼저 보여 줄 모집단위 수 (앱과 같은 값)
   var cutKey = null;          // 고른 전형 key
   var cutAll = false;         // 모집단위 전체 보기 ('기준 보기'·'지원 불가 전형'은 <details> 가 맡는다)
@@ -1017,7 +1051,12 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     '재응시 회차 규정 — 여러 회차에 응시했다면 대학이 어느 회차 성적을 쓰는지'
   ];
 
-  function cutOf(id) { return CUTS ? (CUTS[id] || null) : null; }
+  function cutOf(id) { return CUTS[id] || null; }
+  /** 아직 안 받았지만 수집돼 있는 대학인가 */
+  function cutCollected(id) {
+    if (CUTS[id]) { return true; }
+    return !!(CUT_SPLIT && CUT_META && CUT_META[id]);
+  }
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -1227,6 +1266,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   document.getElementById('searchForm').addEventListener('submit', function (e) {
     e.preventDefault();
     q = document.getElementById('q').value.replace(/\s/g, '');
+    if (q) { loadDepts(); }   // 학과·태그로 찾으려면 검색 색인이 필요하다
     shown = STEP; render();
   });
   document.getElementById('more').addEventListener('click', function () { shown += STEP; render(); });
@@ -1519,6 +1559,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     if (!nameHit && d && d.nameAliases) {
       nameHit = d.nameAliases.some(function (a) { return norm(a).indexOf(q) >= 0; });
     }
+    if (!nameHit && !d && CUT_SPLIT && CUT_META && CUT_META[u.id] && CUT_META[u.id].al) {
+      nameHit = CUT_META[u.id].al.some(function (a) { return norm(a).indexOf(q) >= 0; });
+    }
     var deps = {}, n = 0;
     if (d) {
       d.admissions.forEach(function (a) {
@@ -1529,6 +1572,15 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
           var k = x.name + '|' + (x.track || '');
           if (!deps[k]) { deps[k] = true; n++; }
         });
+      });
+    } else if (CUT_DEPTS && CUT_DEPTS[u.id]) {
+      // 아직 그 대학 파일을 안 받았으면 학과 색인으로 찾는다 (같은 규칙)
+      CUT_DEPTS[u.id].forEach(function (row) {
+        var hit = norm(row[0]).indexOf(q) >= 0 ||
+          (row[2] || []).some(function (t) { return norm(t).indexOf(q) >= 0; });
+        if (!hit) { return; }
+        var k = row[0] + '|' + (row[1] || '');
+        if (!deps[k]) { deps[k] = true; n++; }
       });
     }
     return { ok: nameHit || n > 0, name: nameHit, deps: n ? deps : null, n: n };
@@ -1542,7 +1594,13 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   // 전형에 나오면 그 학과 안에서 먼저 평균을 내고, 그 학과 값들을 다시 평균한다(PLAN §5).
   function univBand(r) {
     var d = cutOf(r.univ.id);
-    if (!d) { return { kind: 'nodata', why: REASON.not_collected }; }
+    if (!d) {
+      if (cutCollected(r.univ.id)) {
+        var meta = CUT_META[r.univ.id] || {};
+        return { kind: 'pending', year: meta.y || null, n: meta.n || 0 };
+      }
+      return { kind: 'nodata', why: REASON.not_collected };
+    }
     if (!d.admissions.some(G.admissionHasNumbers)) {
       return { kind: 'blocked', year: d.resultYear, why: REASON.no_results };
     }
@@ -1781,6 +1839,10 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     var d = cutOf(r.univ.id);
     var out = '<div class="dsec"><h4>학과별 합격 가능성</h4>';
     if (!d) {
+      if (cutCollected(r.univ.id)) {
+        loadCut(r.univ.id);
+        return out + '<p class="hint">전년도 합격선을 불러오는 중입니다…</p></div>';
+      }
       return out + '<p class="hint">전년도 입시결과를 아직 수집하지 않은 대학입니다.</p>' +
         '<div class="nojudge"><b>판정 불가</b><span>' + esc(REASON.not_collected) +
         '</span></div></div>';
@@ -2070,6 +2132,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     if (ub.kind === 'ok') {
       badge = '<span class="pill band">' + esc(ub.band) + '</span>';
       line = '<span class="uc-cnt">' + esc(fitLine(ub)) + '</span>';
+    } else if (ub.kind === 'pending') {
+      badge = '<span class="pill outline">합격선 불러오는 중</span>';
+      line = ub.n ? '<span class="uc-cnt">' + esc('학과 ' + ub.n + '개') + '</span>' : '';
     } else if (ub.kind === 'blocked') {
       badge = '<span class="pill muted">판정 불가</span>';
       line = '<span class="uc-why">' + esc(ub.why) + '</span>';
@@ -2090,7 +2155,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   }
 
   // ── 렌더 ───────────────────────────────────────────────────────────────────
-  var RANK = { ok: 0, blocked: 1, nodata: 2 };
+  var RANK = { ok: 0, pending: 1, blocked: 2, nodata: 3 };
   function render() {
     var all = G.convertAll(scores, RULES);
     var entered = G.GED_SUBJECTS.filter(function (s) { return typeof scores[s] === 'number'; });
@@ -2141,6 +2206,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       if (sortMode === 'fit') {
         var k = r._ub.kind;
         if (k !== prev) {
+          if (k === 'pending') { html += '<div class="subhead">합격선 불러오는 중</div>'; }
           if (k === 'blocked') { html += '<div class="subhead">판정 불가 — 대학이 공개한 수치로는 단계를 나눌 수 없음</div>'; }
           if (k === 'nodata') { html += '<div class="subhead">입결 미수집 — 수집 확대 예정</div>'; }
           prev = k;
@@ -2165,6 +2231,17 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       [].forEach.call(list.querySelectorAll('.ucard'), function (b) {
         if (b.getAttribute('data-id') === sel.univ.id) { b.setAttribute('aria-current', 'true'); }
       });
+      loadCut(sel.univ.id);
+    }
+    // 화면에 뜬 카드 몇 곳은 미리 받아 둔다 — 카드 색이 차례로 채워진다.
+    // 한 번에 여섯 곳까지만 보낸다(작은 파일 253개를 한꺼번에 부르지 않게).
+    if (CUT_SPLIT && CUT_META) {
+      var budget = 6;
+      for (var pi = 0; pi < cut.length && budget > 0; pi++) {
+        var pid = cut[pi].univ.id;
+        if (CUTS[pid] || cutPending[pid] || cutFailed[pid] || !CUT_META[pid]) { continue; }
+        loadCut(pid); budget--;
+      }
     }
   }
 
@@ -2205,11 +2282,12 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
   render();
 
-  // 번들이 커져 빌드가 입결을 results.json 으로 떼어 낸 경우에만 따로 받는다
+  // 빌드가 입결을 대학별로 떼어 놓은 경우, 첫 화면은 메타 색인(몇 KB)만 받는다.
+  // 그 다음부터 카드를 고르거나 화면에 뜬 카드가 차례로 자기 파일을 받는다.
   // (scripts/build_admission_calc.py 가 gzip 150KB 한계로 결정한다)
-  if (!CUTS && window.fetch) {
-    fetch('results.json').then(function (res) { return res.ok ? res.json() : null; })
-      .then(function (j) { if (j) { CUTS = j; render(); } })
+  if (CUT_SPLIT && window.fetch) {
+    fetch('results-index.json').then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (j) { if (j) { CUT_META = j; render(); } })
       .catch(function () { /* 못 받으면 합격선 섹션만 안 뜬다 */ });
   }
 })();
