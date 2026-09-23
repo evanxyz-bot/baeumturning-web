@@ -109,7 +109,8 @@ h2.h{font-size:42.6px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 
 /* ── NAV (메인과 동일) ── */
 .nav{position:sticky;top:0;z-index:50;
-  background:rgba(255,255,255,.88);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+  /* 2026-09-24 대표 지시 — 색 있는 박스 위로 헤더가 비치던 반투명·블러를 불투명으로 */
+  background:#fbfdfd;
   border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
 .nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1400px;margin:0 auto;padding:0 24px}.nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
@@ -213,8 +214,7 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 .tl-note{text-align:center;font-size:14.6px;color:var(--text-3);margin-top:20px}
 
 /* ── PARTNERS ── */
-/* 2026-09-24 개편 — 1280 한 화면 안에 목록과 모집 안내가 같이 들어오게(A-13) */
-.partners{padding:32px 0}
+.partners{padding:72px 0}
 .partner-empty{max-width:680px;margin:0 auto;text-align:center;background:#fff;border:1.5px dashed var(--border-strong);
   border-radius:22px;padding:48px 32px;box-shadow:var(--shadow-xs)}
 .partner-empty b{display:block;font-size:21.3px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
@@ -363,14 +363,16 @@ body{word-break:keep-all;overflow-wrap:break-word}
          좁은 기기에서 줄이 늘면 바가 잘리지 않고 커지도록 높이도 푼다. */
   .nav-bot{overflow:visible;height:auto;min-height:56px}
 }
-/* 협력사 목록 — 2026-09-24 개편: 로고 칸이 비어 있으니 카드를 벗기고 이름만 세운다.
-   로고가 들어오면 그때 칸을 만든다(A-16). */
-.p-h{max-width:680px;margin:0 auto 6px;font-size:20.2px;font-weight:700;letter-spacing:-0.02em}
-.partner-list{max-width:680px;margin:0 auto 10px;display:grid;grid-template-columns:1fr;gap:0}
-.pcard{display:flex;align-items:center;background:none;border:0;
-  border-top:1px solid var(--border);border-radius:0;padding:14px 0;box-shadow:none}
+/* 협력사 목록 — 카드 한 장부터 시작한다(2026-09-03) */
+.partner-list{max-width:680px;margin:0 auto 22px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.pcard{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--border);
+  border-radius:16px;padding:18px 20px;box-shadow:var(--shadow-sm)}
+.pcard .pmark{width:42px;height:42px;flex:none;border-radius:12px;background:var(--accent-soft);
+  display:grid;place-items:center;color:var(--accent)}
+.pcard .pmark svg{width:24px;height:24px}
 .pcard b{display:block;font-size:17.5px;font-weight:700;letter-spacing:-0.01em;color:var(--text)}
-.p-note{max-width:680px;margin:0 auto 26px;font-size:13.8px;color:var(--text-3)}
+.pcard .prole{display:block;margin-top:2px;font-size:13.4px;color:var(--text-3)}
 
 /* ── 푸터 = 메인페이지와 같은 회사정보 형식 (2026-09-07 대표 지시) ──
    "모든 페이지 동일" — 배치와 글자 크기를 index.html 푸터에 맞춘다.
@@ -469,22 +471,30 @@ body{word-break:keep-all;overflow-wrap:break-word}
 <!-- ===================== PAGE HEAD ===================== -->
 <header class="page-head">
   <div class="wrap">
-    <h1>함께 <span class="r">사각지대</span>를 밝힐<br>파트너를 찾습니다</h1>
+    <h1>함께 <span class="r">사각지대</span>를 밝힐<br><span class="g">파트너</span>를 찾습니다</h1>
   </div>
 </header>
 
 <!-- ===================== 협력사 ===================== -->
 <section class="partners sec-focus" id="partners">
   <div class="wrap">
-    <!-- 2026-09-24 개편 — 로고 칸(.pmark)에 자사 조리개 마크가 들어가 두 회사가 같은
-         로고를 쓰는 것처럼 보였다. 로고 칸을 빼고 이름만 구분선 목록으로 둔다.
-         (주)채우다는 2026-09-17 대표 지시로 이름만 먼저 올린 것이다. -->
-    <h2 class="p-h">함께하는 곳</h2>
     <div class="partner-list reveal">
-      <div class="pcard"><b>인너인</b></div>
-      <div class="pcard"><b>(주)채우다</b></div>
+      <div class="pcard">
+        <span class="pmark"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg></span>
+        <div>
+          <b>인너인</b>
+          <span class="prole">협력사</span>
+        </div>
+      </div>
+      <!-- (주)채우다 — 2026-09-17 대표 지시로 이름만 먼저. 로고·사진·소개는 대표가 주는 대로 채운다 -->
+      <div class="pcard">
+        <span class="pmark"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg></span>
+        <div>
+          <b>(주)채우다</b>
+          <span class="prole">협력사</span>
+        </div>
+      </div>
     </div>
-    <p class="p-note">기관 로고는 제공받는 대로 게재합니다.</p>
 
     <div class="partner-empty reveal">
       <b>협력사&amp;협력기관 모집 중</b>

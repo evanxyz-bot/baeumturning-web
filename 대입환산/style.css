@@ -23,8 +23,8 @@ html,body{margin:0;background:var(--bg);color:var(--text);
 h1,h2,h3{font-family:'GmarketSans','Pretendard Variable',sans-serif;letter-spacing:-.02em}
 
 /* ── NAV (계산기·다른 페이지와 같은 것) ── */
-.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);
-  backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+/* 2026-09-24 대표 지시 — 색 있는 박스 위로 헤더가 비치던 반투명·블러를 불투명으로 */
+.nav{position:sticky;top:0;z-index:50;background:#fbfdfd;
   border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
 .nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1400px;margin:0 auto;padding:0 24px}

@@ -109,7 +109,8 @@ h2.h{font-size:42.6px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 
 /* ── NAV (메인과 동일) ── */
 .nav{position:sticky;top:0;z-index:50;
-  background:rgba(255,255,255,.88);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+  /* 2026-09-24 대표 지시 — 색 있는 박스 위로 헤더가 비치던 반투명·블러를 불투명으로 */
+  background:#fbfdfd;
   border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:0 1px 0 rgba(13,38,33,.04),0 4px 16px rgba(13,38,33,.06)}
 .nav-top{height:88px;position:relative;display:flex;align-items:center;justify-content:center;max-width:1400px;margin:0 auto;padding:0 24px}.nav-bot{border-top:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:center}
@@ -348,9 +349,6 @@ article.post:hover{transform:none;box-shadow:none;border-color:var(--border)}
 .pempty{max-width:760px;margin:0 auto;text-align:center;background:#fff;border:2px dashed var(--border-strong);
   border-radius:22px;padding:64px 32px}
 .pempty[hidden]{display:none}
-/* 목록 아래 안내 — 버튼 없이 두 줄 */
-.p-more{max-width:760px;margin:28px auto 0;padding-top:20px;border-top:1px solid var(--border);
-  font-size:15.2px;line-height:1.75;color:var(--text-3)}
 .pempty b{display:block;font-size:20.2px;font-weight:700;margin-bottom:10px}
 .pempty p{font-size:16px;color:var(--text-2);line-height:1.75;max-width:460px;margin:0 auto}
 @media (max-width:560px){article.post{padding:22px 0}.post h2{font-size:20.2px}}
@@ -558,8 +556,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <b>첫 소식을 준비하고 있습니다</b>
       <p>회의록, 개발 기록, 현장에서 만난 이야기를 이곳에 차곡차곡 쌓아갈 예정입니다. 조금만 기다려 주세요.</p>
     </div>
-
-    <p class="p-more">소식은 회의·개발·현장에서 생기는 대로 올립니다.<br>새 소식은 앱 공지에서 먼저 확인할 수 있습니다.</p>
   </div>
 </section>
 
