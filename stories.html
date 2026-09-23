@@ -118,7 +118,9 @@ h2.h{font-size:42.6px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .nav-app{position:absolute;right:24px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:12px;text-decoration:none}
 .nav-app-ic{width:44px;height:44px;border-radius:9px;background:#fff;border:1px solid var(--border);display:grid;place-items:center;box-shadow:var(--shadow-sm)}
 .nav-app-ic svg{width:32px;height:32px;color:var(--accent)}
+.nav-app-nm{font-weight:800;font-size:17px;color:var(--text);letter-spacing:-.01em}
 .nav-app-badge{display:block;height:40px;width:auto}
+@media (max-width:1339px){.nav-app-nm{display:none}}
 @media (max-width:767px){.nav-top{justify-content:flex-start;padding:0 14px}.nav-top .brand-wm{font-size:min(65px,10.4vw)!important}}
 @media (max-width:860px){.nav-app-ic{display:none}}
 @media (max-width:560px){.nav-app{right:12px;gap:6px}.nav-app-badge{height:32px}}
@@ -467,10 +469,11 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span>
       </span>
     </a>
-    <a class="nav-app" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="배움터닝-검정고시 학습 앱 App Store 에서 내려받기">
+    <span class="nav-app">
       <span class="nav-app-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg></span>
-      <img class="nav-app-badge" src="/brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="104" height="32" loading="lazy">
-    </a>
+      <span class="nav-app-nm">검정고시 학습 앱 배움터닝</span>
+      <a href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="배움터닝 App Store 에서 내려받기"><img class="nav-app-badge" src="/brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="104" height="32" loading="lazy"></a>
+    </span>
   </div>
   <div class="nav-bot">
     <div class="navlinks">
