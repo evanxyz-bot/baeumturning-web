@@ -202,7 +202,7 @@ h2.h{font-size:44.8px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   min-width:152px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-md);
   padding:7px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;z-index:60;
   transition:opacity .22s,transform .25s var(--ease-spring),visibility .22s}
-.nav-drop:hover .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-drop:hover .drop-menu,.nav-drop:focus-within .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .drop-menu a{display:block;padding:8px 14px;border-radius:9px;font-size:15.1px;font-weight:600;color:var(--text-2);
   white-space:nowrap;
   transition:background .15s,color .15s}
@@ -225,13 +225,11 @@ h2.h{font-size:44.8px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
 .hero h1 .g{background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p.sub{font-size:19.6px;color:var(--text-2);line-height:1.7;margin-top:22px;max-width:520px}
 .hero p.sub b{color:var(--accent-strong)}
-.uniq{display:inline-flex;align-items:center;gap:9px;font-size:16.8px;font-weight:800;color:var(--accent-strong);
-  background:linear-gradient(#fff,#fff) padding-box,var(--accent-grad) border-box;border:2px solid transparent;
-  padding:9px 18px;border-radius:999px;margin-bottom:20px;box-shadow:0 4px 18px rgba(11,122,106,.18);
+/* 2026-09-24 개편 — 눈썹 배지가 아니라 한 줄 캡션. 알약 배경·점선 상자 제거 */
+.uniq{display:inline-flex;align-items:center;gap:9px;font-size:15px;font-weight:700;color:var(--text-3);
+  background:none;border:0;padding:0;border-radius:0;margin-bottom:20px;box-shadow:none;
   letter-spacing:-0.01em}
-.uniq .first{background:var(--accent-grad);color:#fff;font-size:12.9px;font-weight:800;letter-spacing:.04em;
-  padding:3px 9px;border-radius:999px}
-.uniq .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:nodePulse 2.4s ease-in-out infinite}
+.uniq .dot{display:none}
 .cta-zone{display:flex;flex-direction:column;align-items:center;margin-top:40px;max-width:600px}
 .cta-row{display:flex;gap:14px;align-items:stretch;justify-content:center;flex-wrap:wrap;width:100%}
 /* 좌측 히어로 텍스트를 위쪽으로 정렬 (가운데 → 상단) */
@@ -689,8 +687,8 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
 
 /* ============ FOOTER ============ */
 .foot{border-top:1px solid var(--border);padding:56px 0 36px;background:var(--surface-2);position:relative}
-.foot::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,var(--s-teal),var(--s-blue),var(--s-purple),var(--s-coral),var(--s-amber))}
+.foot::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:var(--border)}
 .foot-top .desc{font-size:15.1px;color:var(--text-3);line-height:1.65;max-width:420px;margin-top:14px}
 .biz-info{margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:14.6px;color:var(--text-3);line-height:1.9}
 .biz-info b{color:var(--text-2);font-weight:600}
@@ -698,6 +696,10 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
   font-size:14px;color:var(--text-4);flex-wrap:wrap;gap:10px}
 .foot-terms{color:var(--text-3);font-weight:600;transition:color .15s}
 .foot-terms:hover{color:var(--text)}
+/* 2026-09-24 — 개인정보처리방침·이용약관을 푸터에 상시 노출(법무 발의) */
+.foot-legal{width:100%;order:3;margin:10px 0 0;font-size:13.4px;color:var(--text-3)}
+.foot-legal a{color:var(--text-3);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.foot-legal a:hover{color:var(--text)}
 
 /* ============ ANIMATIONS ============ */
 @keyframes heroUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
@@ -776,10 +778,8 @@ body::before{background:
 /* 떠다니는 블롭·글로우 오브 제거 */
 .hero-blob{display:none}
 .glow{display:none}
-/* 히어로 배지 → 수험표 스텁 (점선 절취) */
-.uniq{background:#fff;border:1.5px dashed var(--border-strong);border-radius:11px;
-  box-shadow:var(--shadow-sm);color:var(--accent-strong)}
-.uniq .first{background:var(--accent);border-radius:7px}
+/* 히어로 배지 → 한 줄 캡션 (2026-09-24 개편: 점선 절취 상자 제거) */
+.uniq{background:none;border:0;border-radius:0;box-shadow:none;color:var(--text-3)}
 .uniq .dot{display:none}
 /* 그라데이션 클립 텍스트 → 단색 + 형광펜 */
 .hero h1 .g{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--accent-strong);
@@ -815,8 +815,8 @@ body::before{background:
 }
 
 /* 초점 — 브랜드 컬러 강조 */
-.apfx-light .t .fx{font-style:normal;color:var(--accent)}
-.apfx-in .tt .fx{font-style:normal;color:#63d6bd}
+.apfx-light .t .fx{font-style:normal;color:inherit}
+.apfx-in .tt .fx{font-style:normal;color:inherit}
 
 /* 코어 — 빔이 도착하는 순간 테두리에 빛이 한 바퀴 */
 .core-ring{position:absolute;inset:-5px;border-radius:47px;padding:3px;pointer-events:none;
@@ -972,6 +972,12 @@ body::before{background:
   .spark{display:none}
   .node[style*="--fd"] svg{animation:none!important;filter:none!important}
   .net-status i{animation:none}
+  /* 2026-09-24 — 이 페이지에 남은 무한 애니메이션을 전부 멈춘다(가이드라인 감사 4) */
+  .hero-blob,.hero-blob-1,.hero-blob-2,.hero-blob-3,
+  .web3d .wn,.web3d .wl,.net .node,.core,.core-ring,
+  .l-chart,.l-pass,.l-bars,.l-weak,.lf,
+  .uniq .dot,.ai-tag,.pnum,.btn-dl,.skeleton,.net-core .node,
+  .features::before,.beams{animation:none!important}
 }
 @media (max-width:860px){
   .netsec{padding:72px 0 78px}
@@ -1067,23 +1073,12 @@ body::before{background:
 .web3d{opacity:.55}
 .web3d text{font-size:16px}
 
-/* ── 섹션 이음매 제거 — 다크존을 하나의 연속 계조로 ──
-   기존: netsec #101d1a / analysis #0d1917 / foot #0a1413 이 맞닿아 가로 띠가 보였다.
-   각 구간의 끝색 = 다음 구간의 시작색으로 이어 붙여 경계선을 없앤다. */
-.netsec{background:linear-gradient(180deg,#101d1a 0%,#0e1a18 100%)}
-/* 3페이지도 한 화면 단독 — 꼬리 문구를 빼면서 838px 로 짧아져 다음 섹션 제목이
-   아래에 걸쳤다. 분석 섹션과 같은 방식으로 세운다(2026-09-07). */
-.netsec{min-height:100vh;display:flex;align-items:center}
-.netsec>.wrap{width:100%}
-@media (max-width:1024px){.netsec{min-height:0;display:block}}
-.analysis{background:linear-gradient(180deg,#0e1a18 0%,#0c1715 100%)}
-/* 마지막 칸 — 한 화면(100vh)으로 세우니 푸터 네 줄만 덩그러니 남아 빈 칸이
-   너무 컸다. 68vh 로 낮춘다. 마지막 정거장에서는 분석 카드의 '근거 3장 + 고지'
-   가 위에 남고 그 아래로 푸터가 붙어, 잘린 느낌 없이 한 화면이 채워진다.
-   (68vh 도 여전히 헐거워 54vh 로 한 번 더 낮췄다) */
-.foot{background:linear-gradient(180deg,#0c1715 0%,#0a1413 46%,#0a1413 100%);padding:20px 0 16px;
-  min-height:0;display:flex;align-items:center}
-.foot>.wrap{width:100%}
+/* ── 다크 구간은 #apfx 로 들어가 #how 에서 나온다 (2026-09-24 개편) ──
+   조리개 전환과 네트워크 도식까지만 근흑이고 #analysis 부터는 다시 밝다.
+   아래로 이어지던 계조를 끊어 단색으로 두면 섹션 경계가 '의도'로 읽힌다.
+   도식이 화면을 꽉 채울 이유가 없어 min-height:100vh 도 뺀다. */
+.netsec{background:#101d1a}
+/* 푸터는 다시 밝게 — 나머지 6장과 같은 얼굴이 된다 (2026-09-24 개편) */
 .foot-top .brand-wm{font-size:52px!important}
 /* 다크 전환(apfx) 끝색과 첫 다크 섹션 시작색도 일치시킨다 */
 .apfx-dark{background:#101d1a}
@@ -1135,144 +1130,38 @@ body::before{background:
   .mth-d{grid-column:2;margin-top:6px}
 }
 
-/* 분석 파이프라인 — 입력 → 3단계 → 출력. 아래 상세가 위 단계와 같은 격자에 떨어진다.
-   색은 2계열 고정: 앰버(#dfba85)=관측(기록에서 사실을 집계) / 틸=판단(사실에서 순서를 결정) */
-/* 4페이지는 한 화면 고정이라 박스가 남는 높이를 나눠 갖게 한다(2026-09-07 대표 지시).
-   예전엔 글씨만 작고 아래위로 빈 칸이 남아 허전했다. */
-.analysis .evidence{padding:20px 30px 16px;position:relative;overflow:visible;
-  display:flex;flex-direction:column;gap:5px}
-/* 표제를 테두리 위에 걸친다(fieldset legend 처럼). 배경은 섹션 색으로 덮어
-   선이 글자를 관통하지 않게 한다(2026-09-07 대표 지시). */
-/* 뒤의 '.evidence>*:not(.pipe-math){position:relative}' 가 같은 우선순위로 이걸 덮어
-   제목이 테두리 아래로 내려앉았다(2026-09-20 대표 지적) → 선택자를 겹쳐 우선순위를 올린다 */
-.analysis .evidence>.ev-head.ev-head{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);z-index:2;
-  /* 글자 폭에 맞춘다 — 안 그러면 상자가 카드 폭(322px)까지 늘어나 가운데로 옮겨도
-     글자는 왼쪽에 붙어 보인다(2026-09-12 실측). */
-  width:max-content;max-width:calc(100% - 32px);flex-wrap:nowrap;
-  margin:0;padding:0 12px;line-height:1;
-  /* 테두리 선이 지나는 띠만 가린다. ★절대배치 기준은 패딩 박스라 2px 테두리는 이 요소의
-     중심보다 2px '위'에 있다 — 띠를 중심 아래로만 깔면 선이 글자를 그대로 통과한다
-     (2026-09-20 실측). 중심 -6px~+4px 만 칠하고 나머지는 투명이라 패치가 안 보인다. */
-  background:linear-gradient(180deg,transparent calc(50% - 2px),
-    #0d1917 calc(50% - 2px),#0d1917 calc(50% - 1px),
-    var(--surface) calc(50% - 1px),var(--surface) 50%,
-    transparent 50%)}
-/* 배경 수식은 카드 밖으로 새면 안 되므로 자기 상자에서 자른다 */
-.analysis .pipe-math{overflow:hidden;border-radius:14px}
-/* 배경 수식 — 통계·분석 지면이라는 인상만 남기고 읽히지는 않게 */
-.pipe-math{position:absolute;inset:0;pointer-events:none;user-select:none;z-index:0}
-.pipe-math span{position:absolute;font-family:'Times New Roman',Georgia,serif;font-style:italic;
-  color:rgba(120,214,192,.075);white-space:nowrap;line-height:1}
-.analysis .evidence>*:not(.pipe-math){position:relative;z-index:1}
-/* 칸 높이를 내용에 맞춘다(2026-09-11 대표 지시) — 예전엔 셋이 같은 높이로 늘어나
-   기법이 둘뿐인 STEP 2·3 아래에 빈 칸이 크게 남았다. 화살표만 가운데에 맞춰 둔다. */
-.pipe-lane{display:grid;grid-template-columns:1fr 52px 1fr 52px 1fr;gap:0 14px;align-items:start}
-.pipe-arrow{align-self:center}
-/* 흐름 화살표 — 15px 실선 꺾쇠는 눈에 안 띄어 세 칸이 그냥 나열처럼 보였다.
-   점선 꼬리 + 큰 촉으로 바꾸고 브랜드 색을 준다. */
-.pipe-arrow{display:flex;align-items:center;justify-content:center;color:#63d6bd}
-.pipe-arrow svg{width:44px;height:24px}
-.pipe-vsep{display:flex;justify-content:center;padding:4px 0;color:#63d6bd}
-.pipe-vsep svg{width:22px;height:30px}
-.pipe-intro{display:flex;align-items:flex-end;gap:36px;margin-bottom:16px}
-.pipe-intro>p{flex:1;margin:0;max-width:880px;font-size:16.4px;line-height:1.72;color:#a8bfb8;word-break:keep-all}
-.pipe-legend{margin-left:auto;flex-shrink:0;display:flex;flex-direction:column;gap:9px;padding-bottom:2px}
-.pipe-legend div{display:flex;align-items:center;gap:9px;font-size:14px;color:#8aa8a0;white-space:nowrap}
-.pipe-legend i{width:11px;height:11px;border-radius:3px;flex-shrink:0}
-.pipe-legend b{font-weight:700}
-/* INPUT·OUTPUT 은 한 줄로 가운데 모은다. 칸을 화면 폭 끝까지 늘리면
-   글자만 가운데 있고 테두리가 멀어 따로 논다 — 폭도 함께 줄인다(2026-09-07 대표 지시). */
-.pipe-io{display:flex;align-items:center;justify-content:center;gap:16px;border-radius:12px;
-  padding:13px 26px;align-self:center;width:auto;max-width:100%}
-.pipe-io .io-l{font-family:'Outfit',sans-serif;font-size:15.4px;font-weight:700;letter-spacing:.1em;flex-shrink:0}
-.pipe-io .io-bar{width:1px;height:18px;background:rgba(255,255,255,.13);flex-shrink:0}
-.pipe-io>b{font-size:20px;font-weight:700;color:#eef7f4;letter-spacing:-.01em;flex-shrink:0}
-.pipe-io .io-chips{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
-.pipe-in{background:#101d1a;border:1px dashed rgba(214,178,120,.34)}
-.pipe-in .io-l{color:#dfba85}
-.pipe-out{background:rgba(78,207,180,.09);border:1px solid rgba(78,207,180,.35)}
-.pipe-out .io-l{color:#4ecfb4}
-.chip{font-size:15.6px;font-weight:500;padding:7px 14px;border-radius:8px;white-space:nowrap}
-.chip-w{color:#cdbb9c;background:rgba(214,178,120,.11);border:1px solid rgba(214,178,120,.20)}
-.chip-t{color:#a9c9c0;background:rgba(78,207,180,.10);border:1px solid rgba(78,207,180,.20)}
-/* 가운데 정렬 + 아래 여백 축소(2026-09-11 대표 지시). 기법 이름 앞 번호(01·04…)도 뺐다 —
-   순서를 뜻하지 않는 식별번호라 읽는 데 방해만 됐다. */
-.pipe-step{display:flex;flex-direction:column;align-items:center;text-align:center;
-  background:var(--surface-2);border-radius:12px;padding:13px 14px 10px}
-/* 스텝마다 색을 달리한다(2026-09-20 대표 지시): 1 앰버 · 2 틸 · 3 라벤더. 값은 변수로만 든다 */
-.pipe-step.s1{--sc:#dfba85;--stx:#e2d3b8;--sbg:rgba(214,178,120,.13);--sbd:rgba(214,178,120,.24);--sln:rgba(214,178,120,.26)}
-.pipe-step.s2{--sc:#63d6bd;--stx:#cfe3dd;--sbg:rgba(78,207,180,.11);--sbd:rgba(78,207,180,.22);--sln:rgba(78,207,180,.24)}
-.pipe-step.s3{--sc:#b9a6e6;--stx:#dcd3f2;--sbg:rgba(160,140,220,.13);--sbd:rgba(160,140,220,.26);--sln:rgba(160,140,220,.26)}
-.pipe-step{border:1px solid var(--sln);border-top:3px solid var(--sc)}
-.pipe-step .st{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:3px}
-.pipe-step .st i{font-family:'Outfit',sans-serif;font-style:normal;font-size:15.2px;font-weight:700;letter-spacing:.08em}
-.pipe-step .st i,.pipe-step .yield i{color:var(--sc)}
-.pipe-col.warm>.chd i,.pipe-m.warm>.n{color:#dfba85}
-.pipe-col.cool>.chd i,.pipe-m.cool>.n{color:#63d6bd}
-.pipe-step .st span{font-size:19.6px;font-weight:800;color:#eef7f4;letter-spacing:-.02em}
-.pipe-step .q{margin:0 0 8px;font-size:15.8px;line-height:1.5;color:#93aca5;word-break:keep-all}
-.pipe-step .tags{display:flex;flex-wrap:nowrap;justify-content:center;gap:6px;align-content:flex-start;max-width:100%}
-.pipe-step .tags span{font-family:'Outfit',sans-serif;font-size:14.6px;font-weight:600;padding:6px 11px;border-radius:8px;white-space:nowrap}
-.pipe-step .tags span{color:var(--stx);background:var(--sbg);border:1px solid var(--sbd)}
-.pipe-step .yield{margin-top:auto;padding-top:7px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;color:#89a49c}
-.pipe-step .yield i{font-style:normal;font-weight:700}
-.pipe-detail{margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12)}
-.pipe-detail>.lbl{font-size:12.4px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7f9a92;margin-bottom:18px}
-.pipe-col{display:flex;flex-direction:column;gap:14px}
-.pipe-col>.chd{display:flex;align-items:baseline;gap:8px;padding-bottom:12px;margin-bottom:2px;border-bottom:1px solid rgba(255,255,255,.08)}
-.pipe-col>.chd i{font-family:'Outfit',sans-serif;font-style:normal;font-size:11.4px;font-weight:700;letter-spacing:.1em}
-.pipe-col>.chd span{font-size:13.6px;font-weight:700;color:#cfe3dd}
-.pipe-m{display:grid;grid-template-columns:32px 1fr;gap:0 10px}
-.pipe-m>.n{font-family:'Outfit',sans-serif;font-size:13.4px;font-weight:700;padding-top:2px}
-.pipe-m b{display:block;font-size:15.2px;font-weight:700;color:#eef7f4;letter-spacing:-.01em}
-.pipe-m p{margin:4px 0 7px;font-size:13.5px;line-height:1.6;color:#bfd4ce;word-break:keep-all}
-.pipe-m p b{display:inline;font-size:inherit}
-.pipe-m .out{display:inline-block;font-family:'Outfit',sans-serif;font-size:12.2px;font-weight:600;color:#9dbdb4;
-  background:var(--surface-3);border:1px solid rgba(255,255,255,.08);padding:4px 9px;border-radius:6px}
-.pipe-why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:2px;padding-top:14px;
-  border-top:1px dashed rgba(255,255,255,.16)}
-.pipe-why>div{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 17px}
-.pipe-why b{display:block;font-size:16.6px;font-weight:700;color:#eef7f4;margin-bottom:5px;letter-spacing:-.01em}
-.pipe-why span{display:block;font-size:15px;line-height:1.6;color:#8fa8a1;word-break:keep-all}
-.pipe-fine{margin:2px 0 0;font-size:14.4px;color:#7f9a92}
-.pipe-fine b{color:#a8bfb8;font-weight:700}
+/* 분석 표 — 대입환산 style.css 의 .t 규칙을 그대로 옮긴다 (2026-09-24 개편).
+   행 순서가 단계를 말하므로 번호는 붙이지 않는다. 좁은 폭에서는 표만 가로 스크롤. */
+.pipe-tw{margin-top:24px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pipe-t{width:100%;min-width:520px;border-collapse:collapse;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow-sm);font-size:15px}
+.pipe-t thead th{background:var(--surface-2);color:var(--text-2);font-size:13.5px;
+  text-align:left;padding:11px 14px;font-weight:700}
+.pipe-t tbody th{background:var(--surface);color:var(--text);font-size:15.4px;font-weight:700;
+  text-align:left;padding:13px 14px;border-top:1px solid var(--border);
+  vertical-align:top;word-break:keep-all}
+.pipe-t td{padding:13px 14px;border-top:1px solid var(--border);color:var(--text-2);
+  vertical-align:top;word-break:keep-all}
+.pipe-why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;
+  margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
+.pipe-why>div{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:14px 17px}
+.pipe-why b{display:block;font-size:16.6px;font-weight:700;color:var(--text);margin-bottom:5px;letter-spacing:-.01em}
+.pipe-why span{display:block;font-size:15px;line-height:1.6;color:var(--text-2);word-break:keep-all}
+.pipe-fine{margin:16px 0 0;font-size:14.4px;color:var(--text-3)}
+.pipe-fine b{color:var(--text-2);font-weight:700}
+@media (max-width:720px){
+  .pipe-why{grid-template-columns:1fr;gap:10px;margin-top:18px;padding-top:16px}
+  .pipe-t{font-size:14px}
+  .pipe-t thead th,.pipe-t tbody th,.pipe-t td{padding:10px 11px}
+}
 /* 푸터 닫는 CTA */
 .foot-cta{display:flex;gap:10px;flex-wrap:wrap;width:100%;margin-top:14px}
 .foot-cta .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#dbeae6}
 .foot-cta .btn.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
-@media (max-width:1000px){
-  /* 한 줄로 쌓이면 칸끼리 높이를 맞출 이유가 없다 — 비워 둔 칩 자리를 없앤다 */
-  .analysis .evidence{padding:20px 18px 18px;gap:10px}
-  .pipe-step .tags{min-height:0}
-  .pipe-why{grid-template-columns:1fr;gap:10px;margin-top:0;padding-top:12px}
-  .pipe-lane{grid-template-columns:1fr;gap:12px}
-  .pipe-gap{display:none}
-  .pipe-arrow{transform:rotate(90deg);padding:2px 0}
-  .pipe-intro{flex-direction:column;align-items:flex-start;gap:18px}
-  .pipe-legend{margin-left:0}
-}
 @media (max-width:720px){
-  .pipe-io{flex-wrap:wrap;gap:10px 14px}
-  .pipe-note{grid-template-columns:1fr;gap:13px}
-  /* 폰에서 파이프라인 한 칸이 1,510px 이라 스크롤이 길었다 — 글자 크기는 두고
-     칸 안팎의 위아래 여백만 깎는다(2026-09-12 대표 지시). */
-  .analysis .evidence{padding:16px 14px 14px;gap:6px}
-  .pipe-io{padding:9px 16px}
-  .pipe-io>b{font-size:18px}
   .chip{padding:5px 11px}
-  .pipe-vsep{padding:0}
-  .pipe-vsep svg{height:22px}
-  .pipe-lane{gap:9px}
-  .pipe-step{padding:11px 12px 9px}
-  .pipe-step .st{margin-bottom:4px}
-  .pipe-step .q{margin:0 0 7px}
-  .pipe-step .tags{gap:6px}
-  .pipe-step .tags span{padding:5px 8px;font-size:clamp(11.5px,3.4vw,13.5px)}
-  .pipe-step .tags{gap:5px}
-  .pipe-step .yield{padding-top:6px}
-  .pipe-why{gap:9px;padding-top:10px}
-  .pipe-why>div{padding:10px 13px}
-  .pipe-why b{margin-bottom:3px}
 }
 
 /* ── 폰에서도 PC 와 같은 내용(2026-09-08 대표 지시: 기준은 PC) ──
@@ -1396,7 +1285,7 @@ body::before{background:
 
 /* 마지막 네비 드롭다운이 가운데 정렬이라 좁은 폭에서 화면 밖으로 나가 가로 스크롤을 만들던 것 */
 .nav-drop:last-child .drop-menu{left:auto;right:0;transform:translateX(0) translateY(6px)}
-.nav-drop:last-child:hover .drop-menu{transform:translateX(0) translateY(0)}
+.nav-drop:last-child:hover .drop-menu,.nav-drop:last-child:focus-within .drop-menu{transform:translateX(0) translateY(0)}
 
 /* ============ RESPONSIVE ============ */
 @media (max-width:920px){
@@ -1405,7 +1294,7 @@ body::before{background:
      폰에서 카테고리 줄과 기능 칩 사이가 52px 로 벌어져 있었다(2026-09-11 실측). */
   .hero h1{font-size:42.6px}
   .hero-grid,.spot-grid,.spot.rev .spot-grid,.mission-grid,.an-grid,.an-cols,.co-grid,.up-grid,.upcoming.alt .up-grid{grid-template-columns:1fr;gap:40px;direction:ltr}
-  .stage{order:-1}
+  /* 2026-09-24 개편: .stage{order:-1} 삭제 — 375 첫 화면에 h1 이 보인다 */
   .fgrid,.price-grid{grid-template-columns:1fr 1fr}
   .fgrid{gap:20px;padding:0}
   /* 분석 번들 — 모바일은 카드 위에 가로 칩으로 펼침 */
@@ -1664,7 +1553,7 @@ body{background:#0d1917}
    215vh(115vh 스크롤) 때처럼 지치지 않으면서 속도를 스스로 정할 수 있다. */
 /* 조리개 전환 구간 길이 = 스크롤 감도. 길수록 같은 휠 양에 덜 변한다(감도 낮음).
    170vh 는 너무 빨리 열려서 240vh 로 늘렸다(2026-09-06 대표 지시). */
-.apfx{position:relative;height:240vh}
+.apfx{position:relative;height:132vh}
 /* 폰은 1vh 가 작아 같은 240vh 라도 손가락 이동량이 적다 — 그만큼 조리개가
    순식간에 열렸다. 구간을 늘려 감도를 낮춘다(2026-09-07 대표 지시). */
 @media (hover:none) and (max-width:900px){.apfx{height:420vh}}
@@ -1706,13 +1595,10 @@ body{background:#0d1917}
   .apfx-in{--p:1!important;filter:none;opacity:1}
   .apfx-iris{display:none}
 }
-/* 다크존 은은한 빛무리 — 검은 화면이 죽어 보이지 않게 */
-.analysis,.features{position:relative;overflow:hidden}
-.analysis::before,.features::before{content:'';position:absolute;pointer-events:none;z-index:0;
+/* 다크존 은은한 빛무리 — 검은 화면이 죽어 보이지 않게 (#analysis 는 밝아져 제외) */
+.features{position:relative;overflow:hidden}
+.features::before{content:'';position:absolute;pointer-events:none;z-index:0;
   width:1180px;height:520px;left:50%;border-radius:50%;will-change:transform,opacity}
-.analysis::before{top:-190px;
-  background:radial-gradient(50% 50% at 50% 50%, rgba(78,207,180,.16), transparent 70%);
-  animation:glowFloatA 15s ease-in-out infinite}
 .features::before{top:-150px;
   background:radial-gradient(50% 50% at 50% 50%, rgba(120,158,205,.13), transparent 70%);
   animation:glowFloatB 19s ease-in-out infinite}
@@ -1722,10 +1608,10 @@ body{background:#0d1917}
 @keyframes glowFloatB{
   0%,100%{opacity:.58;transform:translateX(calc(-42% + 42px))}
   50%{opacity:1;transform:translateX(calc(-42% - 42px))}}
-.analysis .wrap,.features .wrap{position:relative;z-index:1}
+.features .wrap{position:relative;z-index:1}
 
 /* 다크존 토큰 재정의 — 인라인 var() 참조까지 함께 전환된다 */
-.analysis,.features,.strip,.foot{
+.features,.strip{
   --surface:#152420; --surface-2:#1a2c27; --surface-3:#22352f;
   --bg:#101d1a;
   --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.18);
@@ -1750,18 +1636,12 @@ body{background:#0d1917}
   color:var(--text);
 }
 
-/* 섹션 배경 — 아래로 갈수록 깊어진다 */
-/* 한 화면에 담기도록 압축(2026-09-03) */
-/* 이 섹션 하나로 한 화면(2026-09-06 대표 지시) — 짧아서 푸터가 같이 보이던 것을 막는다 */
-.analysis{background:#0d1917;padding:30px 0 10px;min-height:100vh;display:flex;align-items:center}
-.analysis>.wrap{width:100%}
-@media (max-width:1024px){.analysis{min-height:0;display:block;padding:34px 0 44px}}
+/* 섹션 배경 — #analysis 와 푸터는 2026-09-24 개편에서 밝은 쪽으로 돌아갔다 */
 .features{background:linear-gradient(180deg,#0d1917 0%,#101d1a 100%);padding:100px 0}
 .strip{background:#101d1a}
-.foot{background:#0a1413}
 
 /* 가로 폭 여유 (히어로 3D 씬은 기존 폭 유지) */
-.analysis .wrap,.features .wrap,.strip .wrap,.foot .wrap{max-width:1280px}
+.features .wrap,.strip .wrap{max-width:1280px}
 /* 기능 그룹 소제목 — 다크존 */
 .features .fgroup-t{color:#cfe3dd}
 .features .fgroup-t span{color:#0a1413;background:#63d6bd}
@@ -1781,8 +1661,6 @@ body{background:#0d1917}
 .analysis .sec-head h2.h{font-size:clamp(32px,3.6vw,50px);line-height:1.2}
 /* 3페이지와 같은 1열 가운데 정렬 (2026-09-07 대표 지시) */
 .analysis .sec-head{text-align:center;max-width:900px;margin:0 auto 14px}
-.analysis .w-green{color:#63d6bd}
-.analysis .w-amber{color:#dfba85}
 .analysis .sec-head .lead{margin:10px 0 0;max-width:860px;font-size:16.4px}
 .an-cols{grid-template-columns:1.02fr 1fr;gap:58px}
 .spot-3d{margin-top:0}
@@ -1794,9 +1672,6 @@ body{background:#0d1917}
 .strip .s{align-items:flex-start}
 
 /* 밝은 배경이 하드코딩된 요소 오버라이드 */
-.analysis .pnum{background:var(--surface-3);color:var(--accent-strong)}
-.analysis .evidence{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--accent-grad) border-box;
-  box-shadow:0 14px 40px rgba(0,0,0,.42)}
 .analysis .mock-card{background:var(--surface);box-shadow:32px 44px 80px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3)}
 .analysis .spot-3d:hover .mock-card{box-shadow:16px 24px 56px rgba(0,0,0,.46),0 2px 8px rgba(0,0,0,.3)}
 .analysis .mock-card .prow{background:var(--surface-2);box-shadow:0 14px 26px rgba(0,0,0,.32)}
@@ -2054,9 +1929,9 @@ body{word-break:keep-all;overflow-wrap:break-word}
   <div class="hero-blob hero-blob-3"></div>
   <div class="wrap hero-grid">
     <div>
-      <span class="uniq"><span class="first">BETA</span>검정고시 특화 · 근거기반 학습 분석</span>
+      <span class="uniq">고졸 검정고시 기출 12회차 2,040문항 · 근거기반 학습 분석</span>
       <h1>배움, 마침표가 아닌<br><span class="g">터닝포인트</span>로</h1>
-      <p class="sub">아웃포커스는 교육 사각지대를 해소하는 솔루션을 만듭니다. <b>배움터닝</b>은 <b>검정고시 기출문제</b>를 실전처럼 풀고 <b>무료로 채점</b>하는 학습 솔루션<br>— 모두에게 같은 문제가 아닌 <b>개인의 오답 기록</b>으로 <b>약점 단원</b>을 <span style="white-space:nowrap">분석&amp;진단</span>하고, <b>맞춤 문제</b>를 추천합니다</p>
+      <p class="sub">아웃포커스는 교육 사각지대를 해소하는 솔루션을 만듭니다. <b>배움터닝</b>은 고졸 검정고시 기출 12회차 2,040문항을 실제 시험처럼 풀고 OMR로 바로 채점하는 앱입니다. 채점은 <b>무료</b>이고, 틀린 문항은 단원별로 모여 다시 풀 순서가 됩니다.</p>
       <div class="cta-zone">
         <!-- 스토어별로 나눈 다운로드 버튼(2026-09-11 대표 지시).
              App Store 는 2026-09-17 출시돼 애플 공식 배지(brand/badges/appstore-ko.svg, 수정 금지·최소 40px)로
@@ -2398,7 +2273,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 <section class="netsec sec-focus" id="how">
   <div class="wrap">
     <div class="net-head reveal">
-      <h2 class="h"><span class="w-pink">흩어진</span> 학습 기록이<br>나의 <span class="w-green">데이터</span>로 모입니다</h2>
+      <h2 class="h">흩어진 학습 기록이<br>나의 데이터로 모입니다</h2>
       <p class="lead">문제를 풀 때마다 쌓이는 기록이 배움터닝으로 모이고,<br><b>정교한 로직 분석</b>을 통해 <b>개인별 맞춤 문제</b>를 추천합니다.</p>
     </div>
     <div class="net" id="net">
@@ -2422,72 +2297,28 @@ body{word-break:keep-all;overflow-wrap:break-word}
   </div>
 </section>
 
-<section class="analysis sec-focus" id="analysis">
+<section class="analysis" id="analysis">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <h2 class="h">나의 <span class="w-green">데이터</span>로<br>나를 위한 학습 <span class="w-amber">계획</span></h2>
+    <div class="sec-head">
+      <h2 class="h">나의 데이터로 나를 위한 학습 계획</h2>
+      <p class="lead">배움터닝이 읽는 것은 문항 단위 정오답과 응시 회차, 문항별 소요 시간뿐입니다.
+        여기서 취약 단원과 합격선 기준 위치, 오늘 풀 순서를 뽑아 학습 리포트 한 장으로 돌려줍니다.</p>
     </div>
-    <!-- 채점 기록이 리포트가 되는 경로 — 관측(앰버) → 판단(틸) 2계열로 색을 고정 -->
-    <div class="evidence reveal">
-      <!-- 배경 수식 — 장식일 뿐이라 읽히지 않게 흐리게 깐다(스크린리더 제외) -->
-      <div class="pipe-math" aria-hidden="true">
-        <span style="left:4%;top:7%;font-size:44px">&Sigma;</span>
-        <span style="left:22%;top:30%;font-size:26px">x&#772; = &Sigma;x / n</span>
-        <span style="left:70%;top:5%;font-size:30px">&sigma;&sup2;</span>
-        <span style="left:86%;top:26%;font-size:24px">p &lt; .05</span>
-        <span style="left:8%;top:56%;font-size:26px">R&sup2;</span>
-        <span style="left:38%;top:70%;font-size:23px">&radic;(&Sigma;(x&minus;x&#772;)&sup2;/n)</span>
-        <span style="left:64%;top:52%;font-size:38px">&int;</span>
-        <span style="left:88%;top:66%;font-size:30px">&lambda;</span>
-        <span style="left:16%;top:88%;font-size:24px">&chi;&sup2;</span>
-        <span style="left:52%;top:92%;font-size:23px">&Delta;p / &Delta;t</span>
-        <span style="left:78%;top:86%;font-size:26px">&mu;</span>
-      </div>
-      <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4ecfb4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석 파이프라인</div>
-
-      <div class="pipe-io pipe-in">
-        <span class="io-l">INPUT</span><span class="io-bar"></span><b>풀이 · 채점 기록</b>
-        <div class="io-chips"><span class="chip chip-w">문항 단위 정오답</span><span class="chip chip-w">응시 회차</span><span class="chip chip-w">소요 시간</span></div>
-      </div>
-
-      <div class="pipe-vsep"><svg viewBox="0 0 24 44" fill="none" aria-hidden="true"><path d="m5 8 7 7 7-7" stroke="currentColor" stroke-opacity=".35" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m5 18 7 7 7-7" stroke="currentColor" stroke-opacity=".65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m5 28 7 7 7-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="pipe-lane">
-        <div class="pipe-step s1">
-          <div class="st"><i>STEP 1</i><span>맞춤 진단</span></div>
-          <p class="q">무엇이 점수를 깎고 있지?</p>
-          <div class="tags"><span>파레토 분석</span><span>오답 패턴 분석</span><span>학습량 보정</span></div>
-          <div class="yield"><i>&raquo;</i>취약 단원 목록</div>
-        </div>
-        <div class="pipe-arrow" style="color:#63d6bd"><svg viewBox="0 0 44 24" fill="none" aria-hidden="true"><path d="m8 5 7 7-7 7" stroke="currentColor" stroke-opacity=".35" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m18 5 7 7-7 7" stroke="currentColor" stroke-opacity=".65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m28 5 7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="pipe-step s2">
-          <div class="st"><i>STEP 2</i><span>정밀 분석</span></div>
-          <p class="q">지금 어디쯤 와 있지?</p>
-          <div class="tags"><span>추세 분석</span><span>합격선 마진</span></div>
-          <div class="yield"><i>&raquo;</i>합격선 기준 위치</div>
-        </div>
-        <div class="pipe-arrow" style="color:#b9a6e6"><svg viewBox="0 0 44 24" fill="none" aria-hidden="true"><path d="m8 5 7 7-7 7" stroke="currentColor" stroke-opacity=".35" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m18 5 7 7-7 7" stroke="currentColor" stroke-opacity=".65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m28 5 7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="pipe-step s3">
-          <div class="st"><i>STEP 3</i><span>개인별 학습 계획</span></div>
-          <p class="q">무엇부터, 언제 다시 공부하지?</p>
-          <div class="tags"><span>우선순위 매트릭스</span><span>간격 반복</span></div>
-          <div class="yield"><i>&raquo;</i>오늘 풀 순서</div>
-        </div>
-      </div>
-
-      <div class="pipe-vsep"><svg viewBox="0 0 24 44" fill="none" aria-hidden="true"><path d="m5 8 7 7 7-7" stroke="currentColor" stroke-opacity=".35" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m5 18 7 7 7-7" stroke="currentColor" stroke-opacity=".65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m5 28 7 7 7-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="pipe-io pipe-out">
-        <span class="io-l">OUTPUT</span><span class="io-bar"></span><b>학습 리포트</b>
-        <div class="io-chips"><span class="chip chip-t">취약 단원</span><span class="chip chip-t">합격선 위치</span><span class="chip chip-t">오늘 풀 순서</span></div>
-      </div>
-
-
-      <div class="pipe-why">
-        <div><b>출제 비중에 따른 문제 가중치 계산</b><span>기출 문제 출제 비율을 반영하여 중요도와 우선순위 배분</span></div>
-        <div><b>개인별 임계값 보정</b><span>오답률·연속 오답·재방문 간격으로 복습 시점을 잡고, 표본이 적은 단원은 배움터닝 로직으로 보정</span></div>
-      </div>
-      <p class="pipe-fine">합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.</p>
+    <div class="pipe-tw">
+      <table class="pipe-t">
+        <thead><tr><th scope="col">묻는 것</th><th scope="col">쓰는 방법</th><th scope="col">나오는 것</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">무엇이 점수를 깎고 있지?</th><td>파레토 분석 · 오답 패턴 분석 · 학습량 보정</td><td>취약 단원 목록</td></tr>
+          <tr><th scope="row">지금 어디쯤 와 있지?</th><td>추세 분석 · 합격선 마진</td><td>합격선 기준 위치</td></tr>
+          <tr><th scope="row">무엇부터, 언제 다시 공부하지?</th><td>우선순위 매트릭스 · 간격 반복</td><td>오늘 풀 순서</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pipe-why">
+      <div><b>출제 비중에 따른 문제 가중치 계산</b><span>기출 문제 출제 비율을 반영하여 중요도와 우선순위 배분</span></div>
+      <div><b>개인별 임계값 보정</b><span>오답률·연속 오답·재방문 간격으로 복습 시점을 잡고, 표본이 적은 단원은 배움터닝 로직으로 보정</span></div>
+    </div>
+    <p class="pipe-fine">합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.</p>
   </div>
 </section>
 
@@ -2509,6 +2340,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <b>아웃포커스 (OutFocus)</b> · 대표 양승환<br>
         이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구
       </div>
+      <p class="foot-legal"><a href="privacy.html">개인정보처리방침</a> · <a href="terms.html">이용약관</a></p>
     </div>
   </div>
 </footer>
@@ -2758,9 +2590,9 @@ document.querySelectorAll('.hubitem').forEach(function(item){
 
 <!-- 앱 다운로드 '준비중' 팝업 -->
 <div class="app-popup" id="appPopup" aria-hidden="true">
-  <div class="app-popup-card">
+  <div class="app-popup-card" role="dialog" aria-modal="true" aria-labelledby="appPopupTitle">
     <div class="app-popup-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0b7a6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2.5"/><path d="M12 18h.01"/></svg></div>
-    <b>Google Play 버전은 출시 준비 중입니다</b>
+    <b id="appPopupTitle">Google Play 버전은 출시 준비 중입니다</b>
     <p>조금만 기다려 주세요. 아이폰은 지금 <a href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" style="color:#0b7a6a;font-weight:700">App Store</a>에서 받을 수 있어요.</p>
     <button type="button" class="app-popup-close" id="appPopupClose">확인</button>
   </div>
@@ -2770,8 +2602,12 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var pop=document.getElementById('appPopup');
   var close=document.getElementById('appPopupClose');
   if(!pop) return;
-  function show(){pop.classList.add('on');pop.setAttribute('aria-hidden','false');}
-  function hide(){pop.classList.remove('on');pop.setAttribute('aria-hidden','true');}
+  var opener=null;
+  function show(){opener=document.activeElement;pop.classList.add('on');
+    pop.setAttribute('aria-hidden','false'); if(close) close.focus();}
+  function hide(){if(!pop.classList.contains('on')) return;
+    pop.classList.remove('on');pop.setAttribute('aria-hidden','true');
+    if(opener&&opener.focus) opener.focus(); opener=null;}
   document.querySelectorAll('.js-app-dl').forEach(function(b){ b.addEventListener('click',show); });
   /* 서비스 카드 스토어 pill(App Store·Google Play)도 같은 '준비 중' 팝업 */
   document.querySelectorAll('.store-pill').forEach(function(p){

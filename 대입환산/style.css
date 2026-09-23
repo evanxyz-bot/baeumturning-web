@@ -55,7 +55,7 @@ h1,h2,h3{font-family:'GmarketSans','Pretendard Variable',sans-serif;letter-spaci
   min-width:152px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-md);
   padding:7px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;z-index:60;
   transition:opacity .22s,transform .25s var(--ease-spring),visibility .22s}
-.nav-drop:hover .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-drop:hover .drop-menu,.nav-drop:focus-within .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .drop-menu a{display:block;padding:8px 14px;border-radius:9px;font-size:15.1px;font-weight:600;color:var(--text-2);
   white-space:nowrap;transition:background .15s,color .15s}
 .drop-menu a:hover{background:var(--accent-soft);color:var(--accent-strong)}
@@ -76,7 +76,11 @@ a:hover .brand-wm{transform:scale(1.03)}
 
 /* ── 본문 ── */
 .wrap{max-width:720px;margin:0 auto;padding:26px 16px 56px}
+/* 빵부스러기는 목록이다 — 2026-09-24 개편에서 <ol> 로 바꿨다. 계층을 뜻하는 '›' 는 남긴다 */
 .crumb{font-size:13px;color:var(--text-3);margin:0 0 14px}
+.crumb ol{list-style:none;display:flex;flex-wrap:wrap;gap:0;margin:0;padding:0}
+.crumb li{display:inline}
+.crumb li+li::before{content:'›';margin:0 6px;color:var(--text-4)}
 .crumb a{color:var(--text-3);text-decoration:none}
 .crumb a:hover{color:var(--accent-strong)}
 h1{font-size:28px;line-height:1.35;margin:0 0 12px}
@@ -91,9 +95,11 @@ h2{font-size:19px;margin:32px 0 10px}
 .meta{font-size:13px;color:var(--text-3);margin:0 0 14px}
 .sub{font-size:13.5px;color:var(--text-2);margin:0 0 10px}
 .sub a{color:var(--accent-strong)}
-.topwarn{margin:0 0 22px;background:var(--accent-soft);border-left:4px solid var(--accent);
-  border-radius:var(--r-md);padding:13px 15px;font-size:14.5px;line-height:1.65;color:var(--accent-strong)}
-.topwarn b{font-weight:800}
+/* 2026-09-24 개편 — 문구·위치는 그대로 두고 시각 무게만 낮춘다(색 콜아웃이 첫 화면
+   절반을 먹었다). 접거나 팝업으로 숨기지 않고, 본문과 구분되는 블록으로 남긴다. */
+.topwarn{margin:0 0 22px;background:var(--surface-2);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:12px 14px;font-size:13px;line-height:1.65;color:var(--text-2)}
+.topwarn b{font-weight:800;color:var(--text)}
 .note{background:var(--surface-2);border-radius:var(--r-md);padding:11px 13px;
   font-size:13.5px;line-height:1.7;color:var(--text-2);margin:14px 0 0}
 .t{width:100%;border-collapse:collapse;background:var(--surface);
@@ -169,8 +175,8 @@ h2{font-size:19px;margin:32px 0 10px}
 /* ── FOOTER (다른 페이지와 같은 것) ── */
 .foot{border-top:1px solid var(--border);background:var(--surface-2);position:relative;
   padding:20px 0 16px;text-align:left;font-size:14px;color:var(--text-4)}
-.foot::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,#2f9183,#5878a0,#8f7faa,#c5826e,#af9069)}
+.foot::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:var(--border)}
 .foot .wrap{max-width:1280px;padding:0 24px}
 .foot-top{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap}
 .foot-top .brand-wm{font-size:52px;flex-shrink:0}
@@ -180,6 +186,13 @@ h2{font-size:19px;margin:32px 0 10px}
 .biz-info{margin:0;margin-left:auto;text-align:right;font-size:12.8px;line-height:1.85;color:var(--text-3)}
 .biz-info b{color:var(--text-2);font-weight:600}
 .foot a{color:var(--accent-strong)}
+/* 2026-09-24 — 개인정보처리방침·이용약관을 푸터에 상시 노출(법무 발의) */
+.foot-legal{width:100%;order:3;margin:10px 0 0;font-size:13.4px;color:var(--text-3)}
+.foot-legal a{color:var(--text-3);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.foot-legal a:hover{color:var(--text)}
+/* 줄바꿈 품질 — 다른 7장과 같은 규칙(가이드라인 감사) */
+h1,h2,h3{text-wrap:balance}
+p,li{text-wrap:pretty}
 
 @media (max-width:900px){
   .univindex{columns:2}

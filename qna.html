@@ -139,7 +139,7 @@ h2.h{font-size:42.6px;font-weight:700;line-height:1.18;letter-spacing:-0.025em}
   min-width:152px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-md);
   padding:7px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;z-index:60;
   transition:opacity .22s,transform .25s var(--ease-spring),visibility .22s}
-.nav-drop:hover .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-drop:hover .drop-menu,.nav-drop:focus-within .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .drop-menu a{display:block;padding:8px 14px;border-radius:9px;font-size:15.1px;font-weight:600;color:var(--text-2);
   white-space:nowrap;
   transition:background .15s,color .15s}
@@ -240,23 +240,30 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 /* ── QnA ── */
 .qna{padding:18px 0 56px}
 .qna-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
-details.q{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-xs);overflow:hidden;
+/* 2026-09-24 개편 — 10행 아코디언은 구분선이면 충분하다(A-1). Q 배지 10개도 뺐다(A-2) */
+details.q{background:none;border:0;border-bottom:1px solid var(--border);border-radius:0;box-shadow:none;overflow:hidden;
   transition:box-shadow .2s,border-color .2s}
-details.q:hover{box-shadow:var(--shadow-sm)}
-details.q[open]{border-color:var(--accent-mid);box-shadow:var(--shadow-sm)}
-details.q summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:18px 22px;
+details.q:hover{box-shadow:none}
+details.q[open]{border-color:var(--border);box-shadow:none}
+details.q summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 0;
   font-size:16.8px;font-weight:600;letter-spacing:-0.01em}
 details.q summary::-webkit-details-marker{display:none}
 details.q summary .qmark{flex-shrink:0;width:28px;height:28px;border-radius:9px;background:var(--accent-soft);color:var(--accent-strong);
   display:grid;place-items:center;font-weight:800;font-size:14.6px}
 details.q summary .arrow{margin-left:auto;color:var(--text-4);transition:transform .25s var(--ease-spring)}
 details.q[open] summary .arrow{transform:rotate(180deg)}
-details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-height:1.7}
+details.q .a{padding:0 0 18px;font-size:15.7px;color:var(--text-2);line-height:1.7}
 
 /* ── FOOTER ── */
 .foot{border-top:1px solid var(--border);padding:56px 0 36px;background:var(--surface-2);position:relative}
-.foot::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,var(--s-teal),var(--s-blue),var(--s-purple),var(--s-coral),var(--s-amber))}
+.foot::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:var(--border)}
+/* 2026-09-24 — 개인정보처리방침·이용약관을 푸터에 상시 노출(법무 발의) */
+.foot-legal{width:100%;order:3;margin:10px 0 0;font-size:13.4px;color:var(--text-3)}
+.foot-legal a{color:var(--text-3);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.foot-legal a:hover{color:var(--text)}
+/* 2026-09-24 — 키보드 포커스 링(index.html 과 같은 규칙, 가이드라인 감사) */
+:focus-visible{outline:2.5px solid var(--accent-mid);outline-offset:2px;border-radius:4px}
 .foot-top .desc{font-size:15.1px;color:var(--text-3);line-height:1.65;max-width:420px;margin-top:14px}
 .biz-info{margin-top:32px;padding-top:22px;border-top:1px solid var(--border);font-size:14px;color:var(--text-3);line-height:1.9}
 .biz-info b{color:var(--text-2);font-weight:600}
@@ -300,7 +307,7 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
   .page-head h1{font-size:32.5px}
   h2.h{font-size:28px}
   .foot-grid{grid-template-columns:1fr}
-  details.q .a{padding-left:22px}
+  details.q .a{padding-left:0}
 }
 
 /* ── 배움터닝 고정 문답 + 메일 문의 작성 (2026-08-14 대표 지시) ── */
@@ -335,8 +342,8 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .qna-side .mailq{margin:0}
 /* 좁은 칸에서는 문답 제목·답변을 조금 줄여 두 줄 넘김을 줄인다 */
 @media(min-width:961px){
-  details.q summary{font-size:16px;padding:16px 18px;gap:10px}
-  details.q .a{padding:0 18px 18px 56px;font-size:15.2px}
+  details.q summary{font-size:16px;padding:13px 0;gap:10px}
+  details.q .a{padding:0 0 16px;font-size:15.2px}
   /* 이름은 짧고 이메일은 기니까 반반이 아니라 4:6 */
   .mailq .row{grid-template-columns:.72fr 1.28fr}
 }
@@ -594,7 +601,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 <!-- ===================== PAGE HEAD ===================== -->
 <header class="page-head">
   <div class="wrap">
-    <h1>자주 묻는 <span class="g">질문</span></h1>
+    <h1>자주 묻는 질문</h1>
   </div>
 </header>
 
@@ -606,23 +613,23 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <div class="pin-wrap">
         <div class="pin-head"><b>배움터닝 앱</b></div>
         <details class="q">
-          <summary><span class="qmark">Q</span>언제 출시되나요?<span class="arrow">▾</span></summary>
+          <summary>언제 출시되나요?<span class="arrow">▾</span></summary>
           <div class="a">iOS 버전은 <b>2026년 9월 17일</b> App Store에 출시했습니다. <b>안드로이드(Google Play)</b> 버전은 준비 중이며, 공개되는 대로 알려드리겠습니다.</div>
         </details>
         <details class="q">
-          <summary><span class="qmark">Q</span>무슨 기능이 있나요? 무료인가요?<span class="arrow">▾</span></summary>
+          <summary>무슨 기능이 있나요? 무료인가요?<span class="arrow">▾</span></summary>
           <div class="a">기출문제를 실제 시험과 같은 시간표로 푸는 <b>CBT</b>, <b>자동 채점</b>, 성적 그래프, 오답·복습 정리, <b>취약 단원 진단</b>, 오늘의 학습, 단원·유형별 문제은행, <b>학습 보고서</b>를 담았어요. 이 가운데 채점·그래프·복습·취약 단원·문제은행은 <b>모두 무료</b>이고, 학습 보고서는 하루 1회·한 달 4회까지 만들 수 있어요. 해설은 과목별 체험 2회까지 열리고, 전체 이용은 2027년 1월 구독과 함께 열려요.</div>
         </details>
         <details class="q">
-          <summary><span class="qmark">Q</span>어떤 시험을 지원하나요?<span class="arrow">▾</span></summary>
+          <summary>어떤 시험을 지원하나요?<span class="arrow">▾</span></summary>
           <div class="a">현재는 <b>고졸 검정고시</b>를 지원해요. 필수 6과목(국어·수학·영어·사회·과학·한국사)에 <b>선택과목 도덕</b>까지 7과목을 수록했고, 2021년 1회부터 2026년 2회까지 <b>12회차 2,040문항</b>을 담았습니다. <b>전 문항에 해설</b>이 있습니다.</div>
         </details>
         <details class="q">
-          <summary><span class="qmark">Q</span>해설도 있나요?<span class="arrow">▾</span></summary>
+          <summary>해설도 있나요?<span class="arrow">▾</span></summary>
           <div class="a">2021년 1회부터 2026년 2회까지 <b>전 문항에 해설 2,040개</b>를 담았어요. 핵심 개념, 풀이 과정, 오답 소거, 한 줄 정리까지요. 해설은 과목별 체험 2회로 먼저 열어본 뒤, 2027년 1월 구독으로 전체를 이용할 수 있어요.</div>
         </details>
         <details class="q">
-          <summary><span class="qmark">Q</span>기출문제 저작권은 문제없나요?<span class="arrow">▾</span></summary>
+          <summary>기출문제 저작권은 문제없나요?<span class="arrow">▾</span></summary>
           <div class="a">기출문제의 저작권은 한국교육과정평가원(KICE)과 시·도 교육청에 있습니다. 배움터닝은 앱 안의 모든 문항에 출처를 표기하고 있어요. 또한 <b>한국복제전송저작권협회(KOLAA)를 통해 저작물 이용 사용료를 지불할 예정</b>입니다.</div>
         </details>
       </div>
@@ -630,23 +637,23 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <div class="pin-wrap">
         <div class="pin-head"><b>검정고시란?</b></div>
         <details class="q">
-          <summary><span class="qmark">Q</span>검정고시란 무엇인가요?<span class="arrow">▾</span></summary>
+          <summary>검정고시란 무엇인가요?<span class="arrow">▾</span></summary>
           <div class="a"><b>검정고시</b>는 정규 학교를 다니지 않아도 <b>초등·중학교·고등학교 졸업과 같은 학력</b>을 인정받을 수 있는 국가 시험입니다. 정식 명칭은 <b>초졸·중졸·고졸 학력 인정 고시</b>이며, 교육부가 관장하고 <b>거주지 관할 시·도교육청</b>이 시행합니다. 합격하면 상급 학교 진학과 각종 응시 자격에서 졸업자와 동등하게 인정됩니다.</div>
         </details>
         <details class="q">
-          <summary><span class="qmark">Q</span>검정고시는 1년에 몇 번, 언제 보나요?<span class="arrow">▾</span></summary>
+          <summary>검정고시는 1년에 몇 번, 언제 보나요?<span class="arrow">▾</span></summary>
           <div class="a">검정고시는 <b>연 2회</b> 시행됩니다. 통상 제1회는 상반기, 제2회는 하반기에 치러지며 <b>정확한 접수 기간과 시험일은 시·도교육청 공고로 확정</b>됩니다. 교육청마다 공고 시점이 다르므로, 반드시 <b>본인 거주지 교육청 공고</b>를 기준으로 확인하세요. 아웃포커스는 공고가 나오는 대로 <a href="news.html">검정 뉴스</a>에 정리해 올립니다.</div>
         </details>
         <details class="q">
-          <summary><span class="qmark">Q</span>고졸 검정고시는 몇 점을 받아야 합격인가요?<span class="arrow">▾</span></summary>
+          <summary>고졸 검정고시는 몇 점을 받아야 합격인가요?<span class="arrow">▾</span></summary>
           <div class="a">각 과목 100점 만점에 <b>전 과목 평균 60점 이상</b>이면 합격입니다. 평균이 모자라도 <b>60점 이상 받은 과목</b>은 <b>과목 합격</b>으로 남아 다음 회차에 면제를 신청할 수 있어, 남은 과목만 다시 보면 됩니다.</div>
         </details>
         <details class="q">
-          <summary><span class="qmark">Q</span>고졸 검정고시 시험 과목은 무엇인가요?<span class="arrow">▾</span></summary>
+          <summary>고졸 검정고시 시험 과목은 무엇인가요?<span class="arrow">▾</span></summary>
           <div class="a">필수 6과목은 <b>국어·수학·영어·사회·과학·한국사</b>이고, 여기에 <b>선택 1과목</b>을 더해 <b>총 7과목</b>을 응시합니다. 선택 과목의 구성은 시행 공고에 따라 달라질 수 있으니 접수 전에 공고를 확인하세요.</div>
         </details>
         <details class="q">
-          <summary><span class="qmark">Q</span>고등학교를 자퇴했는데 바로 검정고시를 볼 수 있나요?<span class="arrow">▾</span></summary>
+          <summary>고등학교를 자퇴했는데 바로 검정고시를 볼 수 있나요?<span class="arrow">▾</span></summary>
           <div class="a">바로는 어렵습니다. 고등학교에서 퇴학된 사람은 <b>퇴학일부터 시험 공고일까지의 기간이 6개월 이상</b>이 되어야 고졸 검정고시에 응시할 수 있어요(「초·중등교육법 시행규칙」 제35조 제6항 제2호). 기준이 <b>시험일이 아니라 공고일</b>이라는 점을 놓치기 쉽습니다. 공고는 시험 시행 2개월 전에 나오므로, 실제로는 자퇴하고 <b>여덟 달쯤 지난 시험</b>부터 볼 수 있다고 생각하시면 됩니다. 다만 「장애인복지법」에 따라 등록한 장애인으로서 신체적·정신적 장애로 학업을 계속하기 어려워 퇴학한 경우에는 이 6개월 제한을 받지 않습니다. 고등학교에 <b>재학 중인 상태로는 응시할 수 없고</b>, 공고일은 거주지 관할 시·도교육청 공고에서 확인하세요.</div>
         </details>
       </div>
@@ -662,8 +669,8 @@ body{word-break:keep-all;overflow-wrap:break-word}
           <!-- 허니팟: 사람은 못 보는 칸. 봇이 채우면 서버가 조용히 버린다 -->
           <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
           <div class="row">
-            <div><label for="mq-name">이름 (선택)</label><input id="mq-name" name="name" type="text" placeholder="홍길동"></div>
-            <div><label for="mq-mail">이메일 * (회신받을 이메일 주소)</label><input id="mq-mail" name="email" type="email" inputmode="email" placeholder="reply@example.com" required></div>
+            <div><label for="mq-name">이름 (선택)</label><input id="mq-name" name="name" type="text" autocomplete="name" placeholder="홍길동"></div>
+            <div><label for="mq-mail">이메일 * (회신받을 이메일 주소)</label><input id="mq-mail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="reply@example.com" required></div>
           </div>
           <label for="mq-type">문의 유형 *</label>
           <select id="mq-type" name="type" required>
@@ -680,7 +687,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
           <p class="fhint">화면을 캡처해 올려주시면 더 빨리 확인할 수 있어요. 이미지 1장, 5MB 까지.</p>
           <label class="agree"><input type="checkbox" id="mq-agree" required> <span>문의 응대를 위한 개인정보(이름·이메일) 수집·이용에 동의합니다. 응대 완료 후 파기됩니다. (필수)</span></label>
           <button type="submit" id="mq-send">문의 보내기</button>
-          <p class="fmsg" id="mq-msg"></p>
+          <p class="fmsg" id="mq-msg" role="status" aria-live="polite"></p>
         </form>
       </div>
       </div><!-- /.qna-side -->
@@ -702,6 +709,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <b>아웃포커스 (OutFocus)</b> · 대표 양승환<br>
         이메일 <a href="mailto:outfocus.edu@gmail.com" style="color:var(--accent-strong)">outfocus.edu@gmail.com</a> · 소재지 인천광역시 계양구
       </div>
+      <p class="foot-legal"><a href="privacy.html">개인정보처리방침</a> · <a href="terms.html">이용약관</a></p>
     </div>
   </div>
 </footer>
@@ -741,6 +749,13 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
 (function(){
   var f=document.getElementById('mqform'); if(!f) return;
   var API=f.getAttribute('action');
+  /* 2026-09-24 — 길게 쓴 문의가 실수로 날아가지 않게, 내용이 있을 때만 이탈을 확인한다 */
+  var sent=false;
+  window.addEventListener('beforeunload',function(e){
+    if(sent) return;
+    var b=document.getElementById('mq-body');
+    if(b && b.value.trim().length>=10){ e.preventDefault(); e.returnValue=''; }
+  });
   var msg=document.getElementById('mq-msg'), btn=document.getElementById('mq-send');
   function say(k,t){ msg.className='fmsg '+k; msg.textContent=t; }
 
@@ -774,7 +789,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     fetch(API,{method:'POST',body:fd,headers:{'Accept':'application/json'}})
       .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ return {ok:r.ok,d:d}; }); })
       .then(function(x){
-        if(x.ok && x.d && x.d.ok){ f.reset(); say('ok','문의가 접수되었습니다. 남겨주신 메일로 회신드릴게요.'); return; }
+        if(x.ok && x.d && x.d.ok){ sent=true; f.reset(); say('ok','문의가 접수되었습니다. 남겨주신 메일로 회신드릴게요.'); return; }
         /* 서버가 준 사유(422 검증·503 미설정)를 그대로 보여준다 */
         var why = x.d && typeof x.d.detail==='string' ? x.d.detail : '';
         say('err', why || '전송에 실패했습니다. outfocus.edu@gmail.com 으로 직접 보내주시면 확인하겠습니다.');
