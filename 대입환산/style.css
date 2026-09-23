@@ -33,9 +33,7 @@ h1,h2,h3{font-family:'GmarketSans','Pretendard Variable',sans-serif;letter-spaci
 .nav-app{position:absolute;right:24px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:12px;text-decoration:none}
 .nav-app-ic{width:44px;height:44px;border-radius:9px;background:#fff;border:1px solid var(--border);display:grid;place-items:center;box-shadow:var(--shadow-sm)}
 .nav-app-ic svg{width:32px;height:32px;color:var(--accent)}
-.nav-app-nm{font-weight:800;font-size:17px;color:var(--text);letter-spacing:-.01em}
 .nav-app-badge{display:block;height:40px;width:auto}
-@media (max-width:1339px){.nav-app-nm{display:none}}
 @media (max-width:767px){.nav-top{justify-content:flex-start;padding:0 14px}.nav-top .brand-wm{font-size:min(65px,10.4vw)!important}}
 @media (max-width:860px){.nav-app-ic{display:none}}
 @media (max-width:560px){.nav-app{right:12px;gap:6px}.nav-app-badge{height:32px}}
