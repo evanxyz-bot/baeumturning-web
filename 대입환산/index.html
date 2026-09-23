@@ -219,7 +219,6 @@ h1{font-size:30px;margin:0 0 10px}
 /* 결과 목록 */
 .listhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:32px 0 10px}
 .listhead h2{margin:0}
-.listhead .n{font-size:13px;font-weight:700;color:var(--text-3);font-variant-numeric:tabular-nums}
 .ulist{display:flex;flex-direction:column;gap:10px}
 /* 팻말 높이를 맞춘다 (2026-09-20 대표 지시) — 사유 문구를 지운 뒤에도 대학명 줄 수와
    부제 길이가 달라 들쭉날쭉했다. 최소 높이를 주고 버튼을 아래로 밀어 바닥선을 맞춘다.
@@ -442,14 +441,45 @@ h1{font-size:30px;margin:0 0 10px}
   --grid:hsl(240 5.9% 86%);
   --mark:hsl(240 5% 40%);
 }
-.sortrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 12px}
-.sortrow .lbl{font-size:12px;font-weight:600;color:var(--sc-mutedfg);margin-right:2px}
-.sortrow button{background:#fff;border:1px solid var(--sc-border);color:var(--sc-fg);
-  border-radius:.375rem;padding:5px 12px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
-.sortrow button:hover{background:var(--sc-muted)}
-.sortrow button[aria-pressed="true"]{background:var(--sc-fg);border-color:var(--sc-fg);color:#fff}
+/* ── 판정 단계 필터 (2026-09-24 대표 지시) ───────────────────────────────────
+   매우 상향 … 매우 하향 5개를 겹쳐 고른다. 칩마다 그 단계 색으로 테두리·점을 두고,
+   고르면 그 색으로 채운다. 점수를 넣기 전에는 판정이 없으니 회색으로 잠근다. */
+.bandchip{display:inline-flex;align-items:center;gap:6px;background:#fff;
+  border:1px solid var(--bc,var(--sc-border));color:var(--sc-fg);border-radius:.375rem;
+  padding:5px 11px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;
+  white-space:nowrap;transition:background .15s,color .15s}
+.bandchip .dot{width:8px;height:8px;border-radius:50%;background:var(--bc);flex:none}
+.bandchip:hover:not(:disabled){background:color-mix(in srgb,var(--bc) 8%,#fff)}
+/* :hover 쪽이 선택자가 무거워 누른 칩 위에 마우스를 두면 채움이 풀려 보였다 — 같이 적는다 */
+.bandchip[aria-pressed="true"],.bandchip[aria-pressed="true"]:hover{
+  background:var(--bc);border-color:var(--bc);color:#fff}
+.bandchip[aria-pressed="true"] .dot{background:#fff}
+.bandchip:disabled{background:var(--sc-muted);border-color:var(--sc-border);
+  color:var(--sc-mutedfg);cursor:not-allowed}
+.bandchip:disabled .dot{background:var(--sc-mutedfg);opacity:.45}
+.bandhint{margin:6px 0 0;font-size:11.5px;font-weight:500;color:var(--sc-mutedfg)}
+/* 폰에서는 다섯 칸이 줄바꿈으로 쌓이면 칸이 커진다 — 한 줄 가로 스크롤로 둔다.
+   .frow 가 align-items:flex-start 라 세로로 쌓일 때 칩 줄이 내용 폭 그대로 늘어난다
+   (폰에서 가로 스크롤바가 생기던 원인) — max-width 로 칸 폭에 묶어 둔다. */
+.bandrow .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;min-width:0;max-width:100%;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.bandrow .chips::-webkit-scrollbar{display:none}
+/* 미반영 대학 표시는 조건 칸 밖의 독립 상자 (2026-09-24 대표 지시) */
+.nonebox{display:flex;margin:0 0 10px;background:#fff;border:1px solid var(--sc-border);
+  border-radius:var(--sc-radius);padding:10px 14px}
+.nonebox .toggle{margin:0;font-size:13px}
+.countline{margin:0;font-size:16px;font-weight:700;color:var(--sc-fg);
+  font-variant-numeric:tabular-nums}
+.listtop{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  flex-wrap:wrap;margin:0 0 12px}
+/* 정렬 드롭다운 — shadcn Select 톤(작은 outline) */
+.sortsel{flex:none;background:#fff;border:1px solid var(--sc-border);border-radius:.375rem;
+  padding:5px 28px 5px 10px;font:inherit;font-size:12.5px;font-weight:600;color:var(--sc-fg);
+  cursor:pointer;appearance:none;-webkit-appearance:none;line-height:1.5;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 9px center}
+.sortsel:focus-visible{outline:2px solid var(--sc-fg);outline-offset:1px}
 .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
-.subhead{margin:16px 0 8px;font-size:11.5px;font-weight:600;color:var(--sc-mutedfg)}
 .pill{display:inline-flex;align-items:center;border-radius:.375rem;padding:2px 10px;
   font-size:12px;font-weight:600;line-height:1.34;white-space:nowrap}
 .pill.band{color:#fff;background:var(--bandc,var(--b0))}
@@ -473,8 +503,12 @@ h1{font-size:30px;margin:0 0 10px}
 .uc-nm b{display:block;font-size:15.5px;font-weight:600;color:var(--sc-fg);letter-spacing:-.01em}
 .uc-nm span{display:block;font-size:12px;color:var(--sc-mutedfg);margin-top:2px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 내 환산값은 카드에서 제일 먼저 읽히게 크게 (2026-09-24 대표 지시, 22 → 30px).
+   단위 글자는 그대로 작게 두고, 폰에서 대학명과 자리가 다투면 아래 미디어쿼리가
+   숫자와 '등급 상당'을 두 줄로 내린다. */
 .uc-val{flex:none;text-align:right;min-width:0}
-.uc-val .big{font-size:22px;font-weight:600;color:var(--sc-fg);letter-spacing:-.02em}
+.uc-val .big{font-size:30px;font-weight:700;line-height:1.05;color:var(--sc-fg);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .uc-val .big i{font-style:normal;font-size:12px;font-weight:600;color:var(--sc-mutedfg)}
 .uc-val .sub{font-size:11.5px;font-weight:500;color:var(--sc-mutedfg);margin-top:2px;
   font-variant-numeric:tabular-nums}
@@ -491,14 +525,17 @@ h1{font-size:30px;margin:0 0 10px}
   box-shadow:var(--sc-shadow);overflow:hidden;--bandc:var(--b0);color:var(--sc-fg)}
 .dh{padding:24px;border-bottom:1px solid var(--sc-border);
   background:linear-gradient(100deg,color-mix(in srgb,var(--bandc) var(--band-a),transparent),transparent 60%)}
-.dh-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* 헤더는 두 열 — 좌(대학명·메타·배지) / 우(큰 환산값). 값 블록은 오른쪽 끝이 아니라
+   왼쪽 열에 바짝 붙는다 (2026-09-24 대표 지시). 폰에서는 대학명 아래로 내려가되 크기는 같다. */
+.dh-top{display:flex;align-items:flex-start;justify-content:flex-start;gap:22px;flex-wrap:wrap}
+.dh-main{min-width:0;flex:0 1 auto}
 .dh h3{margin:0;font-family:inherit;font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--sc-fg)}
 .dh .sub{margin:3px 0 0;font-size:12.5px;color:var(--sc-mutedfg)}
-.dh-val{flex:none;text-align:right}
-.dh-val .big{font-size:28px;font-weight:600;color:var(--sc-fg);letter-spacing:-.02em;
-  font-variant-numeric:tabular-nums}
-.dh-val .big i{font-style:normal;font-size:13px;font-weight:600;color:var(--sc-mutedfg)}
-.dh-val .lbl{font-size:11.5px;font-weight:500;color:var(--sc-mutedfg);margin-top:3px}
+.dh-val{flex:none;text-align:left;padding-top:2px}
+.dh-val .big{font-size:46px;font-weight:700;line-height:1;color:var(--sc-fg);letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.dh-val .big i{font-style:normal;font-size:16px;font-weight:600;color:var(--sc-mutedfg)}
+.dh-val .lbl{font-size:12px;font-weight:500;color:var(--sc-mutedfg);margin-top:5px}
 .dh-badges{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
 .dh-conv{margin:10px 0 0;font-size:12.5px;line-height:1.65;color:var(--sc-mutedfg);word-break:keep-all}
 .dh-conv b{color:var(--sc-fg);font-weight:600}
@@ -510,6 +547,10 @@ h1{font-size:30px;margin:0 0 10px}
 .dsec .detail{margin-top:0;background:var(--sc-muted);border-radius:var(--sc-radius);padding:16px}
 .dsec .detail h4{color:var(--sc-fg)}
 .dsec .detail p,.dsec .detail .src-note{color:var(--sc-mutedfg)}
+/* 전형 칩 줄 + 학과 정렬 드롭다운 (2026-09-24 대표 지시) — 폰에서는 드롭다운이 한 줄로 내려간다 */
+.admrow{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.admrow .admchips{flex:1 1 auto;min-width:0;margin-bottom:0}
+.admrow .sortsel{margin-left:auto}
 .admchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
 .admchips button{max-width:100%;background:#fff;border:1px solid var(--sc-border);color:var(--sc-fg);
   border-radius:.375rem;padding:4px 10px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;
@@ -552,12 +593,18 @@ h1{font-size:30px;margin:0 0 10px}
 .dep-diff{margin:6px 0 0;font-size:11.5px;font-weight:500;color:var(--sc-mutedfg);
   font-variant-numeric:tabular-nums;word-break:keep-all}
 .dep-diff b{color:var(--sc-fg);font-weight:600}
-/* 미니 바 — 폭만 늘어나는 좌표계라 눈금 숫자·거리 숫자는 HTML 로 얹는다 */
-.dep-chart{position:relative;margin-top:10px;padding:0 1px}
+/* 미니 바 — 폭만 늘어나는 좌표계라 눈금 숫자·포인트 이름표는 HTML 로 얹는다 */
+.dep-chart{position:relative;margin-top:6px;padding:0 1px}
 .dep-chart svg{display:block;width:100%;height:34px}
-.dep-dist{position:absolute;top:-3px;transform:translateX(-50%);font-size:10.5px;font-weight:600;
-  color:var(--sc-fg);background:#fff;padding:0 4px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.dep.hit .dep-dist{background:var(--sc-muted)}
+/* 포인트 이름표 — 막대 위·아래 두 줄에 나눠 붙인다(겹치면 렌더 뒤 자리를 바꾼다).
+   글자는 줄이지 않고 두 줄로 접는다 — 폰에서도 이름을 그대로 읽게. */
+.dep-labs{position:relative;height:28px}
+.dep-labs i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:9.5px;
+  font-weight:600;line-height:1.3;color:var(--sc-mutedfg);text-align:center;max-width:56px;
+  word-break:keep-all}
+.dep-labs.top i{bottom:1px}
+.dep-labs.bot i{top:1px}
+.dep-labs i.me{color:var(--sc-fg);font-weight:700}
 .dep-ax{position:relative;height:13px;margin-top:1px}
 .dep-ax i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:9.5px;
   font-weight:500;color:var(--sc-mutedfg);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -591,19 +638,22 @@ h1{font-size:30px;margin:0 0 10px}
 .disc{margin:0;font-size:11.5px;line-height:1.75;color:var(--sc-mutedfg);word-break:keep-all}
 .disc b{color:var(--sc-fg);font-weight:600}
 .dask{margin:12px 0 0;font-size:11.5px;font-weight:600;color:var(--sc-fg)}
-.dmore{background:#fff;border:1px solid var(--sc-border);border-radius:var(--sc-radius);
-  padding:7px 14px;margin-top:8px;font:inherit;font-size:12px;font-weight:600;color:var(--sc-fg);cursor:pointer}
-.dmore:hover{background:var(--sc-muted)}
 
 /* 폰 — 상세는 전체 시트 (PC 규칙보다 뒤에 둬야 1023px 이하에서 이긴다) */
 .sheetbar{display:none}
 @media (min-width:1024px){
-  /* 좌 1 : 우 1.6 — 패널을 줄여 오른쪽에 스크롤 여유를 둔다 (§16-1-5) */
-  .layout{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:18px;max-width:1090px}
-  .col-list{min-width:0}
+  /* 좌 카드열은 폭을 고정(예전 1090px·1:1.6 에서 나오던 412px 그대로)하고, 남는 자리는
+     전부 상세 패널이 쓴다 — 본문(main.wrap 1280 − 좌우 여백 32) 끝까지 (2026-09-24 대표 지시). */
+  .layout{grid-template-columns:412px minmax(0,1fr);gap:18px;max-width:1248px}
   /* 위 내비(.nav-top 88 + .nav-bot 56 = 144)가 sticky 라, 패널을 top:16 에 붙이면
      대학 이름·환산값 줄이 내비 밑으로 들어가 안 보인다. 내비 높이만큼 내려 붙인다. */
   .col-detail{min-width:0;position:sticky;top:156px;max-height:calc(100vh - 172px);overflow:auto}
+  /* 좌 카드 목록도 화면 높이에 맞춘 sticky 칸 안에서 따로 구른다 — 페이지를 내려도
+     목록과 상세가 같이 제자리에 있게 (2026-09-24 대표 지시). 머리 줄은 그 칸 맨 위 고정. */
+  .col-list{min-width:0;position:sticky;top:156px;height:calc(100vh - 172px);
+    display:flex;flex-direction:column;min-height:0}
+  .col-list .listtop{flex:none;margin:0 0 10px}
+  .col-list .scrollarea{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px}
   /* 좌열은 한 줄에 카드 하나 — 위쪽 PC 블록의 auto-fill 격자를 덮는다 */
   .col-list .ulist{display:flex;flex-direction:column;gap:10px}
 }
@@ -673,6 +723,17 @@ h1{font-size:30px;margin:0 0 10px}
   .frow>b{width:auto;padding-top:0}
   .uhead{gap:10px}
   .big{font-size:23px}
+  /* 폰에서 대학명과 환산값이 자리를 다투면 값을 두 줄로 내린다 — 숫자 위, '등급 상당' 아래.
+     (2026-09-24 대표 지시) 숫자 크기는 PC 와 같게 유지한다. */
+  .uc-top{flex-wrap:wrap}
+  .uc-nm{flex:1 1 150px}
+  .uc-val{text-align:right}
+  .uc-val .sub{white-space:normal}
+  /* 상세 헤더의 큰 값은 폰에서도 같은 크기로, 대학명 아래 줄에 붙는다 */
+  .dh-top{gap:14px}
+  .dh-main{flex:1 1 100%}
+  /* 이름표가 두 줄로 접힐 자리를 준다 (2026-09-24 대표 지시: 폰에서 축약 없이 두 줄 허용) */
+  .dep-labs{height:29px}
 }
 </style>
 <script type="application/ld+json">
@@ -815,7 +876,7 @@ h1{font-size:30px;margin:0 0 10px}
   </section>
 
   <section class="pane-filter">
-  <h2>조건</h2>
+  <h2>대학 및 학과 검색</h2>
   <div class="card">
     <form class="search" id="searchForm">
       <input id="q" type="search" placeholder="대학·학과·태그로 찾기 (예: 간호)" enterkeyhint="search" aria-label="대학 이름·학과 이름·계열 태그로 찾기">
@@ -825,7 +886,11 @@ h1{font-size:30px;margin:0 0 10px}
          지도가 못 뜨면(JSON 실패) 칩이 그대로 보인다 — 기능이 사라지지 않게. -->
     <div class="frow" id="regionChipRow"><b>지역</b><div class="chips" id="regionChips"></div></div>
     <div class="frow"><b>종류</b><div class="chips" id="kindChips"></div></div>
-    <label class="toggle"><input type="checkbox" id="showNone" checked>검정고시 점수 내신 미반영 대학 표시</label>
+    <!-- 판정 단계 필터 (2026-09-24 대표 지시) — 여러 개를 겹쳐 고르고, 아무것도 안 고르면 전체.
+         점수를 넣기 전에는 판정이 없으니 칩이 잠긴다. -->
+    <div class="frow bandrow"><b>판정</b><div class="chips" id="bandChips"></div></div>
+    <p class="bandhint" id="bandHint" hidden>점수를 입력하면 쓸 수 있습니다</p>
+    <label class="toggle"><input type="checkbox" id="showOther" checked>판정 불가·미수집 포함</label>
   </div>
   </section>
   </div><!-- /colL -->
@@ -839,19 +904,27 @@ h1{font-size:30px;margin:0 0 10px}
 
   <div class="listhead">
     <h2 id="univ-list">대학별 환산 결과 · 학과별 합격 가능성</h2>
-    <span class="n" id="count">가나다순</span>
   </div>
-  <div class="sortrow">
-    <span class="lbl">정렬</span>
-    <button type="button" data-sort="name" aria-pressed="true">가나다</button>
-    <button type="button" data-sort="fit" aria-pressed="false">적정에 가까운 순</button>
+  <!-- 조건 칸에서 떼어 낸 독립 상자 (2026-09-24 대표 지시) -->
+  <div class="nonebox">
+    <label class="toggle"><input type="checkbox" id="showNone" checked>검정고시 점수 내신 미반영 대학 표시</label>
   </div>
-  <!-- PC(≥1024px) 좌 1열 카드 / 우 2칸 sticky 상세. 폰은 카드 목록만 보이고 탭하면 상세가
-       전체 시트로 덮는다 (PLAN §16). -->
+  <!-- PC(≥1024px) 좌 1열 카드 / 우 2칸 sticky 상세. 정렬은 가나다 고정(2026-09-24 대표 지시).
+       폰은 카드 목록만 보이고 탭하면 상세가 전체 시트로 덮는다 (PLAN §16). -->
   <div class="layout">
     <div class="col-list">
-      <div class="ulist" id="list"></div>
-      <div class="morewrap" id="morewrap" hidden><button type="button" id="more">더 보기</button></div>
+      <div class="listtop">
+        <p class="countline" id="count">306개 검색됨</p>
+        <select class="sortsel" id="sortSel" aria-label="대학 목록 정렬">
+          <option value="name">가나다순</option>
+          <option value="up">상향순</option>
+          <option value="down">하향순</option>
+        </select>
+      </div>
+      <div class="scrollarea">
+        <div class="ulist" id="list"></div>
+        <div class="morewrap" id="morewrap" hidden><button type="button" id="more">더 보기</button></div>
+      </div>
     </div>
     <div class="col-detail" id="colDetail">
       <div class="sheetbar"><button type="button" id="sheetClose">대학 목록</button></div>
@@ -997,6 +1070,14 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var regions = [];      // 다중 선택, 비면 전체
   var kinds = [];
   var showNone = true;   // 앱 목록과 같게 기본은 보임
+  // 판정 단계 필터 (2026-09-24 대표 지시) — 고른 단계들, 비면 전체.
+  // showOther = 판정 불가·미수집 대학(과 학과 행)을 같이 볼지. 기본 켬.
+  var bandSel = [];
+  var showOther = true;
+  // 정렬 — 'name' 가나다(기본) · 'up' 상향순(매우 상향 먼저) · 'down' 하향순(매우 하향 먼저).
+  // sortMode 는 좌측 대학 목록, depSort 는 상세 패널의 학과 목록 (2026-09-24 대표 지시).
+  var sortMode = 'name';
+  var depSort = 'name';
   var q = '';
   var shown = STEP;
   var openId = null;     // 고른 대학 id — 우 상세 패널에 뜬다
@@ -1039,9 +1120,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       .then(function (j) { delete cutPending.__depts; if (j) { CUT_DEPTS = j; cutRerender(); } })
       .catch(function () { delete cutPending.__depts; });
   }
-  var CUT_ROWS = 12;          // 한 전형에서 먼저 보여 줄 모집단위 수 (앱과 같은 값)
   var cutKey = null;          // 고른 전형 key
-  var cutAll = false;         // 모집단위 전체 보기 ('기준 보기'·'지원 불가 전형'은 <details> 가 맡는다)
   // 판정 규칙과 연도별 변동 폭은 화면에 쓰지 않는다 (PLAN §16-1-1, 2026-09-22 대표 지시) —
   // 내부 문서(PLAN §5)에만 남긴다. 화면에는 기준 명단·지표·학년도·출처·자격 원문만 낸다.
   var CUT_CHECKLIST = [
@@ -1263,6 +1342,57 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   document.getElementById('showNone').addEventListener('change', function (e) {
     showNone = e.target.checked; shown = STEP; render();
   });
+
+  // ── 판정 단계 칩 (2026-09-24 대표 지시) ───────────────────────────────────
+  // 위쪽이 '매우 상향', 아래쪽이 '매우 하향'. 색은 CSS 토큰(--b5…--b1) 하나만 본다 —
+  // 카드 띠·배지·미니 바와 같은 값이다. 여러 개를 겹쳐 고르고, 아무것도 안 고르면 전체.
+  var BAND_FILTERS = [
+    { name: '매우 상향', css: 'var(--b5)' }, { name: '상향', css: 'var(--b4)' },
+    { name: '적정', css: 'var(--b3)' }, { name: '하향', css: 'var(--b2)' },
+    { name: '매우 하향', css: 'var(--b1)' }
+  ];
+  var bandChipBox = document.getElementById('bandChips');
+  bandChipBox.innerHTML = BAND_FILTERS.map(function (b) {
+    return '<button type="button" class="bandchip" aria-pressed="false" data-b="' + esc(b.name) +
+      '" style="--bc:' + b.css + '"><i class="dot" aria-hidden="true"></i>' + esc(b.name) + '</button>';
+  }).join('');
+  bandChipBox.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.bandchip') : null;
+    if (!b || b.disabled) { return; }
+    var v = b.getAttribute('data-b');
+    var i = bandSel.indexOf(v);
+    if (i >= 0) { bandSel.splice(i, 1); } else { bandSel.push(v); }
+    b.setAttribute('aria-pressed', i >= 0 ? 'false' : 'true');
+    shown = STEP; render();
+  });
+  document.getElementById('showOther').addEventListener('change', function (e) {
+    showOther = e.target.checked; shown = STEP; render();
+  });
+  /** 점수가 없으면 판정 자체가 없다 — 칩을 잠그고 그 자리에 까닭을 적는다 */
+  function paintBandChips() {
+    [].forEach.call(bandChipBox.querySelectorAll('.bandchip'), function (b) {
+      b.disabled = !hasScores;
+    });
+    document.getElementById('bandHint').hidden = hasScores;
+  }
+  /** 단계 필터가 실제로 걸려 있나 — 점수가 없으면 칩이 잠겨 있으니 안 건다 */
+  function bandFilterOn() { return hasScores && bandSel.length > 0; }
+  /** 판정이 난 학과 행만 고르는 중인가 — 그때는 사유만 있는 행을 숨긴다 */
+  function keepBand(band) {
+    if (!bandFilterOn()) { return band ? true : showOther; }
+    return band ? bandSel.indexOf(band) >= 0 : showOther;
+  }
+  /** 단계 순 비교 — 'up' 은 매우 상향이 먼저, 'down' 은 매우 하향이 먼저.
+      판정이 없는 것(불가·미수집)은 두 정렬 모두 맨 뒤로 보내고 그 안은 가나다다. */
+  function bandCmp(mode, va, vb) {
+    if (va == null && vb == null) { return 0; }
+    if (va == null) { return 1; }
+    if (vb == null) { return -1; }
+    return (va - vb) * (mode === 'up' ? -1 : 1);
+  }
+  document.getElementById('sortSel').addEventListener('change', function (e) {
+    sortMode = e.target.value; shown = STEP; render();
+  });
   document.getElementById('searchForm').addEventListener('submit', function (e) {
     e.preventDefault();
     q = document.getElementById('q').value.replace(/\s/g, '');
@@ -1360,7 +1490,6 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
   var detail = document.getElementById('detail');
   var colDetail = document.getElementById('colDetail');
-  var sortMode = 'name';            // 'name' 가나다(기본) · 'fit' 적정에 가까운 순
   var wideMQ = window.matchMedia('(min-width:1024px)');
 
   // 표시 반올림 — 소수 둘째 자리까지(PLAN §5). 정본은 admissionCut 의 fmt2 다.
@@ -1721,60 +1850,158 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       '" stroke="' + stroke + '" stroke-width="' + w + '" vector-effect="non-scaling-stroke"' +
       (extra || '') + '/>';
   }
+  /** 분포 막대의 색 — 단계 색(5색)과 섞이지 않게 중립 청록 한 가지의 농도 차만 쓴다 */
+  var DIST_HUE = '#0f766e';
+
   /**
-   * 미니 바. 위쪽에는 합격선(주 컷)과 내 점수를 잇는 선을, 아래에는 눈금 숫자를 둔다.
-   * 거리 숫자는 HTML(.dep-dist)로 얹는다 — SVG 안의 글자는 폭이 늘어나면 같이 늘어난다.
+   * 미니 바. 공개 포인트가 만드는 구간을 막대 하나로 깔고(50%컷 위쪽이 진하고 최저로 갈수록
+   * 연해진다), 포인트마다 이름표를 위·아래 번갈아 붙인다 (2026-09-24 대표 지시).
+   * 글자는 HTML 로 얹는다 — SVG 안의 글자는 폭이 늘어나면 같이 늘어난다.
    */
   function chartSvg(dom, j, myVal, color) {
     var dt = j.detail, id = 'g' + (++gid);
-    var pts = [dt.best, dt.worst, dt.mean, dt.cut50, j.mainCut].filter(function (v) { return v != null; });
     var s = '<svg viewBox="0 0 100 34" preserveAspectRatio="none" role="img" aria-hidden="true" focusable="false">';
     ticksOf(dom).forEach(function (v) {
       var x = xOf(dom, v).toFixed(2);
       s += ln(x, 17, x, 27, 'var(--grid)', 1);
     });
     s += ln(X0, 22, X1, 22, 'var(--sc-muted)', 8, ' stroke-linecap="round"');
-    if (pts.length >= 2) {
+
+    // 분포 막대 — 최고(또는 막대 시작)부터 최저까지 한 덩이. 50%컷(없으면 평균)까지는 진하고
+    // 거기서 주 컷 → 최저로 갈수록 연해진다.
+    var pts = [dt.best, dt.worst, dt.mean, dt.cut50, j.mainCut]
+      .filter(function (v) { return v != null; });
+    if (pts.length) {
       var xs = pts.map(function (v) { return xOf(dom, v); });
       var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs);
-      s += '<defs><linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' + x0.toFixed(2) +
-        '" y1="0" x2="' + x1.toFixed(2) + '" y2="0">' +
-        '<stop offset="0" stop-color="' + color + '" stop-opacity=".34"/>' +
-        '<stop offset="1" stop-color="' + color + '" stop-opacity=".14"/></linearGradient></defs>';
-      s += ln(x0.toFixed(2), 22, x1.toFixed(2), 22, 'url(#' + id + ')', 8, ' stroke-linecap="round"');
-    }
-    if (dt.mean != null) {
-      var xm = xOf(dom, dt.mean).toFixed(2);
-      s += ln(xm, 17, xm, 27, 'var(--mark)', 1.4, ' stroke-dasharray="2.6 2.4"');
-    }
-    if (j.mainCut != null) {
-      var xc = xOf(dom, j.mainCut).toFixed(2);
-      s += ln(xc, 15, xc, 29, 'var(--mark)', 2, '');
-    }
-    // 합격선 ↔ 내 점수 — 거리 자체를 선으로 보여 준다(§16-1-6). 숫자는 HTML 로 얹는다.
-    var dist = null;
-    if (myVal != null) {
-      var xme = xOf(dom, myVal);
-      if (j.mainCut != null) {
-        var xcut = xOf(dom, j.mainCut);
-        var a = Math.min(xcut, xme), b = Math.max(xcut, xme);
-        s += ln(a.toFixed(2), 10, b.toFixed(2), 10, color, 1.4, '');
-        s += ln(a.toFixed(2), 7.5, a.toFixed(2), 12.5, color, 1.4, '');
-        s += ln(b.toFixed(2), 7.5, b.toFixed(2), 12.5, color, 1.4, '');
-        dist = { mid: (a + b) / 2, v: Math.abs(j.mainCut - myVal) };
+      if (x1 - x0 < 1.2) {
+        // 대학이 합격자 최저 하나만 공개한 경우(규칙 3) — 그 자리에 얇고 연한 막대만 둔다
+        s += ln(Math.max(X0, x0 - 3).toFixed(2), 22, Math.min(X1, x0 + 3).toFixed(2), 22,
+          DIST_HUE, 4, ' stroke-linecap="round" stroke-opacity=".16"');
+      } else {
+        var refV = dt.cut50 != null ? dt.cut50 : dt.mean;
+        var cutV = (j.mainCutKind && j.mainCutKind.slice(0, 3) === 'cut') ? j.mainCut : null;
+        var want = [[x0, '.52']];
+        if (refV != null) { want.push([xOf(dom, refV), '.52']); }
+        if (cutV != null) { want.push([xOf(dom, cutV), '.28']); }
+        want.push([x1, '.10']);
+        // 그라데이션 stop 은 x 오름차순이어야 한다 — 되돌아가거나 겹치는 자리는 버린다
+        var stops = [], last = -1;
+        want.forEach(function (p) {
+          var x = Math.min(x1, Math.max(x0, p[0]));
+          if (stops.length && x < last + 0.01) { return; }
+          stops.push([x, p[1]]); last = x;
+        });
+        s += '<defs><linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' +
+          x0.toFixed(2) + '" y1="0" x2="' + x1.toFixed(2) + '" y2="0">' +
+          stops.map(function (p) {
+            var o = (x1 - x0) ? (p[0] - x0) / (x1 - x0) : 0;
+            return '<stop offset="' + o.toFixed(4) + '" stop-color="' + DIST_HUE +
+              '" stop-opacity="' + p[1] + '"/>';
+          }).join('') + '</linearGradient></defs>';
+        s += ln(x0.toFixed(2), 22, x1.toFixed(2), 22, 'url(#' + id + ')', 8, ' stroke-linecap="round"');
       }
+    }
+
+    // 이름표를 붙일 포인트 — 같은 값이 겹치면 먼저 넣은 이름 하나만 남긴다
+    var marks = [];
+    function mark(v, text, kind) {
+      if (v == null) { return; }
+      for (var i = 0; i < marks.length; i++) {
+        if (Math.abs(marks[i].v - v) < 1e-9) { return; }
+      }
+      marks.push({ v: v, t: text, kind: kind });
+    }
+    mark(dt.best, '최고합격자', 'pt');
+    mark(dt.cut50, '합격자 상위 50%', 'pt');
+    if (j.mainCutKind && j.mainCutKind.slice(0, 3) === 'cut' && j.mainCutKind !== 'cut50') {
+      mark(j.mainCut, '합격자 상위 ' + j.mainCutKind.slice(3) + '%', 'cut');
+    }
+    mark(dt.mean, '합격자 평균', 'mean');
+    mark(dt.worst, '최저합격자', j.mainCutKind === 'max' ? 'cut' : 'pt');
+    if (j.mainCutKind === 'max') { mark(j.mainCut, '최저합격자', 'cut'); }
+    mark(myVal, dom.unit === 'grade' ? '내 등급' : '내 점수', 'me');
+
+    marks.forEach(function (mk) {
+      if (mk.kind === 'me') { return; }
+      var x = xOf(dom, mk.v).toFixed(2);
+      if (mk.kind === 'mean') { s += ln(x, 17, x, 27, 'var(--mark)', 1.4, ' stroke-dasharray="2.6 2.4"'); }
+      else if (mk.kind === 'cut') { s += ln(x, 15, x, 29, 'var(--mark)', 2, ''); }
+      else { s += ln(x, 17.5, x, 26.5, 'var(--mark)', 1.1, ' stroke-opacity=".55"'); }
+    });
+    if (myVal != null) {
       // 내 값 — 길이 0 선의 둥근 끝이 곧 점이다(가로로 늘어나도 원 모양이 유지된다)
-      s += ln(xme.toFixed(2), 22, xme.toFixed(2), 22, '#fff', 11.4, ' stroke-linecap="round"');
-      s += ln(xme.toFixed(2), 22, xme.toFixed(2), 22, color, 8.4, ' stroke-linecap="round"');
+      var xme = xOf(dom, myVal).toFixed(2);
+      s += ln(xme, 22, xme, 22, '#fff', 11.4, ' stroke-linecap="round"');
+      s += ln(xme, 22, xme, 22, color, 8.4, ' stroke-linecap="round"');
     }
     s += '</svg>';
-    var lab = dist
-      ? '<span class="dep-dist" style="left:' + dist.mid.toFixed(2) + '%">' + esc(fmt2(dist.v)) + '</span>'
-      : '';
+
+    // 이름표는 막대 위·아래 번갈아 — 가까운 포인트끼리 글자가 겹치지 않게
+    var top = [], bot = [];
+    marks.slice().sort(function (a, b) { return xOf(dom, a.v) - xOf(dom, b.v); })
+      .forEach(function (mk, i) {
+        var x = xOf(dom, mk.v);
+        var st = x < 10 ? 'left:0;transform:none;text-align:left'
+          : x > 90 ? 'right:0;transform:none;text-align:right'
+          : 'left:' + x.toFixed(2) + '%';
+        var el = '<i' + (mk.kind === 'me' ? ' class="me"' : '') + ' style="' + st + '">' +
+          esc(mk.t) + '</i>';
+        (i % 2 === 0 ? top : bot).push(el);
+      });
     var ax = ticksOf(dom).map(function (v) {
       return '<i style="left:' + xOf(dom, v).toFixed(2) + '%">' + esc(fmt2(v)) + '</i>';
     }).join('');
-    return s + lab + '<div class="dep-ax">' + ax + '</div>';
+    return '<div class="dep-labs top">' + top.join('') + '</div>' + s +
+      '<div class="dep-labs bot">' + bot.join('') + '</div>' +
+      '<div class="dep-ax">' + ax + '</div>';
+  }
+
+  /**
+   * 이름표 겹침 풀기 — 글자 폭은 그릴 때 알 수 없어서, 그린 뒤 실제 폭을 재어
+   * 왼쪽부터 위·아래 줄에 번갈아 끼운다. 줄만 바꾸므로 가로 위치는 그대로다.
+   * (읽기 → 쓰기 순서를 지켜 레이아웃을 한 번만 돌게 한다)
+   */
+  function layoutChartLabels(root) {
+    var GAP = 4;
+    var work = [].slice.call(root.querySelectorAll('.dep-chart')).map(function (ch) {
+      var top = ch.querySelector('.dep-labs.top'), bot = ch.querySelector('.dep-labs.bot');
+      if (!top || !bot) { return null; }
+      var box = top.getBoundingClientRect();
+      if (!box.width) { return null; }          // 숨어 있으면 잴 수 없다 — 다음 렌더에서
+      var items = [].slice.call(top.children).concat([].slice.call(bot.children))
+        .map(function (el) {
+          var r = el.getBoundingClientRect();
+          return { el: el, l: r.left, w: r.width };
+        });
+      if (!items.length) { return null; }
+      items.sort(function (a, b) { return a.l - b.l; });
+      return { top: top, bot: bot, box: box, items: items };
+    }).filter(Boolean);
+    work.forEach(function (w) {
+      var rows = [[], []], last = [-1e9, -1e9];
+      w.items.forEach(function (it) {
+        var pick = it.l >= last[0] + GAP ? 0
+          : it.l >= last[1] + GAP ? 1
+          : (last[0] <= last[1] ? 0 : 1);
+        rows[pick].push(it);
+        last[pick] = Math.max(last[pick], it.l + it.w);
+      });
+      // 같은 줄에서도 붙으면 오른쪽으로 살짝 밀어 띄운다 (칸 밖으로는 안 나간다)
+      rows.forEach(function (list, i) {
+        var prev = -1e9;
+        list.forEach(function (it) {
+          var l = Math.max(it.l, prev + GAP);
+          l = Math.min(l, w.box.right - it.w);
+          l = Math.max(l, w.box.left);
+          it.el.style.left = (l - w.box.left).toFixed(1) + 'px';
+          it.el.style.right = 'auto';
+          it.el.style.transform = 'none';
+          prev = l + it.w;
+          (i === 0 ? w.top : w.bot).appendChild(it.el);
+        });
+      });
+    });
   }
 
   // ── 학과 한 줄 ──────────────────────────────────────────────────────────────
@@ -1883,7 +2110,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       out += '<div class="nojudge"><b>판정 불가</b><span>' +
         esc(ub.kind === 'blocked' ? ub.why : REASON.no_ged_track) + '</span></div>';
     } else {
-      out += '<div class="admchips">' + chipsList.map(function (a) {
+      out += '<div class="admrow"><div class="admchips">' + chipsList.map(function (a) {
         var ged = gedOnlyAdm(a);
         var cls = [a.key === adm.key ? 'on' : '', ged ? 'gedonly' : ''].filter(Boolean).join(' ');
         return '<button type="button" data-cut="' + esc(a.key) + '"' +
@@ -1892,7 +2119,11 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
           (ged ? '<i class="gedb">검정고시 출신자 기준</i>' : '') +
           esc((a.round ? a.round + ' ' : '') + a.label) +
           (a.gedEligible === 'conditional' ? ' ·조건부' : '') + '</button>';
-      }).join('') + '</div>';
+      }).join('') + '</div><select class="sortsel" data-depsort="1" aria-label="학과 목록 정렬">' +
+        [['name', '가나다순'], ['up', '상향순'], ['down', '하향순']].map(function (o) {
+          return '<option value="' + o[0] + '"' + (depSort === o[0] ? ' selected' : '') + '>' +
+            o[1] + '</option>';
+        }).join('') + '</select></div>';
 
       if (adm.gedEligible === 'conditional' && adm.gedEligibleNote) {
         out += '<p class="dline"><b>지원자격</b> ' + esc(adm.gedEligibleNote) + '</p>';
@@ -1909,37 +2140,54 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         out += '<p class="dline gedx"><b>검정고시 제외 각주</b> ' + esc(gedx) + '</p>';
       }
 
-      var rows = (adm.units || []).filter(function (x) {
+      // 학과 행 — 단계를 함께 들고 다닌다(정렬·필터가 같은 값을 본다)
+      var all = (adm.units || []).filter(function (x) {
         return x.stats && Object.keys(x.stats).length > 0;
+      }).map(function (x) {
+        return { row: x, band: judgeRow(r, d, adm, x).j.band || null };
       });
-      var hidden = (adm.units ? adm.units.length : 0) - rows.length;
+      var hidden = (adm.units ? adm.units.length : 0) - all.length;
+      // 조건 칸의 판정 단계 필터는 학과 행에도 같이 걸린다 (2026-09-24 대표 지시)
+      var kept = all.filter(function (o) { return keepBand(o.band); });
+      var filteredOut = all.length - kept.length;
+      // 정렬 — 가나다(기본)·상향순·하향순. 상향·하향순은 판정 없는 행을 맨 뒤로 보낸다.
+      var depByName = function (a, b) { return a.row.name.localeCompare(b.row.name, 'ko'); };
+      var depCmp = depSort === 'name' ? depByName : function (a, b) {
+        return bandCmp(depSort, a.band ? BAND_VAL[a.band] : null,
+          b.band ? BAND_VAL[b.band] : null) || depByName(a, b);
+      };
+      var rows;
       if (m && m.deps) {
-        // 찾은 학과를 먼저 (원래 순서는 그 안에서 유지)
+        // 찾은 학과를 먼저 — 그 안에서만 고른 정렬을 쓴다
         var hitRows = [], restRows = [];
-        rows.forEach(function (x) { (depHit(m, x) ? hitRows : restRows).push(x); });
-        rows = hitRows.concat(restRows);
+        kept.forEach(function (o) { (depHit(m, o.row) ? hitRows : restRows).push(o); });
+        rows = hitRows.sort(depCmp).concat(restRows.sort(depCmp));
+      } else {
+        rows = kept.slice().sort(depCmp);
       }
-      if (!rows.length) {
+      if (!rows.length && filteredOut > 0) {
+        // 단계 칩으로 걸러 낸 결과가 빈 것뿐 — '판정 불가'로 잘못 읽히지 않게 따로 적는다
+        out += '<p class="hint">고른 판정 단계에 해당하는 모집단위가 이 전형에 없습니다.</p>';
+      } else if (!rows.length) {
         said = true;
         out += '<div class="nojudge"><b>판정 불가</b><span>' +
           esc(ub.kind === 'blocked' ? ub.why : '이 전형은 대학이 모집단위별 수치를 공개하지 않았습니다.') +
           '</span></div>';
       } else {
         // 범례의 '합격선'은 그 전형이 실제로 쓴 지표 이름으로 적는다(70%컷·합격자 최저 …)
-        var mk = G.judge(null, adm, rows[0], { resultYear: d.resultYear }).mainCutKind;
+        var mk = G.judge(null, adm, rows[0].row, { resultYear: d.resultYear }).mainCutKind;
         out += '<div class="legend">' +
           '<span><i class="lg-sw"></i>전년도 합격자 분포</span>' +
           '<span><i class="lg-cut"></i>' + esc(G.METRIC_LABEL[mk] || '합격선') + '</span>' +
           '<span><i class="lg-mean"></i>합격자 평균</span>' +
           '<span><i class="lg-me"></i>내 환산등급</span></div>';
         out += '<div class="tblhead"><span>모집단위 · 전년도 합격선 · 내 환산등급</span><span>' +
-          rows.length + '곳' + (hidden > 0 ? ' · 미공개 ' + hidden + '곳 제외' : '') + '</span></div>';
-        var show = cutAll ? rows : rows.slice(0, CUT_ROWS);
-        out += show.map(function (x) { return depHtml(r, d, adm, x, depHit(m, x)); }).join('');
-        if (rows.length > CUT_ROWS) {
-          out += '<button type="button" class="dmore" data-cutall="1">' +
-            (cutAll ? '접기' : '모집단위 ' + rows.length + '곳 모두 보기') + '</button>';
-        }
+          rows.length + '곳' + (hidden > 0 ? ' · 미공개 ' + hidden + '곳 제외' : '') +
+          (filteredOut > 0 ? ' · 단계 필터로 ' + filteredOut + '곳 숨김' : '') + '</span></div>';
+        // 모집단위는 처음부터 전부 보인다 — 12행 뒤 '모두 보기' 접기는 없앴다(2026-09-24 대표 지시)
+        out += rows.map(function (o) {
+          return depHtml(r, d, adm, o.row, depHit(m, o.row));
+        }).join('');
       }
 
       var mc = adm.minCsat || {};
@@ -2068,15 +2316,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     var u = r.univ, ub = univBand(r);
     var color = ub.kind === 'ok' ? BAND_CSS[ub.band] : 'var(--b0)';
     var head = myHeadline(r);
-    var out = '<div class="dh" style="--bandc:' + color + '"><div class="dh-top"><div>' +
-      '<h3>' + esc(u.name) + '</h3><p class="sub">' +
-      esc(u.kind + ' · ' + u.region + ' · 환산 기준 ' + u.year) + '</p></div><div class="dh-val">' +
-      (head.tag
-        ? '<span class="pill muted">' + esc(head.tag) + '</span>'
-        : '<div class="big">' + esc(head.big) + '<i> ' + esc(head.unit) + '</i></div>' +
-          '<div class="lbl">' + esc(head.sub || '내 환산등급') + '</div>') +
-      '</div></div>';
-    out += '<div class="dh-badges" style="--bandc:' + color + '">' +
+    // 헤더는 두 열 — 좌(대학명·메타·배지) / 우(큰 환산값). 값 블록은 오른쪽 끝이 아니라
+    // 왼쪽 열에 바짝 붙는다 (2026-09-24 대표 지시).
+    var badges = '<div class="dh-badges" style="--bandc:' + color + '">' +
       (ub.kind === 'ok'
         ? '<span class="pill band">' + esc(ub.band) + '</span><span class="uc-cnt">' +
           esc(fitLine(ub)) + '</span>'
@@ -2084,6 +2326,15 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
           ? '<span class="pill muted">판정 불가</span><span class="uc-cnt">' + esc(ub.why) + '</span>'
           : '<span class="pill outline">입결 미수집</span><span class="uc-cnt">' +
             esc(REASON.not_collected) + '</span>') + yearBadge(ub) + '</div>';
+    var out = '<div class="dh" style="--bandc:' + color + '"><div class="dh-top">' +
+      '<div class="dh-main"><h3>' + esc(u.name) + '</h3><p class="sub">' +
+      esc(u.kind + ' · ' + u.region + ' · 환산 기준 ' + u.year) + '</p>' + badges +
+      '</div><div class="dh-val">' +
+      (head.tag
+        ? '<span class="pill muted">' + esc(head.tag) + '</span>'
+        : '<div class="big">' + esc(head.big) + '<i> ' + esc(head.unit) + '</i></div>' +
+          '<div class="lbl">' + esc(head.sub || '내 환산등급') + '</div>') +
+      '</div></div>';
     out += '<p class="dh-conv">' + convLine(u, r) + '</p>';
     if (r.byTrack) {
       out += '<p class="dh-conv">' + G.TRACK_ORDER.filter(function (t) { return r.byTrack[t]; })
@@ -2155,7 +2406,6 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   }
 
   // ── 렌더 ───────────────────────────────────────────────────────────────────
-  var RANK = { ok: 0, pending: 1, blocked: 2, nodata: 3 };
   function render() {
     var all = G.convertAll(scores, RULES);
     var entered = G.GED_SUBJECTS.filter(function (s) { return typeof scores[s] === 'number'; });
@@ -2172,48 +2422,32 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       if (!m.ok) { return; }
       r._m = q ? m : null;
       r._ub = univBand(r);
+      // 판정 단계 필터 — 카드의 단계(학과 평균 단계)로 거른다. 판정 불가·미수집·불러오는 중은
+      // '판정 불가·미수집 포함' 토글을 따른다 (2026-09-24 대표 지시).
+      if (!keepBand(r._ub.kind === 'ok' ? r._ub.band : null)) { return; }
       rows.push(r);
     });
-    if (sortMode === 'fit') {
-      // 판정 가능 → 판정 불가 → 입결 미수집. 판정 가능은 '적정'(3)에 가까운 순.
-      rows.sort(function (a, b) {
-        var ra = RANK[a._ub.kind], rb = RANK[b._ub.kind];
-        if (ra !== rb) { return ra - rb; }
-        if (ra === 0) {
-          var da = Math.abs(a._ub.mean - 3), db = Math.abs(b._ub.mean - 3);
-          if (Math.abs(da - db) > 1e-9) { return da - db; }
-          if (a._ub.mean !== b._ub.mean) { return a._ub.mean - b._ub.mean; }
-        }
-        return a.univ.name.localeCompare(b.univ.name, 'ko');
-      });
-    } else {
-      rows.sort(function (a, b) { return a.univ.name.localeCompare(b.univ.name, 'ko'); });
-    }
+    // 정렬 — 가나다(기본)·상향순·하향순 셋뿐이고, 판정 가능·불가·미수집을 그룹으로
+    // 나누지 않는다(2026-09-24 대표 지시로 '적정에 가까운 순'과 그룹 머리글을 없앴다).
+    var byName = function (a, b) { return a.univ.name.localeCompare(b.univ.name, 'ko'); };
+    rows.sort(sortMode === 'name' ? byName : function (a, b) {
+      var c = bandCmp(sortMode,
+        a._ub.kind === 'ok' ? BAND_VAL[a._ub.band] : null,
+        b._ub.kind === 'ok' ? BAND_VAL[b._ub.band] : null);
+      return c || byName(a, b);
+    });
 
     var avg = entered.length
       ? entered.reduce(function (a, s) { return a + scores[s]; }, 0) / entered.length : null;
     document.getElementById('avg').textContent = avg != null ? '평균 ' + n2(avg) + '점' : '점수를 입력해 주세요';
 
-    var okN = 0;
-    rows.forEach(function (r) { if (r._ub.kind === 'ok') { okN++; } });
+    paintBandChips();
     var cut = rows.slice(0, shown);
-    document.getElementById('count').textContent = rows.length + '곳 · 판정 ' + okN + '곳 · ' +
-      (sortMode === 'fit' ? '적정에 가까운 순' : '가나다순') +
-      (rows.length > cut.length ? ' · ' + cut.length + '곳 표시' : '');
+    // 머리 줄은 'N개 검색됨' 하나 (2026-09-24 대표 지시) — 판정 수·정렬 표기는 뺐다
+    document.getElementById('count').textContent = rows.length + '개 검색됨';
 
-    var html = '', prev = null;
-    cut.forEach(function (r) {
-      if (sortMode === 'fit') {
-        var k = r._ub.kind;
-        if (k !== prev) {
-          if (k === 'pending') { html += '<div class="subhead">합격선 불러오는 중</div>'; }
-          if (k === 'blocked') { html += '<div class="subhead">판정 불가 — 대학이 공개한 수치로는 단계를 나눌 수 없음</div>'; }
-          if (k === 'nodata') { html += '<div class="subhead">입결 미수집 — 수집 확대 예정</div>'; }
-          prev = k;
-        }
-      }
-      html += cardHtml(r);
-    });
+    var html = '';
+    cut.forEach(function (r) { html += cardHtml(r); });
     list.innerHTML = cut.length ? html
       : '<div class="empty">조건에 맞는 대학이 없어요. 대학·학과 이름이나 지역·종류를 다시 골라 주세요.</div>';
     var mw = document.getElementById('morewrap');
@@ -2223,10 +2457,11 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     // 고른 대학이 목록에서 사라지면 맨 위 대학으로
     var sel = null;
     for (var i = 0; i < rows.length; i++) { if (rows[i].univ.id === openId) { sel = rows[i]; } }
-    if (!sel && rows.length) { sel = rows[0]; openId = sel.univ.id; cutKey = null; cutAll = false; }
+    if (!sel && rows.length) { sel = rows[0]; openId = sel.univ.id; cutKey = null; }
     if (!rows.length) { openId = null; }
     detail.innerHTML = sel ? panelHtml(sel, sel._m)
       : '<div class="empty">왼쪽에서 대학을 고르면 학과별 합격 가능성이 여기에 나옵니다.</div>';
+    layoutChartLabels(detail);
     if (sel) {
       [].forEach.call(list.querySelectorAll('.ucard'), function (b) {
         if (b.getAttribute('data-id') === sel.univ.id) { b.setAttribute('aria-current', 'true'); }
@@ -2250,30 +2485,26 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     var b = e.target.closest ? e.target.closest('.ucard') : null;
     if (!b) { return; }
     var id = b.getAttribute('data-id');
-    if (id !== openId) { openId = id; cutKey = null; cutAll = false; }
+    if (id !== openId) { openId = id; cutKey = null; }
     if (!wideMQ.matches) { document.body.classList.add('sheet-open'); }
     render();
     if (!wideMQ.matches && colDetail) { colDetail.scrollTop = 0; }
   });
   detail.addEventListener('click', function (e) {
-    var c = e.target.closest ? e.target.closest('[data-cut],[data-cutall]') : null;
+    var c = e.target.closest ? e.target.closest('[data-cut]') : null;
     if (!c) { return; }
-    if (c.hasAttribute('data-cut')) { cutKey = c.getAttribute('data-cut'); cutAll = false; }
-    else { cutAll = !cutAll; }
+    cutKey = c.getAttribute('data-cut');
+    render();
+  });
+  // 상세 패널의 학과 정렬 드롭다운 (2026-09-24 대표 지시)
+  detail.addEventListener('change', function (e) {
+    var s = e.target.closest ? e.target.closest('[data-depsort]') : null;
+    if (!s) { return; }
+    depSort = s.value;
     render();
   });
   document.getElementById('sheetClose').addEventListener('click', function () {
     document.body.classList.remove('sheet-open');
-  });
-  document.querySelector('.sortrow').addEventListener('click', function (e) {
-    var b = e.target.closest ? e.target.closest('[data-sort]') : null;
-    if (!b) { return; }
-    sortMode = b.getAttribute('data-sort');
-    [].forEach.call(this.querySelectorAll('[data-sort]'), function (x) {
-      x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
-    });
-    shown = STEP;
-    render();
   });
   // 폰에서 시트가 열려 있으면 Esc 로 닫는다
   window.addEventListener('keydown', function (e) {
