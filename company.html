@@ -486,8 +486,11 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 /* 2026-09-24 대표 지시 — 왼쪽 사진 자리를 되살린다. 빈 조리개가 아니라 '사진 프레임':
    brand/ceo.jpg 를 넣으면 프레임 안에 그대로 찬다. 프레임 폭은 300px 고정이되 높이는
    3:4 비율이 아니라 **오른쪽 인용 카드 높이에 맞춘다**(align-items:stretch + height:auto).
-   카드 안 여백이 넓어 카드만 길어지던 것을 패딩·줄간격을 줄여 200~230px 로 잡았다. */
-.ceo-row{display:grid;grid-template-columns:300px minmax(0,1fr);gap:22px;align-items:stretch}
+   카드 안 여백이 넓어 카드만 길어지던 것을 패딩·줄간격을 줄여 200~230px 로 잡았다.
+   카드는 폭(상자 자체)을 600px 로 묶고 사진과 함께 가운데 정렬한다 — 넓은 화면에서 한 줄이
+   너무 길어지던 것을 여백이 아니라 상자 너비로 줄인다(2026-09-24 대표 지시). */
+.ceo-row{display:grid;grid-template-columns:300px minmax(0,600px);justify-content:center;
+  gap:22px;align-items:stretch}
 .mission .ceo-card{max-width:none;margin:0;padding:16px 18px}
 .ceo-card .who{margin-top:8px}
 .ceo-card .sub{margin-top:8px;padding-top:8px}
@@ -499,6 +502,10 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
   /* 폰 — 프레임이 위, 인용이 아래. 프레임은 220px 폭으로 가운데, 높이는 3:4(293px) 고정 */
   .ceo-row{grid-template-columns:1fr;gap:14px}
   .ceo-photo{max-width:220px;height:293px;margin:0 auto}
+}
+/* 768~920px — 두 열은 유지하되 카드는 남는 폭을 다 쓴다(600px 상한 해제) */
+@media (min-width:768px) and (max-width:920px){
+  .ceo-row{grid-template-columns:300px minmax(0,1fr)}
 }
 @media (max-width:920px){
   .mission .ceo-card{min-width:0;width:auto;padding:18px 17px 17px;border-radius:18px}
