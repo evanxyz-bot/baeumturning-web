@@ -145,6 +145,22 @@ h1{font-size:30px;margin:0 0 10px}
   flex:none;font:inherit;color:var(--text-2);cursor:pointer}
 .avgline .clear:hover{background:var(--surface-3)}
 .avgline .clear svg{display:block}
+/* 게이트 (2026-09-24 대표 지시) — 입력 중엔 계산하지 않고, 7과목을 다 넣고 '이 점수로 검색'을
+   눌렀을 때만 목록을 낸다. 안내 줄은 빈 과목(회색) → 평균(초록) → 점수 바뀜(빨강) 셋. */
+.avgline #avg.todo{color:var(--text-3)}
+.avgline #avg.stale{color:#b8392b}
+.gobtn{display:block;width:100%;margin-top:12px;min-height:46px;border:0;border-radius:var(--r-lg);
+  background:var(--accent);color:#fff;font:inherit;font-size:15.5px;font-weight:700;cursor:pointer;
+  box-shadow:0 3px 0 var(--accent-strong),0 8px 16px rgba(11,122,106,.18)}
+.gobtn:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 var(--accent-strong)}
+.gobtn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.prehint{margin:28px 0 0;background:var(--surface);border:1px dashed var(--border-strong,var(--border));
+  border-radius:var(--r-lg);padding:18px 16px;text-align:center;font-size:14px;font-weight:600;
+  color:var(--text-3);word-break:keep-all}
+.stalebar{margin:0 0 10px;background:#fbe1dd;color:#a8463c;border:1px solid #f2ccc6;
+  border-radius:var(--sc-radius,.5rem);padding:10px 14px;font-size:13.5px;font-weight:700;word-break:keep-all}
+/* 옛 점수 결과는 흐리게 — 지금 점수 결과로 오해하지 않게 */
+#results.stale .col-list,#results.stale .dpanel{opacity:.45}
 /* 제목 줄 — 오른쪽에 도움말(?) 버튼이 붙는다. PC 에서는 아래 미디어쿼리가 가운데로 옮긴다. */
 .intro h1{display:flex;align-items:center;justify-content:flex-start;gap:10px}
 .help{flex:none;width:28px;height:28px;padding:0;border:1.5px solid var(--accent);border-radius:50%;
@@ -219,7 +235,6 @@ h1{font-size:30px;margin:0 0 10px}
 /* 결과 목록 */
 .listhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:32px 0 10px}
 .listhead h2{margin:0}
-.listhead .n{font-size:13px;font-weight:700;color:var(--text-3);font-variant-numeric:tabular-nums}
 .ulist{display:flex;flex-direction:column;gap:10px}
 /* 팻말 높이를 맞춘다 (2026-09-20 대표 지시) — 사유 문구를 지운 뒤에도 대학명 줄 수와
    부제 길이가 달라 들쭉날쭉했다. 최소 높이를 주고 버튼을 아래로 밀어 바닥선을 맞춘다.
@@ -268,9 +283,26 @@ h1{font-size:30px;margin:0 0 10px}
 .detail h4{font-family:inherit;font-size:12.5px;font-weight:800;color:var(--text-2);margin:0 0 6px}
 .detail h4+*{margin-top:0}
 .detail section+section{margin-top:13px}
+/* '환산 기준' 두 열 — 왼쪽 대학 공개 환산표(내용 폭), 오른쪽 과목별 환산 (2026-09-24 대표 지시).
+   DOM 은 '과목별 → 표' 순서라 폰에서는 그대로 세로로 쌓이고, 넓은 화면에서만 자리를 바꾼다. */
+.cbasis{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px 24px;align-items:start}
+/* 두 열은 같은 줄에서 시작한다 — '.detail section+section{margin-top:13px}' 이 두 번째 열을
+   13px 내리던 것을 여기서 되돌린다(소제목 두 개가 어긋나 보였다) */
+.cbasis>.cb-tbl,.cbasis>.cb-sub{margin-top:0}
+.cbasis>.cb-tbl{grid-column:1;grid-row:1}
+.cbasis>.cb-sub{grid-column:2;grid-row:1}
+.cbasis.one{grid-template-columns:minmax(0,1fr)}
+.cbasis.one>.cb-sub{grid-column:1}
+.detail .cbasis+section{margin-top:13px}
+@media (max-width:560px){
+  .cbasis{grid-template-columns:minmax(0,1fr);gap:13px}
+  .cbasis>.cb-tbl,.cbasis>.cb-sub{grid-column:1;grid-row:auto}
+}
 .persub{list-style:none;margin:0;padding:0}
-.persub li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:2px 0}
-.persub li span{font-weight:600;color:var(--text-2)}
+/* '국어  100점 → 1등급' 처럼 과목명과 값이 붙은 한 덩어리 — 양끝 정렬(space-between)을 쓰면
+   과목명과 값이 열 폭만큼 벌어져 서로 읽히지 않는다 (2026-09-24 대표 지시) */
+.persub li{display:flex;justify-content:flex-start;gap:8px;font-size:12.5px;padding:2px 0}
+.persub li span{flex:none;width:3.5em;font-weight:600;color:var(--text-2)}
 .persub li b{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
 .persub li b i{font-style:normal;color:var(--text-3)}
 /* 구간표는 style.css 의 세로표(.btwrap/.bt)를 그대로 쓴다 — 정적 대학 페이지와 같은 형식.
@@ -290,6 +322,56 @@ h1{font-size:30px;margin:0 0 10px}
 .detail p{font-size:12.5px;line-height:1.65;color:var(--text-3);margin:0}
 .detail p+p{margin-top:4px}
 .src-note{font-size:12.5px;color:var(--text-3);margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+
+/* ── 전년도 합격선 비교 (앱 AdmissionConverter.tsx 의 같은 섹션) ──────────────
+   대학이 공개한 전년도 입시결과와 내 환산값을 나란히 놓는다. 판정은 calc.js 안의
+   judge()(= 앱 lib/admissionCut.ts) 가 하고 여기서는 그리기만 한다.
+   폰 390px 에서 가로로 넘치지 않게: 모든 줄이 flex + min-width:0 + 학과명만 줄임표. */
+.ac{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.ac-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.ac-head h4{margin:0}
+.ac-head .yr{font-size:11.5px;font-weight:700;color:var(--text-3);flex:none}
+.ac-note{margin:8px 0 0;padding:10px 11px;border-radius:var(--r-md);background:var(--accent-soft);
+  font-size:11.5px;line-height:1.7;color:var(--accent-strong);word-break:keep-all}
+.ac-note b{font-weight:800}
+.ac-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ac-chips button{max-width:100%;border:0;border-radius:var(--r-md);padding:5px 9px;font:inherit;
+  font-size:11.5px;font-weight:700;background:var(--surface);color:var(--text-3);cursor:pointer;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ac-chips button.on{background:var(--accent-strong);color:#fff}
+.ac-line{margin:9px 0 0;font-size:11.5px;line-height:1.7;color:var(--text-3);word-break:keep-all}
+.ac-line b{color:var(--text-2);font-weight:800}
+.ac-tblhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  margin-top:10px;padding-bottom:3px;font-size:11px;font-weight:700;color:var(--text-3)}
+.ac-tblhead span:last-child{flex:none;font-variant-numeric:tabular-nums}
+.ac-list{list-style:none;margin:0;padding:0}
+.ac-list li{padding:7px 0;border-top:1px solid var(--border)}
+.ac-r1,.ac-r2{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.ac-r2{margin-top:2px}
+.ac-nm{min-width:0;font-size:12.5px;font-weight:700;color:var(--text);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ac-nm em{font-style:normal;margin-left:4px;font-size:10.5px;font-weight:600;color:var(--text-3)}
+.ac-cut{min-width:0;font-size:11px;font-weight:600;color:var(--text-3);font-variant-numeric:tabular-nums}
+.ac-me{flex:none;font-size:11px;font-weight:700;color:var(--text-2);font-variant-numeric:tabular-nums}
+.ac-band{flex:none;border-radius:999px;padding:2px 7px;font-size:11px;font-weight:700;color:#fff;
+  white-space:nowrap}
+.ac-need{flex:none;border-radius:999px;padding:2px 7px;font-size:11px;font-weight:700;
+  background:var(--surface-2);color:var(--text-3);white-space:nowrap}
+.ac-why{margin:2px 0 0;font-size:10.5px;line-height:1.6;color:var(--text-3);word-break:keep-all}
+.ac-rule{margin:2px 0 0;font-size:10.5px;font-weight:700;color:var(--text-3)}
+.ac-more{background:none;border:0;padding:0;margin-top:7px;font:inherit;font-size:11.5px;
+  font-weight:700;color:var(--accent-strong);cursor:pointer;text-decoration:underline;
+  text-underline-offset:3px}
+.ac-how{margin-top:7px}
+.ac-how p{margin:0;font-size:11px;line-height:1.7;color:var(--text-3);word-break:keep-all}
+.ac-how p+p{margin-top:5px}
+.ac-how p b{color:var(--text-2);font-weight:800}
+.ac-check{margin:10px 0 0;padding:0;list-style:none}
+.ac-check li{display:flex;gap:6px;font-size:11px;line-height:1.7;color:var(--text-3);word-break:keep-all}
+.ac-check li span:first-child{flex:none;color:var(--accent-strong)}
+.ac-ask{margin:10px 0 0;font-size:11.5px;font-weight:700;color:var(--accent-strong)}
+.cutbadge{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px;
+  background:var(--accent-soft);color:var(--accent-strong)}
 .empty{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
   padding:28px 16px;text-align:center;font-size:14px;color:var(--text-3)}
 .morewrap{text-align:center;margin-top:14px}
@@ -367,6 +449,305 @@ h1{font-size:30px;margin:0 0 10px}
   .prose{max-width:760px}
 }
 
+/* ── 학과별 합격 가능성 레이아웃 (PLAN §16 · §16-1 대표 디자인 지시) ────────────
+   PC(≥1024px) 좌 1열 대학 카드 + 우 sticky 상세(1 : 1.6, 오른쪽에 스크롤 여유).
+   폰은 카드 목록 + 탭하면 전체 시트.
+   상자·배지·표는 shadcn/ui 의 값을 그대로 쓴다(§16-1-3) — 테두리 hsl(240 5.9% 90%),
+   반경 0.5rem, 그림자 0 1px 2px rgba(0,0,0,.05), 그라데이션은 카드 배경 4~6%,
+   아이콘·이모지 없음. 사이트 초록 토큰은 내비·푸터·기존 카드가 그대로 쓴다. */
+:root{
+  /* 5단계 색 (§16-1-2) — 주황·하늘 금지. admissionCut.ts BAND_COLOR 와 같은 값이어야 한다 */
+  --b1:#1D4ED8;   /* 매우 하향 */
+  --b2:#3B82F6;   /* 하향 */
+  --b3:#16A34A;   /* 적정 */
+  --b4:#EF4444;   /* 상향 */
+  --b5:#B91C1C;   /* 매우 상향 */
+  --b0:#a1a1aa;   /* 판정 불가·미수집 */
+  --band-a:5%;
+  /* shadcn/ui neutral */
+  --sc-border:hsl(240 5.9% 90%);
+  --sc-muted:hsl(240 4.8% 95.9%);
+  --sc-mutedfg:hsl(240 3.8% 46.1%);
+  --sc-fg:hsl(240 10% 3.9%);
+  --sc-radius:.5rem;
+  --sc-shadow:0 1px 2px rgba(0,0,0,.05);
+  --grid:hsl(240 5.9% 86%);
+  --mark:hsl(240 5% 40%);
+  /* 미니 바 이름표 3종 색 (2026-09-24 대표 지시) — 새 색을 만들지 않고 위 단계 색을 그대로 쓴다 */
+  --lab-best:var(--b4);    /* 최고합격자 — 빨강 */
+  --lab-mean:var(--b3);    /* 합격자 평균 — 초록 */
+  --lab-worst:var(--b2);   /* 최저합격자 — 파랑 */
+  /* 일반전형 강조 (2026-09-24 대표 지시, DESIGN.md §2) — 앱 --c-amber-soft 와 같은 값.
+     단계 색(빨강·초록·파랑)과 안 섞이게 따뜻한 쪽으로 고른 아주 연한 크림 하나다. */
+  --gen-soft:#FFF0D4;
+  --gen-line:#EADCB8;
+}
+/* ── 판정 단계 필터 (2026-09-24 대표 지시) ───────────────────────────────────
+   매우 상향 … 매우 하향 5개를 겹쳐 고른다. 칩마다 그 단계 색으로 테두리·점을 두고,
+   고르면 그 색으로 채운다. 점수를 넣기 전에는 판정이 없으니 회색으로 잠근다. */
+.bandchip{display:inline-flex;align-items:center;gap:6px;background:#fff;
+  border:1px solid var(--bc,var(--sc-border));color:var(--sc-fg);border-radius:.375rem;
+  padding:5px 11px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;
+  white-space:nowrap;transition:background .15s,color .15s}
+.bandchip .dot{width:8px;height:8px;border-radius:50%;background:var(--bc);flex:none}
+.bandchip:hover:not(:disabled){background:color-mix(in srgb,var(--bc) 8%,#fff)}
+/* :hover 쪽이 선택자가 무거워 누른 칩 위에 마우스를 두면 채움이 풀려 보였다 — 같이 적는다 */
+.bandchip[aria-pressed="true"],.bandchip[aria-pressed="true"]:hover{
+  background:var(--bc);border-color:var(--bc);color:#fff}
+.bandchip[aria-pressed="true"] .dot{background:#fff}
+.bandchip:disabled{background:var(--sc-muted);border-color:var(--sc-border);
+  color:var(--sc-mutedfg);cursor:not-allowed}
+.bandchip:disabled .dot{background:var(--sc-mutedfg);opacity:.45}
+.bandhint{margin:6px 0 0;font-size:11.5px;font-weight:500;color:var(--sc-mutedfg)}
+/* 폰에서는 다섯 칸이 줄바꿈으로 쌓이면 칸이 커진다 — 한 줄 가로 스크롤로 둔다.
+   .frow 가 align-items:flex-start 라 세로로 쌓일 때 칩 줄이 내용 폭 그대로 늘어난다
+   (폰에서 가로 스크롤바가 생기던 원인) — max-width 로 칸 폭에 묶어 둔다. */
+.bandrow .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;min-width:0;max-width:100%;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.bandrow .chips::-webkit-scrollbar{display:none}
+/* 미반영 대학 표시는 조건 칸 밖의 독립 상자 (2026-09-24 대표 지시) */
+.nonebox{display:flex;margin:0 0 10px;background:#fff;border:1px solid var(--sc-border);
+  border-radius:var(--sc-radius);padding:10px 14px}
+.nonebox .toggle{margin:0;font-size:13px}
+.countline{margin:0;font-size:16px;font-weight:700;color:var(--sc-fg);
+  font-variant-numeric:tabular-nums}
+.listtop{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  flex-wrap:wrap;margin:0 0 12px}
+/* 정렬 드롭다운 — shadcn Select 톤(작은 outline) */
+.sortsel{flex:none;background:#fff;border:1px solid var(--sc-border);border-radius:.375rem;
+  padding:5px 28px 5px 10px;font:inherit;font-size:12.5px;font-weight:600;color:var(--sc-fg);
+  cursor:pointer;appearance:none;-webkit-appearance:none;line-height:1.5;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 9px center}
+.sortsel:focus-visible{outline:2px solid var(--sc-fg);outline-offset:1px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+.pill{display:inline-flex;align-items:center;border-radius:.375rem;padding:2px 10px;
+  font-size:12px;font-weight:600;line-height:1.34;white-space:nowrap}
+.pill.band{color:#fff;background:var(--bandc,var(--b0))}
+.pill.muted{background:var(--sc-muted);color:var(--sc-mutedfg)}
+.pill.outline{border:1px solid var(--sc-border);color:var(--sc-mutedfg);padding:1px 9px}
+
+/* 대학 카드 — 현행 높이(112)는 지키고 테두리·반경·그림자는 shadcn 값으로 */
+.ucard{position:relative;display:flex;flex-direction:column;min-height:112px;width:100%;text-align:left;
+  background:#fff;border:1px solid var(--sc-border);border-radius:var(--sc-radius);
+  padding:15px 16px 15px 19px;box-shadow:var(--sc-shadow);cursor:pointer;overflow:hidden;
+  font:inherit;color:var(--sc-fg);--bandc:var(--b0);transition:border-color .15s}
+.ucard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--bandc);z-index:2}
+.ucard::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,color-mix(in srgb,var(--bandc) var(--band-a),transparent),transparent 60%)}
+.ucard>*{position:relative;z-index:1}
+.ucard:hover{border-color:hsl(240 5.9% 78%)}
+.ucard[aria-current="true"]{border-color:var(--bandc)}
+.ucard:focus-visible{outline:2px solid var(--sc-fg);outline-offset:2px}
+.uc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.uc-nm{min-width:0}
+.uc-nm b{display:block;font-size:15.5px;font-weight:600;color:var(--sc-fg);letter-spacing:-.01em}
+.uc-nm span{display:block;font-size:12px;color:var(--sc-mutedfg);margin-top:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 부제는 '종류 · 지역' / 학년도 두 줄이다 — 한 줄로 이으면 폰에서 학년도가 잘린다
+   (2026-09-24 개편). 둘째 줄은 한 단계 더 연하게. */
+.uc-nm .uyear{margin-top:1px;color:hsl(240 3.8% 60%)}
+/* 내 환산값은 카드에서 제일 먼저 읽히게 크게 (2026-09-24 대표 지시, 22 → 30px).
+   단위 글자는 그대로 작게 두고, 폰에서 대학명과 자리가 다투면 아래 미디어쿼리가
+   숫자와 '등급 상당'을 두 줄로 내린다. */
+.uc-val{flex:none;text-align:right;min-width:0}
+.uc-val .big{font-size:30px;font-weight:700;line-height:1.05;color:var(--sc-fg);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.uc-val .big i{font-style:normal;font-size:12px;font-weight:600;color:var(--sc-mutedfg)}
+.uc-val .sub{font-size:11.5px;font-weight:500;color:var(--sc-mutedfg);margin-top:2px;
+  font-variant-numeric:tabular-nums}
+.uc-bot{margin-top:auto;padding-top:11px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.uc-cnt{font-size:12px;font-weight:500;color:var(--sc-mutedfg);font-variant-numeric:tabular-nums}
+.uc-why{flex-basis:100%;font-size:11.5px;line-height:1.55;color:var(--sc-mutedfg);word-break:keep-all}
+.uc-hit{font-size:11.5px;font-weight:600;color:var(--sc-fg);background:var(--sc-muted);
+  border-radius:.375rem;padding:2px 8px}
+.col-list .morewrap button{width:100%;border-radius:var(--sc-radius);border-color:var(--sc-border);
+  background:#fff;font-weight:600}
+
+/* ── 상세 패널 ─────────────────────────────────────────────────────────────── */
+.dpanel{background:#fff;border:1px solid var(--sc-border);border-radius:var(--sc-radius);
+  box-shadow:var(--sc-shadow);overflow:hidden;--bandc:var(--b0);color:var(--sc-fg)}
+.dh{padding:24px;border-bottom:1px solid var(--sc-border);
+  background:linear-gradient(100deg,color-mix(in srgb,var(--bandc) var(--band-a),transparent),transparent 60%)}
+/* 헤더는 두 열 — 좌(대학명·메타·배지) / 우(큰 환산값). 값 블록은 오른쪽 끝이 아니라
+   왼쪽 열에 바짝 붙는다 (2026-09-24 대표 지시). 폰에서는 대학명 아래로 내려가되 크기는 같다. */
+.dh-top{display:flex;align-items:flex-start;justify-content:flex-start;gap:22px;flex-wrap:wrap}
+.dh-main{min-width:0;flex:0 1 auto}
+.dh h3{margin:0;font-family:inherit;font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--sc-fg)}
+.dh .sub{margin:3px 0 0;font-size:12.5px;color:var(--sc-mutedfg)}
+.dh-val{flex:none;text-align:left;padding-top:2px}
+.dh-val .big{font-size:46px;font-weight:700;line-height:1;color:var(--sc-fg);letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.dh-val .big i{font-style:normal;font-size:16px;font-weight:600;color:var(--sc-mutedfg)}
+.dh-val .lbl{font-size:12px;font-weight:500;color:var(--sc-mutedfg);margin-top:5px}
+.dh-badges{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+.dh-conv{margin:10px 0 0;font-size:12.5px;line-height:1.65;color:var(--sc-mutedfg);word-break:keep-all}
+.dh-conv b{color:var(--sc-fg);font-weight:600}
+.dsec{padding:24px;border-bottom:1px solid var(--sc-border)}
+.dsec:last-child{border-bottom:0}
+.dsec>h4{margin:0 0 6px;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:-.01em;
+  color:var(--sc-fg)}
+.dsec>.hint{margin:0 0 14px;font-size:12px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.dsec .detail{margin-top:0;background:var(--sc-muted);border-radius:var(--sc-radius);padding:16px}
+.dsec .detail h4{color:var(--sc-fg)}
+.dsec .detail p,.dsec .detail .src-note{color:var(--sc-mutedfg)}
+/* 전형 칩 줄 + 학과 정렬 드롭다운 (2026-09-24 대표 지시) — 폰에서는 드롭다운이 한 줄로 내려간다 */
+.admrow{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.admrow .admchips{flex:1 1 auto;min-width:0;margin-bottom:0}
+.admrow .sortsel{margin-left:auto}
+.admchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.admchips button{max-width:100%;background:#fff;border:1px solid var(--sc-border);color:var(--sc-fg);
+  border-radius:.375rem;padding:4px 10px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admchips button:hover{background:var(--sc-muted)}
+.admchips button.on{background:var(--sc-fg);border-color:var(--sc-fg);color:#fff}
+/* 대학이 모집단위별 수치를 안 낸 전형(종합·논술·실기 등) — 눌러 볼 수는 있되 옅게 */
+.admchips button[data-none="1"]{color:var(--sc-mutedfg)}
+.admchips button[data-none="1"].on{color:#fff}
+/* 검정고시 출신자만 따로 집계해 공개한 입결 전형 — 칩 맨 앞에 두고 배지를 세운다 */
+/* 일반전형 — 전형이 많아 일반 학생 칸이 안 보인다. 아주 연한 크림 바탕 + 작은 '일반' 글자
+   (색만으로 뜻을 전하지 않는다, 2026-09-24 대표 지시). 고른 칩은 기존 진한 바탕을 지킨다. */
+.admchips button.gen{background:var(--gen-soft);border-color:var(--gen-line);color:var(--sc-fg)}
+.admchips button.gen:hover{background:#fbe9c8}
+.admchips button.gen.on{background:var(--sc-fg);border-color:var(--sc-fg);color:#fff}
+.admchips button .genb{display:inline-block;font-style:normal;font-size:10px;font-weight:700;
+  background:#fff;color:var(--sc-mutedfg);border-radius:.25rem;padding:0 4px;margin-right:5px}
+.admchips button.gen.on .genb{background:rgba(255,255,255,.24);color:#fff}
+.admchips button.gedonly{line-height:1.5}
+.admchips button .gedb{display:inline-block;font-style:normal;font-size:10px;font-weight:700;
+  line-height:1.5;border-radius:.25rem;padding:0 5px;margin-right:5px;
+  background:var(--sc-fg);color:#fff}
+.admchips button.gedonly.on .gedb{background:#fff;color:var(--sc-fg)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:11px;color:var(--sc-mutedfg);margin-bottom:12px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{display:inline-block;flex:none}
+.lg-sw{width:16px;height:6px;border-radius:3px;background:var(--sc-muted);border:1px solid var(--sc-border)}
+.lg-cut{width:2px;height:11px;background:var(--mark)}
+.lg-mean{width:0;height:11px;border-left:2px dashed var(--mark)}
+.lg-me{width:9px;height:9px;border-radius:999px;background:var(--sc-fg)}
+.tblhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  font-size:11px;font-weight:600;color:var(--sc-mutedfg);margin-bottom:8px}
+.tblhead span:last-child{flex:none;font-variant-numeric:tabular-nums}
+/* 고른 전형이 일반전형이면 표 머리줄에도 같은 연한 바탕 + '일반' (2026-09-24 대표 지시) */
+.tblhead.gen{background:var(--gen-soft);border-radius:.375rem;padding:4px 8px}
+.tblhead .genb{font-style:normal;font-weight:700;color:var(--sc-fg);margin-right:5px}
+
+/* 학과 한 줄 */
+.dep{border:1px solid var(--sc-border);border-radius:var(--sc-radius);background:#fff;
+  padding:12px 14px;margin-bottom:8px}
+.dep.hit{background:var(--sc-muted)}
+/* 판정 배지 → 학과명 순서. 배지 폭은 가장 긴 '매우 상향'·'판정 불가' 기준으로 못박는다
+   (2026-09-24 대표 지시) — 학과명이 행마다 다른 자리에서 시작하면 훑기가 어렵다. */
+.dep-r1{display:flex;align-items:center;gap:8px}
+.dep-r1>.pill{flex:none;width:70px;padding-left:2px;padding-right:2px;justify-content:center}
+.dep-nm{min-width:0;font-size:13px;font-weight:600;color:var(--sc-fg);letter-spacing:-.01em}
+.dep-nm em{font-style:normal;font-size:10.5px;font-weight:500;color:var(--sc-mutedfg);margin-left:6px}
+.dep-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.dep-tags i{font-style:normal;font-size:10.5px;font-weight:500;color:var(--sc-mutedfg);
+  background:var(--sc-muted);border-radius:.375rem;padding:1px 7px}
+.dep.hit .dep-tags i{background:#fff}
+/* 검색어와 같은 태그는 채워서 — .dep.hit 규칙보다 선택자를 무겁게 둬야 흰 바탕에 지지 않는다 */
+.dep-tags i.on,.dep.hit .dep-tags i.on{background:var(--sc-fg);color:#fff}
+.dep-diff{margin:6px 0 0;font-size:11.5px;font-weight:500;color:var(--sc-mutedfg);
+  font-variant-numeric:tabular-nums;word-break:keep-all}
+.dep-diff b{color:var(--sc-fg);font-weight:600}
+/* 미니 바 — 폭만 늘어나는 좌표계라 눈금 숫자·포인트 이름표는 HTML 로 얹는다 */
+.dep-chart{position:relative;margin-top:6px;padding:0 1px}
+.dep-chart .dep-bar{display:block;width:100%;height:34px}
+/* 포인트 이름표 — **막대 위 두 줄이 먼저**고(r0 이 막대에 붙고 r1 이 그 위), 아래 줄(r2)은
+   마지막 수단이다 (2026-09-24 대표 지시). 비어 있으면 높이 0 이라 눈금이 막대 바로 밑으로 붙는다.
+   글자는 줄이지 않고 두 줄로 접는다 — 폰에서도 이름을 그대로 읽게. */
+.dep-labs{position:relative;height:28px;z-index:1}
+.dep-labs.r2:empty{height:0}
+.dep-labs i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:9.5px;
+  font-weight:600;line-height:1.3;color:var(--sc-mutedfg);text-align:center;max-width:56px;
+  word-break:keep-all}
+.dep-labs.top i{bottom:1px}
+.dep-labs.bot i{top:1px}
+.dep-labs i.me{color:var(--sc-fg);font-weight:700}
+/* 세 이름표만 단계 색으로 — 나머지(상위 50·70%, 내 등급)는 지금 색 그대로 (2026-09-24 대표 지시) */
+.dep-labs i.lb-best{color:var(--lab-best)}
+.dep-labs i.lb-mean{color:var(--lab-mean)}
+.dep-labs i.lb-worst{color:var(--lab-worst)}
+/* 이름표 → 포인트 점선 연결선. 이름표가 겹침 때문에 옆으로 밀려도 사선으로 그 포인트를 가리킨다.
+   높이는 위 이름표 28+28 + 막대 34 = 90px 이고(overflow 가 보이니 아래 줄까지 그려진다),
+   viewBox 를 두지 않아 좌표가 곧 CSS 픽셀이다(막대와 달리 가로로 늘어나도 선 굵기·점 간격이 변하지 않는다). */
+.dep-leads{position:absolute;left:1px;right:1px;top:0;height:90px;overflow:visible;
+  pointer-events:none;z-index:0}
+/* 눈금은 막대 아래 끝(56+26=82)에서 5px — 막대 svg 의 빈 아래쪽 8px 을 당겨 붙인다 */
+.dep-ax{position:relative;height:13px;margin-top:-3px}
+.dep-ax i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:9.5px;
+  font-weight:500;color:var(--sc-mutedfg);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* 확대 보기 네비게이터 (2026-09-24 대표 지시) — 확대 막대 눈금 바로 밑에서 연결선이 내려와
+   전체 막대의 브러시 양 끝에 닿는다. 세로 좌표가 곧 CSS 픽셀이다(높이는 인라인). */
+.dep-navwrap{position:relative}
+.dep-nav{display:block;width:100%}
+.dep-navme{position:absolute;font-style:normal;font-size:9.5px;font-weight:700;line-height:1.3;
+  color:var(--sc-fg);white-space:nowrap;padding:0 2px}
+.dep-ax.dep-navax{margin-top:0}
+.dep-why{margin:6px 0 0;font-size:11px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.dep-rule{margin:4px 0 0;font-size:10.5px;color:var(--sc-mutedfg)}
+/* 그 모집단위에만 걸리는 수능 최저학력기준 (전형 단위 표시와 중복하지 않는다) */
+.dep-csat{margin:6px 0 0;font-size:11px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.dep-csat b{color:var(--sc-fg);font-weight:600}
+
+.nojudge{border:1px solid var(--sc-border);border-radius:var(--sc-radius);background:var(--sc-muted);
+  padding:20px;text-align:center}
+.nojudge b{display:block;font-size:13px;font-weight:600;color:var(--sc-fg);margin-bottom:5px}
+.nojudge span{font-size:12px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.dline{margin:10px 0 0;font-size:12px;line-height:1.7;color:var(--sc-mutedfg);word-break:keep-all}
+.dline b{color:var(--sc-fg);font-weight:600}
+/* '공개 분포에 검정고시 출신자 제외' 각주 — 접지 않고 학과 표 위에 고정 노출 */
+.dline.gedx{margin:12px 0 2px;padding:9px 11px;border:1px solid var(--sc-border);
+  border-radius:var(--sc-radius);background:var(--sc-muted)}
+.dfold{border:1px solid var(--sc-border);border-radius:var(--sc-radius);background:#fff;margin-top:12px}
+.dfold>summary{cursor:pointer;list-style:none;padding:10px 14px;font-size:12.5px;font-weight:600;
+  color:var(--sc-fg)}
+.dfold>summary::-webkit-details-marker{display:none}
+.dfold>summary:focus-visible{outline:2px solid var(--sc-fg);outline-offset:2px}
+.dfold[open]>summary{border-bottom:1px solid var(--sc-border)}
+.dfold .dbody{padding:14px;font-size:12px;line-height:1.75;color:var(--sc-mutedfg)}
+.dfold .dbody p{margin:0 0 8px;word-break:keep-all}
+.dfold .dbody p:last-child{margin-bottom:0}
+.dfold .dbody p b{color:var(--sc-fg);font-weight:600}
+.dcheck{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.dcheck li{font-size:12px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
+.disc{margin:0;font-size:11.5px;line-height:1.75;color:var(--sc-mutedfg);word-break:keep-all}
+.disc b{color:var(--sc-fg);font-weight:600}
+
+/* 폰 — 상세는 전체 시트 (PC 규칙보다 뒤에 둬야 1023px 이하에서 이긴다) */
+.sheetbar{display:none}
+@media (min-width:1024px){
+  /* 좌 카드열은 폭을 고정(예전 1090px·1:1.6 에서 나오던 412px 그대로)하고, 남는 자리는
+     전부 상세 패널이 쓴다 — 본문(main.wrap 1280 − 좌우 여백 32) 끝까지 (2026-09-24 대표 지시). */
+  .layout{grid-template-columns:412px minmax(0,1fr);gap:18px;max-width:1248px}
+  /* 위 내비(.nav-top 88 + .nav-bot 56 = 144)가 sticky 라, 패널을 top:16 에 붙이면
+     대학 이름·환산값 줄이 내비 밑으로 들어가 안 보인다. 내비 높이만큼 내려 붙인다. */
+  .col-detail{min-width:0;position:sticky;top:156px;max-height:calc(100vh - 172px);overflow:auto}
+  /* 좌 카드 목록도 화면 높이에 맞춘 sticky 칸 안에서 따로 구른다 — 페이지를 내려도
+     목록과 상세가 같이 제자리에 있게 (2026-09-24 대표 지시). 머리 줄은 그 칸 맨 위 고정. */
+  .col-list{min-width:0;position:sticky;top:156px;height:calc(100vh - 172px);
+    display:flex;flex-direction:column;min-height:0}
+  .col-list .listtop{flex:none;margin:0 0 10px}
+  .col-list .scrollarea{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px}
+  /* 좌열은 한 줄에 카드 하나 — 위쪽 PC 블록의 auto-fill 격자를 덮는다 */
+  .col-list .ulist{display:flex;flex-direction:column;gap:10px}
+}
+@media (max-width:1023px){
+  .col-detail{position:fixed;inset:0;z-index:100;background:#fff;overflow-y:auto;display:none}
+  body.sheet-open{overflow:hidden}
+  body.sheet-open .col-detail{display:block}
+  .sheetbar{display:flex;position:sticky;top:0;z-index:2;align-items:center;gap:8px;
+    padding:10px 14px;background:#fff;border-bottom:1px solid var(--sc-border)}
+  .sheetbar button{background:#fff;border:1px solid var(--sc-border);border-radius:.375rem;
+    padding:7px 13px;font:inherit;font-size:13px;font-weight:600;color:var(--sc-fg);cursor:pointer}
+  .dpanel{border:0;border-radius:0;box-shadow:none;min-height:100%}
+}
+@media (max-width:560px){
+  .dh,.dsec{padding:18px 16px}
+  .dsec .detail{padding:14px}
+}
+
 /* ── FOOTER (다른 페이지와 같은 것) ── */
 .foot{border-top:1px solid var(--border);background:var(--surface-2);position:relative;
   padding:20px 0 16px;text-align:left;font-size:14px;color:var(--text-4)}
@@ -418,6 +799,40 @@ h1{font-size:30px;margin:0 0 10px}
   .frow>b{width:auto;padding-top:0}
   .uhead{gap:10px}
   .big{font-size:23px}
+  /* 폰에서 대학명과 환산값이 자리를 다투면 값을 두 줄로 내린다 — 숫자 위, '등급 상당' 아래.
+     (2026-09-24 대표 지시) 숫자 크기는 PC 와 같게 유지한다. */
+  .uc-top{flex-wrap:wrap}
+  .uc-nm{flex:1 1 150px}
+  .uc-val{text-align:right}
+  .uc-val .sub{white-space:normal}
+  /* 상세 헤더의 큰 값은 폰에서도 같은 크기로, 대학명 아래 줄에 붙는다 */
+  .dh-top{gap:14px}
+  .dh-main{flex:1 1 100%}
+  /* 이름표가 두 줄로 접힐 자리를 준다 (2026-09-24 대표 지시: 폰에서 축약 없이 두 줄 허용) */
+  .dep-labs{height:29px}
+  /* 점수 칸 4+3 두 줄 (2026-09-24 대표 지시, 원문 순서 그대로) — 국 영 과 도 / 수 사 한.
+     DOM 은 GED_SUBJECTS 순서라 order 로만 자리를 바꾼다. 과목명은 칸 위 가운데(PC 와 같은 모양). */
+  .pane-scores .scores{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:auto;
+    grid-auto-flow:row;gap:6px}
+  .pane-scores .srow{background:none;padding:0;display:flex;flex-direction:column;
+    align-items:stretch;gap:4px}
+  .pane-scores .srow span.nm{width:auto;text-align:center;font-size:13px}
+  .pane-scores .srow .val{display:flex;align-items:center;gap:2px;background:var(--surface-2);
+    border-radius:var(--r-md);padding:7px 6px}
+  .pane-scores .srow input{width:100%;min-width:0;text-align:center}
+  .srow[data-s="korean"]{order:1}.srow[data-s="english"]{order:2}.srow[data-s="science"]{order:3}
+  .srow[data-s="morality"]{order:4}.srow[data-s="math"]{order:5}.srow[data-s="social"]{order:6}
+  .srow[data-s="history"]{order:7}
+  /* 판정 칩 — 좌우 여백이 같게 칸을 균등 분할 (2026-09-24 대표 지시). 다섯 개가 한 줄에 안
+     들어가는 폭(<440)은 3+2 두 줄(6칸 격자에 2칸씩·3칸씩), 들어가면 5칸 한 줄. PC 는 그대로. */
+  .bandrow .chips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));width:100%;
+    overflow:visible;gap:6px}
+  .bandrow .chips .bandchip{grid-column:span 2;justify-content:center;padding:5px 4px;min-width:0}
+  .bandrow .chips .bandchip:nth-child(n+4){grid-column:span 3}
+}
+@media (min-width:440px) and (max-width:560px){
+  .bandrow .chips{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .bandrow .chips .bandchip,.bandrow .chips .bandchip:nth-child(n+4){grid-column:auto}
 }
 </style>
 <script type="application/ld+json">
@@ -556,21 +971,26 @@ h1{font-size:30px;margin:0 0 10px}
   <div class="card">
     <div class="avgline"><span id="avg">점수를 입력해 주세요</span><button type="button" class="clear" id="clear" aria-label="다시 쓰기" title="다시 쓰기"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button></div>
     <div class="scores" id="scores"></div>
+    <button type="button" class="gobtn" id="go" disabled>이 점수로 검색</button>
   </div>
   </section>
 
   <section class="pane-filter">
-  <h2>조건</h2>
+  <h2>대학 및 학과 검색</h2>
   <div class="card">
     <form class="search" id="searchForm">
-      <input id="q" type="search" placeholder="대학 이름·지역으로 찾기" enterkeyhint="search" aria-label="대학 이름·지역으로 찾기">
+      <input id="q" type="search" placeholder="대학·학과·태그로 찾기 (예: 간호)" enterkeyhint="search" aria-label="대학 이름·학과 이름·계열 태그로 찾기">
       <button type="submit">찾기</button>
     </form>
     <!-- 지역은 PC 에서 지도로, 폰에서 칩으로 고른다 (2026-09-20 대표 지시).
          지도가 못 뜨면(JSON 실패) 칩이 그대로 보인다 — 기능이 사라지지 않게. -->
     <div class="frow" id="regionChipRow"><b>지역</b><div class="chips" id="regionChips"></div></div>
     <div class="frow"><b>종류</b><div class="chips" id="kindChips"></div></div>
-    <label class="toggle"><input type="checkbox" id="showNone" checked>검정고시 점수 내신 미반영 대학 표시</label>
+    <!-- 판정 단계 필터 (2026-09-24 대표 지시) — 여러 개를 겹쳐 고르고, 아무것도 안 고르면 전체.
+         점수를 넣기 전에는 판정이 없으니 칩이 잠긴다. -->
+    <div class="frow bandrow"><b>판정</b><div class="chips" id="bandChips"></div></div>
+    <p class="bandhint" id="bandHint" hidden>점수로 검색하면 쓸 수 있습니다</p>
+    <label class="toggle"><input type="checkbox" id="showOther" checked>판정 불가·미수집 포함</label>
   </div>
   </section>
   </div><!-- /colL -->
@@ -582,12 +1002,40 @@ h1{font-size:30px;margin:0 0 10px}
   </section>
   </div><!-- /panes -->
 
+  <!-- 검색 전에는 목록을 그리지 않는다 (2026-09-24 대표 지시) -->
+  <p class="prehint" id="preHint">7과목을 모두 입력하고 '이 점수로 검색'을 누르면 대학별 환산 결과가 나와요.</p>
+  <div id="results" hidden>
   <div class="listhead">
-    <h2 id="univ-list">대학별 환산 결과</h2>
-    <span class="n" id="count">가나다순</span>
+    <h2 id="univ-list">대학별 환산 결과 · 학과별 합격 가능성</h2>
   </div>
-  <div class="ulist" id="list"></div>
-  <div class="morewrap" id="morewrap" hidden><button type="button" id="more">더 보기</button></div>
+  <p class="stalebar" id="staleBar" hidden>점수가 바뀌었어요 — 다시 검색해 주세요. 아래는 이전 점수로 계산한 결과예요.</p>
+  <!-- 조건 칸에서 떼어 낸 독립 상자 (2026-09-24 대표 지시) -->
+  <div class="nonebox">
+    <label class="toggle"><input type="checkbox" id="showNone" checked>검정고시 점수 내신 미반영 대학 표시</label>
+  </div>
+  <!-- PC(≥1024px) 좌 1열 카드 / 우 2칸 sticky 상세. 정렬은 가나다 고정(2026-09-24 대표 지시).
+       폰은 카드 목록만 보이고 탭하면 상세가 전체 시트로 덮는다 (PLAN §16). -->
+  <div class="layout">
+    <div class="col-list">
+      <div class="listtop">
+        <p class="countline" id="count">306개 검색됨</p>
+        <select class="sortsel" id="sortSel" aria-label="대학 목록 정렬">
+          <option value="name">가나다순</option>
+          <option value="up">상향순</option>
+          <option value="down">하향순</option>
+        </select>
+      </div>
+      <div class="scrollarea">
+        <div class="ulist" id="list"></div>
+        <div class="morewrap" id="morewrap" hidden><button type="button" id="more">더 보기</button></div>
+      </div>
+    </div>
+    <div class="col-detail" id="colDetail">
+      <div class="sheetbar"><button type="button" id="sheetClose">대학 목록</button></div>
+      <div class="dpanel" id="detail"></div>
+    </div>
+  </div>
+  </div><!-- /results -->
   <noscript>
     <p class="empty">계산기는 브라우저에서 동작합니다. 자바스크립트를 켜면 대학별 환산 결과가 표시됩니다. 아래 수록 범위와 환산 방식 설명은 그대로 보실 수 있습니다.</p>
   </noscript>
@@ -603,8 +1051,8 @@ h1{font-size:30px;margin:0 0 10px}
     <li>전국 <b data-stat="total">306</b>개 대학 — 4년제 <b data-stat="univ4">182</b>곳, 전문대 <b data-stat="univ2">124</b>곳</li>
     <li>환산 기준을 확보한 곳 <b data-stat="found">258</b>곳, 검정고시 성적을 교과점수로 반영하지 않는 곳 <b data-stat="none">46</b>곳, 대학이 기준을 공개하지 않아 미확인으로 남긴 곳 <b data-stat="unknown">2</b>곳</li>
     <li>지역 <b data-stat="regions">17</b>개 시·도 전체</li>
-    <li>기준 학년도 — 2027학년도 <b data-stat="year-2027">273</b>곳, 2026학년도 <b data-stat="year-2026">30</b>곳, 나머지 3곳은 대학이 학년도를 표기하지 않은 입학처 상시 게시 자료</li>
-    <li>확인일 2026-08-15 ~ 2026-09-07 · 출처는 대학 입학처 모집요강과 성적산출 프로그램</li>
+    <li>기준 학년도 — 2027학년도 <b data-stat="year-2027">274</b>곳, 2026학년도 <b data-stat="year-2026">30</b>곳, 나머지 2곳은 대학이 학년도를 표기하지 않은 입학처 상시 게시 자료</li>
+    <li>확인일 2026-08-15 ~ 2026-09-22 · 출처는 대학 입학처 모집요강과 성적산출 프로그램</li>
     <li>추정·평균·관행으로 채운 값은 한 건도 없습니다. 근거를 찾지 못한 대학은 미확인으로 남겼습니다.</li>
   </ul>
 
@@ -723,19 +1171,132 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
                  '강원','충북','충남','전북','전남','경북','경남','제주'];
   var KINDS = ['4년제','전문대'];
   var STEP = 40;
-  // 펼친 패널 맨 아래 '접기' 화살표 (2026-09-20 대표 지시). currentColor 라 버튼 색을 따라간다.
-  var CHEV = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">' +
-    '<path d="M4 12.5 10 6.5l6 6" fill="none" stroke="currentColor" stroke-width="2.2"' +
-    ' stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
   var scores = {};
   var regions = [];      // 다중 선택, 비면 전체
   var kinds = [];
   var showNone = true;   // 앱 목록과 같게 기본은 보임
+  // 판정 단계 필터 (2026-09-24 대표 지시) — 고른 단계들, 비면 전체.
+  // showOther = 판정 불가·미수집 대학(과 학과 행)을 같이 볼지. 기본 켬.
+  var bandSel = [];
+  var showOther = true;
+  // 정렬 — 'name' 가나다(기본) · 'up' 상향순(매우 상향 먼저) · 'down' 하향순(매우 하향 먼저).
+  // sortMode 는 좌측 대학 목록, depSort 는 상세 패널의 학과 목록 (2026-09-24 대표 지시).
+  var sortMode = 'name';
+  var depSort = 'name';
   var q = '';
   var shown = STEP;
-  var openId = null;
+  var openId = null;     // 고른 대학 id — 우 상세 패널에 뜬다
+  var userClosed = false; // PC 에서 손으로 닫았나 — 그랬으면 첫 대학을 자동으로 다시 펼치지 않는다
   var hasScores = false;
+  // '이 점수로 검색'을 눌렀을 때의 점수 — 목록·환산은 이것으로만 낸다(입력 중 실시간 계산 없음)
+  var searched = null;
+
+  // ── 전년도 합격선 비교 ──
+  // 대학이 공개한 전년도 입시결과. 번들이 커지면 빌드 스크립트가 대학 하나씩 떼어
+  // results/<id>.json 으로 두고, 첫 화면은 results-index.json(메타만)만 받는다.
+  // 카드를 고르면 그 대학 파일 하나를 받아 CUTS 에 담아 둔다(같은 대학은 다시 받지 않는다).
+  var CUTS = G.ADMISSION_RESULTS || {};   // id -> 그 대학 입결 (받은 것만)
+  var CUT_META = null;                    // id -> {y, a, n, al}  (results-index.json)
+  var CUT_DEPTS = null;                   // id -> [[학과명, 계열, [태그]]] (학과 검색용)
+  var CUT_SPLIT = !G.ADMISSION_RESULTS;   // 떼어 낸 판인가
+  var cutPending = {};                    // 받는 중인 대학
+  var cutFailed = {};                     // 못 받은 대학
+  var cutTimer = null;
+  // 일괄 로딩 — 단계 필터·상향/하향 정렬은 목록에 오른 대학의 판정이 **전부** 있어야 수가 맞는다.
+  // 늦게 받는 판에서는 아직 안 받은 대학이 '미수집'으로 잡혀 '282/306' 같은 도중 값이 나왔다.
+  // 그래서 그 조건이 켜지면 목록의 대학을 전부 먼저 받고, 받는 동안에는 거르지도 정렬하지도
+  // 않고 진행 힌트만 띄운다(2026-09-24). 이미 받은 것은 다시 받지 않는다.
+  var CUT_PARALLEL = 6;                   // 한 번에 날리는 요청 수
+  var cutActive = 0;                      // 지금 날아가 있는 요청 수
+  var cutQueue = [];                      // 차례를 기다리는 대학
+  var cutQueued = {};                     // 줄에 이미 선 대학
+
+  function cutRerender() {
+    if (cutTimer) { return; }
+    // 일괄 로딩 중에는 뜸하게 — 파일 250개를 60ms 마다 다시 그리면 폰에서 버벅인다
+    var wait = (cutQueue.length || cutActive > 1) ? 250 : 60;
+    cutTimer = setTimeout(function () { cutTimer = null; render(); }, wait);
+  }
+  /** 아직 안 받았고 받을 수 있는 대학인가 */
+  function cutNeeded(id) {
+    if (!CUT_SPLIT || !id || CUTS[id] || cutPending[id] || cutFailed[id] || !window.fetch) { return false; }
+    if (CUT_META && !CUT_META[id]) { return false; }   // 수집하지 않은 대학
+    return true;
+  }
+  /** 그 대학 입결을 받아 둔다. 이미 있거나 받는 중이면 아무것도 하지 않는다. */
+  function loadCut(id) {
+    if (!cutNeeded(id)) { return; }
+    cutPending[id] = true;
+    cutActive++;
+    fetch('results/' + encodeURIComponent(id) + '.json')
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (j) {
+        delete cutPending[id];
+        if (j) { CUTS[id] = j; } else { cutFailed[id] = true; }
+        cutSettled();
+      })
+      .catch(function () { delete cutPending[id]; cutFailed[id] = true; cutSettled(); });
+  }
+  /** 요청 하나가 끝났다 — 기다리는 대학을 그만큼 채워 보내고 화면을 다시 그린다 */
+  function cutSettled() {
+    cutActive--;
+    cutPump();
+    cutRerender();
+  }
+  function cutPump() {
+    while (cutQueue.length && cutActive < CUT_PARALLEL) {
+      var id = cutQueue.shift();
+      delete cutQueued[id];
+      loadCut(id);                       // 그 사이에 받았으면 loadCut 이 알아서 넘어간다
+    }
+  }
+  function queueCut(id) {
+    if (cutQueued[id] || !cutNeeded(id)) { return; }
+    cutQueued[id] = true; cutQueue.push(id);
+  }
+  /**
+   * 목록에 오른 대학 입결을 전부 받는다(목록 차례대로라 보이는 카드부터 찬다).
+   * 다 받았으면 null, 받는 중이면 [받은 수, 받을 수] — 그동안은 필터·정렬을 걸지 않는다.
+   */
+  function bulkCuts(rows) {
+    if (!CUT_SPLIT) { return null; }              // 한 판에 다 든 빌드 — 받을 게 없다
+    if (!CUT_META) { return [0, 0]; }             // 색인부터 오는 중
+    var ids = [], done = 0;
+    for (var i = 0; i < rows.length; i++) {
+      var id = rows[i].univ.id;
+      if (!CUT_META[id]) { continue; }            // 수집하지 않은 대학 — 받을 게 없다
+      ids.push(id);
+      if (CUTS[id] || cutFailed[id]) { done++; }
+    }
+    if (done >= ids.length) { return null; }
+    for (var k = 0; k < ids.length; k++) { queueCut(ids[k]); }
+    cutPump();
+    return [done, ids.length];
+  }
+  /** 학과·태그 검색 색인 — 검색어를 처음 넣을 때만 받는다 */
+  function loadDepts() {
+    if (!CUT_SPLIT || CUT_DEPTS || cutPending.__depts || !window.fetch) { return; }
+    cutPending.__depts = true;
+    fetch('results-depts.json').then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (j) { delete cutPending.__depts; if (j) { CUT_DEPTS = j; cutRerender(); } })
+      .catch(function () { delete cutPending.__depts; });
+  }
+  var cutKey = null;          // 고른 전형 key
+  // 판정 규칙과 연도별 변동 폭은 화면에 쓰지 않는다 (PLAN §16-1-1, 2026-09-22 대표 지시) —
+  // 내부 문서(PLAN §5)에만 남긴다. 화면에는 기준 명단·지표·학년도·출처·자격 원문만 낸다.
+  var CUT_CHECKLIST = [
+    '대입전형자료 온라인 제공 신청 — 시·도 교육청에 검정고시 성적을 대학으로 보내 달라고 신청했는지',
+    '수능 원서 — 수능 최저학력기준이 있는 전형은 수능에 응시해야 합니다',
+    '학생부 대체서식 — 학교생활기록부가 없는 지원자에게 대학이 따로 요구하는 서식이 있는지',
+    '재응시 회차 규정 — 여러 회차에 응시했다면 대학이 어느 회차 성적을 쓰는지'
+  ];
+
+  function cutOf(id) { return CUTS[id] || null; }
+  /** 아직 안 받았지만 수집돼 있는 대학인가 */
+  function cutCollected(id) {
+    if (CUTS[id]) { return true; }
+    return !!(CUT_SPLIT && CUT_META && CUT_META[id]);
+  }
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -747,7 +1308,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var box = document.getElementById('scores');
   box.innerHTML = G.GED_SUBJECTS.map(function (s) {
     // .val 은 PC 에서만 실제 상자가 된다(폰은 display:contents) — 과목명을 상자 밖 위로 빼기 위한 묶음
-    return '<label class="srow"><span class="nm">' + esc(SUB[s]) + '</span>' +
+    return '<label class="srow" data-s="' + s + '"><span class="nm">' + esc(SUB[s]) + '</span>' +
       '<span class="val">' +
       '<input type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="-" data-s="' + s + '" aria-label="' + esc(SUB[s]) + ' 점수">' +
       '<span class="unit">점</span></span></label>';
@@ -762,13 +1323,56 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       if (String(x) !== el.value) { el.value = x; }
       scores[s] = x;
     }
-    render();
+    updateGate();
+  });
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.getAttribute('data-s')) { e.preventDefault(); runSearch(); }
   });
   document.getElementById('clear').addEventListener('click', function () {
     scores = {};
     [].forEach.call(box.querySelectorAll('input'), function (i) { i.value = ''; });
-    render();
+    updateGate();
   });
+
+  // ── 검색 게이트 (2026-09-24 대표 지시) ──────────────────────────────────────
+  // 7과목이 다 차야 버튼이 켜지고, 누른 순간의 점수로만 목록을 낸다. 검색 뒤 점수를 고치면
+  // 결과는 두되 흐리게 하고 '다시 검색'을 띄운다. 웹은 저장하지 않는다(비로그인 정적 페이지).
+  var goBtn = document.getElementById('go');
+  function missingSubjects() {
+    return G.GED_SUBJECTS.filter(function (s) { return typeof scores[s] !== 'number'; });
+  }
+  function isStale() {
+    return !!searched && G.GED_SUBJECTS.some(function (s) { return scores[s] !== searched[s]; });
+  }
+  function updateGate() {
+    var miss = missingSubjects(), stale = isStale();
+    var complete = !miss.length;
+    var avgEl = document.getElementById('avg');
+    var avg = complete ? G.GED_SUBJECTS.reduce(function (a, s) { return a + scores[s]; }, 0) / G.GED_SUBJECTS.length : null;
+    avgEl.className = !complete ? 'todo' : stale ? 'stale' : '';
+    avgEl.textContent = !complete
+      ? miss.length + '과목을 더 입력해 주세요 (' + miss.map(function (s) { return SUB[s]; }).join('·') + ')'
+      : stale ? '평균 ' + n2(avg) + '점 · 점수가 바뀌었어요 — 다시 검색해 주세요'
+      : '평균 ' + n2(avg) + '점';
+    goBtn.disabled = !(complete && (!searched || stale));
+    goBtn.textContent = stale ? '바뀐 점수로 다시 검색' : '이 점수로 검색';
+    var res = document.getElementById('results');
+    res.classList.toggle('stale', stale);
+    document.getElementById('staleBar').hidden = !stale;
+  }
+  function runSearch() {
+    if (goBtn.disabled) { return; }
+    searched = {};
+    G.GED_SUBJECTS.forEach(function (s) { searched[s] = scores[s]; });
+    shown = STEP;
+    document.getElementById('preHint').hidden = true;
+    document.getElementById('results').hidden = false;
+    updateGate();
+    render();
+    var h = document.getElementById('univ-list');
+    if (h && h.scrollIntoView) { h.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+  goBtn.addEventListener('click', runSearch);
 
   // ── 제목 옆 ? — '검정고시 대입 환산이란' 설명 팝업 (2026-09-22 대표 지시) ──
   (function () {
@@ -942,53 +1546,64 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   document.getElementById('showNone').addEventListener('change', function (e) {
     showNone = e.target.checked; shown = STEP; render();
   });
+
+  // ── 판정 단계 칩 (2026-09-24 대표 지시) ───────────────────────────────────
+  // 위쪽이 '매우 상향', 아래쪽이 '매우 하향'. 색은 CSS 토큰(--b5…--b1) 하나만 본다 —
+  // 카드 띠·배지·미니 바와 같은 값이다. 여러 개를 겹쳐 고르고, 아무것도 안 고르면 전체.
+  var BAND_FILTERS = [
+    { name: '매우 상향', css: 'var(--b5)' }, { name: '상향', css: 'var(--b4)' },
+    { name: '적정', css: 'var(--b3)' }, { name: '하향', css: 'var(--b2)' },
+    { name: '매우 하향', css: 'var(--b1)' }
+  ];
+  var bandChipBox = document.getElementById('bandChips');
+  bandChipBox.innerHTML = BAND_FILTERS.map(function (b) {
+    return '<button type="button" class="bandchip" aria-pressed="false" data-b="' + esc(b.name) +
+      '" style="--bc:' + b.css + '"><i class="dot" aria-hidden="true"></i>' + esc(b.name) + '</button>';
+  }).join('');
+  bandChipBox.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.bandchip') : null;
+    if (!b || b.disabled) { return; }
+    var v = b.getAttribute('data-b');
+    var i = bandSel.indexOf(v);
+    if (i >= 0) { bandSel.splice(i, 1); } else { bandSel.push(v); }
+    b.setAttribute('aria-pressed', i >= 0 ? 'false' : 'true');
+    shown = STEP; render();
+  });
+  document.getElementById('showOther').addEventListener('change', function (e) {
+    showOther = e.target.checked; shown = STEP; render();
+  });
+  /** 점수가 없으면 판정 자체가 없다 — 칩을 잠그고 그 자리에 까닭을 적는다 */
+  function paintBandChips() {
+    [].forEach.call(bandChipBox.querySelectorAll('.bandchip'), function (b) {
+      b.disabled = !hasScores;
+    });
+    document.getElementById('bandHint').hidden = hasScores;
+  }
+  /** 단계 필터가 실제로 걸려 있나 — 점수가 없으면 칩이 잠겨 있으니 안 건다 */
+  function bandFilterOn() { return hasScores && bandSel.length > 0; }
+  /** 판정이 난 학과 행만 고르는 중인가 — 그때는 사유만 있는 행을 숨긴다 */
+  function keepBand(band) {
+    if (!bandFilterOn()) { return band ? true : showOther; }
+    return band ? bandSel.indexOf(band) >= 0 : showOther;
+  }
+  /** 단계 순 비교 — 'up' 은 매우 상향이 먼저, 'down' 은 매우 하향이 먼저.
+      판정이 없는 것(불가·미수집)은 두 정렬 모두 맨 뒤로 보내고 그 안은 가나다다. */
+  function bandCmp(mode, va, vb) {
+    if (va == null && vb == null) { return 0; }
+    if (va == null) { return 1; }
+    if (vb == null) { return -1; }
+    return (va - vb) * (mode === 'up' ? -1 : 1);
+  }
+  document.getElementById('sortSel').addEventListener('change', function (e) {
+    sortMode = e.target.value; shown = STEP; render();
+  });
   document.getElementById('searchForm').addEventListener('submit', function (e) {
     e.preventDefault();
     q = document.getElementById('q').value.replace(/\s/g, '');
+    if (q) { loadDepts(); }   // 학과·태그로 찾으려면 검색 색인이 필요하다
     shown = STEP; render();
   });
   document.getElementById('more').addEventListener('click', function () { shown += STEP; render(); });
-
-  // ── 결과 ──
-  function valueHtml(r) {
-    var u = r.univ;
-    if (r.byTrack) {
-      var rows = G.TRACK_ORDER.filter(function (t) { return r.byTrack[t]; }).map(function (t) {
-        var tr = r.byTrack[t], val = '-';
-        if (tr.ok) {
-          if (tr.grade != null) { val = (u.conv === 'average_band' ? tr.grade : n2(tr.grade)) + '등급'; }
-          else if (tr.score != null) {
-            val = n2(tr.score) + '점' + (tr.gradeEquivalent != null ? ' (' + n2(tr.gradeEquivalent) + '등급 상당)' : '');
-          }
-        }
-        return '<span class="tk"><em>' + esc(G.TRACK_LABELS[t]) + '</em> <b>' + esc(val) + '</b></span>';
-      }).join('');
-      return '<div class="tracks"><span class="lbl">계열별 반영</span>' + rows + '</div>';
-    }
-    // 계산식 대학은 대학이 정한 소수 처리(절사·올림 등)를 이미 마친 값이라 그대로 쓰고,
-    // 값 아래에 어느 전형·만점 기준인지 한 줄 붙인다(2026-09-22 대표 지시)
-    var snote = (r.ok && r.scoreNote) ? '<div class="snote">' + esc(r.scoreNote) + '</div>' : '';
-    if (r.ok && r.grade != null) {
-      return '<div class="big">' + esc(u.calc || u.conv === 'average_band' ? r.grade : n2(r.grade)) +
-        '<i> 등급</i></div>' + snote;
-    }
-    if (r.ok && r.score != null) {
-      return '<div class="big">' + esc(u.calc ? r.score : n2(r.score)) +
-        '<i> ' + esc((u.calc && u.calc.unit) || '점') + '</i></div>' +
-        (r.gradeEquivalent != null ? '<div class="sub2">' + n2(r.gradeEquivalent) + '등급 상당</div>' : '') + snote;
-    }
-    var tag = u.status === 'unknown' ? '확인 필요'
-      : u.status === 'none' ? '교과 미반영'
-      : u.conv === 'formula' ? '계산식'
-      : u.conv === 'comparative' ? '비교내신' : '계산 불가';
-    // 점수를 아직 안 넣은 첫 화면에서 306곳이 모두 '계산 불가'로 보이면 뜻이 정반대로 읽힌다 —
-    // 환산표가 있는 대학은 할 일을 말해 준다(2026-09-20 대표 지시로 '점수 입력 전'에서 바꿈)
-    if (!hasScores && tag === '계산 불가') { tag = '점수를 입력하세요'; }
-    // 계산식 대학은 값을 낼 수 있는 곳이라 '왜 못 냈는지'가 곧 할 일이 된다 —
-    // 빠진 과목·산출식 범위 밖을 태그 아래 한 줄로 적는다(앱 AdmissionConverter 와 같은 취지).
-    var why = (hasScores && u.calc && r.reason) ? '<div class="snote">' + esc(r.reason) + '</div>' : '';
-    return '<span class="tag">' + tag + '</span>' + why;
-  }
 
   // 구간표는 가로 2행 — 1행 구간 / 2행 등급·점수, 9칸 넘으면 9칸씩 아래로 쌓는다.
   // (2026-09-20 대표 지시 · 정적 대학 페이지 build_admission_pages.py band_table() 과 같은 형식)
@@ -1027,7 +1642,10 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   // 미지수는 평문 'x' 로 두고 화면에서만 이탤릭(.mx)으로 키운다 — U+1D465 기호는
   // 글리프 없는 기기에서 두부가 된다(2026-09-20 대표 지시 "모든 기기 문제없게").
   var MX = 'x';
-  function edge(v, upper) {
+  // 요강이 '초과'·'미만'으로 쓴 경계(minExclusive/maxExclusive)는 그대로 열어 둔다 —
+  // 안 그러면 '100≥x≥95' 와 '95≥x≥90' 처럼 경계값 95 가 두 줄에 겹쳐 보인다.
+  function edge(v, upper, exclusive) {
+    if (exclusive) { return ['>', fmtNum(v)]; }
     var c = Math.round(v * 100);
     if (upper && c % 10 === 9) { return ['>', fmtNum((c + 1) / 100)]; }
     if (!upper && c % 10 === 1) { return ['>', fmtNum((c - 1) / 100)]; }
@@ -1035,10 +1653,11 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   }
   function fmtNum(v) { return String(Math.round(v * 100) / 100); }
   function bandSpan(b) {
-    if (b.min === b.max) { return MX + '=' + fmtNum(b.min); }
-    var h = edge(b.max, true), l = edge(b.min, false);
-    if (b.min <= 0) { return h[1] + h[0] + MX; }         // '𝑥≥0' 은 자명하다
-    if (b.max >= 100) { return MX + l[0] + l[1]; }       // 만점이 상한
+    var lox = !!b.minExclusive, hix = !!b.maxExclusive;
+    if (b.min === b.max && !lox && !hix) { return MX + '=' + fmtNum(b.min); }
+    var h = edge(b.max, true, hix), l = edge(b.min, false, lox);
+    if (b.min <= 0 && !lox) { return h[1] + h[0] + MX; }   // '𝑥≥0' 은 자명하다
+    if (b.max >= 100 && !hix) { return MX + l[0] + l[1]; } // 만점이 상한
     return h[1] + h[0] + MX + l[0] + l[1];
   }
   function bandTableHtml(u, bands) {
@@ -1073,17 +1692,993 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       Math.round(bw) + 'px">' + html + '</div>';
   }
 
-  function detailHtml(r) {
+  // ── 전년도 합격선 비교 · 학과별 합격 가능성 (PLAN §16 · §16-1) ────────────────
+  // 판정은 calc.js 안의 judge()(= 앱 lib/admissionCut.ts) 가 하고 여기서는 그리기만 한다.
+  // 규칙 설명과 연도별 변동 폭은 화면에 쓰지 않는다(§16-1-1) — 내부 문서(PLAN §5)에만 둔다.
+
+  var detail = document.getElementById('detail');
+  var colDetail = document.getElementById('colDetail');
+  var wideMQ = window.matchMedia('(min-width:1024px)');
+
+  // 표시 반올림 — 소수 둘째 자리까지(PLAN §5). 정본은 admissionCut 의 fmt2 다.
+  var fmt2 = G.fmt2 || function (v) { return String(Math.round(v * 100) / 100); };
+  function fv(v, unit) { return fmt2(v) + (unit === 'grade' ? '등급' : '점'); }
+
+  // 5단계 → 수치(매우 하향 1 … 매우 상향 5). G.BAND_ORDER 가 정본 순서다.
+  var BAND_VAL = {};
+  G.BAND_ORDER.forEach(function (b, i) { BAND_VAL[b] = i + 1; });
+  function bandOfVal(v) { return G.BAND_ORDER[Math.min(4, Math.max(0, Math.round(v) - 1))]; }
+  // 색은 CSS 토큰(§16-1-2) 하나만 본다 — 카드 띠·배지·미니 바가 같은 값을 쓰게
+  var BAND_CSS = { '매우 하향': 'var(--b1)', '하향': 'var(--b2)', '적정': 'var(--b3)',
+                   '상향': 'var(--b4)', '매우 상향': 'var(--b5)' };
+
+  var CONV_LABEL = {
+    subject_grade: '과목별 등급 환산', subject_score: '과목별 점수 환산',
+    average_band: '전 과목 평균 구간표', formula: '대학 고유 계산식',
+    comparative: '비교내신', unknown: '기준 미확인'
+  };
+
+  // 판정 불가 사유 — PLAN §15 고정 문구. 정본은 admissionCut 의 NO_BAND_REASON 이고
+  // 아래는 번들이 아직 그것을 싣지 않았을 때 쓰는 같은 문구 사본이다.
+  var REASON = {
+    no_results: '2026학년도 입시결과 미공개 — 전형 목록만 확보',
+    not_collected: '입결 미수집 — 확대 예정',
+    no_conv: '이 대학 환산표가 없어 내 등급을 낼 수 없음',
+    unit_mismatch: '내 환산 단위(점수)와 합격선 단위(등급)가 달라 비교 불가 — 대학이 등급별 환산점수 표를 공개하지 않음',
+    mean_only: '대학이 합격자 평균만 공개 — 단계를 나눌 수 없음',
+    first_pass: '대학이 최초합격자 기준만 공개 — 충원 후 합격선과 다를 수 있어 판정하지 않음',
+    basis_unknown: '합격자 기준(최종등록/최초합격)을 읽지 못함 — 요강 확인 필요',
+    csat_unknown: '수능최저 확인 안 됨 — 요강 확인 필요',
+    no_ged_track: '검정고시가 지원할 수 있는 교과 전형에 공개 수치 없음',
+    no_score: '점수를 입력하면 판정이 나옵니다'
+  };
+  if (G.NO_BAND_REASON) {
+    Object.keys(G.NO_BAND_REASON).forEach(function (k) { REASON[k] = G.NO_BAND_REASON[k]; });
+  }
+  // judge() 가 §15 밖에서 쓰는 코드 — 사유를 한 줄로 적는다
+  var REASON_EXTRA = {
+    ged_no: '검정고시 출신자가 지원할 수 없는 전형',
+    ged_unknown: '검정고시 지원자격 미확인 — 요강 확인 필요',
+    no_w: '연도별 자료가 모자라 단계를 나누지 않음'
+  };
+  function reasonOf(j, mine) {
+    if (mine && mine.convReason) { return mine.convReason; }
+    var c = j && j.reasonCode;
+    if (c && c !== 'basis_unspecified') { return REASON[c] || REASON_EXTRA[c] || (j && j.reason) || null; }
+    return (j && !j.band && j.reason) ? j.reason : null;
+  }
+
+  // ── 화면 부가 표시 (FOLLOWUP '화면·표시', 2026-09-23) ────────────────────────
+  // 여기서 새 수치를 만들지 않는다. 데이터에 이미 있는 것을 눈에 띄게 옮길 뿐이다.
+
+  /** 이 입결이 2026학년도가 아니면 카드·상세 머리에 학년도 배지(색 없음)를 세운다 */
+  function yearBadge(ub) {
+    return (ub && ub.year && ub.year !== '2026학년도')
+      ? '<span class="pill outline">' + esc(ub.year + ' 입결') + '</span>' : '';
+  }
+
+  /** 문장 단위로 자른다 — 마침표 뒤가 공백일 때만(소수점·약어를 자르지 않게) */
+  function sentences(t) {
+    var out = [], buf = '', i, c;
+    for (i = 0; i < t.length; i++) {
+      c = t.charAt(i);
+      buf += c;
+      if (c === '.' && (i + 1 >= t.length || /\s/.test(t.charAt(i + 1)))) {
+        if (buf.trim()) { out.push(buf.trim()); }
+        buf = '';
+      }
+    }
+    if (buf.trim()) { out.push(buf.trim()); }
+    return out;
+  }
+
+  // '공개 분포에 검정고시 출신자는 들어가지 않는다'는 대학 각주. 우리가 문장을 짓지 않고
+  // convNote 에 옮겨 둔 원문 문장을 그대로 꺼낸다. 판정에는 영향이 없고 표시만 한다.
+  //  - NEAR: '검정고시' 바로 뒤(50자 이내)에 제외·미반영 말이 있어야 한다
+  //  - CTX : 그 문장이 입결 표 이야기여야 한다(교과 반영방법의 '~ 제외'가 걸리지 않게)
+  //  - BARE: 각주만 한 줄로 옮겨 적은 경우(※ 검정고시 … 성적 제외)
+  var GEDX_NEAR = /검정고시[^.]{0,50}?(제외|미포함|반영하지 ?않|반영되지 ?않|들어가지 ?않|포함되지 ?않|뺀)/;
+  var GEDX_CTX = /(입시결과|입결|각주|분포|등록자|통계)/;
+  var GEDX_BARE = /^[ ※★*]*검정고시[^.]{0,60}(제외|미포함|반영하지 ?않)[ .]*$/;
+  var gedxCache = {};
+  function gedExcludeNote(adm) {
+    var cn = (adm && adm.convNote) || '';
+    if (!cn) { return null; }
+    if (Object.prototype.hasOwnProperty.call(gedxCache, cn)) { return gedxCache[cn]; }
+    var best = null;
+    sentences(cn).forEach(function (s) {
+      if (!GEDX_NEAR.test(s)) { return; }
+      if (!GEDX_CTX.test(s) && !GEDX_BARE.test(s)) { return; }
+      if (best === null || s.length < best.length) { best = s; }
+    });
+    gedxCache[cn] = best;
+    return best;
+  }
+
+  /**
+   * 검정고시 출신자만 따로 집계해 낸 입결 전형(신안산대·동의과학대·대구보건대).
+   * 전국에서 몇 곳뿐이라 목록 맨 앞에 두고 배지를 붙인다 — 우리 학생에게 가장 가까운 수치다.
+   */
+  function gedOnlyAdm(a) {
+    var l = (a && a.label) || '';
+    return l.indexOf('검정고시') >= 0 && l.indexOf('불가') < 0 && !!(a.units && a.units.length);
+  }
+
+  /**
+   * 일반 학생이 넣는 '일반전형'인가 (2026-09-24 대표 지시).
+   * 판정은 앱 정본 admissionCut.ts 의 isGeneralAdmission 하나뿐이다 — 여기서 규칙을 베끼지 않는다.
+   * 옛 calc.js(그 함수가 없는 번들)로 열면 아무것도 강조하지 않는다.
+   */
+  function genAdm(d, a) {
+    if (!a || !G.isGeneralAdmission) { return false; }
+    return G.isGeneralAdmission(a, (d && d.admissions) || null);
+  }
+
+  /**
+   * 이 모집단위에 실제로 걸리는 수능 최저학력기준 — 모집단위에 따로 적혀 있으면 그것이
+   * 전형 값을 덮어쓴다(admissionCut.ts 의 effectiveMinCsat 과 같은 규칙. 번들이 그 함수를
+   * 내보내지 않아 같은 두 줄을 여기 둔다).
+   */
+  function effectiveMinCsat(adm, row) {
+    var own = row && row.minCsat;
+    if (own && own.status) { return { status: own.status, text: own.text || null, fromUnit: true }; }
+    var a = (adm && adm.minCsat) || {};
+    return { status: a.status || 'unknown', text: a.text || null, fromUnit: false };
+  }
+  function csatText(c) {
+    return c.text || (c.status === 'none' ? '없음'
+      : c.status === 'has' ? '있음 — 요강 원문을 확인해 주세요'
+      : '미확인 — 요강을 확인해 주세요');
+  }
+
+  /** 내 환산값을 그 모집단위의 단위에 맞춰 꺼낸다 (앱 myValueFor 와 같은 규칙) */
+  function myValueFor(r, unit, track) {
+    var c = (track && r.byTrack && r.byTrack[track]) ? r.byTrack[track] : r;
+    if (!c.ok) { return { value: null, mismatch: false, convReason: c.reason || null, score: null }; }
+    if (unit === 'grade') {
+      var g = c.grade != null ? c.grade : (c.gradeEquivalent != null ? c.gradeEquivalent : null);
+      return { value: g, mismatch: g == null && c.score != null, convReason: null,
+               score: c.score != null ? c.score : null };
+    }
+    var s = c.score != null ? c.score : null;
+    return { value: s, mismatch: s == null && (c.grade != null || c.gradeEquivalent != null),
+             convReason: null, score: s };
+  }
+
+  /** 이 전형이 쓸 등급별 환산점수 표 (PLAN §14). admissionCut 의 resolveGradeMap 이 정본. */
+  function gradeMapFor(d, adm) {
+    if (!d || !d.gradeMap) { return null; }
+    if (G.resolveGradeMap) { return G.resolveGradeMap(d.gradeMap, adm && adm.gradeMapKey); }
+    return d.gradeMap.rows ? d.gradeMap : null;
+  }
+
+  /**
+   * 한 모집단위 판정.
+   * 내 환산이 점수인데 대학 컷이 등급이고 그 대학이 등급별 환산점수 표를 공개했으면,
+   * 점수를 그대로 넘긴다 — judge() 가 그 표로 '등급 상당'을 읽어 판정한다(PLAN §14).
+   *
+   * 표가 있으면 **mismatch 여부와 상관없이 언제나 점수**를 넘긴다(앱 judgeRow 와 같은 규칙).
+   * 환산기가 '등급 상당'(gradeEquivalent)을 함께 주는 대학은 mine.value 에 그 등급이 들어와
+   * mismatch 가 서지 않는데, 그 값을 넘기면 judge() 가 그것을 다시 **점수**로 보고 표를 태운다 —
+   * 가톨릭꽃동네대 450점(2등급 상당)이 "환산점수 2 → 9등급 상당"으로 뒤집힌 이중 변환이다.
+   */
+  function judgeRow(r, d, adm, row) {
+    var mine = myValueFor(r, adm.unit, row.track);
+    var gm = gradeMapFor(d, adm);
+    var val = mine.value, mismatch = mine.mismatch;
+    if (gm && adm.unit === 'grade' && mine.score != null) {
+      val = mine.score;
+      mismatch = false;
+    }
+    return { mine: mine, gm: gm, j: G.judge(val, adm, row, {
+      resultYear: d.resultYear, unitMismatch: mismatch, gradeMap: gm, univName: d.name }) };
+  }
+
+  /** 그 판정에서 '내 값'으로 쓴 수치 — gradeMap 을 탔으면 등급 상당이다 */
+  function myShown(o) {
+    var gf = o.j.detail && o.j.detail.gradeFromScore;
+    return gf ? gf.grade : o.mine.value;
+  }
+
+  // ── 학과 태그 ───────────────────────────────────────────────────────────────
+  // 정본은 데이터의 units[].tags(빌드가 dept_tags.json 으로 채운 것). 데이터에 아직 없으면
+  // 같은 사전을 화면에서 한 번 돌려 같은 결과를 낸다 — 사전이 없으면 이름만으로 찾는다.
+  var DEPT_TAGS = G.DEPT_TAGS || null;
+  var tagCache = {};
+  function tagsOf(row) {
+    if (row.tags && row.tags.length) { return row.tags; }
+    if (!DEPT_TAGS || !DEPT_TAGS.categories) { return []; }
+    var nm = row.name || '';
+    if (tagCache[nm]) { return tagCache[nm]; }
+    var out = [];
+    DEPT_TAGS.categories.forEach(function (c) {
+      for (var i = 0; i < c.patterns.length; i++) {
+        if (nm.indexOf(c.patterns[i]) >= 0) { out.push(c.tag); return; }
+      }
+    });
+    if (!out.length) { out.push('기타'); }
+    tagCache[nm] = out;
+    return out;
+  }
+
+  // ── 검색 (대학명·별칭·지역·학과명·태그) ──────────────────────────────────────
+  function norm(s) { return String(s == null ? '' : s).replace(/\s/g, '').toLowerCase(); }
+  /** q 가 이 대학에 어떻게 걸렸는지 — 이름으로 걸렸나, 어느 학과가 걸렸나 */
+  function matchOf(r, d) {
+    if (!q) { return { ok: true, name: true, deps: null, n: 0 }; }
+    var u = r.univ;
+    var nameHit = norm(u.name).indexOf(q) >= 0 || norm(u.region).indexOf(q) >= 0;
+    if (!nameHit && d && d.nameAliases) {
+      nameHit = d.nameAliases.some(function (a) { return norm(a).indexOf(q) >= 0; });
+    }
+    if (!nameHit && !d && CUT_SPLIT && CUT_META && CUT_META[u.id] && CUT_META[u.id].al) {
+      nameHit = CUT_META[u.id].al.some(function (a) { return norm(a).indexOf(q) >= 0; });
+    }
+    var deps = {}, n = 0;
+    if (d) {
+      d.admissions.forEach(function (a) {
+        (a.units || []).forEach(function (x) {
+          var hit = norm(x.name).indexOf(q) >= 0 ||
+            tagsOf(x).some(function (t) { return norm(t).indexOf(q) >= 0; });
+          if (!hit) { return; }
+          var k = x.name + '|' + (x.track || '');
+          if (!deps[k]) { deps[k] = true; n++; }
+        });
+      });
+    } else if (CUT_DEPTS && CUT_DEPTS[u.id]) {
+      // 아직 그 대학 파일을 안 받았으면 학과 색인으로 찾는다 (같은 규칙)
+      CUT_DEPTS[u.id].forEach(function (row) {
+        var hit = norm(row[0]).indexOf(q) >= 0 ||
+          (row[2] || []).some(function (t) { return norm(t).indexOf(q) >= 0; });
+        if (!hit) { return; }
+        var k = row[0] + '|' + (row[1] || '');
+        if (!deps[k]) { deps[k] = true; n++; }
+      });
+    }
+    return { ok: nameHit || n > 0, name: nameHit, deps: n ? deps : null, n: n };
+  }
+  function depHit(m, row) {
+    return !!(m && m.deps && m.deps[row.name + '|' + (row.track || '')]);
+  }
+
+  // ── 대학 단위 밴드 ──────────────────────────────────────────────────────────
+  // 카드 색 = 그 대학에서 판정 가능한 학과들의 5단계 평균. 학과(모집단위명+계열) 하나가 여러
+  // 전형에 나오면 그 학과 안에서 먼저 평균을 내고, 그 학과 값들을 다시 평균한다(PLAN §5).
+  function univBand(r) {
+    var d = cutOf(r.univ.id);
+    if (!d) {
+      if (cutCollected(r.univ.id)) {
+        var meta = CUT_META[r.univ.id] || {};
+        return { kind: 'pending', year: meta.y || null, n: meta.n || 0 };
+      }
+      return { kind: 'nodata', why: REASON.not_collected };
+    }
+    if (!d.admissions.some(G.admissionHasNumbers)) {
+      return { kind: 'blocked', year: d.resultYear, why: REASON.no_results };
+    }
+    var elig = d.admissions.filter(function (a) {
+      return (a.gedEligible === 'yes' || a.gedEligible === 'conditional') && G.admissionHasNumbers(a);
+    });
+    if (!elig.length) { return { kind: 'blocked', year: d.resultYear, why: REASON.no_ged_track }; }
+    var convOk = r.ok || (r.byTrack && G.TRACK_ORDER.some(function (t) {
+      return r.byTrack[t] && r.byTrack[t].ok;
+    }));
+    if (!convOk) {
+      var u0 = r.univ;
+      var why0 = !hasScores ? REASON.no_score
+        : u0.status === 'none' ? '검정고시 교과성적을 반영하지 않는 대학'
+        : u0.status === 'unknown' ? '대학이 환산 기준을 공개하지 않음'
+        : u0.conv === 'comparative' ? '비교내신 대학 — 검정고시 점수만으로는 산출되지 않음'
+        : u0.conv === 'formula' ? '대학이 계산식만 공개'
+        : REASON.no_conv;
+      return { kind: 'blocked', year: d.resultYear, why: why0 };
+    }
+    var byDep = {}, reasons = {}, depOrder = [];
+    elig.forEach(function (a) {
+      (a.units || []).forEach(function (row) {
+        if (!row.stats || !Object.keys(row.stats).length) { return; }
+        var o = judgeRow(r, d, a, row);
+        var k = row.name + '|' + (row.track || '');
+        if (o.j.band) {
+          if (!byDep[k]) { byDep[k] = []; depOrder.push(k); }
+          byDep[k].push(BAND_VAL[o.j.band]);
+        } else {
+          var why = reasonOf(o.j, o.mine) || '판정 근거 부족';
+          reasons[why] = (reasons[why] || 0) + 1;
+        }
+      });
+    });
+    if (!depOrder.length) {
+      var top = null, n = 0;
+      Object.keys(reasons).forEach(function (k) { if (reasons[k] > n) { n = reasons[k]; top = k; } });
+      return { kind: 'blocked', year: d.resultYear, why: top || '판정 근거 부족' };
+    }
+    var vals = depOrder.map(function (k) {
+      return Math.round(byDep[k].reduce(function (x, y) { return x + y; }, 0) / byDep[k].length);
+    });
+    var mean = vals.reduce(function (x, y) { return x + y; }, 0) / vals.length;
+    var fit = vals.filter(function (v) { return v <= 3; }).length;
+    return { kind: 'ok', band: bandOfVal(mean), mean: mean, total: vals.length,
+             fit: fit, year: d.resultYear };
+  }
+
+  /** 카드·패널 머리에 띄울 내 환산값 한 덩이 */
+  function myHeadline(r) {
+    var u = r.univ;
+    function one(c, tl) {
+      if (!c.ok) { return null; }
+      if (c.grade != null) {
+        return { big: (u.calc || u.conv === 'average_band' ? String(c.grade) : fmt2(c.grade)),
+                 unit: '등급', sub: tl };
+      }
+      if (c.score != null) {
+        return { big: (u.calc ? String(c.score) : fmt2(c.score)),
+                 unit: (u.calc && u.calc.unit) || '점',
+                 sub: [tl, c.gradeEquivalent != null ? fmt2(c.gradeEquivalent) + '등급 상당' : null]
+                        .filter(Boolean).join(' · ') || null };
+      }
+      return null;
+    }
+    if (r.byTrack) {
+      // 계열이 갈리는 대학은 '하나의 등급'이 없다 — 첫 계열 값을 내고 계열명을 같이 적는다.
+      var first = null;
+      G.TRACK_ORDER.forEach(function (t) {
+        if (first || !r.byTrack[t]) { return; }
+        first = one(r.byTrack[t], G.TRACK_LABELS[t] + ' 기준');
+      });
+      if (first) { return first; }
+    }
+    var o = one(r, null);
+    if (o) { return o; }
+    var tag = u.status === 'unknown' ? '기준 미확인'
+      : u.status === 'none' ? '교과 미반영'
+      : u.conv === 'formula' ? '계산식만 공개'
+      : u.conv === 'comparative' ? '비교내신' : (hasScores ? '환산 불가' : '점수를 입력하세요');
+    return { tag: tag };
+  }
+
+  // ── 미니 바 (인라인 SVG + HTML 눈금) ────────────────────────────────────────
+  var gid = 0;
+  /** 축 — 등급은 1~9 고정, 점수는 그 모집단위 수치 범위(만점이 학과마다 달라 축을 공유하지 않는다) */
+  function domainFor(unit, row, myVal) {
+    if (unit === 'grade') { return { lo: 1, hi: 9, unit: unit }; }
+    var vs = [];
+    Object.keys(row.stats || {}).forEach(function (k) {
+      var v = row.stats[k]; if (typeof v === 'number') { vs.push(v); }
+    });
+    if (myVal != null) { vs.push(myVal); }
+    if (vs.length < 2) { return null; }
+    var lo = Math.min.apply(null, vs), hi = Math.max.apply(null, vs);
+    var pad = (hi - lo) * 0.12 || Math.max(1, Math.abs(hi) * 0.02);
+    return { lo: lo - pad, hi: hi + pad, unit: unit };
+  }
+  /** 눈금 값 — 등급은 1~9 전부, 점수는 축을 5칸으로 (§16-1-5: 눈금 숫자를 다 적는다) */
+  function ticksOf(dom) {
+    var t = [], i;
+    if (dom.unit === 'grade') { for (i = 1; i <= 9; i++) { t.push(i); } }
+    else { for (i = 0; i <= 4; i++) { t.push(dom.lo + (dom.hi - dom.lo) * i / 4); } }
+    return t;
+  }
+  // 가로만 늘어나는 좌표계(preserveAspectRatio="none") — 굵기는 non-scaling-stroke 로 고정한다
+  var X0 = 3, X1 = 97, SPAN = X1 - X0;
+  /** 왼쪽이 늘 유리한 쪽 — 등급은 1등급, 점수는 만점 쪽 */
+  function xOf(dom, v) {
+    var t = dom.unit === 'grade'
+      ? (v - dom.lo) / (dom.hi - dom.lo)
+      : (dom.hi - v) / (dom.hi - dom.lo);
+    return X0 + SPAN * Math.min(1, Math.max(0, t));
+  }
+  function ln(x1, y1, x2, y2, stroke, w, extra) {
+    return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 +
+      '" stroke="' + stroke + '" stroke-width="' + w + '" vector-effect="non-scaling-stroke"' +
+      (extra || '') + '/>';
+  }
+  /** 분포 막대의 색 — 단계 색(5색)과 섞이지 않게 중립 청록 한 가지의 농도 차만 쓴다 */
+  var DIST_HUE = '#0f766e';
+  /**
+   * 이름표 색 (2026-09-24 대표 지시) — 세 개만 단계 색으로 구분하고,
+   * '합격자 상위 50/70%' 와 '내 등급' 은 지금 색을 그대로 둔다.
+   */
+  var LAB_CLS = { '최고합격자': 'best', '합격자 평균': 'mean', '최저합격자': 'worst' };
+  var LEAD_COLOR = { best: 'var(--lab-best)', mean: 'var(--lab-mean)', worst: 'var(--lab-worst)',
+    me: 'var(--sc-fg)', '': 'var(--sc-mutedfg)' };
+
+  /**
+   * 미니 바. 공개 포인트가 만드는 구간을 막대 하나로 깔고(50%컷 위쪽이 진하고 최저로 갈수록
+   * 연해진다), 포인트마다 이름표를 위·아래 번갈아 붙인다 (2026-09-24 대표 지시).
+   * 글자는 HTML 로 얹는다 — SVG 안의 글자는 폭이 늘어나면 같이 늘어난다.
+   */
+  function chartSvg(full, j, myVal, color, maxScore) {
+    var dt = j.detail, id = 'g' + (++gid);
+    // 분포 포인트(최고·평균·최저·50%컷(보일 때)·주 컷)가 좁게 몰려 있으면 그 구간만 떼어 낸
+    // **확대 막대**를 위에 그리고, 아래에 전체 축 네비게이터를 둔다 (2026-09-24 대표 지시).
+    // 켜는 기준·범위는 앱 정본 admissionCut.ts cutZoomRange 하나 — 여기서 베끼지 않는다.
+    var dist = G.cutBarDistPoints(j);
+    var zoom = G.cutZoomRange(dist, full, maxScore);
+    var dom = zoom ? { lo: zoom.lo, hi: zoom.hi, unit: full.unit } : full;
+    var ticks = zoom ? zoom.ticks : ticksOf(full);
+    var zStep = zoom && zoom.ticks.length > 1 ? zoom.ticks[1] - zoom.ticks[0] : 1;
+    // 확대 눈금은 간격의 자릿수로 맞춰 적는다(2.5 · 3.0 · 3.5)
+    function tickText(v) {
+      return zoom ? v.toFixed(zStep >= 1 - 1e-9 ? 0 : zStep >= 0.1 - 1e-9 ? 1 : 2) : fmt2(v);
+    }
+    var meIn = myVal != null && (!zoom || (myVal >= zoom.lo - 1e-9 && myVal <= zoom.hi + 1e-9));
+    var showCut50 = G.cutBarShowsCut50(dt);
+    var s = '<svg class="dep-bar" viewBox="0 0 100 34" preserveAspectRatio="none" role="img"' +
+      ' aria-hidden="true" focusable="false">';
+    ticks.forEach(function (v) {
+      var x = xOf(dom, v).toFixed(2);
+      s += ln(x, 17, x, 27, 'var(--grid)', 1);
+    });
+    s += ln(X0, 22, X1, 22, 'var(--sc-muted)', 8, ' stroke-linecap="round"');
+
+    // 분포 막대 — 최고(또는 막대 시작)부터 최저까지 한 덩이. 50%컷(그리지 않는 표면 평균)까지는
+    // 진하고 거기서 주 컷 → 최저로 갈수록 연해진다.
+    var pts = dist;
+    if (pts.length) {
+      var xs = pts.map(function (v) { return xOf(dom, v); });
+      var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs);
+      if (x1 - x0 < 1.2) {
+        // 대학이 합격자 최저 하나만 공개한 경우(규칙 3) — 그 자리에 얇고 연한 막대만 둔다
+        s += ln(Math.max(X0, x0 - 3).toFixed(2), 22, Math.min(X1, x0 + 3).toFixed(2), 22,
+          DIST_HUE, 4, ' stroke-linecap="round" stroke-opacity=".16"');
+      } else {
+        var refV = showCut50 ? dt.cut50 : dt.mean;
+        var cutV = (j.mainCutKind && j.mainCutKind.slice(0, 3) === 'cut') ? j.mainCut : null;
+        var want = [[x0, '.52']];
+        if (refV != null) { want.push([xOf(dom, refV), '.52']); }
+        if (cutV != null) { want.push([xOf(dom, cutV), '.28']); }
+        want.push([x1, '.10']);
+        // 그라데이션 stop 은 x 오름차순이어야 한다 — 되돌아가거나 겹치는 자리는 버린다
+        var stops = [], last = -1;
+        want.forEach(function (p) {
+          var x = Math.min(x1, Math.max(x0, p[0]));
+          if (stops.length && x < last + 0.01) { return; }
+          stops.push([x, p[1]]); last = x;
+        });
+        s += '<defs><linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' +
+          x0.toFixed(2) + '" y1="0" x2="' + x1.toFixed(2) + '" y2="0">' +
+          stops.map(function (p) {
+            var o = (x1 - x0) ? (p[0] - x0) / (x1 - x0) : 0;
+            return '<stop offset="' + o.toFixed(4) + '" stop-color="' + DIST_HUE +
+              '" stop-opacity="' + p[1] + '"/>';
+          }).join('') + '</linearGradient></defs>';
+        s += ln(x0.toFixed(2), 22, x1.toFixed(2), 22, 'url(#' + id + ')', 8, ' stroke-linecap="round"');
+      }
+    }
+
+    // 이름표를 붙일 포인트 — 같은 값이 겹치면 먼저 넣은 이름 하나만 남긴다
+    var marks = [];
+    function mark(v, text, kind) {
+      if (v == null) { return; }
+      for (var i = 0; i < marks.length; i++) {
+        if (Math.abs(marks[i].v - v) < 1e-9) { return; }
+      }
+      marks.push({ v: v, t: text, kind: kind });
+    }
+    mark(dt.best, '최고합격자', 'pt');
+    // 평균이 있는 표에서는 50%컷을 그리지 않는다 (2026-09-24 대표 지시 — 표시만, 판정은 그대로)
+    if (showCut50) { mark(dt.cut50, '합격자 상위 50%', 'pt'); }
+    if (j.mainCutKind && j.mainCutKind.slice(0, 3) === 'cut' && j.mainCutKind !== 'cut50') {
+      mark(j.mainCut, '합격자 상위 ' + j.mainCutKind.slice(3) + '%', 'cut');
+    }
+    mark(dt.mean, '합격자 평균', 'mean');
+    mark(dt.worst, '최저합격자', j.mainCutKind === 'max' ? 'cut' : 'pt');
+    if (j.mainCutKind === 'max') { mark(j.mainCut, '최저합격자', 'cut'); }
+    var meText = dom.unit === 'grade' ? '내 등급' : '내 점수';
+    // 내 값이 확대 구간 밖이면 이름표는 아래 전체 막대에만 둔다
+    if (meIn) { mark(myVal, meText, 'me'); }
+
+    marks.forEach(function (mk) {
+      if (mk.kind === 'me') { return; }
+      var x = xOf(dom, mk.v).toFixed(2);
+      if (mk.kind === 'mean') { s += ln(x, 17, x, 27, 'var(--mark)', 1.4, ' stroke-dasharray="2.6 2.4"'); }
+      else if (mk.kind === 'cut') { s += ln(x, 15, x, 29, 'var(--mark)', 2, ''); }
+      else { s += ln(x, 17.5, x, 26.5, 'var(--mark)', 1.1, ' stroke-opacity=".55"'); }
+    });
+    if (meIn) {
+      // 내 값 — 길이 0 선의 둥근 끝이 곧 점이다(가로로 늘어나도 원 모양이 유지된다)
+      var xme = xOf(dom, myVal).toFixed(2);
+      s += ln(xme, 22, xme, 22, '#fff', 11.4, ' stroke-linecap="round"');
+      s += ln(xme, 22, xme, 22, color, 8.4, ' stroke-linecap="round"');
+    }
+    s += '</svg>';
+
+    // 이름표는 **막대 위 두 줄**에 번갈아 깐다 (2026-09-24 대표 지시 — 아래로 내리지 않는다).
+    // 아래 줄(r2)은 마지막 수단이라 처음엔 비워 두고, 자리가 정말 없을 때 layoutChartLabels 가 쓴다.
+    // data-x 는 그 이름표가 가리키는 포인트의 가로 위치(%)다 — 렌더 뒤 점선을 그 자리로 긋는다.
+    var top = [], bot = [];
+    marks.slice().sort(function (a, b) { return xOf(dom, a.v) - xOf(dom, b.v); })
+      .forEach(function (mk, i) {
+        var x = xOf(dom, mk.v);
+        var st = x < 10 ? 'left:0;transform:none;text-align:left'
+          : x > 90 ? 'right:0;transform:none;text-align:right'
+          : 'left:' + x.toFixed(2) + '%';
+        var cls = (mk.kind === 'me' ? 'me' : '') + (LAB_CLS[mk.t] ? ' lb-' + LAB_CLS[mk.t] : '');
+        cls = cls.replace(/^ +| +$/g, '');
+        var el = '<i' + (cls ? ' class="' + cls + '"' : '') + ' data-x="' + x.toFixed(3) +
+          '" style="' + st + '">' + esc(mk.t) + '</i>';
+        (i % 2 === 0 ? top : bot).push(el);
+      });
+    var ax = ticks.map(function (v) {
+      return '<i style="left:' + xOf(dom, v).toFixed(2) + '%">' + esc(tickText(v)) + '</i>';
+    }).join('');
+    // r1(둘째 줄) 이 위, r0(첫 줄) 이 막대에 붙는다. r2(아래 줄)는 비어 있으면 높이 0 이라
+    // 눈금이 막대 바로 밑 5px 로 올라온다.
+    return '<div class="dep-labs top r1">' + bot.join('') + '</div>' +
+      '<div class="dep-labs top r0">' + top.join('') + '</div>' + s +
+      '<div class="dep-labs bot r2"></div>' +
+      '<svg class="dep-leads" aria-hidden="true" focusable="false"></svg>' +
+      '<div class="dep-ax">' + ax + '</div>' +
+      (zoom ? navHtml(full, zoom, dist, j, myVal, color, meIn ? null : meText) : '');
+  }
+
+  /**
+   * 확대 보기의 전체 막대(네비게이터) — 1~9(또는 점수 축) 전체에 분포 밴드·포인트 점·내 등급만 둔다.
+   * 확대한 구간은 반투명 브러시로 칠하고, 확대 막대 양 끝(X0·X1)과 브러시 양 끝을 옅은 선으로 잇는다
+   * (range-selector / zoom inset 관례). 이름표는 '내 등급' 하나 — 그것도 확대 구간 밖일 때만.
+   * 세로 좌표가 곧 CSS 픽셀이다(viewBox 높이 = svg 높이).
+   */
+  var NAV_CONN_H = 12, NAV_ME_H = 13, NAV_BAR_W = 6;
+  function navHtml(dom, zoom, dist, j, myVal, color, meLabel) {
+    var cy = NAV_CONN_H + (meLabel ? NAV_ME_H : 0) + 7, h = cy + 8;
+    var za = xOf(dom, zoom.lo), zb = xOf(dom, zoom.hi);
+    var bxa = Math.min(za, zb), bxb = Math.max(za, zb);
+    var xs = dist.map(function (v) { return xOf(dom, v); });
+    var da = Math.min.apply(null, xs), db = Math.max.apply(null, xs);
+    var s = '<svg class="dep-nav" viewBox="0 0 100 ' + h + '" preserveAspectRatio="none"' +
+      ' style="height:' + h + 'px" aria-hidden="true" focusable="false">';
+    s += ln(X0, 0, bxa.toFixed(2), NAV_CONN_H, 'var(--grid)', 1);
+    s += ln(X1, 0, bxb.toFixed(2), NAV_CONN_H, 'var(--grid)', 1);
+    ticksOf(dom).forEach(function (v) {
+      var x = xOf(dom, v).toFixed(2);
+      s += ln(x, cy - 4, x, cy + 4, 'var(--grid)', 1);
+    });
+    s += ln(X0, cy, X1, cy, 'var(--sc-muted)', NAV_BAR_W, ' stroke-linecap="round"');
+    s += '<rect x="' + bxa.toFixed(2) + '" y="' + NAV_CONN_H + '" width="' +
+      Math.max(0.4, bxb - bxa).toFixed(2) + '" height="' + (cy + 5 - NAV_CONN_H) +
+      '" fill="' + DIST_HUE + '" fill-opacity=".08" stroke="' + DIST_HUE +
+      '" stroke-opacity=".45" stroke-width="1" vector-effect="non-scaling-stroke"/>';
+    s += ln(da.toFixed(2), cy, db.toFixed(2), cy, DIST_HUE, NAV_BAR_W,
+      ' stroke-linecap="round" stroke-opacity=".42"');
+    dist.forEach(function (v) {
+      var x = xOf(dom, v).toFixed(2), main = v === j.mainCut;
+      s += ln(x, cy - 3, x, cy + 3, 'var(--mark)', main ? 1.6 : 1,
+        ' stroke-opacity="' + (main ? '.9' : '.5') + '"');
+    });
+    var mx = myVal != null ? xOf(dom, myVal) : null;
+    if (mx != null) {
+      s += ln(mx.toFixed(2), cy, mx.toFixed(2), cy, '#fff', 9.4, ' stroke-linecap="round"');
+      s += ln(mx.toFixed(2), cy, mx.toFixed(2), cy, color, 6.8, ' stroke-linecap="round"');
+    }
+    s += '</svg>';
+    var me = '';
+    if (meLabel && mx != null) {
+      var st = mx < 10 ? 'left:0' : mx > 90 ? 'right:0'
+        : 'left:' + mx.toFixed(2) + '%;transform:translateX(-50%)';
+      me = '<i class="dep-navme" style="top:' + NAV_CONN_H + 'px;' + st + '">' + esc(meLabel) + '</i>';
+    }
+    var ax = ticksOf(dom).map(function (v) {
+      return '<i style="left:' + xOf(dom, v).toFixed(2) + '%">' + esc(fmt2(v)) + '</i>';
+    }).join('');
+    return '<div class="dep-navwrap">' + s + me + '</div><div class="dep-ax dep-navax">' + ax + '</div>';
+  }
+
+  // 미니 바 기하 — 막대 중심은 viewBox 세로 22(=CSS 픽셀 22, 높이 34 를 그대로 쓴다).
+  // LEAD_GAP 은 점선이 막대(굵기 8)·내 점(지름 11.4)에 닿기 전에 멈추는 거리다.
+  var BAR_CY = 22, LEAD_GAP = 6, LAB_GAP = 4;
+
+  /**
+   * 이름표 가로 자리 잡기 — 포인트 가운데를 원하는 자리로 삼아 줄에 끼우고,
+   * 같은 줄에서 붙으면 오른쪽으로 민다. 오른쪽 끝을 넘으면 뒤에서부터 되짚어 왼쪽으로 당겨
+   * 넣는다(막대 밖으로 글자가 나가지 않게). 반환값의 각 항목에 최종 left(화면 좌표)가 붙는다.
+   *
+   * 줄은 **위쪽 우선** 세 개다 (2026-09-24 대표 지시) — 0: 막대 바로 위, 1: 그 위 둘째 줄,
+   * 2: 막대 아래(마지막 수단). 앞 줄에 자리가 나면 절대 뒤 줄로 내리지 않는다.
+   */
+  function placeLabels(items, boxL, boxR) {
+    var rows = [[], [], []], cur = [boxL - LAB_GAP, boxL - LAB_GAP, boxL - LAB_GAP];
+    items.forEach(function (it) {
+      var want = Math.min(Math.max(it.px - it.w / 2, boxL), Math.max(boxL, boxR - it.w));
+      // ① 위 두 줄 중 제 자리에 그대로 들어가는 줄
+      var r = want >= cur[0] + LAB_GAP ? 0 : want >= cur[1] + LAB_GAP ? 1 : -1;
+      if (r < 0) {
+        // ② 위 두 줄 중 덜 찬 줄에 오른쪽으로 밀어 넣는다(점선이 사선으로 제 포인트를 가리킨다).
+        //    ③ 그렇게 밀면 막대 밖으로 나갈 때만 아래 줄 — 아래 줄은 마지막 수단이다.
+        var t = cur[0] <= cur[1] ? 0 : 1;
+        r = cur[t] + LAB_GAP + it.w <= boxR ? t : 2;
+      }
+      it.l = Math.max(want, cur[r] + LAB_GAP);
+      rows[r].push(it);
+      cur[r] = it.l + it.w;
+    });
+    rows.forEach(function (list) {
+      if (!list.length) { return; }
+      var tail = list[list.length - 1];
+      if (tail.l + tail.w <= boxR) { return; }
+      var nextL = boxR + LAB_GAP;
+      for (var i = list.length - 1; i >= 0; i--) {
+        list[i].l = Math.min(list[i].l, nextL - LAB_GAP - list[i].w);
+        nextL = list[i].l;
+      }
+      var prev = boxL - LAB_GAP;                 // 왼쪽 벽을 넘었으면 다시 밀어 넣는다
+      list.forEach(function (it) {
+        it.l = Math.max(it.l, prev + LAB_GAP);
+        prev = it.l + it.w;
+      });
+    });
+    return rows;
+  }
+
+  /**
+   * 이름표 겹침 풀기 + 점선 연결선 — 글자 폭은 그릴 때 알 수 없어서, 그린 뒤 실제 폭을 재어
+   * 위·아래 줄에 나눠 끼우고 같은 줄에서 겹치면 좌우로 민다. 자리를 잡은 뒤 이름표마다
+   * 자기 포인트까지 1px 점선을 긋는다(밀려 있으면 사선). (읽기 → 쓰기 순서를 지킨다)
+   */
+  function layoutChartLabels(root) {
+    var work = [].slice.call(root.querySelectorAll('.dep-chart')).map(function (ch) {
+      // 줄 세 개 — r0(막대 바로 위) · r1(그 위) · r2(막대 아래, 마지막 수단)
+      var rowEls = [ch.querySelector('.dep-labs.r0'), ch.querySelector('.dep-labs.r1'),
+        ch.querySelector('.dep-labs.r2')];
+      var bar = ch.querySelector('.dep-bar'), leads = ch.querySelector('.dep-leads');
+      if (!rowEls[0] || !rowEls[1] || !rowEls[2] || !bar) { return null; }
+      var box = bar.getBoundingClientRect(), cr = ch.getBoundingClientRect();
+      if (!box.width) { return null; }          // 숨어 있으면 잴 수 없다 — 다음 렌더에서
+      // 점선이 닿을 글자 쪽 끝(화면 좌표) — r0·r1 은 아래끝 정렬(bottom:1px), r2 는 위끝(top:1px).
+      // 줄 높이가 28 로 고정이라 이름표를 옮겨도 이 값은 안 변한다.
+      var rowY = [rowEls[0].getBoundingClientRect().bottom - 1,
+        rowEls[1].getBoundingClientRect().bottom - 1,
+        rowEls[2].getBoundingClientRect().top + 1];
+      var items = [];
+      rowEls.forEach(function (el) {
+        [].slice.call(el.children).forEach(function (c) { items.push(c); });
+      });
+      items = items.map(function (el) {
+        var r = el.getBoundingClientRect();
+        var k = el.classList.contains('lb-best') ? 'best'
+          : el.classList.contains('lb-mean') ? 'mean'
+          : el.classList.contains('lb-worst') ? 'worst'
+          : el.classList.contains('me') ? 'me' : '';
+        return { el: el, w: r.width, h: r.height, col: LEAD_COLOR[k],
+          px: box.left + box.width * (parseFloat(el.getAttribute('data-x')) || 0) / 100 };
+      });
+      if (!items.length) { return null; }
+      items.sort(function (a, b) { return a.px - b.px; });
+      return { rowEls: rowEls, rowY: rowY, leads: leads, box: box, cr: cr, items: items,
+        bar: bar, chart: ch, zoom: !!ch.querySelector('.dep-nav') };
+    }).filter(Boolean);
+    work.forEach(function (w) {
+      var d = '';
+      var placed = placeLabels(w.items, w.box.left, w.box.right);
+      placed.forEach(function (list, i) {
+        list.forEach(function (it) {
+          it.el.style.left = (it.l - w.box.left).toFixed(1) + 'px';
+          it.el.style.right = 'auto';
+          it.el.style.transform = 'none';
+          w.rowEls[i].appendChild(it.el);
+        });
+      });
+      // 확대 막대가 켜진 행은 이름표 줄이 실제로 쓰는 높이만 잡는다 (2026-09-24 대표 지시) —
+      // 안 쓰는 둘째 줄(r1) 28px 와 한 줄짜리 이름표 위 빈칸 때문에 바로 위 문장과 멀었다.
+      // 쓰는 줄은 '가장 큰 이름표 높이 + 3px'(아래 1px·위 2px) — 바깥 margin-top 6px 과 합쳐
+      // 문장과 이름표 사이가 8px 이다. 확대 없는 행은 그대로 둔다.
+      if (w.zoom) {
+        [0, 1].forEach(function (i) {
+          var hs = placed[i].map(function (it) { return it.h; });
+          w.rowEls[i].style.height = hs.length ? (Math.max.apply(null, hs) + 3) + 'px' : '0px';
+        });
+        // 줄 높이가 바뀌었으니 막대·줄 위치를 다시 잰다
+        w.box = w.bar.getBoundingClientRect();
+        w.cr = w.chart.getBoundingClientRect();
+        w.rowY = [w.rowEls[0].getBoundingClientRect().bottom - 1,
+          w.rowEls[1].getBoundingClientRect().bottom - 1,
+          w.rowEls[2].getBoundingClientRect().top + 1];
+      }
+      placed.forEach(function (list, i) {
+        list.forEach(function (it) {
+          // 점선은 글자 쪽 끝을 포인트에 가장 가까운 지점으로 잡는다 — 글자 위라면 수직선
+          var cx = it.w > 12 ? Math.min(Math.max(it.px, it.l + 6), it.l + it.w - 6)
+            : it.l + it.w / 2;
+          d += '<line x1="' + (cx - w.box.left).toFixed(1) +
+            '" y1="' + (w.rowY[i] - w.cr.top).toFixed(1) +
+            '" x2="' + (it.px - w.box.left).toFixed(1) +
+            '" y2="' + ((w.box.top + BAR_CY + (i === 2 ? LEAD_GAP : -LEAD_GAP)) - w.cr.top).toFixed(1) +
+            '" stroke="' + it.col + '" stroke-width="1" stroke-linecap="round"' +
+            ' stroke-dasharray="1 2.5"/>';
+        });
+      });
+      if (w.leads) { w.leads.innerHTML = d; }
+    });
+  }
+
+  // ── 학과 한 줄 ──────────────────────────────────────────────────────────────
+  function depHtml(r, d, adm, row, hit) {
+    var o = judgeRow(r, d, adm, row), j = o.j, mine = o.mine;
+    var color = j.band ? BAND_CSS[j.band] : 'var(--b0)';
+    var badge = j.band
+      ? '<span class="pill band" style="--bandc:' + color + '">' + esc(j.band) + '</span>'
+      : '<span class="pill muted">판정 불가</span>';
+    // 판정 배지가 행 맨 앞이고 폭이 고정이다 — 학과명 시작 위치가 행마다 흔들리지 않게
+    // (2026-09-24 대표 지시). data-nolock 은 카드 여닫기에서 이 행을 빼는 표시다.
+    var out = '<div class="dep' + (hit ? ' hit' : '') + '" data-nolock><div class="dep-r1">' +
+      badge + '<span class="dep-nm">' +
+      esc(row.name) + (row.track ? '<em>' + esc(G.TRACK_LABELS[row.track]) + '</em>' : '') +
+      '</span></div>';
+
+    var tags = tagsOf(row);
+    if (tags.length) {
+      out += '<div class="dep-tags">' + tags.map(function (t) {
+        return '<i' + (q && norm(t).indexOf(q) >= 0 ? ' class="on"' : '') + '>' + esc(t) + '</i>';
+      }).join('') + '</div>';
+    }
+
+    // 학과 행 글은 '작년 70%컷 3.2 · 내 2.9' 정도만 (§16-1-6) — 거리는 아래 미니 바가 보여 준다
+    var unit = adm.unit, g = myShown(o), bits = [];
+    if (j.mainCut != null && j.mainCutKind) {
+      bits.push('작년 ' + G.METRIC_LABEL[j.mainCutKind] + ' <b>' + esc(fv(j.mainCut, unit)) + '</b>');
+      if (j.rule === 2) {
+        if (j.detail.mean != null) { bits.push('평균 ' + esc(fv(j.detail.mean, unit))); }
+        if (j.detail.best != null) { bits.push('최고 ' + esc(fv(j.detail.best, unit))); }
+      }
+    } else if (row.stats && row.stats.mean != null) {
+      bits.push('작년 ' + G.METRIC_LABEL.mean + ' <b>' + esc(fv(row.stats.mean, unit)) + '</b>');
+    } else {
+      bits.push('공개 수치 없음');
+    }
+    if (g != null) { bits.push('내 <b>' + esc(fv(g, unit)) + '</b>'); }
+    out += '<p class="dep-diff">' + bits.join(' · ') + '</p>';
+
+    var why = !j.band ? reasonOf(j, mine) : null;
+    if (why) { out += '<p class="dep-why">' + esc(why) + '</p>'; }
+    // 점수를 대학 표로 등급 상당으로 읽었으면 그 내역을 그대로 노출한다(PLAN §14)
+    var gf = j.detail && j.detail.gradeFromScore;
+    if (gf) { out += '<p class="dep-why">' + esc(gf.note) + '</p>'; }
+    // 이 모집단위만 수능 최저가 다른 대학(간호·물리치료 등) — 그 학과 줄에만 원문을 붙인다.
+    // 전형 단위 표시(아래 '수능 최저학력기준' 줄)와 문장이 같으면 두 번 적지 않는다.
+    var ec = effectiveMinCsat(adm, row);
+    if (ec.fromUnit && csatText(ec) !== ((adm.minCsat && adm.minCsat.text) || null)) {
+      out += '<p class="dep-csat"><b>수능최저</b> ' + esc(csatText(ec)) + '</p>';
+    }
+
+    var dom = domainFor(unit, row, g);
+    if (dom && (j.mainCut != null || j.detail.mean != null)) {
+      out += '<div class="dep-chart">' + chartSvg(dom, j, g, color, adm.maxScore) + '</div>';
+    }
+    if (j.band && j.rule && j.mainCutKind) {
+      out += '<p class="dep-rule">' + esc(G.METRIC_LABEL[j.mainCutKind] + ' 기준') +
+        (adm.basis === 'unspecified' ? ' · 기준 명단 미표기' : '') + '</p>';
+    }
+    return out + '</div>';
+  }
+
+  // ── 학과별 합격 가능성 섹션 ────────────────────────────────────────────────
+  function cutSectionHtml(r, ub, m) {
+    var d = cutOf(r.univ.id);
+    var out = '<div class="dsec"><h4>학과별 합격 가능성</h4>';
+    if (!d) {
+      if (cutCollected(r.univ.id)) {
+        loadCut(r.univ.id);
+        return out + '<p class="hint">전년도 합격선을 불러오는 중입니다…</p></div>';
+      }
+      return out + '<p class="hint">전년도 입시결과를 아직 수집하지 않은 대학입니다.</p>' +
+        '<div class="nojudge"><b>판정 불가</b><span>' + esc(REASON.not_collected) +
+        '</span></div></div>';
+    }
+    out += '<p class="hint">' + esc(d.resultYear +
+      ' 입시결과 기준 · 아래 단계는 대학이 공개한 수치와 내 환산등급의 거리입니다. 확률을 계산하지 않습니다.') +
+      '</p>';
+
+    var elig = [], blocked = [];
+    d.admissions.forEach(function (a) {
+      if (a.gedEligible === 'yes' || a.gedEligible === 'conditional') { elig.push(a); }
+      else { blocked.push(a); }
+    });
+    // 수치가 있는 전형을 먼저 — 칩을 눌렀는데 빈 표만 나오는 일이 없게
+    var chipsList = elig.slice().sort(function (a, b) {
+      return (b.units ? b.units.length : 0) - (a.units ? a.units.length : 0);
+    });
+    // 학과·태그로 찾았으면 그 학과가 있는 전형을 먼저 고른다
+    if (m && m.deps) {
+      chipsList = chipsList.slice().sort(function (a, b) {
+        function n(x) {
+          return (x.units || []).filter(function (y) { return depHit(m, y); }).length;
+        }
+        return n(b) - n(a);
+      });
+    }
+    // 검정고시 출신자 전용 입결 전형은 늘 맨 앞 — 대학이 우리 학생만 따로 집계한 수치다.
+    // (정렬은 안정적이라 앞의 순서는 그 안에서 유지된다)
+    chipsList = chipsList.slice().sort(function (a, b) {
+      return (gedOnlyAdm(b) ? 1 : 0) - (gedOnlyAdm(a) ? 1 : 0);
+    });
+    var adm = null, said = false, i;
+    for (i = 0; i < chipsList.length; i++) { if (chipsList[i].key === cutKey) { adm = chipsList[i]; } }
+    if (!adm) { adm = chipsList[0] || null; }
+
+    if (!adm) {
+      said = true;
+      out += '<div class="nojudge"><b>판정 불가</b><span>' +
+        esc(ub.kind === 'blocked' ? ub.why : REASON.no_ged_track) + '</span></div>';
+    } else {
+      out += '<div class="admrow"><div class="admchips">' + chipsList.map(function (a) {
+        var ged = gedOnlyAdm(a);
+        // 일반전형 판정은 앱과 같은 함수(admissionCut.ts isGeneralAdmission)로만 한다
+        var gen = genAdm(d, a);
+        var cls = [a.key === adm.key ? 'on' : '', ged ? 'gedonly' : '', gen ? 'gen' : '']
+          .filter(Boolean).join(' ');
+        return '<button type="button" data-cut="' + esc(a.key) + '"' +
+          (G.admissionHasNumbers(a) ? '' : ' data-none="1"') +
+          (cls ? ' class="' + cls + '"' : '') + '>' +
+          (gen ? '<i class="genb">일반</i>' : '') +
+          (ged ? '<i class="gedb">검정고시 출신자 기준</i>' : '') +
+          esc((a.round ? a.round + ' ' : '') + a.label) +
+          (a.gedEligible === 'conditional' ? ' ·조건부' : '') + '</button>';
+      }).join('') + '</div><select class="sortsel" data-depsort="1" aria-label="학과 목록 정렬">' +
+        [['name', '가나다순'], ['up', '상향순'], ['down', '하향순']].map(function (o) {
+          return '<option value="' + o[0] + '"' + (depSort === o[0] ? ' selected' : '') + '>' +
+            o[1] + '</option>';
+        }).join('') + '</select></div>';
+
+      if (adm.gedEligible === 'conditional' && adm.gedEligibleNote) {
+        out += '<p class="dline"><b>지원자격</b> ' + esc(adm.gedEligibleNote) + '</p>';
+      }
+      // 대학이 기준 명단을 안 적은 전형 — 단계 옆에 반드시 붙는 단서(PLAN §5). 접히지 않는다.
+      if (adm.basis === 'unspecified') {
+        out += '<p class="dline"><b>기준 명단</b> ' + esc(G.BASIS_UNSPECIFIED_NOTE) +
+          ' — 아래 단계는 대학이 낸 그 수치만으로 잰 것입니다.</p>';
+      }
+      // 대학이 '공개 분포에서 검정고시 출신자는 뺐다'고 각주를 단 전형 — 학과 표 바로 위에
+      // 고정으로 낸다(접지 않는다). 아래 수치가 검정고시 출신자를 뺀 분포라는 뜻이다.
+      var gedx = gedExcludeNote(adm);
+      if (gedx) {
+        out += '<p class="dline gedx"><b>검정고시 제외 각주</b> ' + esc(gedx) + '</p>';
+      }
+
+      // 학과 행 — 단계를 함께 들고 다닌다(정렬·필터가 같은 값을 본다)
+      var all = (adm.units || []).filter(function (x) {
+        return x.stats && Object.keys(x.stats).length > 0;
+      }).map(function (x) {
+        return { row: x, band: judgeRow(r, d, adm, x).j.band || null };
+      });
+      var hidden = (adm.units ? adm.units.length : 0) - all.length;
+      // 조건 칸의 판정 단계 필터는 학과 행에도 같이 걸린다 (2026-09-24 대표 지시)
+      var kept = all.filter(function (o) { return keepBand(o.band); });
+      var filteredOut = all.length - kept.length;
+      // 정렬 — 가나다(기본)·상향순·하향순. 상향·하향순은 판정 없는 행을 맨 뒤로 보낸다.
+      var depByName = function (a, b) { return a.row.name.localeCompare(b.row.name, 'ko'); };
+      var depCmp = depSort === 'name' ? depByName : function (a, b) {
+        return bandCmp(depSort, a.band ? BAND_VAL[a.band] : null,
+          b.band ? BAND_VAL[b.band] : null) || depByName(a, b);
+      };
+      var rows;
+      if (m && m.deps) {
+        // 찾은 학과를 먼저 — 그 안에서만 고른 정렬을 쓴다
+        var hitRows = [], restRows = [];
+        kept.forEach(function (o) { (depHit(m, o.row) ? hitRows : restRows).push(o); });
+        rows = hitRows.sort(depCmp).concat(restRows.sort(depCmp));
+      } else {
+        rows = kept.slice().sort(depCmp);
+      }
+      if (!rows.length && filteredOut > 0) {
+        // 단계 칩으로 걸러 낸 결과가 빈 것뿐 — '판정 불가'로 잘못 읽히지 않게 따로 적는다
+        out += '<p class="hint">고른 판정 단계에 해당하는 모집단위가 이 전형에 없습니다.</p>';
+      } else if (!rows.length) {
+        said = true;
+        out += '<div class="nojudge"><b>판정 불가</b><span>' +
+          esc(ub.kind === 'blocked' ? ub.why : '이 전형은 대학이 모집단위별 수치를 공개하지 않았습니다.') +
+          '</span></div>';
+      } else {
+        // 범례의 '합격선'은 그 전형이 실제로 쓴 지표 이름으로 적는다(70%컷·합격자 최저 …)
+        var mk = G.judge(null, adm, rows[0].row, { resultYear: d.resultYear }).mainCutKind;
+        out += '<div class="legend">' +
+          '<span><i class="lg-sw"></i>전년도 합격자 분포</span>' +
+          '<span><i class="lg-cut"></i>' + esc(G.METRIC_LABEL[mk] || '합격선') + '</span>' +
+          '<span><i class="lg-mean"></i>합격자 평균</span>' +
+          '<span><i class="lg-me"></i>내 환산등급</span></div>';
+        out += '<div class="tblhead' + (genAdm(d, adm) ? ' gen' : '') + '"><span>' +
+          (genAdm(d, adm) ? '<i class="genb">일반</i>' : '') +
+          '모집단위 · 전년도 합격선 · 내 환산등급</span><span>' +
+          rows.length + '곳' + (hidden > 0 ? ' · 미공개 ' + hidden + '곳 제외' : '') +
+          (filteredOut > 0 ? ' · 단계 필터로 ' + filteredOut + '곳 숨김' : '') + '</span></div>';
+        // 모집단위는 처음부터 전부 보인다 — 12행 뒤 '모두 보기' 접기는 없앴다(2026-09-24 대표 지시)
+        out += rows.map(function (o) {
+          return depHtml(r, d, adm, o.row, depHit(m, o.row));
+        }).join('');
+      }
+
+      var mc = adm.minCsat || {};
+      out += '<p class="dline"><b>수능 최저학력기준</b> ' +
+        esc(mc.status === 'none' ? '없음'
+          : mc.status === 'has' ? (mc.text || '있음 — 요강 원문을 확인해 주세요')
+          : '미확인 — 요강을 확인해 주세요') + '</p>';
+
+      // 기준 보기 — 기준 명단·지표·학년도·출처·자격 원문만 (§16-1-1: 규칙·변동 폭은 쓰지 않는다)
+      var h = '';
+      h += '<p><b>기준 명단</b> ' + esc(G.BASIS_LABEL[adm.basis]) + '</p>';
+      var metrics = [];
+      rows.forEach(function (x) {
+        Object.keys(x.stats || {}).forEach(function (k) {
+          if (x.stats[k] != null && G.METRIC_LABEL[k] && metrics.indexOf(G.METRIC_LABEL[k]) < 0) {
+            metrics.push(G.METRIC_LABEL[k]);
+          }
+        });
+      });
+      if (metrics.length) { h += '<p><b>공개 지표</b> ' + esc(metrics.join(' · ')) + '</p>'; }
+      h += '<p><b>학년도</b> ' + esc(d.resultYear + ' 입시결과 · 단위 ' +
+        (adm.unit === 'grade' ? '등급(숫자가 작을수록 좋음)' : '점수(클수록 좋음)')) + '</p>';
+      if (adm.basis === 'unspecified') {
+        h += '<p>' + esc(G.BASIS_UNSPECIFIED_NOTE) +
+          '. 최종등록자 분포인지 최초합격자 분포인지 알 수 없어, 같은 단계라도 다른 대학과 나란히 견주지 마세요.</p>';
+      }
+      if (adm.unit === 'score') {
+        h += '<p>모집단위마다 만점이 다를 수 있어 학과끼리 점수를 나란히 견주지 않습니다.</p>';
+      }
+      var gm = gradeMapFor(d, adm);
+      if (gm) {
+        h += '<p><b>등급 환산</b> ' + esc('내 환산점수는 ' + d.name +
+          ' 요강의 등급별 환산점수 표로 등급 상당을 읽습니다' +
+          (gm.source ? ' (' + gm.source + ')' : '') +
+          (gm.method === 'midpoint'
+            ? '. ' + (G.GRADE_MAP_MIDPOINT_NOTE || '등급 경계는 대학 표의 인접 점수 중간값') + '입니다'
+            : '') + '.') + '</p>';
+      }
+      if (adm.convNote) { h += '<p><b>성적 반영</b> ' + esc(adm.convNote) + '</p>'; }
+      if (adm.gedEligibleNote) { h += '<p><b>지원자격 원문</b> ' + esc(adm.gedEligibleNote) + '</p>'; }
+      if (d.retakeNote) { h += '<p><b>재응시 회차</b> ' + esc(d.retakeNote) + '</p>'; }
+      // 출처는 링크로 걸지 않는다 — 대학 사이트 개편으로 깨지는 주소를 관리하지 않는다
+      var rs = null, gs = null;
+      (d.sources || []).forEach(function (s) {
+        if (s.role === 'results' && !rs) { rs = s; }
+        if (s.role === 'guide' && !gs) { gs = s; }
+      });
+      var src = [];
+      if (rs) {
+        src.push('입시결과 ' + (rs.type === 'adiga' ? '대학어디가' : d.name + ' 입학처') +
+          ' 공개 자료(' + rs.format + ') · 확인일 ' + rs.checkedAt);
+      }
+      if (gs) { src.push(d.applyYear + ' 모집요강 · 확인일 ' + gs.checkedAt); }
+      if (src.length) { h += '<p><b>출처</b> ' + esc(src.join(' · ')) + '</p>'; }
+      out += '<details class="dfold"><summary>기준 보기 — 기준 명단 · 지표 · 학년도 · 출처</summary>' +
+        '<div class="dbody">' + h + '</div></details>';
+    }
+
+    if (ub.kind === 'blocked' && !said) {
+      out += '<div class="nojudge" style="margin-top:12px"><b>판정 불가</b><span>' +
+        esc(ub.why) + '</span></div>';
+    }
+    if (blocked.length) {
+      out += '<details class="dfold"><summary>검정고시 지원 불가·요강 확인 필요 전형 ' +
+        blocked.length + '개</summary><div class="dbody">' + blocked.map(function (a) {
+          return '<p><b>' + esc((a.round ? a.round + ' ' : '') + a.label) + '</b>' +
+            esc((a.gedEligible === 'unknown' ? ' — 요강 확인 필요' : '') +
+              (a.gedEligibleNote ? ' · ' + a.gedEligibleNote : '')) + '</p>';
+        }).join('') + '</div></details>';
+    }
+    return out + '</div>';
+  }
+
+  // ── 환산 기준(기존 카드 펼침 내용) ─────────────────────────────────────────
+  function convDetailHtml(r) {
     var u = r.univ, out = '';
+    // 과목별 환산과 대학 공개 환산표를 두 열로 나란히 (2026-09-24 대표 지시) — 예전엔 표가
+    // 과목 줄 아래 따로 떨어져 있어, 과목명과 그 환산값이 서로 멀었다.
+    // DOM 순서는 '과목별 환산 → 표' 다(폰에서 세로로 쌓일 때 과목별이 먼저 와야 한다).
+    // 넓은 화면에서는 CSS 가 표를 왼쪽 열(auto 폭)로, 과목 줄을 오른쪽 열로 옮긴다.
+    var sub = '', tbl = '';
     if (r.perSubject) {
-      out += '<section><h4>과목별 환산</h4><ul class="persub">' + r.perSubject.map(function (p) {
-        return '<li><span>' + esc(SUB[p.subject]) + '</span><b>' +
-          (isNaN(p.score) ? '미응시' : p.score + '점') + '<i> → </i>' +
-          esc(p.converted) + (u.conv === 'subject_grade' ? '등급' : '점') + '</b></li>';
-      }).join('') + '</ul></section>';
+      sub = '<section class="cb-sub"><h4>과목별 환산</h4><ul class="persub">' +
+        r.perSubject.map(function (p) {
+          return '<li><span>' + esc(SUB[p.subject]) + '</span><b>' +
+            (isNaN(p.score) ? '미응시' : p.score + '점') + '<i> → </i>' +
+            esc(p.converted) + (u.conv === 'subject_grade' ? '등급' : '점') + '</b></li>';
+        }).join('') + '</ul></section>';
     }
     if (u.bands && u.bands.length) {
-      out += '<section><h4>대학 공개 환산표</h4>' + bandTableHtml(u, u.bands) + '</section>';
+      tbl = '<section class="cb-tbl"><h4>대학 공개 환산표</h4>' + bandTableHtml(u, u.bands) + '</section>';
+    }
+    if (sub || tbl) {
+      // 환산표가 없는 대학(계산식·비교내신 등)은 한 열로 과목별 환산만 낸다
+      out += '<div class="cbasis' + (sub && tbl ? '' : ' one') + '">' + sub + tbl + '</div>';
     }
     if (u.formula) { out += '<section><h4>대학 산출식</h4><p>' + esc(u.formula) + '</p></section>'; }
     var subjects = '';
@@ -1099,83 +2694,282 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         (subjects ? '<p><b>반영</b> ' + esc(subjects) + '</p>' : '') +
         (u.note && u.note !== r.reason ? '<p>' + esc(u.note) + '</p>' : '') + '</section>';
     }
-    // 출처는 링크로 걸지 않는다 — 대학 사이트 개편으로 깨지는 주소를 관리하지 않는다(2026-09-18 대표 지시)
+    // 출처는 링크로 걸지 않는다 (2026-09-18 대표 지시)
     out += '<p class="src-note">출처: ' + esc(u.name) +
       (u.origin === 'calculator' ? ' 입학처 성적산출 프로그램' : ' 입학처 공개 자료') +
       ' · ' + esc(u.year) + ' 기준 · 확인일 ' + esc(u.checkedAt) + '</p>';
     return out;
   }
 
-  function cardHtml(r) {
-    var u = r.univ;
-    var warn = u.note && u.note.indexOf('⚠') >= 0
-      ? '<span class="warnbadge">' + (u.note.indexOf('학자금 지원 제한') >= 0
-          ? '⚠ 학자금 지원 제한' + (u.note.indexOf('(전면)') >= 0 ? '·전면' : u.note.indexOf('(일부)') >= 0 ? '·일부' : '')
-          : '⚠ 확인 필요') + '</span>'
-      : '';
-    var canOpen = (r.ok && r.perSubject) || (u.bands && u.bands.length) || u.formula || u.subjectsNote || u.note;
-    var open = openId === u.id;
-    return '<article class="u">' +
-      '<div class="uhead"><div class="uname"><b>' + esc(u.name) + '</b>' +
-      // 2026-09-24 개편 — '·' 로 이은 한 줄을 두 줄로 나눈다(삭제 없음, 줄만 나눔)
-      '<span>' + esc(u.kind) + ' · ' + esc(u.region) + '</span>' +
-      '<span class="uyear">' + esc(u.year) + '</span></div>' +
-      '<div class="uval">' + valueHtml(r) + '</div></div>' +
-      (r.ok && r.final ? '<p class="ufinal">대학 최종 득점 ' + esc(r.final.value) + esc(r.final.unit) +
-        '<em> · ' + esc(r.final.formula) + '</em></p>' : '') +
-      // 사유 문구('이 대학은 … 바꾸지 않아요', '대학이 계산식으로 공개했어요')는 대학마다 길이가
-      // 달라 카드 높이가 제각각이 된다 — 삭제해 팻말 높이를 맞춘다(2026-09-20 대표 지시).
-      // 뜻은 우측 배지(교과 미반영·계산식·확인 필요)가 그대로 전한다.
-      (canOpen ? '<div class="urow"><button type="button" class="more-btn" data-open="' + esc(u.id) + '"' +
-        ' aria-expanded="' + (open ? 'true' : 'false') + '">' +
-        '환산표·상세정보 보기</button>' + warn + '</div>' : (warn ? '<div class="urow">' + warn + '</div>' : '')) +
-      // 접기는 펼친 패널 맨 아래 화살표 버튼으로 — 긴 표를 다 내려 읽고 그 자리에서 닫는다
-      // (2026-09-20 대표 지시). 위쪽 '환산표·상세정보 보기' 는 라벨이 바뀌지 않는다.
-      (canOpen && open ? '<div class="detail">' + detailHtml(r) + '</div>' +
-        '<div class="foldrow"><button type="button" class="fold-btn" data-open="' + esc(u.id) + '"' +
-        ' aria-expanded="true" aria-label="' + esc(u.name) + ' 상세정보 접기">' + CHEV + '</button></div>' : '') +
-      '</article>';
+  function convLine(u, r) {
+    var bits = ['<b>' + esc(CONV_LABEL[u.conv] || '기준 미확인') + '</b>'];
+    if (u.subjectsNote && !r.byTrack) { bits.push(esc(u.subjectsNote)); }
+    if (r.byTrack && u.tracks) {
+      bits.push(G.TRACK_ORDER.filter(function (t) { return u.tracks[t]; }).map(function (t) {
+        return esc(G.TRACK_LABELS[t] + ' ' + u.tracks[t].map(function (x) { return SUB[x]; }).join('·'));
+      }).join(' / '));
+    }
+    return bits.join(' · ');
   }
 
+  /** 카드·패널이 같이 쓰는 한 줄 — '적정 이상 학과 33/37' (§16-1-4) */
+  function fitLine(ub) {
+    return '적정 이상 학과 ' + ub.fit + '/' + ub.total;
+  }
+
+  // ── 상세 패널 ──────────────────────────────────────────────────────────────
+  function panelHtml(r, m) {
+    var u = r.univ, ub = univBand(r);
+    var color = ub.kind === 'ok' ? BAND_CSS[ub.band] : 'var(--b0)';
+    var head = myHeadline(r);
+    // 헤더는 두 열 — 좌(대학명·메타·배지) / 우(큰 환산값). 값 블록은 오른쪽 끝이 아니라
+    // 왼쪽 열에 바짝 붙는다 (2026-09-24 대표 지시).
+    var badges = '<div class="dh-badges" style="--bandc:' + color + '">' +
+      (ub.kind === 'ok'
+        ? '<span class="pill band">' + esc(ub.band) + '</span><span class="uc-cnt">' +
+          esc(fitLine(ub)) + '</span>'
+        : ub.kind === 'blocked'
+          ? '<span class="pill muted">판정 불가</span><span class="uc-cnt">' + esc(ub.why) + '</span>'
+          : '<span class="pill outline">입결 미수집</span><span class="uc-cnt">' +
+            esc(REASON.not_collected) + '</span>') + yearBadge(ub) + '</div>';
+    var out = '<div class="dh" style="--bandc:' + color + '"><div class="dh-top">' +
+      '<div class="dh-main"><h3>' + esc(u.name) + '</h3><p class="sub">' +
+      esc(u.kind + ' · ' + u.region + ' · 환산 기준 ' + u.year) + '</p>' + badges +
+      '</div><div class="dh-val">' +
+      (head.tag
+        ? '<span class="pill muted">' + esc(head.tag) + '</span>'
+        : '<div class="big">' + esc(head.big) + '<i> ' + esc(head.unit) + '</i></div>' +
+          '<div class="lbl">' + esc(head.sub || '내 환산등급') + '</div>') +
+      '</div></div>';
+    out += '<p class="dh-conv">' + convLine(u, r) + '</p>';
+    if (r.byTrack) {
+      out += '<p class="dh-conv">' + G.TRACK_ORDER.filter(function (t) { return r.byTrack[t]; })
+        .map(function (t) {
+          var c = r.byTrack[t], v = '-';
+          if (c.ok) {
+            if (c.grade != null) { v = (u.conv === 'average_band' ? c.grade : fmt2(c.grade)) + '등급'; }
+            else if (c.score != null) {
+              v = fmt2(c.score) + '점' +
+                (c.gradeEquivalent != null ? ' (' + fmt2(c.gradeEquivalent) + '등급 상당)' : '');
+            }
+          }
+          return '<b>' + esc(G.TRACK_LABELS[t]) + '</b> ' + esc(v);
+        }).join(' · ') + '</p>';
+    }
+    // 대학 규칙·보수 적용 같은 계산 메모 — 앱 카드의 scoreNote 와 같은 문장
+    if (r.ok && r.scoreNote) { out += '<p class="dh-conv">' + esc(r.scoreNote) + '</p>'; }
+    if (r.ok && r.final) {
+      out += '<p class="dh-conv">대학 최종 득점 <b>' + esc(r.final.value) + esc(r.final.unit) +
+        '</b> · ' + esc(r.final.formula) + '</p>';
+    }
+    out += '</div>';
+
+    out += '<div class="dsec"><h4>환산 기준</h4><div class="detail">' + convDetailHtml(r) + '</div></div>';
+    out += cutSectionHtml(r, ub, m);
+    out += '<div class="dsec"><h4>지원 전 체크리스트</h4><ul class="dcheck">' +
+      CUT_CHECKLIST.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div>';
+    out += '<div class="dsec"><p class="disc"><b>※ 전년도 결과 대비 참고 정보입니다.</b> ' +
+      '각 대학이 공개한 전년도 입시결과(학년도·전형·지표는 위에 표기)와 내 환산등급을 단순 비교한 것입니다. ' +
+      '합격 여부를 예측하지 않으며, 올해 경쟁률·모집인원·전형 변경은 반영되지 않습니다. ' +
+      '지원 전에 반드시 해당 대학 입학처의 그 해 모집요강을 직접 확인하세요. ' +
+      '지원 결정과 그 결과는 지원자 본인의 책임입니다.</p></div>';
+    return out;
+  }
+
+  // ── 카드 ───────────────────────────────────────────────────────────────────
+  function cardHtml(r) {
+    var u = r.univ, ub = r._ub, m = r._m, head = myHeadline(r);
+    var color = ub.kind === 'ok' ? BAND_CSS[ub.band] : 'var(--b0)';
+    var warn = u.note && u.note.indexOf('⚠') >= 0
+      ? '<span class="pill outline">' + (u.note.indexOf('학자금 지원 제한') >= 0
+          ? '학자금 지원 제한' + (u.note.indexOf('(전면)') >= 0 ? ' 전면'
+              : u.note.indexOf('(일부)') >= 0 ? ' 일부' : '')
+          : '확인 필요') + '</span>'
+      : '';
+    var badge, line = '';
+    if (ub.kind === 'ok') {
+      badge = '<span class="pill band">' + esc(ub.band) + '</span>';
+      line = '<span class="uc-cnt">' + esc(fitLine(ub)) + '</span>';
+    } else if (ub.kind === 'pending') {
+      badge = '<span class="pill outline">합격선 불러오는 중</span>';
+      line = ub.n ? '<span class="uc-cnt">' + esc('학과 ' + ub.n + '개') + '</span>' : '';
+    } else if (ub.kind === 'blocked') {
+      badge = '<span class="pill muted">판정 불가</span>';
+      line = '<span class="uc-why">' + esc(ub.why) + '</span>';
+    } else {
+      badge = '<span class="pill outline">입결 미수집</span>';
+      line = '';
+    }
+    var hit = (m && m.n) ? '<span class="uc-hit">일치 학과 ' + m.n + '개</span>' : '';
+    // 카드는 오른쪽(폰은 시트) 상세 패널을 여닫는 버튼이다 — 옛 '환산표·상세정보 보기'
+    // 버튼이 달고 있던 aria-expanded 를 그대로 잇는다(스크린리더가 열림 상태를 읽는다).
+    return '<button type="button" class="ucard" data-id="' + esc(u.id) + '" style="--bandc:' + color + '"' +
+      ' aria-expanded="' + (openId === u.id ? 'true' : 'false') + '" aria-controls="detail"' +
+      (openId === u.id ? ' aria-current="true"' : '') + '>' +
+      // 부제는 '·' 로 이은 한 줄이 아니라 두 줄이다(삭제 없음, 줄만 나눔) — master 허브와 같게
+      '<div class="uc-top"><div class="uc-nm"><b>' + esc(u.name) + '</b>' +
+      '<span>' + esc(u.kind + ' · ' + u.region) + '</span>' +
+      '<span class="uyear">' + esc(u.year) + '</span></div><div class="uc-val">' +
+      (head.tag ? '<span class="pill muted">' + esc(head.tag) + '</span>'
+        : '<div class="big">' + esc(head.big) + '<i> ' + esc(head.unit) + '</i></div>' +
+          (head.sub ? '<div class="sub">' + esc(head.sub) + '</div>' : '')) +
+      '</div></div><div class="uc-bot">' + badge + yearBadge(ub) + hit + warn + line +
+      '</div></button>';
+  }
+
+  // ── 렌더 ───────────────────────────────────────────────────────────────────
   function render() {
-    var all = G.convertAll(scores, RULES);
-    // 정렬은 앱의 '등급 좋은 순'이 아니라 가나다순 — 필터 전후 모두 (2026-09-18 대표 지시)
-    all.sort(function (a, b) { return a.univ.name.localeCompare(b.univ.name, 'ko'); });
-    var rows = all.filter(function (r) {
+    // 검색 전에는 목록을 만들지 않는다 — 판정 칩 잠금만 칠한다
+    hasScores = !!searched;
+    if (!searched) { paintBandChips(); return; }
+    var all = G.convertAll(searched, RULES);
+
+    var rows = [];
+    all.forEach(function (r) {
       var u = r.univ;
-      if (kinds.length && kinds.indexOf(u.kind) < 0) { return false; }
-      if (regions.length && regions.indexOf(u.region) < 0) { return false; }
-      if (!showNone && u.status === 'none') { return false; }
-      if (q && u.name.replace(/\s/g, '').indexOf(q) < 0 && u.region.indexOf(q) < 0) { return false; }
-      return true;
+      if (kinds.length && kinds.indexOf(u.kind) < 0) { return; }
+      if (regions.length && regions.indexOf(u.region) < 0) { return; }
+      if (!showNone && u.status === 'none') { return; }
+      var d = cutOf(u.id);
+      var m = matchOf(r, d);
+      if (!m.ok) { return; }
+      r._m = q ? m : null;
+      rows.push(r);
+    });
+    // 판정으로 거르거나 줄 세우려면 목록에 오른 대학 입결이 전부 있어야 한다 — 없으면 먼저 받는다.
+    // 받는 동안(cutLoading)에는 가나다순 그대로 두고 아무것도 거르지 않는다. 다 받은 뒤 적용한다.
+    var cutLoading = (bandFilterOn() || sortMode !== 'name' || !showOther) ? bulkCuts(rows) : null;
+    rows.forEach(function (r) { r._ub = univBand(r); });
+    if (!cutLoading) {
+      // 판정 단계 필터 — 카드의 단계(학과 평균 단계)로 거른다. 판정 불가·미수집은
+      // '판정 불가·미수집 포함' 토글을 따른다 (2026-09-24 대표 지시).
+      rows = rows.filter(function (r) {
+        return keepBand(r._ub.kind === 'ok' ? r._ub.band : null);
+      });
+    }
+    // 정렬 — 가나다(기본)·상향순·하향순 셋뿐이고, 판정 가능·불가·미수집을 그룹으로
+    // 나누지 않는다(2026-09-24 대표 지시로 '적정에 가까운 순'과 그룹 머리글을 없앴다).
+    var byName = function (a, b) { return a.univ.name.localeCompare(b.univ.name, 'ko'); };
+    rows.sort((cutLoading || sortMode === 'name') ? byName : function (a, b) {
+      var c = bandCmp(sortMode,
+        a._ub.kind === 'ok' ? BAND_VAL[a._ub.band] : null,
+        b._ub.kind === 'ok' ? BAND_VAL[b._ub.band] : null);
+      return c || byName(a, b);
     });
 
-    var entered = G.GED_SUBJECTS.filter(function (s) { return typeof scores[s] === 'number'; });
-    hasScores = entered.length > 0;
-    var avg = entered.length
-      ? entered.reduce(function (a, s) { return a + scores[s]; }, 0) / entered.length : null;
-    document.getElementById('avg').textContent = avg != null ? '평균 ' + n2(avg) + '점' : '점수를 입력해 주세요';
-
+    paintBandChips();
     var cut = rows.slice(0, shown);
-    document.getElementById('count').textContent = rows.length + '곳 · 가나다순' +
-      (rows.length > cut.length ? ' · ' + cut.length + '곳 표시' : '');
-    list.innerHTML = cut.length
-      ? cut.map(cardHtml).join('')
-      : '<div class="empty">조건에 맞는 대학이 없어요. 지역·종류를 다시 골라 주세요.</div>';
+    // 머리 줄은 'N개 검색됨' 하나 (2026-09-24 대표 지시) — 판정 수·정렬 표기는 뺐다.
+    // 단계 필터·상향/하향 정렬 때문에 입결을 전부 받는 중이면 그 진행만 뒤에 붙인다.
+    document.getElementById('count').textContent = rows.length + '개 검색됨'
+      + (cutLoading ? ' · 입결 불러오는 중' + (cutLoading[1] ? ' ' + cutLoading[0] + '/' + cutLoading[1] : '') : '');
+
+    var html = '';
+    cut.forEach(function (r) { html += cardHtml(r); });
+    // 카드를 키보드로 여닫으면 innerHTML 이 통째로 바뀌면서 포커스가 사라진다 —
+    // 누르고 있던 카드로 되돌려 준다(Enter 로 펼치고 바로 Space 로 접을 수 있게).
+    var focused = document.activeElement;
+    var focusId = focused && focused.closest && focused.closest('.ucard')
+      ? focused.closest('.ucard').getAttribute('data-id') : null;
+    list.innerHTML = cut.length ? html
+      : '<div class="empty">조건에 맞는 대학이 없어요. 대학·학과 이름이나 지역·종류를 다시 골라 주세요.</div>';
+    if (focusId) {
+      var back = list.querySelector('.ucard[data-id="' + focusId.replace(/"/g, '\\"') + '"]');
+      if (back) { back.focus({ preventScroll: true }); }
+    }
     var mw = document.getElementById('morewrap');
     mw.hidden = rows.length <= cut.length;
     document.getElementById('more').textContent = '더 보기 (' + (rows.length - cut.length) + '곳 남음)';
+
+    // 고른 대학이 목록에서 사라지면 맨 위 대학으로 — 손으로 닫았으면(userClosed) 그대로 둔다
+    var sel = null;
+    for (var i = 0; i < rows.length; i++) { if (rows[i].univ.id === openId) { sel = rows[i]; } }
+    if (!sel && rows.length && !userClosed) { sel = rows[0]; openId = sel.univ.id; cutKey = null; }
+    if (!rows.length) { openId = null; }
+    detail.innerHTML = sel ? panelHtml(sel, sel._m)
+      : '<div class="empty">왼쪽에서 대학을 고르면 학과별 합격 가능성이 여기에 나옵니다.</div>';
+    layoutChartLabels(detail);
+    if (sel) {
+      [].forEach.call(list.querySelectorAll('.ucard'), function (b) {
+        if (b.getAttribute('data-id') === sel.univ.id) { b.setAttribute('aria-current', 'true'); }
+      });
+      loadCut(sel.univ.id);
+    }
+    // 화면에 뜬 카드 몇 곳은 미리 받아 둔다 — 카드 색이 차례로 채워진다.
+    // 한 번에 여섯 곳까지만 보낸다(작은 파일 253개를 한꺼번에 부르지 않게).
+    // 일괄 로딩이 도는 중이면 그 줄이 이미 목록 차례대로 받고 있으니 건드리지 않는다.
+    if (CUT_SPLIT && CUT_META && !cutLoading) {
+      var budget = 6;
+      for (var pi = 0; pi < cut.length && budget > 0; pi++) {
+        var pid = cut[pi].univ.id;
+        if (CUTS[pid] || cutPending[pid] || cutFailed[pid] || !CUT_META[pid]) { continue; }
+        loadCut(pid); budget--;
+      }
+    }
   }
 
+  // ── 입력 ───────────────────────────────────────────────────────────────────
+  //
+  // 카드 하나가 곧 상세를 여닫는 손잡이다 (2026-09-24 대표 지시). PC 는 같은 카드를 다시
+  // 누르면 우 상세가 닫히고, 그 뒤로는 목록이 바뀌어도 첫 대학을 자동으로 펼치지 않는다
+  // (userClosed). 폰은 상세가 시트로 덮이니 시트 쪽에서 닫는다.
   list.addEventListener('click', function (e) {
-    var b = e.target.closest ? e.target.closest('[data-open]') : null;
+    var b = e.target.closest ? e.target.closest('.ucard') : null;
     if (!b) { return; }
-    var id = b.getAttribute('data-open');
-    openId = openId === id ? null : id;
+    var id = b.getAttribute('data-id');
+    if (wideMQ.matches && id === openId) { closeDetail(); return; }
+    if (id !== openId) { openId = id; cutKey = null; }
+    userClosed = false;
+    if (!wideMQ.matches) { document.body.classList.add('sheet-open'); }
+    render();
+    if (!wideMQ.matches && colDetail) { colDetail.scrollTop = 0; }
+  });
+  /**
+   * 상세 안에서 **기능 없는 자리**를 누르면 닫는다 — 대학 이름·머리 영역, 환산표, 여백.
+   * 링크·버튼·입력/선택 상자·전형 탭과 학과 행(data-nolock)은 건드리지 않고,
+   * 글자를 끌어 고른 직후의 클릭도 여닫기가 아니다.
+   */
+  var NO_TOGGLE = 'a,button,input,select,textarea,label,summary,[data-nolock]';
+  function closeDetail() {
+    if (!wideMQ.matches) { document.body.classList.remove('sheet-open'); return; }
+    userClosed = true; openId = null; cutKey = null;
+    render();
+  }
+  colDetail.addEventListener('click', function (e) {
+    var t = e.target;
+    var c = t.closest ? t.closest('[data-cut]') : null;
+    if (c) { cutKey = c.getAttribute('data-cut'); render(); return; }
+    if (t.closest && t.closest(NO_TOGGLE)) { return; }
+    var sel = window.getSelection ? window.getSelection() : null;
+    if (sel && !sel.isCollapsed && String(sel).replace(/^\s+|\s+$/g, '')) { return; }
+    closeDetail();
+  });
+  // 상세 패널의 학과 정렬 드롭다운 (2026-09-24 대표 지시)
+  detail.addEventListener('change', function (e) {
+    var s = e.target.closest ? e.target.closest('[data-depsort]') : null;
+    if (!s) { return; }
+    depSort = s.value;
     render();
   });
+  document.getElementById('sheetClose').addEventListener('click', function () {
+    document.body.classList.remove('sheet-open');
+  });
+  // 폰에서 시트가 열려 있으면 Esc 로 닫는다
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { document.body.classList.remove('sheet-open'); }
+  });
 
+  updateGate();
   render();
+
+  // 빌드가 입결을 대학별로 떼어 놓은 경우, 첫 화면은 메타 색인(몇 KB)만 받는다.
+  // 그 다음부터 카드를 고르거나 화면에 뜬 카드가 차례로 자기 파일을 받는다.
+  // (scripts/build_admission_calc.py 가 gzip 150KB 한계로 결정한다)
+  if (CUT_SPLIT && window.fetch) {
+    fetch('results-index.json').then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (j) { if (j) { CUT_META = j; render(); } })
+      .catch(function () { /* 못 받으면 합격선 섹션만 안 뜬다 */ });
+  }
 })();
 </script>
 </body>
