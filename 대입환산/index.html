@@ -440,6 +440,10 @@ h1{font-size:30px;margin:0 0 10px}
   --sc-shadow:0 1px 2px rgba(0,0,0,.05);
   --grid:hsl(240 5.9% 86%);
   --mark:hsl(240 5% 40%);
+  /* 미니 바 이름표 3종 색 (2026-09-24 대표 지시) — 새 색을 만들지 않고 위 단계 색을 그대로 쓴다 */
+  --lab-best:var(--b4);    /* 최고합격자 — 빨강 */
+  --lab-mean:var(--b3);    /* 합격자 평균 — 초록 */
+  --lab-worst:var(--b2);   /* 최저합격자 — 파랑 */
 }
 /* ── 판정 단계 필터 (2026-09-24 대표 지시) ───────────────────────────────────
    매우 상향 … 매우 하향 5개를 겹쳐 고른다. 칩마다 그 단계 색으로 테두리·점을 두고,
@@ -598,16 +602,25 @@ h1{font-size:30px;margin:0 0 10px}
 .dep-diff b{color:var(--sc-fg);font-weight:600}
 /* 미니 바 — 폭만 늘어나는 좌표계라 눈금 숫자·포인트 이름표는 HTML 로 얹는다 */
 .dep-chart{position:relative;margin-top:6px;padding:0 1px}
-.dep-chart svg{display:block;width:100%;height:34px}
+.dep-chart .dep-bar{display:block;width:100%;height:34px}
 /* 포인트 이름표 — 막대 위·아래 두 줄에 나눠 붙인다(겹치면 렌더 뒤 자리를 바꾼다).
    글자는 줄이지 않고 두 줄로 접는다 — 폰에서도 이름을 그대로 읽게. */
-.dep-labs{position:relative;height:28px}
+.dep-labs{position:relative;height:28px;z-index:1}
 .dep-labs i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:9.5px;
   font-weight:600;line-height:1.3;color:var(--sc-mutedfg);text-align:center;max-width:56px;
   word-break:keep-all}
 .dep-labs.top i{bottom:1px}
 .dep-labs.bot i{top:1px}
 .dep-labs i.me{color:var(--sc-fg);font-weight:700}
+/* 세 이름표만 단계 색으로 — 나머지(상위 50·70%, 내 등급)는 지금 색 그대로 (2026-09-24 대표 지시) */
+.dep-labs i.lb-best{color:var(--lab-best)}
+.dep-labs i.lb-mean{color:var(--lab-mean)}
+.dep-labs i.lb-worst{color:var(--lab-worst)}
+/* 이름표 → 포인트 점선 연결선. 이름표가 겹침 때문에 옆으로 밀려도 사선으로 그 포인트를 가리킨다.
+   높이는 위 이름표 28 + 막대 34 + 아래 이름표 28 = 90px 고정이고, viewBox 를 두지 않아
+   좌표가 곧 CSS 픽셀이다(막대와 달리 가로로 늘어나도 선 굵기·점 간격이 변하지 않는다). */
+.dep-leads{position:absolute;left:1px;right:1px;top:0;height:90px;overflow:visible;
+  pointer-events:none;z-index:0}
 .dep-ax{position:relative;height:13px;margin-top:1px}
 .dep-ax i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:9.5px;
   font-weight:500;color:var(--sc-mutedfg);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -1913,6 +1926,13 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   }
   /** 분포 막대의 색 — 단계 색(5색)과 섞이지 않게 중립 청록 한 가지의 농도 차만 쓴다 */
   var DIST_HUE = '#0f766e';
+  /**
+   * 이름표 색 (2026-09-24 대표 지시) — 세 개만 단계 색으로 구분하고,
+   * '합격자 상위 50/70%' 와 '내 등급' 은 지금 색을 그대로 둔다.
+   */
+  var LAB_CLS = { '최고합격자': 'best', '합격자 평균': 'mean', '최저합격자': 'worst' };
+  var LEAD_COLOR = { best: 'var(--lab-best)', mean: 'var(--lab-mean)', worst: 'var(--lab-worst)',
+    me: 'var(--sc-fg)', '': 'var(--sc-mutedfg)' };
 
   /**
    * 미니 바. 공개 포인트가 만드는 구간을 막대 하나로 깔고(50%컷 위쪽이 진하고 최저로 갈수록
@@ -1921,7 +1941,8 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
    */
   function chartSvg(dom, j, myVal, color) {
     var dt = j.detail, id = 'g' + (++gid);
-    var s = '<svg viewBox="0 0 100 34" preserveAspectRatio="none" role="img" aria-hidden="true" focusable="false">';
+    var s = '<svg class="dep-bar" viewBox="0 0 100 34" preserveAspectRatio="none" role="img"' +
+      ' aria-hidden="true" focusable="false">';
     ticksOf(dom).forEach(function (v) {
       var x = xOf(dom, v).toFixed(2);
       s += ln(x, 17, x, 27, 'var(--grid)', 1);
@@ -1998,7 +2019,8 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     }
     s += '</svg>';
 
-    // 이름표는 막대 위·아래 번갈아 — 가까운 포인트끼리 글자가 겹치지 않게
+    // 이름표는 막대 위·아래 번갈아 — 가까운 포인트끼리 글자가 겹치지 않게.
+    // data-x 는 그 이름표가 가리키는 포인트의 가로 위치(%)다 — 렌더 뒤 점선을 그 자리로 긋는다.
     var top = [], bot = [];
     marks.slice().sort(function (a, b) { return xOf(dom, a.v) - xOf(dom, b.v); })
       .forEach(function (mk, i) {
@@ -2006,8 +2028,10 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         var st = x < 10 ? 'left:0;transform:none;text-align:left'
           : x > 90 ? 'right:0;transform:none;text-align:right'
           : 'left:' + x.toFixed(2) + '%';
-        var el = '<i' + (mk.kind === 'me' ? ' class="me"' : '') + ' style="' + st + '">' +
-          esc(mk.t) + '</i>';
+        var cls = (mk.kind === 'me' ? 'me' : '') + (LAB_CLS[mk.t] ? ' lb-' + LAB_CLS[mk.t] : '');
+        cls = cls.replace(/^ +| +$/g, '');
+        var el = '<i' + (cls ? ' class="' + cls + '"' : '') + ' data-x="' + x.toFixed(3) +
+          '" style="' + st + '">' + esc(mk.t) + '</i>';
         (i % 2 === 0 ? top : bot).push(el);
       });
     var ax = ticksOf(dom).map(function (v) {
@@ -2015,53 +2039,96 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     }).join('');
     return '<div class="dep-labs top">' + top.join('') + '</div>' + s +
       '<div class="dep-labs bot">' + bot.join('') + '</div>' +
+      '<svg class="dep-leads" aria-hidden="true" focusable="false"></svg>' +
       '<div class="dep-ax">' + ax + '</div>';
   }
 
+  // 미니 바 기하 — 막대 중심은 viewBox 세로 22(=CSS 픽셀 22, 높이 34 를 그대로 쓴다).
+  // LEAD_GAP 은 점선이 막대(굵기 8)·내 점(지름 11.4)에 닿기 전에 멈추는 거리다.
+  var BAR_CY = 22, LEAD_GAP = 6, LAB_GAP = 4;
+
   /**
-   * 이름표 겹침 풀기 — 글자 폭은 그릴 때 알 수 없어서, 그린 뒤 실제 폭을 재어
-   * 왼쪽부터 위·아래 줄에 번갈아 끼운다. 줄만 바꾸므로 가로 위치는 그대로다.
-   * (읽기 → 쓰기 순서를 지켜 레이아웃을 한 번만 돌게 한다)
+   * 이름표 가로 자리 잡기 — 포인트 가운데를 원하는 자리로 삼아 위·아래 두 줄에 끼우고,
+   * 같은 줄에서 붙으면 오른쪽으로 민다. 오른쪽 끝을 넘으면 뒤에서부터 되짚어 왼쪽으로 당겨
+   * 넣는다(막대 밖으로 글자가 나가지 않게). 반환값의 각 항목에 최종 left(화면 좌표)가 붙는다.
+   */
+  function placeLabels(items, boxL, boxR) {
+    var rows = [[], []], cur = [boxL - LAB_GAP, boxL - LAB_GAP];
+    items.forEach(function (it) {
+      var want = Math.min(Math.max(it.px - it.w / 2, boxL), Math.max(boxL, boxR - it.w));
+      var r = want >= cur[0] + LAB_GAP ? 0
+        : want >= cur[1] + LAB_GAP ? 1
+        : (cur[0] <= cur[1] ? 0 : 1);
+      it.l = Math.max(want, cur[r] + LAB_GAP);
+      rows[r].push(it);
+      cur[r] = it.l + it.w;
+    });
+    rows.forEach(function (list) {
+      if (!list.length) { return; }
+      var tail = list[list.length - 1];
+      if (tail.l + tail.w <= boxR) { return; }
+      var nextL = boxR + LAB_GAP;
+      for (var i = list.length - 1; i >= 0; i--) {
+        list[i].l = Math.min(list[i].l, nextL - LAB_GAP - list[i].w);
+        nextL = list[i].l;
+      }
+      var prev = boxL - LAB_GAP;                 // 왼쪽 벽을 넘었으면 다시 밀어 넣는다
+      list.forEach(function (it) {
+        it.l = Math.max(it.l, prev + LAB_GAP);
+        prev = it.l + it.w;
+      });
+    });
+    return rows;
+  }
+
+  /**
+   * 이름표 겹침 풀기 + 점선 연결선 — 글자 폭은 그릴 때 알 수 없어서, 그린 뒤 실제 폭을 재어
+   * 위·아래 줄에 나눠 끼우고 같은 줄에서 겹치면 좌우로 민다. 자리를 잡은 뒤 이름표마다
+   * 자기 포인트까지 1px 점선을 긋는다(밀려 있으면 사선). (읽기 → 쓰기 순서를 지킨다)
    */
   function layoutChartLabels(root) {
-    var GAP = 4;
     var work = [].slice.call(root.querySelectorAll('.dep-chart')).map(function (ch) {
       var top = ch.querySelector('.dep-labs.top'), bot = ch.querySelector('.dep-labs.bot');
-      if (!top || !bot) { return null; }
-      var box = top.getBoundingClientRect();
+      var bar = ch.querySelector('.dep-bar'), leads = ch.querySelector('.dep-leads');
+      if (!top || !bot || !bar) { return null; }
+      var box = bar.getBoundingClientRect(), cr = ch.getBoundingClientRect();
       if (!box.width) { return null; }          // 숨어 있으면 잴 수 없다 — 다음 렌더에서
       var items = [].slice.call(top.children).concat([].slice.call(bot.children))
         .map(function (el) {
           var r = el.getBoundingClientRect();
-          return { el: el, l: r.left, w: r.width };
+          var k = el.classList.contains('lb-best') ? 'best'
+            : el.classList.contains('lb-mean') ? 'mean'
+            : el.classList.contains('lb-worst') ? 'worst'
+            : el.classList.contains('me') ? 'me' : '';
+          return { el: el, w: r.width, h: r.height, col: LEAD_COLOR[k],
+            px: box.left + box.width * (parseFloat(el.getAttribute('data-x')) || 0) / 100 };
         });
       if (!items.length) { return null; }
-      items.sort(function (a, b) { return a.l - b.l; });
-      return { top: top, bot: bot, box: box, items: items };
+      items.sort(function (a, b) { return a.px - b.px; });
+      return { top: top, bot: bot, leads: leads, box: box, cr: cr, items: items };
     }).filter(Boolean);
     work.forEach(function (w) {
-      var rows = [[], []], last = [-1e9, -1e9];
-      w.items.forEach(function (it) {
-        var pick = it.l >= last[0] + GAP ? 0
-          : it.l >= last[1] + GAP ? 1
-          : (last[0] <= last[1] ? 0 : 1);
-        rows[pick].push(it);
-        last[pick] = Math.max(last[pick], it.l + it.w);
-      });
-      // 같은 줄에서도 붙으면 오른쪽으로 살짝 밀어 띄운다 (칸 밖으로는 안 나간다)
-      rows.forEach(function (list, i) {
-        var prev = -1e9;
+      // 이름표 줄의 위 끝(화면 좌표) — 위 줄은 아래끝 정렬(bottom:1px), 아래 줄은 위끝(top:1px)
+      var yTop = w.box.top - 1, yBot = w.box.bottom + 1;
+      var d = '';
+      placeLabels(w.items, w.box.left, w.box.right).forEach(function (list, i) {
         list.forEach(function (it) {
-          var l = Math.max(it.l, prev + GAP);
-          l = Math.min(l, w.box.right - it.w);
-          l = Math.max(l, w.box.left);
-          it.el.style.left = (l - w.box.left).toFixed(1) + 'px';
+          it.el.style.left = (it.l - w.box.left).toFixed(1) + 'px';
           it.el.style.right = 'auto';
           it.el.style.transform = 'none';
-          prev = l + it.w;
           (i === 0 ? w.top : w.bot).appendChild(it.el);
+          // 점선은 글자 쪽 끝을 포인트에 가장 가까운 지점으로 잡는다 — 글자 위라면 수직선
+          var cx = it.w > 12 ? Math.min(Math.max(it.px, it.l + 6), it.l + it.w - 6)
+            : it.l + it.w / 2;
+          d += '<line x1="' + (cx - w.box.left).toFixed(1) +
+            '" y1="' + ((i === 0 ? yTop : yBot) - w.cr.top).toFixed(1) +
+            '" x2="' + (it.px - w.box.left).toFixed(1) +
+            '" y2="' + ((w.box.top + BAR_CY + (i === 0 ? -LEAD_GAP : LEAD_GAP)) - w.cr.top).toFixed(1) +
+            '" stroke="' + it.col + '" stroke-width="1" stroke-linecap="round"' +
+            ' stroke-dasharray="1 2.5"/>';
         });
       });
+      if (w.leads) { w.leads.innerHTML = d; }
     });
   }
 
