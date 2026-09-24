@@ -145,6 +145,22 @@ h1{font-size:30px;margin:0 0 10px}
   flex:none;font:inherit;color:var(--text-2);cursor:pointer}
 .avgline .clear:hover{background:var(--surface-3)}
 .avgline .clear svg{display:block}
+/* 게이트 (2026-09-24 대표 지시) — 입력 중엔 계산하지 않고, 7과목을 다 넣고 '이 점수로 검색'을
+   눌렀을 때만 목록을 낸다. 안내 줄은 빈 과목(회색) → 평균(초록) → 점수 바뀜(빨강) 셋. */
+.avgline #avg.todo{color:var(--text-3)}
+.avgline #avg.stale{color:#b8392b}
+.gobtn{display:block;width:100%;margin-top:12px;min-height:46px;border:0;border-radius:var(--r-lg);
+  background:var(--accent);color:#fff;font:inherit;font-size:15.5px;font-weight:700;cursor:pointer;
+  box-shadow:0 3px 0 var(--accent-strong),0 8px 16px rgba(11,122,106,.18)}
+.gobtn:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 var(--accent-strong)}
+.gobtn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.prehint{margin:28px 0 0;background:var(--surface);border:1px dashed var(--border-strong,var(--border));
+  border-radius:var(--r-lg);padding:18px 16px;text-align:center;font-size:14px;font-weight:600;
+  color:var(--text-3);word-break:keep-all}
+.stalebar{margin:0 0 10px;background:#fbe1dd;color:#a8463c;border:1px solid #f2ccc6;
+  border-radius:var(--sc-radius,.5rem);padding:10px 14px;font-size:13.5px;font-weight:700;word-break:keep-all}
+/* 옛 점수 결과는 흐리게 — 지금 점수 결과로 오해하지 않게 */
+#results.stale .col-list,#results.stale .dpanel{opacity:.45}
 /* 제목 줄 — 오른쪽에 도움말(?) 버튼이 붙는다. PC 에서는 아래 미디어쿼리가 가운데로 옮긴다. */
 .intro h1{display:flex;align-items:center;justify-content:flex-start;gap:10px}
 .help{flex:none;width:28px;height:28px;padding:0;border:1.5px solid var(--accent);border-radius:50%;
@@ -794,6 +810,29 @@ h1{font-size:30px;margin:0 0 10px}
   .dh-main{flex:1 1 100%}
   /* 이름표가 두 줄로 접힐 자리를 준다 (2026-09-24 대표 지시: 폰에서 축약 없이 두 줄 허용) */
   .dep-labs{height:29px}
+  /* 점수 칸 4+3 두 줄 (2026-09-24 대표 지시, 원문 순서 그대로) — 국 영 과 도 / 수 사 한.
+     DOM 은 GED_SUBJECTS 순서라 order 로만 자리를 바꾼다. 과목명은 칸 위 가운데(PC 와 같은 모양). */
+  .pane-scores .scores{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:auto;
+    grid-auto-flow:row;gap:6px}
+  .pane-scores .srow{background:none;padding:0;display:flex;flex-direction:column;
+    align-items:stretch;gap:4px}
+  .pane-scores .srow span.nm{width:auto;text-align:center;font-size:13px}
+  .pane-scores .srow .val{display:flex;align-items:center;gap:2px;background:var(--surface-2);
+    border-radius:var(--r-md);padding:7px 6px}
+  .pane-scores .srow input{width:100%;min-width:0;text-align:center}
+  .srow[data-s="korean"]{order:1}.srow[data-s="english"]{order:2}.srow[data-s="science"]{order:3}
+  .srow[data-s="morality"]{order:4}.srow[data-s="math"]{order:5}.srow[data-s="social"]{order:6}
+  .srow[data-s="history"]{order:7}
+  /* 판정 칩 — 좌우 여백이 같게 칸을 균등 분할 (2026-09-24 대표 지시). 다섯 개가 한 줄에 안
+     들어가는 폭(<440)은 3+2 두 줄(6칸 격자에 2칸씩·3칸씩), 들어가면 5칸 한 줄. PC 는 그대로. */
+  .bandrow .chips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));width:100%;
+    overflow:visible;gap:6px}
+  .bandrow .chips .bandchip{grid-column:span 2;justify-content:center;padding:5px 4px;min-width:0}
+  .bandrow .chips .bandchip:nth-child(n+4){grid-column:span 3}
+}
+@media (min-width:440px) and (max-width:560px){
+  .bandrow .chips{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .bandrow .chips .bandchip,.bandrow .chips .bandchip:nth-child(n+4){grid-column:auto}
 }
 </style>
 <script type="application/ld+json">
@@ -932,6 +971,7 @@ h1{font-size:30px;margin:0 0 10px}
   <div class="card">
     <div class="avgline"><span id="avg">점수를 입력해 주세요</span><button type="button" class="clear" id="clear" aria-label="다시 쓰기" title="다시 쓰기"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button></div>
     <div class="scores" id="scores"></div>
+    <button type="button" class="gobtn" id="go" disabled>이 점수로 검색</button>
   </div>
   </section>
 
@@ -949,7 +989,7 @@ h1{font-size:30px;margin:0 0 10px}
     <!-- 판정 단계 필터 (2026-09-24 대표 지시) — 여러 개를 겹쳐 고르고, 아무것도 안 고르면 전체.
          점수를 넣기 전에는 판정이 없으니 칩이 잠긴다. -->
     <div class="frow bandrow"><b>판정</b><div class="chips" id="bandChips"></div></div>
-    <p class="bandhint" id="bandHint" hidden>점수를 입력하면 쓸 수 있습니다</p>
+    <p class="bandhint" id="bandHint" hidden>점수로 검색하면 쓸 수 있습니다</p>
     <label class="toggle"><input type="checkbox" id="showOther" checked>판정 불가·미수집 포함</label>
   </div>
   </section>
@@ -962,9 +1002,13 @@ h1{font-size:30px;margin:0 0 10px}
   </section>
   </div><!-- /panes -->
 
+  <!-- 검색 전에는 목록을 그리지 않는다 (2026-09-24 대표 지시) -->
+  <p class="prehint" id="preHint">7과목을 모두 입력하고 '이 점수로 검색'을 누르면 대학별 환산 결과가 나와요.</p>
+  <div id="results" hidden>
   <div class="listhead">
     <h2 id="univ-list">대학별 환산 결과 · 학과별 합격 가능성</h2>
   </div>
+  <p class="stalebar" id="staleBar" hidden>점수가 바뀌었어요 — 다시 검색해 주세요. 아래는 이전 점수로 계산한 결과예요.</p>
   <!-- 조건 칸에서 떼어 낸 독립 상자 (2026-09-24 대표 지시) -->
   <div class="nonebox">
     <label class="toggle"><input type="checkbox" id="showNone" checked>검정고시 점수 내신 미반영 대학 표시</label>
@@ -991,6 +1035,7 @@ h1{font-size:30px;margin:0 0 10px}
       <div class="dpanel" id="detail"></div>
     </div>
   </div>
+  </div><!-- /results -->
   <noscript>
     <p class="empty">계산기는 브라우저에서 동작합니다. 자바스크립트를 켜면 대학별 환산 결과가 표시됩니다. 아래 수록 범위와 환산 방식 설명은 그대로 보실 수 있습니다.</p>
   </noscript>
@@ -1143,6 +1188,8 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var openId = null;     // 고른 대학 id — 우 상세 패널에 뜬다
   var userClosed = false; // PC 에서 손으로 닫았나 — 그랬으면 첫 대학을 자동으로 다시 펼치지 않는다
   var hasScores = false;
+  // '이 점수로 검색'을 눌렀을 때의 점수 — 목록·환산은 이것으로만 낸다(입력 중 실시간 계산 없음)
+  var searched = null;
 
   // ── 전년도 합격선 비교 ──
   // 대학이 공개한 전년도 입시결과. 번들이 커지면 빌드 스크립트가 대학 하나씩 떼어
@@ -1261,7 +1308,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var box = document.getElementById('scores');
   box.innerHTML = G.GED_SUBJECTS.map(function (s) {
     // .val 은 PC 에서만 실제 상자가 된다(폰은 display:contents) — 과목명을 상자 밖 위로 빼기 위한 묶음
-    return '<label class="srow"><span class="nm">' + esc(SUB[s]) + '</span>' +
+    return '<label class="srow" data-s="' + s + '"><span class="nm">' + esc(SUB[s]) + '</span>' +
       '<span class="val">' +
       '<input type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="-" data-s="' + s + '" aria-label="' + esc(SUB[s]) + ' 점수">' +
       '<span class="unit">점</span></span></label>';
@@ -1276,13 +1323,56 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       if (String(x) !== el.value) { el.value = x; }
       scores[s] = x;
     }
-    render();
+    updateGate();
+  });
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.getAttribute('data-s')) { e.preventDefault(); runSearch(); }
   });
   document.getElementById('clear').addEventListener('click', function () {
     scores = {};
     [].forEach.call(box.querySelectorAll('input'), function (i) { i.value = ''; });
-    render();
+    updateGate();
   });
+
+  // ── 검색 게이트 (2026-09-24 대표 지시) ──────────────────────────────────────
+  // 7과목이 다 차야 버튼이 켜지고, 누른 순간의 점수로만 목록을 낸다. 검색 뒤 점수를 고치면
+  // 결과는 두되 흐리게 하고 '다시 검색'을 띄운다. 웹은 저장하지 않는다(비로그인 정적 페이지).
+  var goBtn = document.getElementById('go');
+  function missingSubjects() {
+    return G.GED_SUBJECTS.filter(function (s) { return typeof scores[s] !== 'number'; });
+  }
+  function isStale() {
+    return !!searched && G.GED_SUBJECTS.some(function (s) { return scores[s] !== searched[s]; });
+  }
+  function updateGate() {
+    var miss = missingSubjects(), stale = isStale();
+    var complete = !miss.length;
+    var avgEl = document.getElementById('avg');
+    var avg = complete ? G.GED_SUBJECTS.reduce(function (a, s) { return a + scores[s]; }, 0) / G.GED_SUBJECTS.length : null;
+    avgEl.className = !complete ? 'todo' : stale ? 'stale' : '';
+    avgEl.textContent = !complete
+      ? miss.length + '과목을 더 입력해 주세요 (' + miss.map(function (s) { return SUB[s]; }).join('·') + ')'
+      : stale ? '평균 ' + n2(avg) + '점 · 점수가 바뀌었어요 — 다시 검색해 주세요'
+      : '평균 ' + n2(avg) + '점';
+    goBtn.disabled = !(complete && (!searched || stale));
+    goBtn.textContent = stale ? '바뀐 점수로 다시 검색' : '이 점수로 검색';
+    var res = document.getElementById('results');
+    res.classList.toggle('stale', stale);
+    document.getElementById('staleBar').hidden = !stale;
+  }
+  function runSearch() {
+    if (goBtn.disabled) { return; }
+    searched = {};
+    G.GED_SUBJECTS.forEach(function (s) { searched[s] = scores[s]; });
+    shown = STEP;
+    document.getElementById('preHint').hidden = true;
+    document.getElementById('results').hidden = false;
+    updateGate();
+    render();
+    var h = document.getElementById('univ-list');
+    if (h && h.scrollIntoView) { h.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+  goBtn.addEventListener('click', runSearch);
 
   // ── 제목 옆 ? — '검정고시 대입 환산이란' 설명 팝업 (2026-09-22 대표 지시) ──
   (function () {
@@ -2254,16 +2344,38 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       });
       if (!items.length) { return null; }
       items.sort(function (a, b) { return a.px - b.px; });
-      return { rowEls: rowEls, rowY: rowY, leads: leads, box: box, cr: cr, items: items };
+      return { rowEls: rowEls, rowY: rowY, leads: leads, box: box, cr: cr, items: items,
+        bar: bar, chart: ch, zoom: !!ch.querySelector('.dep-nav') };
     }).filter(Boolean);
     work.forEach(function (w) {
       var d = '';
-      placeLabels(w.items, w.box.left, w.box.right).forEach(function (list, i) {
+      var placed = placeLabels(w.items, w.box.left, w.box.right);
+      placed.forEach(function (list, i) {
         list.forEach(function (it) {
           it.el.style.left = (it.l - w.box.left).toFixed(1) + 'px';
           it.el.style.right = 'auto';
           it.el.style.transform = 'none';
           w.rowEls[i].appendChild(it.el);
+        });
+      });
+      // 확대 막대가 켜진 행은 이름표 줄이 실제로 쓰는 높이만 잡는다 (2026-09-24 대표 지시) —
+      // 안 쓰는 둘째 줄(r1) 28px 와 한 줄짜리 이름표 위 빈칸 때문에 바로 위 문장과 멀었다.
+      // 쓰는 줄은 '가장 큰 이름표 높이 + 3px'(아래 1px·위 2px) — 바깥 margin-top 6px 과 합쳐
+      // 문장과 이름표 사이가 8px 이다. 확대 없는 행은 그대로 둔다.
+      if (w.zoom) {
+        [0, 1].forEach(function (i) {
+          var hs = placed[i].map(function (it) { return it.h; });
+          w.rowEls[i].style.height = hs.length ? (Math.max.apply(null, hs) + 3) + 'px' : '0px';
+        });
+        // 줄 높이가 바뀌었으니 막대·줄 위치를 다시 잰다
+        w.box = w.bar.getBoundingClientRect();
+        w.cr = w.chart.getBoundingClientRect();
+        w.rowY = [w.rowEls[0].getBoundingClientRect().bottom - 1,
+          w.rowEls[1].getBoundingClientRect().bottom - 1,
+          w.rowEls[2].getBoundingClientRect().top + 1];
+      }
+      placed.forEach(function (list, i) {
+        list.forEach(function (it) {
           // 점선은 글자 쪽 끝을 포인트에 가장 가까운 지점으로 잡는다 — 글자 위라면 수직선
           var cx = it.w > 12 ? Math.min(Math.max(it.px, it.l + 6), it.l + it.w - 6)
             : it.l + it.w / 2;
@@ -2644,6 +2756,8 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
           return '<b>' + esc(G.TRACK_LABELS[t]) + '</b> ' + esc(v);
         }).join(' · ') + '</p>';
     }
+    // 대학 규칙·보수 적용 같은 계산 메모 — 앱 카드의 scoreNote 와 같은 문장
+    if (r.ok && r.scoreNote) { out += '<p class="dh-conv">' + esc(r.scoreNote) + '</p>'; }
     if (r.ok && r.final) {
       out += '<p class="dh-conv">대학 최종 득점 <b>' + esc(r.final.value) + esc(r.final.unit) +
         '</b> · ' + esc(r.final.formula) + '</p>';
@@ -2705,9 +2819,10 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
   // ── 렌더 ───────────────────────────────────────────────────────────────────
   function render() {
-    var all = G.convertAll(scores, RULES);
-    var entered = G.GED_SUBJECTS.filter(function (s) { return typeof scores[s] === 'number'; });
-    hasScores = entered.length > 0;
+    // 검색 전에는 목록을 만들지 않는다 — 판정 칩 잠금만 칠한다
+    hasScores = !!searched;
+    if (!searched) { paintBandChips(); return; }
+    var all = G.convertAll(searched, RULES);
 
     var rows = [];
     all.forEach(function (r) {
@@ -2741,10 +2856,6 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
         b._ub.kind === 'ok' ? BAND_VAL[b._ub.band] : null);
       return c || byName(a, b);
     });
-
-    var avg = entered.length
-      ? entered.reduce(function (a, s) { return a + scores[s]; }, 0) / entered.length : null;
-    document.getElementById('avg').textContent = avg != null ? '평균 ' + n2(avg) + '점' : '점수를 입력해 주세요';
 
     paintBandChips();
     var cut = rows.slice(0, shown);
@@ -2848,6 +2959,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     if (e.key === 'Escape') { document.body.classList.remove('sheet-open'); }
   });
 
+  updateGate();
   render();
 
   // 빌드가 입결을 대학별로 떼어 놓은 경우, 첫 화면은 메타 색인(몇 KB)만 받는다.
