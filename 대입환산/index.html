@@ -267,9 +267,26 @@ h1{font-size:30px;margin:0 0 10px}
 .detail h4{font-family:inherit;font-size:12.5px;font-weight:800;color:var(--text-2);margin:0 0 6px}
 .detail h4+*{margin-top:0}
 .detail section+section{margin-top:13px}
+/* '환산 기준' 두 열 — 왼쪽 대학 공개 환산표(내용 폭), 오른쪽 과목별 환산 (2026-09-24 대표 지시).
+   DOM 은 '과목별 → 표' 순서라 폰에서는 그대로 세로로 쌓이고, 넓은 화면에서만 자리를 바꾼다. */
+.cbasis{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px 24px;align-items:start}
+/* 두 열은 같은 줄에서 시작한다 — '.detail section+section{margin-top:13px}' 이 두 번째 열을
+   13px 내리던 것을 여기서 되돌린다(소제목 두 개가 어긋나 보였다) */
+.cbasis>.cb-tbl,.cbasis>.cb-sub{margin-top:0}
+.cbasis>.cb-tbl{grid-column:1;grid-row:1}
+.cbasis>.cb-sub{grid-column:2;grid-row:1}
+.cbasis.one{grid-template-columns:minmax(0,1fr)}
+.cbasis.one>.cb-sub{grid-column:1}
+.detail .cbasis+section{margin-top:13px}
+@media (max-width:560px){
+  .cbasis{grid-template-columns:minmax(0,1fr);gap:13px}
+  .cbasis>.cb-tbl,.cbasis>.cb-sub{grid-column:1;grid-row:auto}
+}
 .persub{list-style:none;margin:0;padding:0}
-.persub li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:2px 0}
-.persub li span{font-weight:600;color:var(--text-2)}
+/* '국어  100점 → 1등급' 처럼 과목명과 값이 붙은 한 덩어리 — 양끝 정렬(space-between)을 쓰면
+   과목명과 값이 열 폭만큼 벌어져 서로 읽히지 않는다 (2026-09-24 대표 지시) */
+.persub li{display:flex;justify-content:flex-start;gap:8px;font-size:12.5px;padding:2px 0}
+.persub li span{flex:none;width:3.5em;font-weight:600;color:var(--text-2)}
 .persub li b{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
 .persub li b i{font-style:normal;color:var(--text-3)}
 /* 구간표는 style.css 의 세로표(.btwrap/.bt)를 그대로 쓴다 — 정적 대학 페이지와 같은 형식.
@@ -444,6 +461,10 @@ h1{font-size:30px;margin:0 0 10px}
   --lab-best:var(--b4);    /* 최고합격자 — 빨강 */
   --lab-mean:var(--b3);    /* 합격자 평균 — 초록 */
   --lab-worst:var(--b2);   /* 최저합격자 — 파랑 */
+  /* 일반전형 강조 (2026-09-24 대표 지시, DESIGN.md §2) — 앱 --c-amber-soft 와 같은 값.
+     단계 색(빨강·초록·파랑)과 안 섞이게 따뜻한 쪽으로 고른 아주 연한 크림 하나다. */
+  --gen-soft:#FFF0D4;
+  --gen-line:#EADCB8;
 }
 /* ── 판정 단계 필터 (2026-09-24 대표 지시) ───────────────────────────────────
    매우 상향 … 매우 하향 5개를 겹쳐 고른다. 칩마다 그 단계 색으로 테두리·점을 두고,
@@ -568,6 +589,14 @@ h1{font-size:30px;margin:0 0 10px}
 .admchips button[data-none="1"]{color:var(--sc-mutedfg)}
 .admchips button[data-none="1"].on{color:#fff}
 /* 검정고시 출신자만 따로 집계해 공개한 입결 전형 — 칩 맨 앞에 두고 배지를 세운다 */
+/* 일반전형 — 전형이 많아 일반 학생 칸이 안 보인다. 아주 연한 크림 바탕 + 작은 '일반' 글자
+   (색만으로 뜻을 전하지 않는다, 2026-09-24 대표 지시). 고른 칩은 기존 진한 바탕을 지킨다. */
+.admchips button.gen{background:var(--gen-soft);border-color:var(--gen-line);color:var(--sc-fg)}
+.admchips button.gen:hover{background:#fbe9c8}
+.admchips button.gen.on{background:var(--sc-fg);border-color:var(--sc-fg);color:#fff}
+.admchips button .genb{display:inline-block;font-style:normal;font-size:10px;font-weight:700;
+  background:#fff;color:var(--sc-mutedfg);border-radius:.25rem;padding:0 4px;margin-right:5px}
+.admchips button.gen.on .genb{background:rgba(255,255,255,.24);color:#fff}
 .admchips button.gedonly{line-height:1.5}
 .admchips button .gedb{display:inline-block;font-style:normal;font-size:10px;font-weight:700;
   line-height:1.5;border-radius:.25rem;padding:0 5px;margin-right:5px;
@@ -583,12 +612,18 @@ h1{font-size:30px;margin:0 0 10px}
 .tblhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
   font-size:11px;font-weight:600;color:var(--sc-mutedfg);margin-bottom:8px}
 .tblhead span:last-child{flex:none;font-variant-numeric:tabular-nums}
+/* 고른 전형이 일반전형이면 표 머리줄에도 같은 연한 바탕 + '일반' (2026-09-24 대표 지시) */
+.tblhead.gen{background:var(--gen-soft);border-radius:.375rem;padding:4px 8px}
+.tblhead .genb{font-style:normal;font-weight:700;color:var(--sc-fg);margin-right:5px}
 
 /* 학과 한 줄 */
 .dep{border:1px solid var(--sc-border);border-radius:var(--sc-radius);background:#fff;
   padding:12px 14px;margin-bottom:8px}
 .dep.hit{background:var(--sc-muted)}
-.dep-r1{display:flex;align-items:center;justify-content:space-between;gap:10px}
+/* 판정 배지 → 학과명 순서. 배지 폭은 가장 긴 '매우 상향'·'판정 불가' 기준으로 못박는다
+   (2026-09-24 대표 지시) — 학과명이 행마다 다른 자리에서 시작하면 훑기가 어렵다. */
+.dep-r1{display:flex;align-items:center;gap:8px}
+.dep-r1>.pill{flex:none;width:70px;padding-left:2px;padding-right:2px;justify-content:center}
 .dep-nm{min-width:0;font-size:13px;font-weight:600;color:var(--sc-fg);letter-spacing:-.01em}
 .dep-nm em{font-style:normal;font-size:10.5px;font-weight:500;color:var(--sc-mutedfg);margin-left:6px}
 .dep-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
@@ -603,9 +638,11 @@ h1{font-size:30px;margin:0 0 10px}
 /* 미니 바 — 폭만 늘어나는 좌표계라 눈금 숫자·포인트 이름표는 HTML 로 얹는다 */
 .dep-chart{position:relative;margin-top:6px;padding:0 1px}
 .dep-chart .dep-bar{display:block;width:100%;height:34px}
-/* 포인트 이름표 — 막대 위·아래 두 줄에 나눠 붙인다(겹치면 렌더 뒤 자리를 바꾼다).
+/* 포인트 이름표 — **막대 위 두 줄이 먼저**고(r0 이 막대에 붙고 r1 이 그 위), 아래 줄(r2)은
+   마지막 수단이다 (2026-09-24 대표 지시). 비어 있으면 높이 0 이라 눈금이 막대 바로 밑으로 붙는다.
    글자는 줄이지 않고 두 줄로 접는다 — 폰에서도 이름을 그대로 읽게. */
 .dep-labs{position:relative;height:28px;z-index:1}
+.dep-labs.r2:empty{height:0}
 .dep-labs i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:9.5px;
   font-weight:600;line-height:1.3;color:var(--sc-mutedfg);text-align:center;max-width:56px;
   word-break:keep-all}
@@ -617,11 +654,12 @@ h1{font-size:30px;margin:0 0 10px}
 .dep-labs i.lb-mean{color:var(--lab-mean)}
 .dep-labs i.lb-worst{color:var(--lab-worst)}
 /* 이름표 → 포인트 점선 연결선. 이름표가 겹침 때문에 옆으로 밀려도 사선으로 그 포인트를 가리킨다.
-   높이는 위 이름표 28 + 막대 34 + 아래 이름표 28 = 90px 고정이고, viewBox 를 두지 않아
-   좌표가 곧 CSS 픽셀이다(막대와 달리 가로로 늘어나도 선 굵기·점 간격이 변하지 않는다). */
+   높이는 위 이름표 28+28 + 막대 34 = 90px 이고(overflow 가 보이니 아래 줄까지 그려진다),
+   viewBox 를 두지 않아 좌표가 곧 CSS 픽셀이다(막대와 달리 가로로 늘어나도 선 굵기·점 간격이 변하지 않는다). */
 .dep-leads{position:absolute;left:1px;right:1px;top:0;height:90px;overflow:visible;
   pointer-events:none;z-index:0}
-.dep-ax{position:relative;height:13px;margin-top:1px}
+/* 눈금은 막대 아래 끝(56+26=82)에서 5px — 막대 svg 의 빈 아래쪽 8px 을 당겨 붙인다 */
+.dep-ax{position:relative;height:13px;margin-top:-3px}
 .dep-ax i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:9.5px;
   font-weight:500;color:var(--sc-mutedfg);font-variant-numeric:tabular-nums;white-space:nowrap}
 .dep-why{margin:6px 0 0;font-size:11px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
@@ -653,7 +691,6 @@ h1{font-size:30px;margin:0 0 10px}
 .dcheck li{font-size:12px;line-height:1.6;color:var(--sc-mutedfg);word-break:keep-all}
 .disc{margin:0;font-size:11.5px;line-height:1.75;color:var(--sc-mutedfg);word-break:keep-all}
 .disc b{color:var(--sc-fg);font-weight:600}
-.dask{margin:12px 0 0;font-size:11.5px;font-weight:600;color:var(--sc-fg)}
 
 /* 폰 — 상세는 전체 시트 (PC 규칙보다 뒤에 둬야 1023px 이하에서 이긴다) */
 .sheetbar{display:none}
@@ -1097,6 +1134,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var q = '';
   var shown = STEP;
   var openId = null;     // 고른 대학 id — 우 상세 패널에 뜬다
+  var userClosed = false; // PC 에서 손으로 닫았나 — 그랬으면 첫 대학을 자동으로 다시 펼치지 않는다
   var hasScores = false;
 
   // ── 전년도 합격선 비교 ──
@@ -1507,7 +1545,10 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   // 미지수는 평문 'x' 로 두고 화면에서만 이탤릭(.mx)으로 키운다 — U+1D465 기호는
   // 글리프 없는 기기에서 두부가 된다(2026-09-20 대표 지시 "모든 기기 문제없게").
   var MX = 'x';
-  function edge(v, upper) {
+  // 요강이 '초과'·'미만'으로 쓴 경계(minExclusive/maxExclusive)는 그대로 열어 둔다 —
+  // 안 그러면 '100≥x≥95' 와 '95≥x≥90' 처럼 경계값 95 가 두 줄에 겹쳐 보인다.
+  function edge(v, upper, exclusive) {
+    if (exclusive) { return ['>', fmtNum(v)]; }
     var c = Math.round(v * 100);
     if (upper && c % 10 === 9) { return ['>', fmtNum((c + 1) / 100)]; }
     if (!upper && c % 10 === 1) { return ['>', fmtNum((c - 1) / 100)]; }
@@ -1515,10 +1556,11 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   }
   function fmtNum(v) { return String(Math.round(v * 100) / 100); }
   function bandSpan(b) {
-    if (b.min === b.max) { return MX + '=' + fmtNum(b.min); }
-    var h = edge(b.max, true), l = edge(b.min, false);
-    if (b.min <= 0) { return h[1] + h[0] + MX; }         // '𝑥≥0' 은 자명하다
-    if (b.max >= 100) { return MX + l[0] + l[1]; }       // 만점이 상한
+    var lox = !!b.minExclusive, hix = !!b.maxExclusive;
+    if (b.min === b.max && !lox && !hix) { return MX + '=' + fmtNum(b.min); }
+    var h = edge(b.max, true, hix), l = edge(b.min, false, lox);
+    if (b.min <= 0 && !lox) { return h[1] + h[0] + MX; }   // '𝑥≥0' 은 자명하다
+    if (b.max >= 100 && !hix) { return MX + l[0] + l[1]; } // 만점이 상한
     return h[1] + h[0] + MX + l[0] + l[1];
   }
   function bandTableHtml(u, bands) {
@@ -1663,6 +1705,16 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   function gedOnlyAdm(a) {
     var l = (a && a.label) || '';
     return l.indexOf('검정고시') >= 0 && l.indexOf('불가') < 0 && !!(a.units && a.units.length);
+  }
+
+  /**
+   * 일반 학생이 넣는 '일반전형'인가 (2026-09-24 대표 지시).
+   * 판정은 앱 정본 admissionCut.ts 의 isGeneralAdmission 하나뿐이다 — 여기서 규칙을 베끼지 않는다.
+   * 옛 calc.js(그 함수가 없는 번들)로 열면 아무것도 강조하지 않는다.
+   */
+  function genAdm(d, a) {
+    if (!a || !G.isGeneralAdmission) { return false; }
+    return G.isGeneralAdmission(a, (d && d.admissions) || null);
   }
 
   /**
@@ -2019,7 +2071,8 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     }
     s += '</svg>';
 
-    // 이름표는 막대 위·아래 번갈아 — 가까운 포인트끼리 글자가 겹치지 않게.
+    // 이름표는 **막대 위 두 줄**에 번갈아 깐다 (2026-09-24 대표 지시 — 아래로 내리지 않는다).
+    // 아래 줄(r2)은 마지막 수단이라 처음엔 비워 두고, 자리가 정말 없을 때 layoutChartLabels 가 쓴다.
     // data-x 는 그 이름표가 가리키는 포인트의 가로 위치(%)다 — 렌더 뒤 점선을 그 자리로 긋는다.
     var top = [], bot = [];
     marks.slice().sort(function (a, b) { return xOf(dom, a.v) - xOf(dom, b.v); })
@@ -2037,8 +2090,11 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     var ax = ticksOf(dom).map(function (v) {
       return '<i style="left:' + xOf(dom, v).toFixed(2) + '%">' + esc(fmt2(v)) + '</i>';
     }).join('');
-    return '<div class="dep-labs top">' + top.join('') + '</div>' + s +
-      '<div class="dep-labs bot">' + bot.join('') + '</div>' +
+    // r1(둘째 줄) 이 위, r0(첫 줄) 이 막대에 붙는다. r2(아래 줄)는 비어 있으면 높이 0 이라
+    // 눈금이 막대 바로 밑 5px 로 올라온다.
+    return '<div class="dep-labs top r1">' + bot.join('') + '</div>' +
+      '<div class="dep-labs top r0">' + top.join('') + '</div>' + s +
+      '<div class="dep-labs bot r2"></div>' +
       '<svg class="dep-leads" aria-hidden="true" focusable="false"></svg>' +
       '<div class="dep-ax">' + ax + '</div>';
   }
@@ -2048,17 +2104,25 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var BAR_CY = 22, LEAD_GAP = 6, LAB_GAP = 4;
 
   /**
-   * 이름표 가로 자리 잡기 — 포인트 가운데를 원하는 자리로 삼아 위·아래 두 줄에 끼우고,
+   * 이름표 가로 자리 잡기 — 포인트 가운데를 원하는 자리로 삼아 줄에 끼우고,
    * 같은 줄에서 붙으면 오른쪽으로 민다. 오른쪽 끝을 넘으면 뒤에서부터 되짚어 왼쪽으로 당겨
    * 넣는다(막대 밖으로 글자가 나가지 않게). 반환값의 각 항목에 최종 left(화면 좌표)가 붙는다.
+   *
+   * 줄은 **위쪽 우선** 세 개다 (2026-09-24 대표 지시) — 0: 막대 바로 위, 1: 그 위 둘째 줄,
+   * 2: 막대 아래(마지막 수단). 앞 줄에 자리가 나면 절대 뒤 줄로 내리지 않는다.
    */
   function placeLabels(items, boxL, boxR) {
-    var rows = [[], []], cur = [boxL - LAB_GAP, boxL - LAB_GAP];
+    var rows = [[], [], []], cur = [boxL - LAB_GAP, boxL - LAB_GAP, boxL - LAB_GAP];
     items.forEach(function (it) {
       var want = Math.min(Math.max(it.px - it.w / 2, boxL), Math.max(boxL, boxR - it.w));
-      var r = want >= cur[0] + LAB_GAP ? 0
-        : want >= cur[1] + LAB_GAP ? 1
-        : (cur[0] <= cur[1] ? 0 : 1);
+      // ① 위 두 줄 중 제 자리에 그대로 들어가는 줄
+      var r = want >= cur[0] + LAB_GAP ? 0 : want >= cur[1] + LAB_GAP ? 1 : -1;
+      if (r < 0) {
+        // ② 위 두 줄 중 덜 찬 줄에 오른쪽으로 밀어 넣는다(점선이 사선으로 제 포인트를 가리킨다).
+        //    ③ 그렇게 밀면 막대 밖으로 나갈 때만 아래 줄 — 아래 줄은 마지막 수단이다.
+        var t = cur[0] <= cur[1] ? 0 : 1;
+        r = cur[t] + LAB_GAP + it.w <= boxR ? t : 2;
+      }
       it.l = Math.max(want, cur[r] + LAB_GAP);
       rows[r].push(it);
       cur[r] = it.l + it.w;
@@ -2088,42 +2152,50 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
    */
   function layoutChartLabels(root) {
     var work = [].slice.call(root.querySelectorAll('.dep-chart')).map(function (ch) {
-      var top = ch.querySelector('.dep-labs.top'), bot = ch.querySelector('.dep-labs.bot');
+      // 줄 세 개 — r0(막대 바로 위) · r1(그 위) · r2(막대 아래, 마지막 수단)
+      var rowEls = [ch.querySelector('.dep-labs.r0'), ch.querySelector('.dep-labs.r1'),
+        ch.querySelector('.dep-labs.r2')];
       var bar = ch.querySelector('.dep-bar'), leads = ch.querySelector('.dep-leads');
-      if (!top || !bot || !bar) { return null; }
+      if (!rowEls[0] || !rowEls[1] || !rowEls[2] || !bar) { return null; }
       var box = bar.getBoundingClientRect(), cr = ch.getBoundingClientRect();
       if (!box.width) { return null; }          // 숨어 있으면 잴 수 없다 — 다음 렌더에서
-      var items = [].slice.call(top.children).concat([].slice.call(bot.children))
-        .map(function (el) {
-          var r = el.getBoundingClientRect();
-          var k = el.classList.contains('lb-best') ? 'best'
-            : el.classList.contains('lb-mean') ? 'mean'
-            : el.classList.contains('lb-worst') ? 'worst'
-            : el.classList.contains('me') ? 'me' : '';
-          return { el: el, w: r.width, h: r.height, col: LEAD_COLOR[k],
-            px: box.left + box.width * (parseFloat(el.getAttribute('data-x')) || 0) / 100 };
-        });
+      // 점선이 닿을 글자 쪽 끝(화면 좌표) — r0·r1 은 아래끝 정렬(bottom:1px), r2 는 위끝(top:1px).
+      // 줄 높이가 28 로 고정이라 이름표를 옮겨도 이 값은 안 변한다.
+      var rowY = [rowEls[0].getBoundingClientRect().bottom - 1,
+        rowEls[1].getBoundingClientRect().bottom - 1,
+        rowEls[2].getBoundingClientRect().top + 1];
+      var items = [];
+      rowEls.forEach(function (el) {
+        [].slice.call(el.children).forEach(function (c) { items.push(c); });
+      });
+      items = items.map(function (el) {
+        var r = el.getBoundingClientRect();
+        var k = el.classList.contains('lb-best') ? 'best'
+          : el.classList.contains('lb-mean') ? 'mean'
+          : el.classList.contains('lb-worst') ? 'worst'
+          : el.classList.contains('me') ? 'me' : '';
+        return { el: el, w: r.width, h: r.height, col: LEAD_COLOR[k],
+          px: box.left + box.width * (parseFloat(el.getAttribute('data-x')) || 0) / 100 };
+      });
       if (!items.length) { return null; }
       items.sort(function (a, b) { return a.px - b.px; });
-      return { top: top, bot: bot, leads: leads, box: box, cr: cr, items: items };
+      return { rowEls: rowEls, rowY: rowY, leads: leads, box: box, cr: cr, items: items };
     }).filter(Boolean);
     work.forEach(function (w) {
-      // 이름표 줄의 위 끝(화면 좌표) — 위 줄은 아래끝 정렬(bottom:1px), 아래 줄은 위끝(top:1px)
-      var yTop = w.box.top - 1, yBot = w.box.bottom + 1;
       var d = '';
       placeLabels(w.items, w.box.left, w.box.right).forEach(function (list, i) {
         list.forEach(function (it) {
           it.el.style.left = (it.l - w.box.left).toFixed(1) + 'px';
           it.el.style.right = 'auto';
           it.el.style.transform = 'none';
-          (i === 0 ? w.top : w.bot).appendChild(it.el);
+          w.rowEls[i].appendChild(it.el);
           // 점선은 글자 쪽 끝을 포인트에 가장 가까운 지점으로 잡는다 — 글자 위라면 수직선
           var cx = it.w > 12 ? Math.min(Math.max(it.px, it.l + 6), it.l + it.w - 6)
             : it.l + it.w / 2;
           d += '<line x1="' + (cx - w.box.left).toFixed(1) +
-            '" y1="' + ((i === 0 ? yTop : yBot) - w.cr.top).toFixed(1) +
+            '" y1="' + (w.rowY[i] - w.cr.top).toFixed(1) +
             '" x2="' + (it.px - w.box.left).toFixed(1) +
-            '" y2="' + ((w.box.top + BAR_CY + (i === 0 ? -LEAD_GAP : LEAD_GAP)) - w.cr.top).toFixed(1) +
+            '" y2="' + ((w.box.top + BAR_CY + (i === 2 ? LEAD_GAP : -LEAD_GAP)) - w.cr.top).toFixed(1) +
             '" stroke="' + it.col + '" stroke-width="1" stroke-linecap="round"' +
             ' stroke-dasharray="1 2.5"/>';
         });
@@ -2139,9 +2211,12 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     var badge = j.band
       ? '<span class="pill band" style="--bandc:' + color + '">' + esc(j.band) + '</span>'
       : '<span class="pill muted">판정 불가</span>';
-    var out = '<div class="dep' + (hit ? ' hit' : '') + '"><div class="dep-r1"><span class="dep-nm">' +
+    // 판정 배지가 행 맨 앞이고 폭이 고정이다 — 학과명 시작 위치가 행마다 흔들리지 않게
+    // (2026-09-24 대표 지시). data-nolock 은 카드 여닫기에서 이 행을 빼는 표시다.
+    var out = '<div class="dep' + (hit ? ' hit' : '') + '" data-nolock><div class="dep-r1">' +
+      badge + '<span class="dep-nm">' +
       esc(row.name) + (row.track ? '<em>' + esc(G.TRACK_LABELS[row.track]) + '</em>' : '') +
-      '</span>' + badge + '</div>';
+      '</span></div>';
 
     var tags = tagsOf(row);
     if (tags.length) {
@@ -2240,10 +2315,14 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     } else {
       out += '<div class="admrow"><div class="admchips">' + chipsList.map(function (a) {
         var ged = gedOnlyAdm(a);
-        var cls = [a.key === adm.key ? 'on' : '', ged ? 'gedonly' : ''].filter(Boolean).join(' ');
+        // 일반전형 판정은 앱과 같은 함수(admissionCut.ts isGeneralAdmission)로만 한다
+        var gen = genAdm(d, a);
+        var cls = [a.key === adm.key ? 'on' : '', ged ? 'gedonly' : '', gen ? 'gen' : '']
+          .filter(Boolean).join(' ');
         return '<button type="button" data-cut="' + esc(a.key) + '"' +
           (G.admissionHasNumbers(a) ? '' : ' data-none="1"') +
           (cls ? ' class="' + cls + '"' : '') + '>' +
+          (gen ? '<i class="genb">일반</i>' : '') +
           (ged ? '<i class="gedb">검정고시 출신자 기준</i>' : '') +
           esc((a.round ? a.round + ' ' : '') + a.label) +
           (a.gedEligible === 'conditional' ? ' ·조건부' : '') + '</button>';
@@ -2309,7 +2388,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
           '<span><i class="lg-cut"></i>' + esc(G.METRIC_LABEL[mk] || '합격선') + '</span>' +
           '<span><i class="lg-mean"></i>합격자 평균</span>' +
           '<span><i class="lg-me"></i>내 환산등급</span></div>';
-        out += '<div class="tblhead"><span>모집단위 · 전년도 합격선 · 내 환산등급</span><span>' +
+        out += '<div class="tblhead' + (genAdm(d, adm) ? ' gen' : '') + '"><span>' +
+          (genAdm(d, adm) ? '<i class="genb">일반</i>' : '') +
+          '모집단위 · 전년도 합격선 · 내 환산등급</span><span>' +
           rows.length + '곳' + (hidden > 0 ? ' · 미공개 ' + hidden + '곳 제외' : '') +
           (filteredOut > 0 ? ' · 단계 필터로 ' + filteredOut + '곳 숨김' : '') + '</span></div>';
         // 모집단위는 처음부터 전부 보인다 — 12행 뒤 '모두 보기' 접기는 없앴다(2026-09-24 대표 지시)
@@ -2392,15 +2473,25 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   // ── 환산 기준(기존 카드 펼침 내용) ─────────────────────────────────────────
   function convDetailHtml(r) {
     var u = r.univ, out = '';
+    // 과목별 환산과 대학 공개 환산표를 두 열로 나란히 (2026-09-24 대표 지시) — 예전엔 표가
+    // 과목 줄 아래 따로 떨어져 있어, 과목명과 그 환산값이 서로 멀었다.
+    // DOM 순서는 '과목별 환산 → 표' 다(폰에서 세로로 쌓일 때 과목별이 먼저 와야 한다).
+    // 넓은 화면에서는 CSS 가 표를 왼쪽 열(auto 폭)로, 과목 줄을 오른쪽 열로 옮긴다.
+    var sub = '', tbl = '';
     if (r.perSubject) {
-      out += '<section><h4>과목별 환산</h4><ul class="persub">' + r.perSubject.map(function (p) {
-        return '<li><span>' + esc(SUB[p.subject]) + '</span><b>' +
-          (isNaN(p.score) ? '미응시' : p.score + '점') + '<i> → </i>' +
-          esc(p.converted) + (u.conv === 'subject_grade' ? '등급' : '점') + '</b></li>';
-      }).join('') + '</ul></section>';
+      sub = '<section class="cb-sub"><h4>과목별 환산</h4><ul class="persub">' +
+        r.perSubject.map(function (p) {
+          return '<li><span>' + esc(SUB[p.subject]) + '</span><b>' +
+            (isNaN(p.score) ? '미응시' : p.score + '점') + '<i> → </i>' +
+            esc(p.converted) + (u.conv === 'subject_grade' ? '등급' : '점') + '</b></li>';
+        }).join('') + '</ul></section>';
     }
     if (u.bands && u.bands.length) {
-      out += '<section><h4>대학 공개 환산표</h4>' + bandTableHtml(u, u.bands) + '</section>';
+      tbl = '<section class="cb-tbl"><h4>대학 공개 환산표</h4>' + bandTableHtml(u, u.bands) + '</section>';
+    }
+    if (sub || tbl) {
+      // 환산표가 없는 대학(계산식·비교내신 등)은 한 열로 과목별 환산만 낸다
+      out += '<div class="cbasis' + (sub && tbl ? '' : ' one') + '">' + sub + tbl + '</div>';
     }
     if (u.formula) { out += '<section><h4>대학 산출식</h4><p>' + esc(u.formula) + '</p></section>'; }
     var subjects = '';
@@ -2492,8 +2583,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       '각 대학이 공개한 전년도 입시결과(학년도·전형·지표는 위에 표기)와 내 환산등급을 단순 비교한 것입니다. ' +
       '합격 여부를 예측하지 않으며, 올해 경쟁률·모집인원·전형 변경은 반영되지 않습니다. ' +
       '지원 전에 반드시 해당 대학 입학처의 그 해 모집요강을 직접 확인하세요. ' +
-      '지원 결정과 그 결과는 지원자 본인의 책임입니다.</p>' +
-      '<p class="dask">담당 선생님·꿈드림 상담사와 함께 확인하세요.</p></div>';
+      '지원 결정과 그 결과는 지원자 본인의 책임입니다.</p></div>';
     return out;
   }
 
@@ -2590,16 +2680,25 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
     var html = '';
     cut.forEach(function (r) { html += cardHtml(r); });
+    // 카드를 키보드로 여닫으면 innerHTML 이 통째로 바뀌면서 포커스가 사라진다 —
+    // 누르고 있던 카드로 되돌려 준다(Enter 로 펼치고 바로 Space 로 접을 수 있게).
+    var focused = document.activeElement;
+    var focusId = focused && focused.closest && focused.closest('.ucard')
+      ? focused.closest('.ucard').getAttribute('data-id') : null;
     list.innerHTML = cut.length ? html
       : '<div class="empty">조건에 맞는 대학이 없어요. 대학·학과 이름이나 지역·종류를 다시 골라 주세요.</div>';
+    if (focusId) {
+      var back = list.querySelector('.ucard[data-id="' + focusId.replace(/"/g, '\\"') + '"]');
+      if (back) { back.focus({ preventScroll: true }); }
+    }
     var mw = document.getElementById('morewrap');
     mw.hidden = rows.length <= cut.length;
     document.getElementById('more').textContent = '더 보기 (' + (rows.length - cut.length) + '곳 남음)';
 
-    // 고른 대학이 목록에서 사라지면 맨 위 대학으로
+    // 고른 대학이 목록에서 사라지면 맨 위 대학으로 — 손으로 닫았으면(userClosed) 그대로 둔다
     var sel = null;
     for (var i = 0; i < rows.length; i++) { if (rows[i].univ.id === openId) { sel = rows[i]; } }
-    if (!sel && rows.length) { sel = rows[0]; openId = sel.univ.id; cutKey = null; }
+    if (!sel && rows.length && !userClosed) { sel = rows[0]; openId = sel.univ.id; cutKey = null; }
     if (!rows.length) { openId = null; }
     detail.innerHTML = sel ? panelHtml(sel, sel._m)
       : '<div class="empty">왼쪽에서 대학을 고르면 학과별 합격 가능성이 여기에 나옵니다.</div>';
@@ -2624,20 +2723,40 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   }
 
   // ── 입력 ───────────────────────────────────────────────────────────────────
+  //
+  // 카드 하나가 곧 상세를 여닫는 손잡이다 (2026-09-24 대표 지시). PC 는 같은 카드를 다시
+  // 누르면 우 상세가 닫히고, 그 뒤로는 목록이 바뀌어도 첫 대학을 자동으로 펼치지 않는다
+  // (userClosed). 폰은 상세가 시트로 덮이니 시트 쪽에서 닫는다.
   list.addEventListener('click', function (e) {
     var b = e.target.closest ? e.target.closest('.ucard') : null;
     if (!b) { return; }
     var id = b.getAttribute('data-id');
+    if (wideMQ.matches && id === openId) { closeDetail(); return; }
     if (id !== openId) { openId = id; cutKey = null; }
+    userClosed = false;
     if (!wideMQ.matches) { document.body.classList.add('sheet-open'); }
     render();
     if (!wideMQ.matches && colDetail) { colDetail.scrollTop = 0; }
   });
-  detail.addEventListener('click', function (e) {
-    var c = e.target.closest ? e.target.closest('[data-cut]') : null;
-    if (!c) { return; }
-    cutKey = c.getAttribute('data-cut');
+  /**
+   * 상세 안에서 **기능 없는 자리**를 누르면 닫는다 — 대학 이름·머리 영역, 환산표, 여백.
+   * 링크·버튼·입력/선택 상자·전형 탭과 학과 행(data-nolock)은 건드리지 않고,
+   * 글자를 끌어 고른 직후의 클릭도 여닫기가 아니다.
+   */
+  var NO_TOGGLE = 'a,button,input,select,textarea,label,summary,[data-nolock]';
+  function closeDetail() {
+    if (!wideMQ.matches) { document.body.classList.remove('sheet-open'); return; }
+    userClosed = true; openId = null; cutKey = null;
     render();
+  }
+  colDetail.addEventListener('click', function (e) {
+    var t = e.target;
+    var c = t.closest ? t.closest('[data-cut]') : null;
+    if (c) { cutKey = c.getAttribute('data-cut'); render(); return; }
+    if (t.closest && t.closest(NO_TOGGLE)) { return; }
+    var sel = window.getSelection ? window.getSelection() : null;
+    if (sel && !sel.isCollapsed && String(sel).replace(/^\s+|\s+$/g, '')) { return; }
+    closeDetail();
   });
   // 상세 패널의 학과 정렬 드롭다운 (2026-09-24 대표 지시)
   detail.addEventListener('change', function (e) {
