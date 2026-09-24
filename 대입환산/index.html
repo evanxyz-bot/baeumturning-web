@@ -1702,7 +1702,6 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
   // 표시 반올림 — 소수 둘째 자리까지(PLAN §5). 정본은 admissionCut 의 fmt2 다.
   var fmt2 = G.fmt2 || function (v) { return String(Math.round(v * 100) / 100); };
-  function fv(v, unit) { return fmt2(v) + (unit === 'grade' ? '등급' : '점'); }
 
   // 5단계 → 수치(매우 하향 1 … 매우 상향 5). G.BAND_ORDER 가 정본 순서다.
   var BAND_VAL = {};
@@ -2412,20 +2411,17 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       }).join('') + '</div>';
     }
 
-    // 학과 행 글은 '작년 70%컷 3.2 · 내 2.9' 정도만 (§16-1-6) — 거리는 아래 미니 바가 보여 준다
-    var unit = adm.unit, g = myShown(o), bits = [];
-    if (j.mainCut != null && j.mainCutKind) {
-      bits.push('작년 ' + G.METRIC_LABEL[j.mainCutKind] + ' <b>' + esc(fv(j.mainCut, unit)) + '</b>');
-      if (j.rule === 2) {
-        if (j.detail.mean != null) { bits.push('평균 ' + esc(fv(j.detail.mean, unit))); }
-        if (j.detail.best != null) { bits.push('최고 ' + esc(fv(j.detail.best, unit))); }
-      }
-    } else if (row.stats && row.stats.mean != null) {
-      bits.push('작년 ' + G.METRIC_LABEL.mean + ' <b>' + esc(fv(row.stats.mean, unit)) + '</b>');
-    } else {
-      bits.push('공개 수치 없음');
-    }
-    if (g != null) { bits.push('내 <b>' + esc(fv(g, unit)) + '</b>'); }
+    // 학과 행 글 — '최근 3개년 70%컷 3.52등급 (3.4~3.6) · 내 4등급' (2026-09-24 대표 결정).
+    // 1개년이면 '작년 70%컷 …'. 문장은 앱과 같은 함수(admissionCut.ts cutRowPieces)가 만든다.
+    // 거리는 아래 미니 바가 보여 준다(미니 바는 작년 합격자 분포 그대로).
+    var unit = adm.unit, g = myShown(o);
+    var pieces = G.cutRowPieces(j, unit, { mean: row.stats ? row.stats.mean : null, mine: g });
+    var bits = pieces.map(function (p) {
+      var v = esc(p.value);
+      return esc(p.label) + ' ' + (p.strong ? '<b>' + v + '</b>' : v) +
+        (p.range ? ' (' + esc(p.range) + ')' : '');
+    });
+    if (pieces.length === (g != null ? 1 : 0)) { bits.unshift('공개 수치 없음'); }
     out += '<p class="dep-diff">' + bits.join(' · ') + '</p>';
 
     var why = !j.band ? reasonOf(j, mine) : null;
@@ -2443,10 +2439,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     var dom = domainFor(unit, row, g);
     if (dom && (j.mainCut != null || j.detail.mean != null)) {
       out += '<div class="dep-chart">' + chartSvg(dom, j, g, color, adm.maxScore) + '</div>';
-    }
-    if (j.band && j.rule && j.mainCutKind) {
-      out += '<p class="dep-rule">' + esc(G.METRIC_LABEL[j.mainCutKind] + ' 기준') +
-        (adm.basis === 'unspecified' ? ' · 기준 명단 미표기' : '') + '</p>';
+      // 막대 아래 캡션 — 막대는 작년 합격자 분포다(위 기준 문장의 3개년과 헷갈리지 않게)
+      out += '<p class="dep-rule">' + esc(G.CUT_BAR_CAPTION) +
+        (j.band && adm.basis === 'unspecified' ? ' · 기준 명단 미표기' : '') + '</p>';
     }
     return out + '</div>';
   }
@@ -2577,7 +2572,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
           '<span><i class="lg-me"></i>내 환산등급</span></div>';
         out += '<div class="tblhead' + (genAdm(d, adm) ? ' gen' : '') + '"><span>' +
           (genAdm(d, adm) ? '<i class="genb">일반</i>' : '') +
-          '모집단위 · 전년도 합격선 · 내 환산등급</span><span>' +
+          '모집단위 · 합격선 · 내 환산등급</span><span>' +
           rows.length + '곳' + (hidden > 0 ? ' · 미공개 ' + hidden + '곳 제외' : '') +
           (filteredOut > 0 ? ' · 단계 필터로 ' + filteredOut + '곳 숨김' : '') + '</span></div>';
         // 모집단위는 처음부터 전부 보인다 — 12행 뒤 '모두 보기' 접기는 없앴다(2026-09-24 대표 지시)
