@@ -225,7 +225,7 @@
 
   <h2>전년도 입시결과(합격선)</h2>
 
-  <p class="sub">고신대학교 입학처가 공개한 2026학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 1개 · 모집단위 16곳의 성적이 아래 표에 있습니다. 공개 지표는 70%컷 · 합격자 평균이며, 추정으로 채운 값은 없습니다.</p>
+  <p class="sub">고신대학교 입학처가 공개한 2026학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 1개 ·<wbr> 모집단위 16곳의 성적이 아래 표에 있습니다. 공개 지표는 <span class="nw">70%컷</span> ·<wbr> 합격자 평균이며, 추정으로 채운 값은 없습니다.</p>
 
   <h3>학생부교과 일반고전형</h3>
 
@@ -233,7 +233,7 @@
 
   <p class="sub"><b>수능 최저학력기준</b> 간호학과: 수능 국어, 수학, 영어, 탐구(사탐 또는 과탐) 4개 영역 중 2개 영역 등급 합 7 이내(탐구는 1과목) / 의예과: 수능 국어, 수학(미적분/기하), 영어, 과탐(1과목) 4개 영역 중 수학 포함 3개 영역 등급 합 4 이내 / 그 외 모집단위 수능최저학력기준 없음</p>
 
-  <p class="note"><b>성적 반영</b> 요강 p.61 &#x27;(3) 공통 및 일반선택과목 석차등급 환산점수표&#x27;는 의예과만 다른 표(1등급 100, 2등급 99.5, 3등급 99, 4등급 98.5, 5등급 98, 6등급 97, 7등급 96, 8등급 92, 9등급 0)를 쓴다. 등급별 환산점수 표는 &#x27;전 모집단위(의예과 제외)&#x27; 표 기준이라 의예과에는 맞지 않는다. 또 p.62 &#x27;(7) 검정고시 성적반영 방법&#x27;의 점수등급표는 작업치료학과·응급구조학과·간호학과·의예과가 그 외 모집단위보다 한 등급씩 아래로 매겨진다(예: 100점이 2등급).</p>
+  <p class="note"><b>성적 반영</b> 요강 p.61 &#x27;(3) 공통 및 일반선택과목 석차등급 환산점수표&#x27;는 의예과만 다른 표(1등급 100, 2등급 99.5, 3등급 99, 4등급 98.5, 5등급 98, 6등급 97, 7등급 96, 8등급 92, 9등급 0)를 쓴다. 등급별 환산점수 표는 &#x27;전 모집단위(의예과 제외)&#x27; 표 기준이라 의예과에는 맞지 않는다. 또 p.62 &#x27;(7) 검정고시 성적반영 방법&#x27;의 점수등급표는 작업치료학과·<wbr>응급구조학과·<wbr>간호학과·<wbr>의예과가 그 외 모집단위보다 한 등급씩 아래로 매겨진다(예: 100점이 2등급).</p>
 
   <div class="btwrap"><table class="bt rt">
     <thead><tr><th>모집단위</th><th>70%컷(등급)</th><th>합격자 평균(등급)</th></tr></thead>
@@ -334,6 +334,42 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   });
   document.addEventListener('click',function(e){
     if(!e.target.closest||!e.target.closest('.nav-drop')){ closeAll(null); }
+  });
+})();
+/* 헤더 워드마크의 한글('아웃포커스')이 오른쪽 앱 배지에 닿으면 뺀다 (2026-09-27).
+   폭 기준(≤359px)만으로는 안드 글꼴 크기 배율(115·130%)에서 배지 밑으로 파고든다 — 그린 뒤 실측. */
+(function(){
+  var top=document.querySelector('.nav-top');
+  var ko=top&&top.querySelector('.wm-ko'), app=top&&top.querySelector('.nav-app');
+  if(!ko||!app){return;}
+  function fit(){
+    top.classList.remove('wm-tight');
+    var a=app.getBoundingClientRect(), k=ko.getBoundingClientRect();
+    if(a.width&&k.width&&k.right>a.left-2){ top.classList.add('wm-tight'); }
+  }
+  fit();
+  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-tx')||ko); }
+  else{ window.addEventListener('resize',fit); }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(fit); }
+})();
+/* 열린 드롭다운이 화면 밖으로 나가면 안쪽으로 민다 (2026-09-27). 큰 글꼴(130%)에서 내비가 두 줄이 되면
+   '고객지원' 메뉴가 왼쪽으로 19px 잘렸다. 위치 규칙(첫 칸 왼쪽·끝 칸 오른쪽)은 CSS 가 정하고,
+   그래도 넘칠 때만 translate 로 옮긴다 — transform(열림 애니메이션)과 따로 논다. */
+(function(){
+  var drops=document.querySelectorAll('.nav-drop');
+  if(!drops.length||!window.MutationObserver){return;}
+  function place(d){
+    var m=d.querySelector('.drop-menu');
+    if(!m){return;}
+    m.style.translate='';
+    if(!d.classList.contains('open')){return;}
+    var r=m.getBoundingClientRect(), vw=document.documentElement.clientWidth, dx=0;
+    if(r.right>vw-8){ dx=vw-8-r.right; }
+    if(r.left+dx<8){ dx=8-r.left; }
+    if(dx){ m.style.translate=Math.round(dx)+'px 0'; }
+  }
+  [].forEach.call(drops,function(d){
+    new MutationObserver(function(){ place(d); }).observe(d,{attributes:true,attributeFilter:['class']});
   });
 })();
 </script>

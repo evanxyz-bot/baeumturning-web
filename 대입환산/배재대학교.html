@@ -211,7 +211,7 @@
 
   <h2>전년도 입시결과(합격선)</h2>
 
-  <p class="sub">배재대학교 입학처가 공개한 2026학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 4개 · 모집단위 46곳의 성적이 아래 표에 있습니다. 공개 지표는 합격자 평균 · 합격자 최고 · 합격자 최저이며, 추정으로 채운 값은 없습니다.</p>
+  <p class="sub">배재대학교 입학처가 공개한 2026학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 4개 ·<wbr> 모집단위 46곳의 성적이 아래 표에 있습니다. 공개 지표는 합격자 평균 ·<wbr> 합격자 최고 ·<wbr> 합격자 최저이며, 추정으로 채운 값은 없습니다.</p>
 
   <h3>교과 전형</h3>
 
@@ -278,7 +278,7 @@
 
   <p class="sub"><b>수능 최저학력기준</b> 없음</p>
 
-  <p class="note"><b>성적 반영</b> 학생부 교과전형 검정고시 합격자 성적 반영(2027 요강 p.44): 검정고시 환산 수식 {960 - [(100 - 검정고시 평균점수) × 6.5]}, 최고성적 960점. 고교 출신자는 석차등급 배점(1등급 100 / 2등급 97 / 3등급 92 / 4등급 89 / 5등급 85 / 6등급 80 / 7등급 70 / 8등급 65 / 9등급 60)으로 (5과목 등급점수 합 ÷ 5과목 이수단위 수 합) × 5 = 500점씩 두 묶음, 총점 1,000점이다. 검정고시 최고 960점은 2등급(970점)과 3등급(920점) 사이다. ※ 대학이 이 전형의 입시결과를 &quot;학생부 교과성적만 표기(면접·실기·실적 점수 미반영)&quot;로 공개했다.</p>
+  <p class="note"><b>성적 반영</b> 학생부 교과전형 검정고시 합격자 성적 반영(2027 요강 p.44): 검정고시 환산 수식 {960 - [(100 - 검정고시 평균점수) × 6.5]}, 최고성적 960점. 고교 출신자는 석차등급 배점(1등급 100 / 2등급 97 / 3등급 92 / 4등급 89 / 5등급 85 / 6등급 80 / 7등급 70 / 8등급 65 / 9등급 60)으로 (5과목 등급점수 합 ÷ 5과목 이수단위 수 합) × 5 = 500점씩 두 묶음, 총점 1,000점이다. 검정고시 최고 960점은 2등급(970점)과 3등급(920점) 사이다. ※ 대학이 이 전형의 입시결과를 &quot;학생부 교과성적만 표기(면접·<wbr>실기·<wbr>실적 점수 미반영)&quot;로 공개했다.</p>
 
   <div class="btwrap"><table class="bt rt">
     <thead><tr><th>모집단위</th><th>합격자 평균(등급)</th><th>합격자 최고(등급)</th><th>합격자 최저(등급)</th></tr></thead>
@@ -398,6 +398,42 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   });
   document.addEventListener('click',function(e){
     if(!e.target.closest||!e.target.closest('.nav-drop')){ closeAll(null); }
+  });
+})();
+/* 헤더 워드마크의 한글('아웃포커스')이 오른쪽 앱 배지에 닿으면 뺀다 (2026-09-27).
+   폭 기준(≤359px)만으로는 안드 글꼴 크기 배율(115·130%)에서 배지 밑으로 파고든다 — 그린 뒤 실측. */
+(function(){
+  var top=document.querySelector('.nav-top');
+  var ko=top&&top.querySelector('.wm-ko'), app=top&&top.querySelector('.nav-app');
+  if(!ko||!app){return;}
+  function fit(){
+    top.classList.remove('wm-tight');
+    var a=app.getBoundingClientRect(), k=ko.getBoundingClientRect();
+    if(a.width&&k.width&&k.right>a.left-2){ top.classList.add('wm-tight'); }
+  }
+  fit();
+  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-tx')||ko); }
+  else{ window.addEventListener('resize',fit); }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(fit); }
+})();
+/* 열린 드롭다운이 화면 밖으로 나가면 안쪽으로 민다 (2026-09-27). 큰 글꼴(130%)에서 내비가 두 줄이 되면
+   '고객지원' 메뉴가 왼쪽으로 19px 잘렸다. 위치 규칙(첫 칸 왼쪽·끝 칸 오른쪽)은 CSS 가 정하고,
+   그래도 넘칠 때만 translate 로 옮긴다 — transform(열림 애니메이션)과 따로 논다. */
+(function(){
+  var drops=document.querySelectorAll('.nav-drop');
+  if(!drops.length||!window.MutationObserver){return;}
+  function place(d){
+    var m=d.querySelector('.drop-menu');
+    if(!m){return;}
+    m.style.translate='';
+    if(!d.classList.contains('open')){return;}
+    var r=m.getBoundingClientRect(), vw=document.documentElement.clientWidth, dx=0;
+    if(r.right>vw-8){ dx=vw-8-r.right; }
+    if(r.left+dx<8){ dx=8-r.left; }
+    if(dx){ m.style.translate=Math.round(dx)+'px 0'; }
+  }
+  [].forEach.call(drops,function(d){
+    new MutationObserver(function(){ place(d); }).observe(d,{attributes:true,attributeFilter:['class']});
   });
 })();
 </script>

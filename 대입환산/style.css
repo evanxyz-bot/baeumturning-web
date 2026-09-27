@@ -235,3 +235,58 @@ p,li{text-wrap:pretty}
   .bt th,.bt td{padding:7px 10px}
   .univindex{columns:2;font-size:13.5px}
 }
+
+/* ── 반응형 맞춤 (2026-09-27 기기 비율 전수 점검) — 색·글꼴·구성은 그대로, 넘침·꺾임·잘림만 ──
+   홈페이지 11장과 같은 블록이다(index.html 등 '반응형 맞춤' 절). 한쪽을 고치면 같이 고친다.
+   ① 내비 항목은 통째로 묶고(561~700px 에서 '검정 / 뉴스' 로 꺾였다), 모자라면 항목 단위로 다음 줄.
+   ② 숨어 있는 드롭다운도 화면 밖으로 나가면 가로 스크롤(+5~40px)이 생긴다 — 첫 칸은 왼쪽,
+      끝 칸은 오른쪽에 붙이고 헤더는 가로로 잘라 둔다(clip 은 스크롤을 만들지 않는다).
+   ③ 워드마크 한글이 앱 배지에 닿으면 뺀다 — 문서 끝 스크립트가 실측해 .wm-tight 를 붙인다.
+   ④ 폰 터치 표적 44px — 보이는 모양은 그대로 두고 누르는 영역만 넓힌다. */
+.nav{overflow-x:clip}
+.nav-bot{height:auto;min-height:56px}
+.navlinks{flex-wrap:wrap;justify-content:center}
+.navlinks a{white-space:nowrap}
+@media (min-width:561px) and (max-width:700px){
+  .navlinks{gap:6px}
+  .navlinks a{padding:10px 12px}
+}
+.navlinks>.nav-drop:last-child .drop-menu{left:auto;right:0;transform:translateY(6px)}
+.navlinks>.nav-drop:last-child:hover .drop-menu,.navlinks>.nav-drop:last-child:focus-within .drop-menu,
+.navlinks>.nav-drop:last-child.open .drop-menu{transform:translateY(0)}
+@media (max-width:900px){
+  .navlinks>.nav-drop:first-of-type .drop-menu{left:0;right:auto;transform:translateY(6px)}
+  .navlinks>.nav-drop:first-of-type:hover .drop-menu,.navlinks>.nav-drop:first-of-type:focus-within .drop-menu,
+  .navlinks>.nav-drop:first-of-type.open .drop-menu{transform:translateY(0)}
+  .drop-menu a{min-height:44px;display:flex;align-items:center}
+}
+.nav-top.wm-tight .wm-ko{display:none}
+@media (max-width:900px){
+  .nav-app>a{display:block;padding:6px 0;margin:-6px 0}
+  .foot-legal a{display:inline-block;padding:14px 0;margin:-14px 0}
+  .crumb a{display:inline-block;padding:14px 6px 14px 0;margin:-14px -6px -14px 0}
+  .crumb li:first-child a{padding:14px 16px 14px 17px;margin:-14px -16px -14px -17px}
+  .lst td:first-child a{display:inline-block;padding:11px 0;margin:-11px 0}
+}
+@media (max-width:560px){
+  .navlinks>a::before,.navlinks .nav-drop>a::before{content:'';position:absolute;inset:0 -5px}
+  .nav-top>a{min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
+}
+/* 표 — 폰 폭보다 넓은 표(목록 3열·계열 가중치 8열)가 본문 밖으로 나가 잘렸다(320~393px).
+   표를 가로 스크롤 틀에 넣고(모양은 틀이 대신 입는다), 폰에서는 칸 안여백을 줄여 360px 부터는
+   대부분 스크롤 없이 들어온다. */
+.tscroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  border-radius:var(--r-lg);box-shadow:var(--shadow-sm);background:var(--surface)}
+.tscroll>.t{box-shadow:none}
+@media (max-width:560px){
+  .t th,.t td{padding:9px 8px}
+  /* '사유' 가 긴 표(미반영·미확인)는 행 높이를 사유 글이 정한다 — 폰에서는 둘째 칸('4년제 · 서울')을
+     낱말 단위로 접어 사유 칸에 자리를 준다(사유 칸이 너무 좁아 '…뿐이며 / , 그마저' 처럼 쉼표가 떨어졌다).
+     목록 표(반영 방식)는 대표 지시대로 한 줄 그대로. */
+  .lst.why th:nth-child(2),.lst.why td:nth-child(2){white-space:normal}
+}
+/* 표 칸 안에서는 낱말을 쪼개지 않는다 — 크롬은 표 칸의 break-word 를 최소 폭 계산에 넣어
+   '…뿐이며 / , 그마저' 처럼 쉼표를 떨어뜨렸다. 칸이 모자라면 표가 넓어지고 틀(.tscroll)이 스크롤한다. */
+.t td,.t th{overflow-wrap:normal}
+/* 숫자+단위('70%컷')가 줄 끝에서 '70%' / '컷' 으로 갈리지 않게 */
+.nw{white-space:nowrap}

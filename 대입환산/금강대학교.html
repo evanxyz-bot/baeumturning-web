@@ -227,13 +227,13 @@
   <h2>대학이 공개한 산출식</h2>
   <p class="formula">과목점수 = 검정고시 과목별 원점수 × 0.97 / 고교 성적의 산출(총점 1,000, 최고점 1,000·최저점 600): 석차등급(평균) = ∑(환산점수×이수단위)/∑이수단위 / 일반학생·금강인재추천·기회균형특별전형(학생부교과 100%) 산출: ∑(환산점수×이수단위)/∑(이수단위)*10, 소수점 셋째 자리에서 반올림, 가산 및 감산 없음</p>
 
-  <p class="note">⚠ 2027학년도 학자금 지원 제한 대학(전면) — 2027 신·편입생은 국가장학금·학자금대출을 받을 수 없음(교육부 2026-08-24). 지원 전 대학 상황 확인 필요.</p>
+  <p class="note">⚠ 2027학년도 학자금 지원 제한 대학(전면) — 2027 신·<wbr>편입생은 국가장학금·<wbr>학자금대출을 받을 수 없음(교육부 2026-08-24). 지원 전 대학 상황 확인 필요.</p>
 
   <h2>전년도 입시결과(합격선)</h2>
 
-  <p class="sub">금강대학교 입학처가 공개한 2025학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 1개 · 모집단위 1곳의 성적이 아래 표에 있습니다. 공개 지표는 50%컷 · 70%컷 · 합격자 최고이며, 추정으로 채운 값은 없습니다.</p>
+  <p class="sub">금강대학교 입학처가 공개한 2025학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 1개 ·<wbr> 모집단위 1곳의 성적이 아래 표에 있습니다. 공개 지표는 <span class="nw">50%컷</span> ·<wbr> <span class="nw">70%컷</span> ·<wbr> 합격자 최고이며, 추정으로 채운 값은 없습니다.</p>
 
-  <p class="sub"><b>재응시 회차</b> ⚠ 2027학년도 학자금 지원 제한 대학(전면) — 2027 신·편입생은 국가장학금·학자금대출을 받을 수 없음 (교육부 2026-08-24, 우리 환산표 note와 동일).</p>
+  <p class="sub"><b>재응시 회차</b> ⚠ 2027학년도 학자금 지원 제한 대학(전면) — 2027 신·<wbr>편입생은 국가장학금·<wbr>학자금대출을 받을 수 없음 (교육부 2026-08-24, 우리 환산표 note와 동일).</p>
 
   <h3>학생부교과(일반전형)</h3>
 
@@ -241,7 +241,7 @@
 
   <p class="sub"><b>수능 최저학력기준</b> 없음</p>
 
-  <p class="note"><b>성적 반영</b> 대학이 공개하는 입시결과표는 전형(일반전형/금강인재추천전형/기회균형특별전형) 구분 없이 &#x27;수시모집&#x27; 전체를 프라마나학부 한 행으로만 집계해 공개한다(요강상 정원은 일반전형 78명이 대부분을 차지). 이 수치를 일반전형 대표값으로 옮기되, 실제로는 3개 전형 합산치라는 점을 밝혀 둔다. 환산등급은 요강 p.15 「검정고시 출신자 학생부 성적산출」표(과목점수 100→2등급, 95~99.99→3등급, … 60미만→9등급)를 그대로 쓰는 우리 환산표와 같은 축이라 등급별 환산점수 표가 필요 없다.</p>
+  <p class="note"><b>성적 반영</b> 대학이 공개하는 입시결과표는 전형(일반전형/금강인재추천전형/기회균형특별전형) 구분 없이 &#x27;수시모집&#x27; 전체를 프라마나학부 한 행으로만 집계해 공개한다(요강상 정원은 일반전형 78명이 대부분을 차지). 이 수치를 일반전형 대표값으로 옮기되, 실제로는 3개 전형 합산치라는 점을 밝혀 둔다. 환산등급은 요강 p.15 「검정고시 출신자 학생부 성적산출<span class="nw">」표</span>(과목점수 100→2등급, 95~99.99→3등급, … 60미만→9등급)를 그대로 쓰는 우리 환산표와 같은 축이라 등급별 환산점수 표가 필요 없다.</p>
 
   <div class="btwrap"><table class="bt rt">
     <thead><tr><th>모집단위</th><th>50%컷(등급)</th><th>70%컷(등급)</th><th>합격자 최고(등급)</th></tr></thead>
@@ -327,6 +327,42 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   });
   document.addEventListener('click',function(e){
     if(!e.target.closest||!e.target.closest('.nav-drop')){ closeAll(null); }
+  });
+})();
+/* 헤더 워드마크의 한글('아웃포커스')이 오른쪽 앱 배지에 닿으면 뺀다 (2026-09-27).
+   폭 기준(≤359px)만으로는 안드 글꼴 크기 배율(115·130%)에서 배지 밑으로 파고든다 — 그린 뒤 실측. */
+(function(){
+  var top=document.querySelector('.nav-top');
+  var ko=top&&top.querySelector('.wm-ko'), app=top&&top.querySelector('.nav-app');
+  if(!ko||!app){return;}
+  function fit(){
+    top.classList.remove('wm-tight');
+    var a=app.getBoundingClientRect(), k=ko.getBoundingClientRect();
+    if(a.width&&k.width&&k.right>a.left-2){ top.classList.add('wm-tight'); }
+  }
+  fit();
+  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-tx')||ko); }
+  else{ window.addEventListener('resize',fit); }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(fit); }
+})();
+/* 열린 드롭다운이 화면 밖으로 나가면 안쪽으로 민다 (2026-09-27). 큰 글꼴(130%)에서 내비가 두 줄이 되면
+   '고객지원' 메뉴가 왼쪽으로 19px 잘렸다. 위치 규칙(첫 칸 왼쪽·끝 칸 오른쪽)은 CSS 가 정하고,
+   그래도 넘칠 때만 translate 로 옮긴다 — transform(열림 애니메이션)과 따로 논다. */
+(function(){
+  var drops=document.querySelectorAll('.nav-drop');
+  if(!drops.length||!window.MutationObserver){return;}
+  function place(d){
+    var m=d.querySelector('.drop-menu');
+    if(!m){return;}
+    m.style.translate='';
+    if(!d.classList.contains('open')){return;}
+    var r=m.getBoundingClientRect(), vw=document.documentElement.clientWidth, dx=0;
+    if(r.right>vw-8){ dx=vw-8-r.right; }
+    if(r.left+dx<8){ dx=8-r.left; }
+    if(dx){ m.style.translate=Math.round(dx)+'px 0'; }
+  }
+  [].forEach.call(drops,function(d){
+    new MutationObserver(function(){ place(d); }).observe(d,{attributes:true,attributeFilter:['class']});
   });
 })();
 </script>

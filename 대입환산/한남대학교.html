@@ -213,15 +213,15 @@
 
   <h2>전년도 입시결과(합격선)</h2>
 
-  <p class="sub">한남대학교 입학처가 공개한 2026학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 1개 · 모집단위 57곳의 성적이 아래 표에 있습니다. 공개 지표는 70%컷 · 합격자 평균 · 합격자 최저이며, 추정으로 채운 값은 없습니다.</p>
+  <p class="sub">한남대학교 입학처가 공개한 2026학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 1개 ·<wbr> 모집단위 57곳의 성적이 아래 표에 있습니다. 공개 지표는 <span class="nw">70%컷</span> ·<wbr> 합격자 평균 ·<wbr> 합격자 최저이며, 추정으로 채운 값은 없습니다.</p>
 
   <h3>학생부교과(일반전형)</h3>
 
-  <p class="sub"><b>지원자격</b> 국내 고등학교 졸업(예정)자 또는 초·중등교육법에 의거 고등학교 졸업자와 동등 학력을 인정받는 자 (전형 안내면 &#x27;검정고시 출신자, 외국고교 출신자 지원 가능&#x27;, 「출신유형별 지원자격」 표 검정고시 출신자 ○)</p>
+  <p class="sub"><b>지원자격</b> 국내 고등학교 졸업(예정)자 또는 초·<wbr>중등교육법에 의거 고등학교 졸업자와 동등 학력을 인정받는 자 (전형 안내면 &#x27;검정고시 출신자, 외국고교 출신자 지원 가능&#x27;, 「출신유형별 지원자격」 표 검정고시 출신자 ○)</p>
 
   <p class="sub"><b>수능 최저학력기준</b> 없음</p>
 
-  <p class="note"><b>성적 반영</b> 검정고시 출신자 교과성적 산출방법(요강 66쪽) — a = 검정고시 전체 평균점수. 500점 만점 전형: 평균 93점 이상 a×14.3−968 / 93점 미만 76점 이상 a×4.3−38 / 76점 미만 기본점수 290점. 입시결과 표의 &#x27;교과성적&#x27;도 같은 500점 축이라 환산점수끼리 바로 견줄 수 있다(400점 만점 전형은 ×0.8, 200점 만점 전형은 ×0.4). ※ 실기/실적위주 전형인 미술교육과·스포츠과학과(교과 400점 만점), 융합디자인학과(200점 만점), 회화과(실기 100%)는 교과 만점이 달라 같은 표에 실려 있어도 수록하지 않았다. ※ 대학이 입시결과 PDF 에 붙인 각주: 모집인원이 적은 모집단위는 합격자 평균이 70%컷보다 낮게(등급이 나쁘게) 나올 수 있다 — 두 지표를 함께 볼 것.</p>
+  <p class="note"><b>성적 반영</b> 검정고시 출신자 교과성적 산출방법(요강 66쪽) — a = 검정고시 전체 평균점수. 500점 만점 전형: 평균 93점 이상 a×14.3−968 / 93점 미만 76점 이상 a×4.3−38 / 76점 미만 기본점수 290점. 입시결과 표의 &#x27;교과성적&#x27;도 같은 500점 축이라 환산점수끼리 바로 견줄 수 있다(400점 만점 전형은 ×0.8, 200점 만점 전형은 ×0.4). ※ 실기/실적위주 전형인 미술교육과·<wbr>스포츠과학과(교과 400점 만점), 융합디자인학과(200점 만점), 회화과(실기 100%)는 교과 만점이 달라 같은 표에 실려 있어도 수록하지 않았다. ※ 대학이 입시결과 PDF 에 붙인 각주: 모집인원이 적은 모집단위는 합격자 평균이 <span class="nw">70%컷보다</span> 낮게(등급이 나쁘게) 나올 수 있다 — 두 지표를 함께 볼 것.</p>
 
   <div class="btwrap"><table class="bt rt">
     <thead><tr><th>모집단위</th><th>70%컷(점)</th><th>합격자 평균(점)</th><th>합격자 최저(점)</th></tr></thead>
@@ -363,6 +363,42 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   });
   document.addEventListener('click',function(e){
     if(!e.target.closest||!e.target.closest('.nav-drop')){ closeAll(null); }
+  });
+})();
+/* 헤더 워드마크의 한글('아웃포커스')이 오른쪽 앱 배지에 닿으면 뺀다 (2026-09-27).
+   폭 기준(≤359px)만으로는 안드 글꼴 크기 배율(115·130%)에서 배지 밑으로 파고든다 — 그린 뒤 실측. */
+(function(){
+  var top=document.querySelector('.nav-top');
+  var ko=top&&top.querySelector('.wm-ko'), app=top&&top.querySelector('.nav-app');
+  if(!ko||!app){return;}
+  function fit(){
+    top.classList.remove('wm-tight');
+    var a=app.getBoundingClientRect(), k=ko.getBoundingClientRect();
+    if(a.width&&k.width&&k.right>a.left-2){ top.classList.add('wm-tight'); }
+  }
+  fit();
+  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-tx')||ko); }
+  else{ window.addEventListener('resize',fit); }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(fit); }
+})();
+/* 열린 드롭다운이 화면 밖으로 나가면 안쪽으로 민다 (2026-09-27). 큰 글꼴(130%)에서 내비가 두 줄이 되면
+   '고객지원' 메뉴가 왼쪽으로 19px 잘렸다. 위치 규칙(첫 칸 왼쪽·끝 칸 오른쪽)은 CSS 가 정하고,
+   그래도 넘칠 때만 translate 로 옮긴다 — transform(열림 애니메이션)과 따로 논다. */
+(function(){
+  var drops=document.querySelectorAll('.nav-drop');
+  if(!drops.length||!window.MutationObserver){return;}
+  function place(d){
+    var m=d.querySelector('.drop-menu');
+    if(!m){return;}
+    m.style.translate='';
+    if(!d.classList.contains('open')){return;}
+    var r=m.getBoundingClientRect(), vw=document.documentElement.clientWidth, dx=0;
+    if(r.right>vw-8){ dx=vw-8-r.right; }
+    if(r.left+dx<8){ dx=8-r.left; }
+    if(dx){ m.style.translate=Math.round(dx)+'px 0'; }
+  }
+  [].forEach.call(drops,function(d){
+    new MutationObserver(function(){ place(d); }).observe(d,{attributes:true,attributeFilter:['class']});
   });
 })();
 </script>

@@ -479,6 +479,58 @@ body{word-break:keep-all;overflow-wrap:break-word}
   color:var(--accent-strong);font-weight:800;letter-spacing:.03em;
   background-image:linear-gradient(transparent 62%, rgba(154,215,205,.5) 62%, rgba(154,215,205,.5) 94%, transparent 94%)}
 .eyebrow:hover{transform:none}
+
+/* ── 반응형 맞춤 (2026-09-27 기기 비율 전수 점검) — 색·글꼴·구성은 그대로, 넘침·꺾임·잘림만 ──
+   대입 생성 페이지(scripts/build_admission_pages.py CSS)와 같은 블록이다. 한쪽을 고치면 같이 고친다.
+   ① 내비 항목은 통째로 묶고(561~700px 에서 '검정 / 뉴스' 로 꺾였다), 모자라면 항목 단위로 다음 줄.
+   ② 숨어 있는 드롭다운도 화면 밖으로 나가면 가로 스크롤(+5~40px)이 생긴다 — 첫 칸은 왼쪽,
+      끝 칸은 오른쪽에 붙이고 헤더는 가로로 잘라 둔다(clip 은 스크롤을 만들지 않는다).
+   ③ 워드마크 한글이 앱 배지에 닿으면 뺀다 — 문서 끝 스크립트가 실측해 .wm-tight 를 붙인다.
+   ④ 폰 터치 표적 44px — 보이는 모양은 그대로 두고 누르는 영역만 넓힌다. */
+.nav{overflow-x:clip}
+.nav-bot{height:auto;min-height:56px}
+.navlinks{flex-wrap:wrap;justify-content:center}
+.navlinks a{white-space:nowrap}
+@media (min-width:561px) and (max-width:700px){
+  .navlinks{gap:6px}
+  .navlinks a{padding:10px 12px}
+}
+.navlinks>.nav-drop:last-child .drop-menu{left:auto;right:0;transform:translateY(6px)}
+.navlinks>.nav-drop:last-child:hover .drop-menu,.navlinks>.nav-drop:last-child:focus-within .drop-menu,
+.navlinks>.nav-drop:last-child.open .drop-menu{transform:translateY(0)}
+@media (max-width:900px){
+  .navlinks>.nav-drop:first-of-type .drop-menu{left:0;right:auto;transform:translateY(6px)}
+  .navlinks>.nav-drop:first-of-type:hover .drop-menu,.navlinks>.nav-drop:first-of-type:focus-within .drop-menu,
+  .navlinks>.nav-drop:first-of-type.open .drop-menu{transform:translateY(0)}
+  .drop-menu a{min-height:44px;display:flex;align-items:center}
+}
+.nav-top.wm-tight .wm-ko{display:none}
+@media (max-width:900px){
+  .nav-app>a{display:block;padding:6px 0;margin:-6px 0}
+  .foot-legal a{display:inline-block;padding:14px 0;margin:-14px 0}
+}
+@media (max-width:560px){
+  .navlinks>a::before,.navlinks .nav-drop>a::before{content:'';position:absolute;inset:0 -5px}
+  .nav-top>a{min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
+}
+/* 검정 뉴스 — 폰에서 날짜 칸 두 개가 제 폭을 고집해 오른쪽 칸과 검색·초기화가 화면 밖으로 잘렸다
+   (375px +5px, 320px +60px). 두 칸이 남은 폭을 나눠 갖는다. 폰 입력 칸은 누르기 쉽게 44px. */
+@media (max-width:760px){
+  .news-dates input{flex:1 1 0;min-width:0;width:0}
+  .news-dates>span{flex:none}
+  .news-search input,.news-dates input,.news-reset{min-height:44px}
+}
+/* 목록 제목은 한 줄 말줄임 대신 낱말 단위로 줄을 바꿔 끝까지 보인다(폰에서 제목 절반이 '…' 였다).
+   날짜·태그 같은 짧은 조각은 한 줄로 묶는다('2026년 8월 / 18일' 로 갈리던 것). */
+.news-row .r-title{white-space:normal;overflow:visible;text-overflow:clip;text-wrap:pretty}
+.news-row .r-top,.news-pane .p-top{flex-wrap:wrap}
+.news-row .r-date,.news-row .r-tag,.news-row .r-pin,.news-pane .p-date,.news-pane .p-tag,.news-pane .p-pin{white-space:nowrap}
+@media (max-width:900px){
+  .news-pager .pg-btns button{position:relative}
+  .news-pager .pg-btns button::after{content:'';position:absolute;inset:-4px}
+  .news-links a{position:relative}
+  .news-links a::before{content:'';position:absolute;inset:-4px 0}
+}
 </style>
 </head>
 <body>
@@ -2342,6 +2394,8 @@ body{word-break:keep-all;overflow-wrap:break-word}
     if(u.href!==location.href) history.replaceState(null,'',u.href);
   }
   function fmtK(d){ var p=d.split('-'); return p[0]+'년 '+(+p[1])+'월 '+(+p[2])+'일'; }
+  /* 제목의 '2%대'·'70%컷' 같은 숫자+%+붙은 말이 줄 끝에서 '2%' / '대' 로 갈리지 않게 묶는다 (2026-09-27) */
+  function glue(t){ return String(t).replace(/(\d+(?:\.\d+)?%[가-힣]+)/g,'<span style="white-space:nowrap">$1</span>'); }
   function key(n){ return n.date+'|'+n.title; }
   function filtered(){
     var kw=(q.value||'').trim().toLowerCase(), f=from.value, t=to.value;
@@ -2358,7 +2412,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
     var sum=n.sum.map(function(s){ return '<li>'+s+'</li>'; }).join('');
     var lk=n.links.map(function(l){ return '<a href="'+l.u+'" target="_blank" rel="noopener">'+l.t+'</a>'; }).join('');
     pane.innerHTML='<div class="p-top">'+(n.pinned?'<span class="p-pin">고정 공지</span>':'')+'<span class="p-tag">'+n.tag+'</span><span class="p-date">'+fmtK(n.date)+'</span></div>'
-      +'<h2>'+n.title+'</h2><ul class="p-sum">'+sum+'</ul>'
+      +'<h2>'+glue(n.title)+'</h2><ul class="p-sum">'+sum+'</ul>'
       +'<div class="p-src">출처 · '+n.src+'</div>'+((n.links&&n.links.length)?'<div class="news-links">'+lk+'</div>':'');
   }
   function renderPager(total){
@@ -2404,7 +2458,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
     rows.innerHTML=pageItems.map(function(n){
       var act=key(n)===selKey?' active':'';
       /* 2026-09-24 — button 안에는 div 를 넣지 않는다(콘텐츠 모델). span + display 로 같은 모양 */
-      return '<button class="news-row'+act+(n.pinned?' pinned':'')+'" data-k="'+key(n)+'"><span class="r-top">'+(n.pinned?'<span class="r-pin">고정</span>':'')+'<span class="r-tag">'+n.tag+'</span><span class="r-date">'+fmtK(n.date)+'</span></span><span class="r-title">'+n.title+'</span></button>';
+      return '<button class="news-row'+act+(n.pinned?' pinned':'')+'" data-k="'+key(n)+'"><span class="r-top">'+(n.pinned?'<span class="r-pin">고정</span>':'')+'<span class="r-tag">'+n.tag+'</span><span class="r-date">'+fmtK(n.date)+'</span></span><span class="r-title">'+glue(n.title)+'</span></button>';
     }).join('');
     [].forEach.call(rows.querySelectorAll('.news-row'),function(b){
       b.addEventListener('click',function(){
@@ -2516,6 +2570,44 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
   });
   document.addEventListener('click',function(e){
     if(!e.target.closest||!e.target.closest('.nav-drop')){ closeAll(null); }
+  });
+})();
+</script>
+<script>
+/* 헤더 워드마크의 한글('아웃포커스')이 오른쪽 앱 배지에 닿으면 뺀다 (2026-09-27).
+   폭 기준(≤359px)만으로는 안드 글꼴 크기 배율(115·130%)에서 배지 밑으로 파고든다 — 그린 뒤 실측. */
+(function(){
+  var top=document.querySelector('.nav-top');
+  var ko=top&&top.querySelector('.wm-ko'), app=top&&top.querySelector('.nav-app');
+  if(!ko||!app){return;}
+  function fit(){
+    top.classList.remove('wm-tight');
+    var a=app.getBoundingClientRect(), k=ko.getBoundingClientRect();
+    if(a.width&&k.width&&k.right>a.left-2){ top.classList.add('wm-tight'); }
+  }
+  fit();
+  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-tx')||ko); }
+  else{ window.addEventListener('resize',fit); }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(fit); }
+})();
+/* 열린 드롭다운이 화면 밖으로 나가면 안쪽으로 민다 (2026-09-27). 큰 글꼴(130%)에서 내비가 두 줄이 되면
+   '고객지원' 메뉴가 왼쪽으로 19px 잘렸다. 위치 규칙(첫 칸 왼쪽·끝 칸 오른쪽)은 CSS 가 정하고,
+   그래도 넘칠 때만 translate 로 옮긴다 — transform(열림 애니메이션)과 따로 논다. */
+(function(){
+  var drops=document.querySelectorAll('.nav-drop');
+  if(!drops.length||!window.MutationObserver){return;}
+  function place(d){
+    var m=d.querySelector('.drop-menu');
+    if(!m){return;}
+    m.style.translate='';
+    if(!d.classList.contains('open')){return;}
+    var r=m.getBoundingClientRect(), vw=document.documentElement.clientWidth, dx=0;
+    if(r.right>vw-8){ dx=vw-8-r.right; }
+    if(r.left+dx<8){ dx=8-r.left; }
+    if(dx){ m.style.translate=Math.round(dx)+'px 0'; }
+  }
+  [].forEach.call(drops,function(d){
+    new MutationObserver(function(){ place(d); }).observe(d,{attributes:true,attributeFilter:['class']});
   });
 })();
 </script>

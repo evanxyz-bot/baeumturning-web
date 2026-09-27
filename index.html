@@ -1996,6 +1996,53 @@ body{word-break:keep-all;overflow-wrap:break-word}
          좁은 기기에서 줄이 늘면 바가 잘리지 않고 커지도록 높이도 푼다. */
   .nav-bot{overflow:visible;height:auto;min-height:56px}
 }
+
+/* ── 반응형 맞춤 (2026-09-27 기기 비율 전수 점검) — 색·글꼴·구성은 그대로, 넘침·꺾임·잘림만 ──
+   대입 생성 페이지(scripts/build_admission_pages.py CSS)와 같은 블록이다. 한쪽을 고치면 같이 고친다.
+   ① 내비 항목은 통째로 묶고(561~700px 에서 '검정 / 뉴스' 로 꺾였다), 모자라면 항목 단위로 다음 줄.
+   ② 숨어 있는 드롭다운도 화면 밖으로 나가면 가로 스크롤(+5~40px)이 생긴다 — 첫 칸은 왼쪽,
+      끝 칸은 오른쪽에 붙이고 헤더는 가로로 잘라 둔다(clip 은 스크롤을 만들지 않는다).
+   ③ 워드마크 한글이 앱 배지에 닿으면 뺀다 — 문서 끝 스크립트가 실측해 .wm-tight 를 붙인다.
+   ④ 폰 터치 표적 44px — 보이는 모양은 그대로 두고 누르는 영역만 넓힌다. */
+.nav{overflow-x:clip}
+.nav-bot{height:auto;min-height:56px}
+.navlinks{flex-wrap:wrap;justify-content:center}
+.navlinks a{white-space:nowrap}
+@media (min-width:561px) and (max-width:700px){
+  .navlinks{gap:6px}
+  .navlinks a{padding:10px 12px}
+}
+.navlinks>.nav-drop:last-child .drop-menu{left:auto;right:0;transform:translateY(6px)}
+.navlinks>.nav-drop:last-child:hover .drop-menu,.navlinks>.nav-drop:last-child:focus-within .drop-menu,
+.navlinks>.nav-drop:last-child.open .drop-menu{transform:translateY(0)}
+@media (max-width:900px){
+  .navlinks>.nav-drop:first-of-type .drop-menu{left:0;right:auto;transform:translateY(6px)}
+  .navlinks>.nav-drop:first-of-type:hover .drop-menu,.navlinks>.nav-drop:first-of-type:focus-within .drop-menu,
+  .navlinks>.nav-drop:first-of-type.open .drop-menu{transform:translateY(0)}
+  .drop-menu a{min-height:44px;display:flex;align-items:center}
+}
+.nav-top.wm-tight .wm-ko{display:none}
+@media (max-width:900px){
+  .nav-app>a{display:block;padding:6px 0;margin:-6px 0}
+  .foot-legal a{display:inline-block;padding:14px 0;margin:-14px 0}
+}
+@media (max-width:560px){
+  .navlinks>a::before,.navlinks .nav-drop>a::before{content:'';position:absolute;inset:0 -5px}
+  .nav-top>a{min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
+}
+/* 폰·태블릿 가로 줄의 '실점 집중 단원' 카드 — 186px 고정 폭이라 '도덕 · 환경윤리' 와
+   '-48점 오답 12/13' 이 낱말 가운데서 꺾였다. 카드가 내용에 맞춰 커지고(hug) 두 덩어리는 각각 한 줄. */
+.float-chip .fr{gap:10px}
+.float-chip .fr span,.float-chip .fr b{white-space:nowrap}
+@media (max-width:1099px){ .hcm-strip .float-chip{width:auto;min-width:186px} }
+/* 분석 STEP 3칸 — 1001~1099px 에서 태그 줄이 한 줄로 고정돼 셋째 칸이 화면 밖으로 나갔다(1024px 에서 +11px).
+   그 구간만 칸이 폭을 나눠 갖고 태그는 칩 단위로 다음 줄로 넘긴다. 1100px 이상은 지금 그대로. */
+@media (min-width:1001px) and (max-width:1099px){
+  .pipe-lane{grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr) 52px minmax(0,1fr)}
+  .pipe-step .tags{flex-wrap:wrap}
+}
+/* 폰 1열에서 큰 글꼴(안드 130%)이면 태그 세 개가 한 줄을 넘어 칸 밖으로 나갔다 — 칩 단위로 넘긴다 */
+@media (max-width:1000px){ .pipe-step .tags{flex-wrap:wrap} }
 </style>
 </head>
 <body>
@@ -3147,6 +3194,44 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     stageEl.insertBefore(labels, sceneEl);
     if(cta) stageEl.insertBefore(cta, sceneEl.nextSibling);
   }
+})();
+</script>
+<script>
+/* 헤더 워드마크의 한글('아웃포커스')이 오른쪽 앱 배지에 닿으면 뺀다 (2026-09-27).
+   폭 기준(≤359px)만으로는 안드 글꼴 크기 배율(115·130%)에서 배지 밑으로 파고든다 — 그린 뒤 실측. */
+(function(){
+  var top=document.querySelector('.nav-top');
+  var ko=top&&top.querySelector('.wm-ko'), app=top&&top.querySelector('.nav-app');
+  if(!ko||!app){return;}
+  function fit(){
+    top.classList.remove('wm-tight');
+    var a=app.getBoundingClientRect(), k=ko.getBoundingClientRect();
+    if(a.width&&k.width&&k.right>a.left-2){ top.classList.add('wm-tight'); }
+  }
+  fit();
+  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-tx')||ko); }
+  else{ window.addEventListener('resize',fit); }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(fit); }
+})();
+/* 열린 드롭다운이 화면 밖으로 나가면 안쪽으로 민다 (2026-09-27). 큰 글꼴(130%)에서 내비가 두 줄이 되면
+   '고객지원' 메뉴가 왼쪽으로 19px 잘렸다. 위치 규칙(첫 칸 왼쪽·끝 칸 오른쪽)은 CSS 가 정하고,
+   그래도 넘칠 때만 translate 로 옮긴다 — transform(열림 애니메이션)과 따로 논다. */
+(function(){
+  var drops=document.querySelectorAll('.nav-drop');
+  if(!drops.length||!window.MutationObserver){return;}
+  function place(d){
+    var m=d.querySelector('.drop-menu');
+    if(!m){return;}
+    m.style.translate='';
+    if(!d.classList.contains('open')){return;}
+    var r=m.getBoundingClientRect(), vw=document.documentElement.clientWidth, dx=0;
+    if(r.right>vw-8){ dx=vw-8-r.right; }
+    if(r.left+dx<8){ dx=8-r.left; }
+    if(dx){ m.style.translate=Math.round(dx)+'px 0'; }
+  }
+  [].forEach.call(drops,function(d){
+    new MutationObserver(function(){ place(d); }).observe(d,{attributes:true,attributeFilter:['class']});
+  });
 })();
 </script>
 </body>

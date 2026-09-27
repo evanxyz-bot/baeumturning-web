@@ -133,7 +133,7 @@
   <p class="topwarn">※ 위 환산 결과는 각 대학이 공개한 자료를 옮긴 참고 자료이며, <b>지원과 합격을 보장하지 않습니다.</b> 입시 기준은 해마다 바뀌고 전형·모집단위에 따라서도 달라집니다. 최종 반영 방식은 지원하려는 대학 입학처의 해당 학년도 모집요강을 기준으로 하며, 모집요강과 다를 경우 모집요강이 우선합니다. 이 정보를 바탕으로 한 지원 결정과 그 결과는 지원자 본인의 책임입니다.</p>
 
   <h2>4년제</h2>
-  <table class="t lst">
+  <div class="tscroll"><table class="t lst">
     <thead><tr><th>대학</th><th>반영 방식</th><th>전 과목 100점일 때</th></tr></thead>
     <tbody>
       <tr><td><a href="../가톨릭관동대학교.html">가톨릭관동대학교</a></td><td>대학 고유 계산식</td><td class="g">925.00점</td></tr>
@@ -143,10 +143,10 @@
       <tr><td><a href="../한라대학교.html">한라대학교</a></td><td>전 과목 평균 구간표</td><td class="g">400.00점</td></tr>
       <tr><td><a href="../한림대학교.html">한림대학교</a></td><td>과목별 등급 환산</td><td class="g">3.00등급</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <h2>전문대</h2>
-  <table class="t lst">
+  <div class="tscroll"><table class="t lst">
     <thead><tr><th>대학</th><th>반영 방식</th><th>전 과목 100점일 때</th></tr></thead>
     <tbody>
       <tr><td><a href="../강릉영동대학교.html">강릉영동대학교</a></td><td>전 과목 평균 구간표</td><td class="g">400.00점 (1.00등급 상당)</td></tr>
@@ -157,15 +157,15 @@
       <tr><td><a href="../한국골프과학기술대학교.html">한국골프과학기술대학교</a></td><td>전 과목 평균 구간표</td><td class="g">400.00점 (1.00등급 상당)</td></tr>
       <tr><td><a href="../한림성심대학교.html">한림성심대학교</a></td><td>대학 고유 계산식</td><td class="g">1000.00점</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <h2>교과 미반영 · 미확인</h2>
-  <table class="t lst">
+  <div class="tscroll"><table class="t lst why">
     <thead><tr><th>대학</th><th>종류</th><th>사유</th></tr></thead>
     <tbody>
       <tr><td>춘천교육대학교</td><td>4년제</td><td>해당 없음 (검정고시 성적을 정량 환산하지 않고 서류 정성평가 자료로만 활용)</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <p class="warn">입시 기준은 해마다 바뀝니다. 지원 전 반드시 해당 학년도 <b>모집요강 원문</b>을 확인하세요. 이 목록은 참고용이며 합격 여부를 보장하지 않습니다.</p>
 </main>
@@ -217,6 +217,42 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   });
   document.addEventListener('click',function(e){
     if(!e.target.closest||!e.target.closest('.nav-drop')){ closeAll(null); }
+  });
+})();
+/* 헤더 워드마크의 한글('아웃포커스')이 오른쪽 앱 배지에 닿으면 뺀다 (2026-09-27).
+   폭 기준(≤359px)만으로는 안드 글꼴 크기 배율(115·130%)에서 배지 밑으로 파고든다 — 그린 뒤 실측. */
+(function(){
+  var top=document.querySelector('.nav-top');
+  var ko=top&&top.querySelector('.wm-ko'), app=top&&top.querySelector('.nav-app');
+  if(!ko||!app){return;}
+  function fit(){
+    top.classList.remove('wm-tight');
+    var a=app.getBoundingClientRect(), k=ko.getBoundingClientRect();
+    if(a.width&&k.width&&k.right>a.left-2){ top.classList.add('wm-tight'); }
+  }
+  fit();
+  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-tx')||ko); }
+  else{ window.addEventListener('resize',fit); }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(fit); }
+})();
+/* 열린 드롭다운이 화면 밖으로 나가면 안쪽으로 민다 (2026-09-27). 큰 글꼴(130%)에서 내비가 두 줄이 되면
+   '고객지원' 메뉴가 왼쪽으로 19px 잘렸다. 위치 규칙(첫 칸 왼쪽·끝 칸 오른쪽)은 CSS 가 정하고,
+   그래도 넘칠 때만 translate 로 옮긴다 — transform(열림 애니메이션)과 따로 논다. */
+(function(){
+  var drops=document.querySelectorAll('.nav-drop');
+  if(!drops.length||!window.MutationObserver){return;}
+  function place(d){
+    var m=d.querySelector('.drop-menu');
+    if(!m){return;}
+    m.style.translate='';
+    if(!d.classList.contains('open')){return;}
+    var r=m.getBoundingClientRect(), vw=document.documentElement.clientWidth, dx=0;
+    if(r.right>vw-8){ dx=vw-8-r.right; }
+    if(r.left+dx<8){ dx=8-r.left; }
+    if(dx){ m.style.translate=Math.round(dx)+'px 0'; }
+  }
+  [].forEach.call(drops,function(d){
+    new MutationObserver(function(){ place(d); }).observe(d,{attributes:true,attributeFilter:['class']});
   });
 })();
 </script>

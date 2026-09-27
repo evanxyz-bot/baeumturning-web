@@ -232,7 +232,7 @@
 
   <h2>전년도 입시결과(합격선)</h2>
 
-  <p class="sub">송원대학교 입학처가 공개한 2026학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 3개 · 모집단위 17곳의 성적이 아래 표에 있습니다. 공개 지표는 50%컷 · 70%컷이며, 추정으로 채운 값은 없습니다.</p>
+  <p class="sub">송원대학교 입학처가 공개한 2026학년도 입시결과입니다. 검정고시 출신자가 지원할 수 있는 전형 3개 ·<wbr> 모집단위 17곳의 성적이 아래 표에 있습니다. 공개 지표는 <span class="nw">50%컷</span> ·<wbr> <span class="nw">70%컷이며</span>, 추정으로 채운 값은 없습니다.</p>
 
   <h3>학생부교과위주-일반전형</h3>
 
@@ -240,7 +240,7 @@
 
   <p class="sub"><b>수능 최저학력기준</b> 없음</p>
 
-  <p class="note"><b>성적 반영</b> 2026학년도에는 &#x27;정원내-일반전형&#x27; 한 표에 학생부우수자(학생부교과75%+출결25%)·인성우수자(간호학과, 학생부교과70%+면접30%)·실기우수자(공연예술학과, 학생부교과30%+실기70%)가 함께 들어 있었고, 2027학년도에 면접전형·실기전형·특기자전형으로 갈라졌다. 아래 행은 2026 표기 그대로이며, 실기 방법이던 공연예술학과만 뺐다(원문 수치는 raw 파일에 있다). 검정고시 합격자는 「검정고시·석차 등급 없는 성적 산출방법」 표(96점 이상 1등급 … 64점 이하 9등급)로 등급 환산해 반영하므로 이 표의 등급 축과 같다.</p>
+  <p class="note"><b>성적 반영</b> 2026학년도에는 &#x27;정원내-일반전형&#x27; 한 표에 학생부우수자(학생부교과75%+출결25%)·<wbr>인성우수자(간호학과, 학생부교과70%+면접30%)·<wbr>실기우수자(공연예술학과, 학생부교과30%+실기70%)가 함께 들어 있었고, 2027학년도에 면접전형·<wbr>실기전형·<wbr>특기자전형으로 갈라졌다. 아래 행은 2026 표기 그대로이며, 실기 방법이던 공연예술학과만 뺐다(원문 수치는 raw 파일에 있다). 검정고시 합격자는 「검정고시·<wbr>석차 등급 없는 성적 산출방법」 표(96점 이상 1등급 … 64점 이하 9등급)로 등급 환산해 반영하므로 이 표의 등급 축과 같다.</p>
 
   <div class="btwrap"><table class="bt rt">
     <thead><tr><th>모집단위</th><th>50%컷(등급)</th><th>70%컷(등급)</th></tr></thead>
@@ -271,7 +271,7 @@
 
   <p class="sub"><b>수능 최저학력기준</b> 없음</p>
 
-  <p class="note"><b>성적 반영</b> 모집학과는 사회서비스융합학과 하나다. 2024학년도에는 같은 학과·같은 모집인원(89명)으로 &#x27;성인학습자전형&#x27;이라는 이름이었다(대학 표기 그대로).</p>
+  <p class="note"><b>성적 반영</b> 모집학과는 사회서비스융합학과 하나다. 2024학년도에는 같은 학과·<wbr>같은 모집인원(89명)으로 &#x27;성인학습자전형&#x27;이라는 이름이었다(대학 표기 그대로).</p>
 
   <div class="btwrap"><table class="bt rt">
     <thead><tr><th>모집단위</th><th>50%컷(등급)</th><th>70%컷(등급)</th></tr></thead>
@@ -288,7 +288,7 @@
 
   <p class="sub"><b>수능 최저학력기준</b> 없음</p>
 
-  <p class="note"><b>성적 반영</b> 최종등록자가 3명 이하인 학과는 대학이 컷을 공개하지 않아 stats 를 비웠다(모집인원·경쟁률만 남김). 2024학년도 정원외는 &#x27;교육기회&#x27; 전형이라 이름이 달라 history 로 잇지 않았다.</p>
+  <p class="note"><b>성적 반영</b> 최종등록자가 3명 이하인 학과는 대학이 컷을 공개하지 않아 stats 를 비웠다(모집인원·<wbr>경쟁률만 남김). 2024학년도 정원외는 &#x27;교육기회&#x27; 전형이라 이름이 달라 history 로 잇지 않았다.</p>
 
   <div class="btwrap"><table class="bt rt">
     <thead><tr><th>모집단위</th><th>50%컷(등급)</th><th>70%컷(등급)</th></tr></thead>
@@ -374,6 +374,42 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   });
   document.addEventListener('click',function(e){
     if(!e.target.closest||!e.target.closest('.nav-drop')){ closeAll(null); }
+  });
+})();
+/* 헤더 워드마크의 한글('아웃포커스')이 오른쪽 앱 배지에 닿으면 뺀다 (2026-09-27).
+   폭 기준(≤359px)만으로는 안드 글꼴 크기 배율(115·130%)에서 배지 밑으로 파고든다 — 그린 뒤 실측. */
+(function(){
+  var top=document.querySelector('.nav-top');
+  var ko=top&&top.querySelector('.wm-ko'), app=top&&top.querySelector('.nav-app');
+  if(!ko||!app){return;}
+  function fit(){
+    top.classList.remove('wm-tight');
+    var a=app.getBoundingClientRect(), k=ko.getBoundingClientRect();
+    if(a.width&&k.width&&k.right>a.left-2){ top.classList.add('wm-tight'); }
+  }
+  fit();
+  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-tx')||ko); }
+  else{ window.addEventListener('resize',fit); }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(fit); }
+})();
+/* 열린 드롭다운이 화면 밖으로 나가면 안쪽으로 민다 (2026-09-27). 큰 글꼴(130%)에서 내비가 두 줄이 되면
+   '고객지원' 메뉴가 왼쪽으로 19px 잘렸다. 위치 규칙(첫 칸 왼쪽·끝 칸 오른쪽)은 CSS 가 정하고,
+   그래도 넘칠 때만 translate 로 옮긴다 — transform(열림 애니메이션)과 따로 논다. */
+(function(){
+  var drops=document.querySelectorAll('.nav-drop');
+  if(!drops.length||!window.MutationObserver){return;}
+  function place(d){
+    var m=d.querySelector('.drop-menu');
+    if(!m){return;}
+    m.style.translate='';
+    if(!d.classList.contains('open')){return;}
+    var r=m.getBoundingClientRect(), vw=document.documentElement.clientWidth, dx=0;
+    if(r.right>vw-8){ dx=vw-8-r.right; }
+    if(r.left+dx<8){ dx=8-r.left; }
+    if(dx){ m.style.translate=Math.round(dx)+'px 0'; }
+  }
+  [].forEach.call(drops,function(d){
+    new MutationObserver(function(){ place(d); }).observe(d,{attributes:true,attributeFilter:['class']});
   });
 })();
 </script>
