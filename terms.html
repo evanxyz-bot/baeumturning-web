@@ -514,6 +514,10 @@ body{word-break:keep-all;overflow-wrap:break-word}
    머리줄(구분·항목·이전 국가)은 짧은 제목이라 폰에서도 한 줄로 둔다. */
 .doc tr>:first-child{min-width:7em}
 @media (max-width:560px){ .doc tr:first-child>th{white-space:nowrap} }
+/* 「법령명」 뒤에 붙은 조사가 폰에서 다음 줄로 떨어졌다(「민사소송법」|에) — 낫표로 묶인 말과 조사를
+   한 덩어리로 묶는다. 글자는 그대로, 줄바꿈 위치만 (2026-09-28 대표 승인). 법령명이 길어 한 줄을
+   넘을 수 있는 곳은 끝 글자+」+조사만 묶는다. */
+.nw{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -808,7 +812,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
     콘텐츠분쟁조정위원회, 공정거래위원회, 개인정보 침해신고센터(국번 없이 118) 등 관계 기관에 상담 또는
     분쟁조정을 신청할 수 있습니다.</li>
     <li>본 약관은 대한민국 법령에 따라 해석·적용됩니다.</li>
-    <li>회사와 회원 사이의 소송에 관한 관할은 「민사소송법」에 따릅니다.</li>
+    <li>회사와 회원 사이의 소송에 관한 관할은 <span class="nw">「민사소송법」에</span> 따릅니다.</li>
   </ol>
 
   <h2>제12조 (회사 정보 및 고객센터)</h2>
