@@ -22,6 +22,30 @@ BASE = "https://outfocus.co.kr/"
 # 대표 승인 전에는 색인을 막는다. 승인 후 True 로 바꾸고 다시 빌드하면 noindex 가 빠진다.
 PUBLISHED = False
 
+# 글 끝 출처 문장·CTA — 앞머리 `source_note:`·`cta:` 로 글마다 바꾼다(2026-10-04 콘텐츠 가이드 반론 검토).
+# 예전엔 모든 글에 '배움터닝 기출 데이터를 바탕으로'와 앱 CTA 가 고정으로 붙어, 제도·자퇴 글에서 사실이 아니거나
+# 결정 중립 원칙(company/content/가이드/01_재료수집.md §8)과 부딪혔다. CTA 는 12/1 이후에도 무료인 것(기출·채점·해설)만 말한다.
+SOURCE_NOTE_DEFAULT = "이 글은 공개된 제도 정보와 공식 발표 자료를 바탕으로 작성했습니다."
+APP_STORE_URL = "https://apps.apple.com/kr/app/id6807482640"
+
+
+def foot_cta(kind):
+    kind = (kind or "app").strip().lower()
+    if kind == "none":
+        return ""
+    if kind == "help":   # 자퇴·위기 주제 — 앱 대신 도움 창구
+        return ('<div class="bl-cta">\n'
+                '        <div class="t"><b>혼자 고민하지 않아도 돼요</b>\n'
+                '          <p>청소년상담 1388(전화·문자·카카오톡)과 가까운 학교밖청소년지원센터(꿈드림)에서 '
+                '학업·진로 상담을 받을 수 있어요. 학교에 다니는 중이라면 학업중단 숙려제도 함께 알아보세요.</p></div>\n'
+                '      </div>')
+    return ('<div class="bl-cta">\n'
+            '        <div class="t"><b>기출로 지금 점수부터 확인해 보세요</b>\n'
+            '          <p>고졸 검정고시 기출을 실제 시험처럼 풀고 바로 채점해요. 전 문항에 해설이 있어요. '
+            '(만 14세 이상 가입 · iOS)</p></div>\n'
+            '        <a href="%s">App Store에서 보기</a>\n'
+            '      </div>' % APP_STORE_URL)
+
 
 # ───────────────────────────────── 껍데기 추출 ─────────────────────────────────
 def slice_between(s, start, end, what):
@@ -335,19 +359,17 @@ def build_post(p, posts):
 %s
     </article>
     <div class="bl-foot">
-      <p class="bl-src">이 글은 공개된 제도 정보와 배움터닝이 보유한 검정고시 기출 데이터를 바탕으로 작성했습니다.
-        시험 일정·요강은 <b>거주지 관할 시·도교육청 공고</b>로 확정되며, 이 글은 공식 공고를 대체하지 않습니다.</p>
-      <div class="bl-cta">
-        <div class="t"><b>어디가 약한지부터 알고 시작하세요</b>
-          <p>기출을 실제 시험처럼 풀면 자동 채점되고, 실점이 몰린 단원을 짚어 줍니다. 채점은 무료입니다.</p></div>
-        <a href="app.html">배움터닝 보기</a>
-      </div>
+      <p class="bl-src">%s
+        시험 일정·요강은 <b>거주지 관할 시·도교육청 공고</b>로 확정되며, 이 글은 공식 공고를 대체하지 않습니다.
+        <br>글쓴이: 배움터닝 운영사 아웃포커스</p>
+      %s
       %s
       <div class="bl-nav"><a href="blog.html">← 배움 기록 전체 보기</a></div>
     </div>
   </div>
 </section>""" % (html.escape(p["tag"]), html.escape(p["title"]), html.escape(p["tag"]),
-                 p["date"].replace("-", ". "), p["mins"], p["html"], rel)
+                 p["date"].replace("-", ". "), p["mins"], p["html"],
+                 html.escape(p.get("source_note") or SOURCE_NOTE_DEFAULT), foot_cta(p.get("cta", "app")), rel)
 
     io.open(os.path.join(ROOT, p["file"]), "w", encoding="utf-8", newline="").write(
         head(p["title"] + " — 아웃포커스", p["desc"], url, ldtag) + page(inner))

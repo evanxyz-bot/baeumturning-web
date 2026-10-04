@@ -1,0 +1,8 @@
+# 배포에서 빼는 내부 작업물 (2026-10-04 사이트 점검 — 공개 주소로 열려 AI 크롤러가 옛 수치를 가져갈 수 있었다)
+# 공개 페이지가 참조하지 않는 것만 뺀다. fair/(부스 태블릿)·transitions.html(의도된 수집 제한)은 그대로 둔다.
+docs/
+scripts/
+content/
+approvals/
+design/
+.claude/
