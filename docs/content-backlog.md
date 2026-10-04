@@ -1,3 +1,5 @@
+> ⛔ **대체됨(2026-10-04)** — 이 문서는 더 이상 정본이 아니다. 블로그·인스타 규칙·글감·수치는 본 저장소의 `company/content/가이드/`(README·01 재료 수집·02 이미지 제작·03 글감 백로그)와 `company/content/data/fact_registry.json` 을 따른다. 여기 적힌 수치(3,465문항·22회차·해설 1,870 등)와 Notion 결재 절차는 폐기됐다. 이 폴더는 배포에서 빠진다(.vercelignore).
+
 # 글감 백로그
 
 *작성 2026-08-18 · 근거: `aeo_audit.md` 4-1/4-2 키워드 표 · 규칙: `content-plan.md`*
