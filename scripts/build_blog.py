@@ -312,6 +312,8 @@ def head(title, desc, url, extra_ld=""):
 %s
 %s
 %s
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};window.va('beforeSend',function(e){if(navigator.globalPrivacyControl||navigator.doNotTrack==='1')return null;var u=new URL(e.url);u.search='';u.hash='';return Object.assign({},e,{url:u.toString()})});</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 """ % (html.escape(title), html.escape(desc), url, html.escape(title), html.escape(desc),
        BASE, "index,follow" if PUBLISHED else "noindex,nofollow",
