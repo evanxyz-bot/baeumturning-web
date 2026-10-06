@@ -1485,7 +1485,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   // 결과 표시는 이 호출을 기다리지 않는다(keepalive, 응답 무시, 실패해도 조용히) — Render 가 자다 깨는 데
   // 30초 넘게 걸려도 검색은 그대로다. Content-Type 을 text/plain 으로 두어 CORS 사전 요청 없이 간다
   // (서버가 본문을 JSON 으로 읽는다). 우리 도메인에서만 보낸다 — 로컬·미리보기에서 시험한 점수가 섞이지 않게.
-  var SCORE_API = 'https://ged-app.onrender.com/api/v1/admission/web-score-submissions';
+  var SCORE_API = 'https://api.outfocus.co.kr/api/v1/admission/web-score-submissions';
   var ANON_KEY = 'bt_anon_id', OPTOUT_KEY = 'bt_score_optout';
   var UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   var noSave = document.getElementById('noSave');
