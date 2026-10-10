@@ -36,6 +36,7 @@
     { "source": "/notice.html", "destination": "/qna.html", "permanent": true },
     { "source": "/contact.html", "destination": "/qna.html", "permanent": true },
     { "source": "/app.html", "destination": "/", "permanent": true },
-    { "source": "/launch.html", "destination": "/", "permanent": true }
+    { "source": "/launch.html", "destination": "/", "permanent": true },
+    { "source": "/news.html", "destination": "/", "permanent": true }
   ]
 }
