@@ -223,6 +223,10 @@ h1{font-size:30px;margin:0 0 10px}
 .kmap .rg.hl{fill:#fff0b3;stroke:var(--accent);transform:scale(1.06)}
 /* 울릉도·독도는 커지면 점이 튀어 보인다 — 호버 확대 없이 색만 */
 .kmap .rg.isl:hover{transform:none}
+.kmap .rg.isl.hl{transform:none}
+/* 독도 둘레 누름 영역 — 보이지 않지만 눌린다. 섬 이름(울릉도·독도)도 누르면 경북이 골라진다 */
+.kmap .hit{fill:transparent;stroke:none;pointer-events:all;cursor:pointer}
+.kmap .lb.islb{pointer-events:auto;cursor:pointer}
 /* 이름은 지도가 작아도 읽히게 크게 — 면을 넘어가도 괜찮다 (2026-09-21 대표 지시).
    후광(stroke)이 경계선을 덮어 글자가 선 위에서도 읽힌다. */
 .kmap .lb{font-size:24px;font-weight:700;fill:var(--text-2);pointer-events:none;
@@ -1264,7 +1268,9 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
   // 앱과 똑같이 합친다 — 중복 id 를 걸러내지 않는다(AdmissionConverter.tsx:67)
   var RULES = G.UNIV_RULES.concat(G.GENERATED_RULES.map(G.toRule));
-  var SUB = G.SUBJECT_LABELS;
+  // 7번째 칸('morality')은 선택과목 칸이다 — 도덕·기술·가정·체육·음악·미술 중 응시한 하나(2026-10-15 대표 지시).
+  // 앱 공용 이름표(SUBJECT_LABELS)는 그대로 두고 이 페이지에서만 덮어쓴다. 저장 키는 그대로 morality.
+  var SUB = Object.assign({}, G.SUBJECT_LABELS, { morality: '선택과목' });
   // 지역 순서는 앱 REGIONS 상수 그대로 (대학 수가 많은 순)
   var REGIONS = ['서울','경기','인천','부산','대구','광주','대전','울산','세종',
                  '강원','충북','충남','전북','전남','경북','경남','제주'];
@@ -1632,6 +1638,10 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       svg += '<circle class="rg isl dokdo" data-r="경북" cx="' + isl['독도'].point[0] + '" cy="' +
         isl['독도'].point[1] + '" r="3.4" role="button" tabindex="0" aria-pressed="false"' +
         ' aria-label="경북 울릉군 독도"><title>독도</title></circle>';
+      // 점이 화면에서 6px 라 정확히 맞혀야만 눌렸다(2026-10-15 대표 "독도 클릭 안 됨") —
+      // 둘레에 안 보이는 넓은 누름 영역을 깐다. 섬 이름 글자도 눌리게 했다(.islb).
+      svg += '<circle class="hit" data-r="경북" cx="' + isl['독도'].point[0] + '" cy="' +
+        isl['독도'].point[1] + '" r="15" aria-hidden="true"><title>독도</title></circle>';
     }
     // 넓은 도는 면 안에 이름을 쓴다
     Object.keys(m.labels).forEach(function (r) {
@@ -1654,7 +1664,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     ['울릉도', '독도'].forEach(function (n) {
       var l = isl[n] && isl[n].label;
       if (!l) { return; }
-      svg += '<text class="lb small" x="' + l[0] + '" y="' + l[1] +
+      svg += '<text class="lb small islb" data-r="경북" x="' + l[0] + '" y="' + l[1] +
         '" text-anchor="middle" dominant-baseline="middle">' + n + '</text>';
     });
     // 이름이 전부 지도 안에 들어가므로 별도 이름 칩 열은 없다 (2026-09-21 — 전날의 "왼쪽 세로 칩"
@@ -1662,7 +1672,8 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     box.innerHTML = svg + '</svg>';
     document.body.classList.add('hasmap');
     box.addEventListener('click', function (e) {
-      var t = e.target.closest ? (e.target.closest('.rg') || e.target.closest('.mlb')) : null;
+      var t = e.target.closest ? (e.target.closest('.rg') || e.target.closest('.mlb') ||
+        e.target.closest('.hit') || e.target.closest('.islb')) : null;
       if (t) { toggleRegion(t.getAttribute('data-r')); }
     });
     box.addEventListener('keydown', function (e) {
@@ -1681,14 +1692,14 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     });
     // 광역시 이름에 마우스를 얹으면 그 점과 면도 같이 밝힌다 — 이름·점이 한 몸인 걸 보여 준다
     box.addEventListener('pointerover', function (e) {
-      var c = e.target.closest ? e.target.closest('.mlb') : null;
+      var c = e.target.closest ? e.target.closest('.mlb,.hit,.islb') : null;
       if (!c) { return; }
       var r = c.getAttribute('data-r');
       box.querySelectorAll('.rg[data-r="' + r + '"],.dot[data-r="' + r + '"]')
         .forEach(function (el) { el.classList.add('hl'); });
     });
     box.addEventListener('pointerout', function (e) {
-      var c = e.target.closest ? e.target.closest('.mlb') : null;
+      var c = e.target.closest ? e.target.closest('.mlb,.hit,.islb') : null;
       if (!c) { return; }
       box.querySelectorAll('.hl').forEach(function (el) { el.classList.remove('hl'); });
     });
