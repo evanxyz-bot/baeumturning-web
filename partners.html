@@ -372,6 +372,16 @@ body{word-break:keep-all;overflow-wrap:break-word}
 .pcard .pmark{width:42px;height:42px;flex:none;border-radius:12px;background:var(--accent-soft);
   display:grid;place-items:center;color:var(--accent)}
 .pcard .pmark svg{width:24px;height:24px}
+/* 실제 로고가 있는 협력사 — 흰 바탕 가로형 칸(2026-10-16) */
+.pcard .pmark.plogo{display:flex;align-items:center;justify-content:center;width:64px;height:42px;padding:0;
+  background:#fff;border:1px solid var(--border);overflow:hidden}
+.pcard .pmark.plogo img{width:54px;height:33px;max-width:none;object-fit:contain;display:block}
+/* 제목과 협력사 카드 사이 간격 — 2026-10-16 대표 지시로 좁힘(이전 56+72px) */
+.page-head{padding-bottom:20px}
+.page-head + .partners{padding-top:20px}
+/* 제목은 한 줄 고정 — 좁은 폰에서는 글자를 줄여 줄바꿈을 막는다 */
+.page-head h1{white-space:nowrap}
+@media (max-width:560px){.page-head h1{font-size:min(32.5px,5.6vw)}}
 .pcard b{display:block;font-size:17.5px;font-weight:700;letter-spacing:-0.01em;color:var(--text)}
 .pcard .prole{display:block;margin-top:2px;font-size:13.4px;color:var(--text-3)}
 
@@ -487,8 +497,8 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <a href="company.html" class="active">회사<span class="chev">▾</span></a>
         <div class="drop-menu">
           <a href="company.html">회사 소개</a>
-          <a href="history.html">연혁</a>
           <a href="partners.html">협력사/협력기관</a>
+          <a href="history.html">연혁</a>
         </div>
       </div>
       <a href="stories.html">소식</a>
@@ -509,7 +519,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 <!-- ===================== PAGE HEAD ===================== -->
 <header class="page-head">
   <div class="wrap">
-    <h1>함께 <span class="r">사각지대</span>를 밝힐<br><span class="g">파트너</span>를 찾습니다</h1>
+    <h1><span class="r">사각지대</span>를 함께 밝히는 <span class="g">협력사</span></h1>
   </div>
 </header>
 
@@ -524,9 +534,9 @@ body{word-break:keep-all;overflow-wrap:break-word}
           <span class="prole">협력사</span>
         </div>
       </div>
-      <!-- (주)채우다 — 2026-09-17 대표 지시로 이름만 먼저. 로고·사진·소개는 대표가 주는 대로 채운다 -->
+      <!-- (주)채우다 — 2026-09-17 이름만 먼저, 2026-10-16 대표가 준 로고 파일(채우다 로고.jpg, 여백만 잘라 냄)로 교체 -->
       <div class="pcard">
-        <span class="pmark"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg></span>
+        <span class="pmark plogo"><img src="brand/partners/chaewooda-logo.png" alt="(주)채우다 로고" width="360" height="220" loading="lazy"></span>
         <div>
           <b>(주)채우다</b>
           <span class="prole">협력사</span>
