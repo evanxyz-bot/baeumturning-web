@@ -369,13 +369,13 @@ body{word-break:keep-all;overflow-wrap:break-word}
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
 .pcard{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--border);
   border-radius:16px;padding:18px 20px;box-shadow:var(--shadow-sm)}
-.pcard .pmark{width:42px;height:42px;flex:none;border-radius:12px;background:var(--accent-soft);
+.pcard .pmark{width:60px;height:60px;flex:none;border-radius:12px;background:var(--accent-soft);
   display:grid;place-items:center;color:var(--accent)}
-.pcard .pmark svg{width:24px;height:24px}
+.pcard .pmark svg{width:34px;height:34px}
 /* 실제 로고가 있는 협력사 — 흰 바탕 가로형 칸(2026-10-16) */
-.pcard .pmark.plogo{display:flex;align-items:center;justify-content:center;width:64px;height:42px;padding:0;
+.pcard .pmark.plogo{display:flex;align-items:center;justify-content:center;width:100px;height:60px;padding:0;
   background:#fff;border:1px solid var(--border);overflow:hidden}
-.pcard .pmark.plogo img{width:54px;height:33px;max-width:none;object-fit:contain;display:block}
+.pcard .pmark.plogo img{width:88px;height:54px;max-width:none;object-fit:contain;display:block}
 /* 제목과 협력사 카드 사이 간격 — 2026-10-16 대표 지시로 좁힘(이전 56+72px) */
 .page-head{padding-bottom:20px}
 .page-head + .partners{padding-top:20px}
@@ -531,7 +531,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <span class="pmark"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg></span>
         <div>
           <b>인너인</b>
-          <span class="prole">협력사</span>
         </div>
       </div>
       <!-- (주)채우다 — 2026-09-17 이름만 먼저, 2026-10-16 대표가 준 로고 파일(채우다 로고.jpg, 여백만 잘라 냄)로 교체 -->
@@ -539,15 +538,8 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <span class="pmark plogo"><img src="brand/partners/chaewooda-logo.png" alt="(주)채우다 로고" width="360" height="220" loading="lazy"></span>
         <div>
           <b>(주)채우다</b>
-          <span class="prole">협력사</span>
         </div>
       </div>
-    </div>
-
-    <div class="partner-empty reveal">
-      <b>협력사&amp;협력기관 모집 중</b>
-      <p>교육기관, 검정고시 학원, 청소년 지원기관, 콘텐츠 제작사 등 교육 사각지대 해소에 함께할 파트너를 기다리고 있습니다.</p>
-      <a class="btn" href="qna.html?type=제휴#mailq">문의하기</a>
     </div>
   </div>
 </section>
