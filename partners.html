@@ -386,6 +386,8 @@ body{display:flex;flex-direction:column;min-height:100vh;min-height:100svh}
 /* 제목은 한 줄 고정 — 좁은 폰에서는 글자를 줄여 줄바꿈을 막는다 */
 .page-head h1{white-space:nowrap}
 @media (max-width:560px){.page-head h1{font-size:min(32.5px,5.6vw)}}
+/* 이름은 로고 오른쪽 빈칸의 가운데에(2026-10-17 대표 지시 — 로고에 붙어 보였다) */
+.pcard > div{flex:1;min-width:0;text-align:center}
 .pcard b{display:block;font-size:22px;font-weight:700;letter-spacing:-0.01em;color:var(--text)}
 .pcard .prole{display:block;margin-top:2px;font-size:13.4px;color:var(--text-3)}
 
