@@ -316,6 +316,13 @@ details.q .a{padding:0 22px 20px 62px;font-size:15.7px;color:var(--text-2);line-
 .foot-legal{width:100%;order:3;margin:10px 0 0;font-size:13.4px;color:var(--text-3)}
 .foot-legal a{color:var(--text-3);font-weight:600;text-decoration:underline;text-underline-offset:3px}
 .foot-legal a:hover{color:var(--text)}
+/* 2026-10-19 대표 지시 — 법적 링크를 © 줄과 회사정보(이메일·소재지) 사이에. 넓은 화면은 한 줄 가운데, 좁은 화면은 그 순서로 쌓인다 */
+.foot .foot-bottom>.foot-legal{order:2;margin:0}
+.foot .foot-bottom>.biz-info{order:3}
+@media (min-width:901px){
+  .foot .foot-bottom>.foot-legal{width:auto;margin:0 auto}
+  .foot .foot-bottom>.biz-info{margin-left:0}
+}
 /* 2026-09-24 — 키보드 포커스 링(index.html 과 같은 규칙, 가이드라인 감사) */
 :focus-visible{outline:2.5px solid var(--accent-mid);outline-offset:2px;border-radius:4px}
 .foot-top .desc{font-size:15.1px;color:var(--text-3);line-height:1.65;max-width:420px;margin-top:14px}
