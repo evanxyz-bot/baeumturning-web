@@ -795,8 +795,9 @@ body::before{background:
 .uniq .first{background:var(--accent);border-radius:7px}
 .uniq .dot{display:none}
 /* 그라데이션 클립 텍스트 → 단색 + 형광펜 */
-.hero h1 .g{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--accent-strong);
-  background-image:linear-gradient(transparent 58%, rgba(154,215,205,.5) 58%, rgba(154,215,205,.5) 93%, transparent 93%)}
+.hero h1 .g{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--accent-strong)}
+/* 2026-10-19 대표 지시 — '배움'·'터닝포인트' 형광펜 삭제(글자색만 브랜드색 유지). 옛 형광펜:
+   background-image:linear-gradient(transparent 58%, rgba(154,215,205,.5) 58%, rgba(154,215,205,.5) 93%, transparent 93%) */
 /* 그라데이션+글로우 배지 → 단색 정지 */
 .ai-tag{background:#5878a0;animation:none}
 /* 브랜드 그라데이션 → 단색 (버튼·독·칩 일괄) */
@@ -830,6 +831,8 @@ body::before{background:
 /* 초점 — 브랜드 컬러 강조 */
 .apfx-light .t .fx{font-style:normal;color:inherit}
 .apfx-in .tt .fx{font-style:normal;color:inherit}
+/* 2026-10-19 대표 지시 — 2페이지 '데이터'에 브랜드색. 어두운 바탕이라 같은 구간 마크(.apfx-in .mk)와 같은 밝은 브랜드 초록 */
+.apfx-in .tt .fx.dt{color:#4ecfb4}
 
 /* 코어 — 빔이 도착하는 순간 테두리에 빛이 한 바퀴 */
 .core-ring{position:absolute;inset:-5px;border-radius:47px;padding:3px;pointer-events:none;
@@ -2454,7 +2457,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="apfx-light"><span class="t">공부에는 <em class="fx">초점</em>이 필요하니까</span></div>
     <div class="apfx-dark" id="apfxDark">
       <div class="apfx-in" id="apfxIn">
-        <span class="tt"><em class="fx">초점</em>을 <em class="fx">데이터</em>에 맞춥니다</span>
+        <span class="tt"><em class="fx">초점</em>을 <em class="fx dt">데이터</em>에 맞춥니다</span>
       </div>
     </div>
     <!-- 2026-10-19 대표 지시: 조리개 바깥 날(로고)은 빼고 초점이 흐려졌다 맞춰지는 육각 개구부만 남긴다.
