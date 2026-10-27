@@ -5,7 +5,7 @@
 <link>https://outfocus.co.kr/</link>
 <description>교육 사각지대를 해소하는 솔루션 컴퍼니 아웃포커스. 검정고시에 특화한 학습 관리 앱 '배움터닝' — 자체 로직으로 계산한 약점 진단과 학습 보고서까지.</description>
 <language>ko</language>
-<lastBuildDate>Tue, 27 Oct 2026 18:22:49 +0900</lastBuildDate>
+<lastBuildDate>Tue, 27 Oct 2026 18:41:52 +0900</lastBuildDate>
 <atom:link href="https://outfocus.co.kr/rss.xml" rel="self" type="application/rss+xml" />
 <item>
 <title>배움터닝 — 고졸 검정고시 기출·오답 분석 앱 | 아웃포커스</title>
@@ -18,7 +18,7 @@
 <title>검정고시 대입 환산 — 전국 대학 내신 환산 등급·점수 계산 | 배움터닝</title>
 <link>https://outfocus.co.kr/%EB%8C%80%EC%9E%85%ED%99%98%EC%82%B0/</link>
 <description>검정고시 과목 점수를 넣으면 대학이 공개한 성적산출 기준(전국 306곳 수록·258곳 환산)으로 내신 환산 등급·환산점수를 한 번에 보여 줍니다. 대학 입학처 공개 자료 기준, 추정값 없음.</description>
-<pubDate>Sun, 18 Oct 2026 00:00:00 +0900</pubDate>
+<pubDate>Tue, 27 Oct 2026 00:00:00 +0900</pubDate>
 <guid isPermaLink="true">https://outfocus.co.kr/%EB%8C%80%EC%9E%85%ED%99%98%EC%82%B0/</guid>
 </item>
 <item>
@@ -27,6 +27,13 @@
 <description>검정고시란 무엇인지, 시험 과목·합격 기준·시행 횟수부터 배움터닝 채점 무료 여부와 출시 일정까지 자주 묻는 질문을 정리했습니다.</description>
 <pubDate>Tue, 27 Oct 2026 00:00:00 +0900</pubDate>
 <guid isPermaLink="true">https://outfocus.co.kr/qna.html</guid>
+</item>
+<item>
+<title>전문대 검정고시 환산 기준 — 지역별 목록 | 배움터닝</title>
+<link>https://outfocus.co.kr/%EB%8C%80%EC%9E%85%ED%99%98%EC%82%B0/%EC%A0%84%EB%AC%B8%EB%8C%80.html</link>
+<description>검정고시 환산 기준을 공개한 전문대 117곳의 반영 방식과 전 과목 100점 결과를 지역별로 정리했습니다. 대학 입학처 공개 자료 기준.</description>
+<pubDate>Tue, 27 Oct 2026 00:00:00 +0900</pubDate>
+<guid isPermaLink="true">https://outfocus.co.kr/%EB%8C%80%EC%9E%85%ED%99%98%EC%82%B0/%EC%A0%84%EB%AC%B8%EB%8C%80.html</guid>
 </item>
 <item>
 <title>회사 소개 — 배움터닝을 만드는 아웃포커스</title>
@@ -1434,13 +1441,6 @@
 <description>전남대학교는 과목별 점수를 각각 구간표에 넣어 환산점수로 바꾼 뒤 평균합니다. 전 과목 100점이면 88.00점이고, 구간은 8개입니다. (4년제·광주, 2027학년도 기준)</description>
 <pubDate>Mon, 19 Oct 2026 00:00:00 +0900</pubDate>
 <guid isPermaLink="true">https://outfocus.co.kr/%EB%8C%80%EC%9E%85%ED%99%98%EC%82%B0/%EC%A0%84%EB%82%A8%EB%8C%80%ED%95%99%EA%B5%90.html</guid>
-</item>
-<item>
-<title>전문대 검정고시 환산 기준 — 지역별 목록 | 배움터닝</title>
-<link>https://outfocus.co.kr/%EB%8C%80%EC%9E%85%ED%99%98%EC%82%B0/%EC%A0%84%EB%AC%B8%EB%8C%80.html</link>
-<description>검정고시 환산 기준을 공개한 전문대 117곳의 반영 방식과 전 과목 100점 결과를 지역별로 정리했습니다. 전 과목 평균 구간표 66곳·과목별 등급 환산 27곳·대학 고유 계산식 23곳 등, 대학 입학처 공개 자료 기준.</description>
-<pubDate>Mon, 19 Oct 2026 00:00:00 +0900</pubDate>
-<guid isPermaLink="true">https://outfocus.co.kr/%EB%8C%80%EC%9E%85%ED%99%98%EC%82%B0/%EC%A0%84%EB%AC%B8%EB%8C%80.html</guid>
 </item>
 <item>
 <title>전북과학대학교 검정고시 환산 등급 — 평균 점수 구간표 | 배움터닝</title>

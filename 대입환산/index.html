@@ -112,8 +112,9 @@ h1{font-size:30px;margin:0 0 10px}
 /* 상단 안내 — 계산기보다 먼저 읽히게 (2026-09-18 대표 지시) */
 /* 2026-09-24 개편 — 문구·위치는 그대로 두고 시각 무게만 낮춘다(색 콜아웃이 첫 화면
    절반을 먹어 계산기가 밀렸다). 접거나 팝업으로 숨기지 않고, 본문과 구분되는 블록으로 남긴다. */
-.topwarn{margin:0 0 22px;background:var(--surface-2);border:1px solid var(--border);
-  border-radius:var(--r-sm);padding:12px 14px;font-size:13px;line-height:1.65;color:var(--text-2)}
+/* 2026-10-27 대표 지시 — 아래쪽 같은 안내(.warn)를 지우고 이것만 남기며, 그 상자처럼 연분홍 주의색 */
+.topwarn{margin:0 0 22px;background:#fbf0ee;border:0;
+  border-radius:var(--r-md);padding:12px 14px;font-size:13px;line-height:1.65;color:var(--text-2)}
 .topwarn b{font-weight:800;color:var(--text)}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
   padding:16px 16px 18px;box-shadow:var(--shadow-sm)}
@@ -976,7 +977,7 @@ h1{font-size:30px;margin:0 0 10px}
    "name": "검정고시 점수는 대학에서 어떻게 반영되나요?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "대학은 검정고시 점수를 학교생활기록부 교과성적 자리에 넣기 위해 자체 환산표로 바꿉니다. 방식은 크게 다섯 가지로, 전 과목 평균을 구간표에 넣어 등급 하나를 정하는 곳이 124곳, 과목별 점수를 등급으로 바꿔 평균을 내는 곳이 47곳, 과목별 점수를 대학 환산점수로 바꾸는 곳이 34곳, 구간표 대신 자체 계산식을 공개한 곳이 48곳(그중 식이 계산을 완전히 결정하는 39곳은 계산기가 값을 냅니다), 수능 성적으로 대체하는 비교내신이 5곳입니다. 전국 306개 대학 조사 기준이며, 46곳은 검정고시 성적을 교과점수로 반영하지 않습니다."
+    "text": "대학은 검정고시 점수를 학교생활기록부 교과성적 자리에 넣기 위해 대학마다 정한 기준으로 바꿉니다. 반영 방식은 대학마다 다르며, 대학별 페이지에서 그 대학의 방식을 확인할 수 있습니다. 전국 306개 대학 조사 기준이며, 46곳은 검정고시 성적을 교과점수로 반영하지 않습니다."
    }
   },
   {
@@ -1164,16 +1165,6 @@ h1{font-size:30px;margin:0 0 10px}
     <li>자료를 찾지 못한 대학은 미확인으로 남겼습니다.</li>
   </ul>
 
-  <h2>환산 방식은 대학마다 다릅니다</h2>
-  <p class="para">환산 기준을 확보한 <b data-stat="found">258</b>곳을 방식별로 나누면 다섯 가지입니다.</p>
-  <ul class="facts">
-    <li><b>전 과목 평균 구간표</b> <b data-stat="conv-average-band">124</b>곳 — 7과목 평균 점수를 구간표에 넣어 등급 또는 환산점수 하나를 정합니다.</li>
-    <li><b>과목별 등급 환산</b> <b data-stat="conv-subject-grade">47</b>곳 — 과목마다 점수를 등급으로 바꾼 뒤 평균 등급을 냅니다.</li>
-    <li><b>과목별 점수 환산</b> <b data-stat="conv-subject-score">34</b>곳 — 과목마다 점수를 대학 환산점수로 바꾼 뒤 평균을 냅니다. 과목 단위수로 가중하는 대학이 있습니다.</li>
-    <li><b>대학 고유 계산식</b> <b data-stat="conv-formula">48</b>곳 — 구간표 대신 계산식을 공개했습니다. 이 가운데 식이 계산을 완전히 결정하는 39곳은 계산기가 실제로 값을 내고, 나머지 9곳은 식 원문만 싣습니다. 등급표를 '별표'로만 가리킨 곳, 과목마다 등급을 매겨 평균하는 곳, 전형별 총점을 요강에서 찾아야 값이 정해지는 곳은 계산하지 않습니다.</li>
-    <li><b>비교내신</b> <b data-stat="conv-comparative">5</b>곳 — 수능 등 다른 성적으로 교과성적을 대체하므로 검정고시 점수만으로는 산출되지 않습니다.</li>
-  </ul>
-  <p class="para">전 과목 90점을 넣어 보면, 등급이 산출되는 대학 <span data-stat="grade90-n">106</span>곳에서 결과가 <b data-stat="grade90-min">2</b>등급에서 <b data-stat="grade90-max">8</b>등급까지 갈립니다. 같은 점수라도 대학이 정한 구간표에 따라 차이가 크다는 뜻입니다.</p>
 
   <!-- 아래 「수록 대학 목록」은 scripts/build_admission_pages.py 가 써 넣는다.
        마커 사이만 교체되므로 이 밖의 내용을 손으로 고쳐도 지워지지 않는다. -->
@@ -1183,10 +1174,6 @@ h1{font-size:30px;margin:0 0 10px}
   <p class="para">종류별 — <a href="4년제.html">4년제</a> · <a href="전문대.html">전문대</a> · <a href="미반영.html">교과 미반영 대학</a></p>
   <p class="para">지역별 — <a href="지역/서울.html">서울</a> · <a href="지역/경기.html">경기</a> · <a href="지역/인천.html">인천</a> · <a href="지역/부산.html">부산</a> · <a href="지역/대구.html">대구</a> · <a href="지역/광주.html">광주</a> · <a href="지역/대전.html">대전</a> · <a href="지역/울산.html">울산</a> · <a href="지역/세종.html">세종</a> · <a href="지역/강원.html">강원</a> · <a href="지역/충북.html">충북</a> · <a href="지역/충남.html">충남</a> · <a href="지역/전북.html">전북</a> · <a href="지역/전남.html">전남</a> · <a href="지역/경북.html">경북</a> · <a href="지역/경남.html">경남</a> · <a href="지역/제주.html">제주</a></p>
   <!-- univ-list:end -->
-
-  <p class="warn">※ 위 환산 결과는 각 대학이 공개한 자료를 옮긴 <b>참고 자료</b>이며, 지원과 합격을 보장하지 않습니다.
-  입시 기준은 해마다 바뀌고 전형·모집단위에 따라서도 달라집니다. 최종 반영 방식은 지원하려는 대학 입학처의 해당 학년도 모집요강을 기준으로 하며,
-  모집요강과 다를 경우 모집요강이 우선합니다. 이 정보를 바탕으로 한 지원 결정과 그 결과는 지원자 본인의 책임입니다.</p>
 
   <aside class="cta">
     <h2>배움터닝 앱에서는</h2>
