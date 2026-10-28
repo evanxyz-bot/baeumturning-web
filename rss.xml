@@ -5,7 +5,7 @@
 <link>https://outfocus.co.kr/</link>
 <description>검정고시 준비는 배움터닝 앱으로! 고졸 검정고시 기출을 풀면 약한 단원을 찾아 오늘 풀 문제를 골라 주고, 학습 보고서로 공부 방향까지 잡아 줍니다. 무료로 시작하세요.</description>
 <language>ko</language>
-<lastBuildDate>Wed, 28 Oct 2026 18:21:39 +0900</lastBuildDate>
+<lastBuildDate>Wed, 28 Oct 2026 18:36:19 +0900</lastBuildDate>
 <atom:link href="https://outfocus.co.kr/rss.xml" rel="self" type="application/rss+xml" />
 <item>
 <title>검정고시 준비는 배움터닝 앱으로! — 고졸 검정고시 기출·오답 분석 | 아웃포커스</title>
@@ -2003,6 +2003,13 @@
 <guid isPermaLink="true">https://outfocus.co.kr/partners.html</guid>
 </item>
 <item>
+<title>개인정보처리방침 — 배움터닝 · 아웃포커스</title>
+<link>https://outfocus.co.kr/privacy.html</link>
+<description>배움터닝(아웃포커스) 개인정보처리방침. 만 14세 미만은 가입할 수 없습니다.</description>
+<pubDate>Wed, 28 Oct 2026 00:00:00 +0900</pubDate>
+<guid isPermaLink="true">https://outfocus.co.kr/privacy.html</guid>
+</item>
+<item>
 <title>이용약관 — 배움터닝 · 아웃포커스</title>
 <link>https://outfocus.co.kr/terms.html</link>
 <description>배움터닝(아웃포커스) 서비스 이용약관. 만 14세 이상만 가입할 수 있습니다.</description>
@@ -2015,13 +2022,6 @@
 <description>배움터닝 계정과 학습 데이터를 삭제하는 방법. 앱 [내 정보] 화면에서 직접 삭제할 수 있습니다.</description>
 <pubDate>Tue, 27 Oct 2026 00:00:00 +0900</pubDate>
 <guid isPermaLink="true">https://outfocus.co.kr/delete-account.html</guid>
-</item>
-<item>
-<title>개인정보처리방침 — 배움터닝 · 아웃포커스</title>
-<link>https://outfocus.co.kr/privacy.html</link>
-<description>배움터닝(아웃포커스) 개인정보처리방침. 만 14세 미만은 가입할 수 없습니다.</description>
-<pubDate>Sun, 25 Oct 2026 00:00:00 +0900</pubDate>
-<guid isPermaLink="true">https://outfocus.co.kr/privacy.html</guid>
 </item>
 </channel>
 </rss>
