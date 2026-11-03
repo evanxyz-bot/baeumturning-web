@@ -1455,6 +1455,9 @@ body::before{background:
   .navlinks a{padding:7px 5px;white-space:nowrap}
   .nav-drop>a .chev{margin-left:2px}
   .hero h1{font-size:34.7px}
+  /* 대제목과 폰 사이가 66px 로 벌어져 있었다(위 920px 블록의 grid gap 40px + 폰 무대 위 26px) —
+     gap 을 없앤다 — 폰 무대 위 26px 만 남는다(2026-11-03 대표 지시). */
+  .hero-grid{gap:0}
   .hero p.sub{font-size:17.4px}
   .fgrid,.price-grid,.foot-grid,.co-info{grid-template-columns:1fr}
   .wrap{padding:0 18px}
@@ -3199,6 +3202,8 @@ document.querySelectorAll('.hubitem').forEach(function(item){
     if(parts.length>1){ parts.forEach(function(line,k){ if(k) sp.appendChild(document.createElement('br'));
       sp.appendChild(document.createTextNode(line)); }); }
     else { sp.textContent=(parts[0]||t.textContent).replace(/\s+/g,' ').trim(); }
+    // 폰 칩만 '학습 보고서' → '검정고시 앱'(2026-11-03 대표 지시). PC 3D 라벨은 그대로.
+    if(sp.textContent==='학습 보고서') sp.textContent='검정고시 앱';
     labels.appendChild(sp);
   });
   ['.l-chart','.l-pass','.l-bars','.l-weak'].forEach(function(sel){
