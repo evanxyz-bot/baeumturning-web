@@ -1365,6 +1365,12 @@ body::before{background:
     pointer-events:auto;zoom:1}
   .hcm-strip .lf{animation:none!important;opacity:1;transform:none}
   .hcm-strip .mini-card,.hcm-strip .float-chip{transform:none;transform-origin:center}
+  /* 넘겨 보는 줄에선 손을 대야만(:hover) 빛이 켜졌다 — 지금 가운데 보이는 카드에 자동으로
+     같은 보라 조명을 켠다(.lit 는 문서 끝 스크립트가 붙인다, 2026-11-03 대표 지시).
+     줄이 세로로 잘려(overflow-y:hidden, 위 여백 10px) PC 만큼 퍼지면 위가 직선으로 끊긴다 — 번짐만 줄였다. */
+  .hcm-strip .layer.lit .lf::before{opacity:1;inset:-8px}
+  .hcm-strip .layer.lit .lf>*{box-shadow:0 0 0 2.5px rgba(143,127,170,.55),0 0 14px 2px rgba(168,150,205,.45),0 8px 20px rgba(13,38,33,.12)!important;
+    transform:scale(1.035)}
   .hcm-hint{display:block;margin:0 0 4px;text-align:center;font-size:13.4px;color:var(--text-3)}
 }
 @media (min-width:720px) and (max-width:1099px){
@@ -3209,6 +3215,18 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   ['.l-chart','.l-pass','.l-bars','.l-weak'].forEach(function(sel){
     var el=scene.querySelector(sel);if(el) strip.appendChild(el);
   });
+  /* 가운데 보이는 카드에 빛(.lit) — 넘기는 줄(≤719px)에서만. 태블릿은 다 펼쳐 보여 주니 켜지 않는다. */
+  if(window.matchMedia('(max-width:719px)').matches){
+    var cards=[].slice.call(strip.children), litRaf=0;
+    function lightCenter(){
+      litRaf=0;
+      var r=strip.getBoundingClientRect(), mid=r.left+r.width/2, best=null, bd=1e9;
+      cards.forEach(function(c){ var b=c.getBoundingClientRect(), d=Math.abs(b.left+b.width/2-mid); if(d<bd){bd=d;best=c;} });
+      cards.forEach(function(c){ c.classList.toggle('lit',c===best); });
+    }
+    strip.addEventListener('scroll',function(){ if(!litRaf) litRaf=requestAnimationFrame(lightCenter); },{passive:true});
+    lightCenter();
+  }
   /* 차례 바꾸기(2026-09-11 대표 지시): 기능 칩을 3D 폰 위로, 앱 다운로드를 폰 바로 아래로.
      CSS order 만으로는 안 된다 — 앱 다운로드는 그리드의 다른 칸(글 블록)에 들어 있다. */
   var stageEl=host.parentNode, sceneEl=stageEl.querySelector('.scene');
