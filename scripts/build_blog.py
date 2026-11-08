@@ -223,7 +223,7 @@ BLOG_CSS = """
 .article p{font-size:17px;line-height:1.92;color:#2b3038;margin:0 0 22px;
   text-wrap:pretty;word-break:keep-all}
 .article h2{font-family:'GmarketSans',sans-serif;font-weight:700;font-size:22px;line-height:1.5;
-  color:var(--text);margin:42px 0 16px;padding-left:14px;border-left:4px solid var(--accent);
+  color:var(--text);margin:42px 0 16px;
   word-break:keep-all}
 .article h3{font-weight:800;font-size:17.5px;color:var(--text);margin:30px 0 12px;word-break:keep-all}
 .article b{font-weight:700;color:#1b1f26}
@@ -240,7 +240,7 @@ BLOG_CSS = """
   rgba(154,215,205,.62) 94%,transparent 94%);color:inherit;padding:0 2px}
 
 /* 두괄식 핵심 답변 — AI 인용을 노리는 자리 */
-.answer{background:#f0f8f6;border-left:4px solid var(--accent);border-radius:0 12px 12px 0;
+.answer{background:#f0f8f6;border:1px solid var(--accent-mid);border-radius:12px;
   padding:20px 24px;margin:0 0 30px}
 .answer-tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.05em;
   color:var(--accent-strong);margin-bottom:8px}
