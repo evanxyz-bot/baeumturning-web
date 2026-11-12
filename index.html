@@ -438,103 +438,10 @@ h1,h2,h3,h4,.h,.app-title{font-family:'GmarketSans','Pretendard Variable',Preten
   box-shadow:0 2px 8px rgba(23,147,126,.28)}
 .ai-pill.sm{font-size:11.2px;padding:1px 7px;margin-left:5px;vertical-align:2px}
 
-/* ============ ANALYSIS (AI 매커니즘) ============ */
+/* ============ ANALYSIS ============ */
 .analysis{padding:96px 0;background:linear-gradient(135deg,#fef7f5 0%,#f3f7f6 60%,#eef1f8 100%)}
-.an-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:44px;align-items:center;position:relative;z-index:0}
-/* 3섹터 나란히: 파이프라인 | 분석의 근거 | 결과카드 */
-.an-cols{display:grid;grid-template-columns:1fr 1fr 1.05fr;gap:26px;align-items:start}
-/* 분석 기법 칩 ↔ 파레토 카드 점선 거미줄 (JS가 경로 계산) */
-.an-web{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:visible}
-.an-web path{stroke:#0b7a6a;stroke-opacity:.32;stroke-width:1.3;fill:none;stroke-dasharray:3 7;stroke-linecap:round;animation:dashMove 26s linear infinite}
-.an-web circle{fill:var(--accent);animation:nodePulse 3.2s ease-in-out infinite}
-/* align-items:flex-start — 각 행 호버 영역을 콘텐츠 폭으로 제한 (파레토 구역과 분리) */
-.pipe{margin-top:30px;display:flex;flex-direction:column;align-items:flex-start;position:relative}
-.pipe::before{content:'';position:absolute;left:27px;top:24px;bottom:24px;width:2px;
-  background:linear-gradient(180deg,var(--accent-mid),var(--border))}
-.pstep{position:relative;display:flex;gap:20px;padding:18px 14px 18px 0;align-items:flex-start}
-.pnum{position:relative;z-index:1;width:56px;height:56px;border-radius:50%;background:#fff;border:2.5px solid var(--accent-mid);
-  display:grid;place-items:center;font-size:20.2px;font-weight:800;color:var(--accent-strong);flex-shrink:0;
-  font-family:'Outfit',monospace;letter-spacing:.02em;box-shadow:var(--shadow-sm);
-  transition:background .25s,color .25s,border-color .25s,box-shadow .3s}
-.pstep:hover .pnum{background:var(--accent-grad);border-color:transparent;color:#fff;
-  animation:pnumGlow 1.6s ease-in-out infinite}
-/* 호버 시 다음 단계로 향하는 네온 화살표 (숫자 원 사이, 아래 방향) */
-.pstep::before{content:'❯';position:absolute;left:28px;bottom:-13px;z-index:2;
-  font-size:23.5px;font-weight:800;color:#14c2a3;opacity:0;pointer-events:none;line-height:1;
-  transform:translateX(-50%) rotate(90deg) translateX(-9px);
-  text-shadow:0 0 8px rgba(20,194,163,.95),0 0 20px rgba(20,194,163,.55),0 0 36px rgba(20,194,163,.3);
-  transition:opacity .25s,transform .3s var(--ease-spring)}
-.pstep:hover::before{opacity:1;transform:translateX(-50%) rotate(90deg) translateX(0)}
-.pstep:last-child::before{display:none}
-@keyframes pnumGlow{
-  0%,100%{box-shadow:0 0 0 5px rgba(11,122,106,.13),0 0 18px rgba(11,122,106,.45)}
-  50%{box-shadow:0 0 0 9px rgba(11,122,106,.08),0 0 32px rgba(11,122,106,.68)}
-}
-.pstep b{display:block;font-size:20.7px;font-weight:700;letter-spacing:-0.01em;margin-bottom:3px}
-.pstep span{font-size:16.8px;color:var(--text-3);line-height:1.55}
-/* 기법 칩 — 파레토 카드를 마인드맵처럼 둘러쌈 (좌측·하단만, 우측·상단 여백 유지) */
-/* 분석 기법 — 세로로 묶어 3D 분석 카드(엔진)로 쏙 들어가는 번들 */
-.feed{position:relative;z-index:1;display:flex;flex-direction:column;gap:9px;flex-shrink:0;order:2}
-.feed-cap{align-self:flex-start;font-size:12.9px;font-weight:800;letter-spacing:.03em;color:var(--accent-strong);
-  background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:6px;
-  display:flex;align-items:center;gap:6px}
-.feed-cap b{font-family:'Outfit',sans-serif;font-size:14.6px}
-.mchips{display:flex;flex-direction:column;gap:7px}
-.mchips span{display:block;white-space:nowrap;width:fit-content;font-size:14px;font-weight:600;color:var(--text-2);
-  background:#fff;border:1px solid var(--border-strong);padding:7px 15px;border-radius:999px;
-  box-shadow:0 4px 14px rgba(13,38,33,.08);transition:transform .18s var(--ease-spring),border-color .18s,color .18s}
-.mchips span:hover{transform:translateX(-5px);border-color:var(--accent);color:var(--accent-strong)}
-/* 분석 기법 칩 — 균일 정렬(플랫) */
-.an-note{font-size:13.4px;color:var(--text-4);margin-top:18px}
-/* 근거(evidence) 카드 — 검증된 학문 어필 */
 .evidence{margin-top:24px;background:linear-gradient(#fff,#fff) padding-box,var(--accent-grad) border-box;
   border:2px solid transparent;border-radius:16px;padding:22px 24px;box-shadow:0 12px 34px rgba(11,122,106,.16)}
-.ev-head{display:flex;align-items:center;gap:9px;font-size:20.2px;font-weight:800;letter-spacing:-0.025em;color:var(--text);margin-bottom:16px}
-.analysis .ev-head{font-size:22.4px}
-.ev-badge{font-size:12.9px;font-weight:800;letter-spacing:.02em;color:#fff;background:var(--accent-grad);padding:4px 11px;border-radius:999px;margin-left:auto;white-space:nowrap}
-.ev-grid{display:flex;flex-direction:column;gap:14px}
-.ev-item{position:relative;padding-left:15px}
-.ev-item::before{content:'';position:absolute;left:0;top:5px;bottom:5px;width:3px;border-radius:2px;background:var(--accent-grad)}
-.ev-item.alt::before{background:linear-gradient(180deg,#5878a0,#8f7faa)}
-.ev-item b{display:block;font-size:17.4px;font-weight:700;letter-spacing:-0.01em;color:var(--accent-strong);margin-bottom:2px}
-.ev-item.alt b{color:var(--s-blue)}
-.ev-item span{font-size:15.7px;color:var(--text-2);line-height:1.62}
-.ev-note{font-size:13.4px;color:var(--text-4);margin-top:14px}
-.ev-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.ev-tags span{font-size:12.9px;font-weight:600;color:var(--accent-strong);background:var(--accent-soft);padding:4px 10px;border-radius:999px}
-
-/* 3D 적층 파레토 카드 + 오답 막대 채움 애니메이션 */
-.spot-3d{position:relative;display:flex;align-items:flex-start;justify-content:center;perspective:1100px}
-.mock-card{position:relative;z-index:3;flex-shrink:1;max-width:320px;width:100%;
-  background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);
-  box-shadow:32px 44px 80px rgba(13,38,33,.16),0 2px 8px rgba(13,38,33,.05);padding:22px;
-  border-top:3px solid var(--s-coral);transform-style:preserve-3d;
-  transform:rotateX(13deg) rotateY(-15deg);transition:transform .55s var(--ease-spring),box-shadow .4s}
-.spot-3d:hover .mock-card{transform:rotateX(3deg) rotateY(-4deg);box-shadow:16px 24px 56px rgba(13,38,33,.14),0 2px 8px rgba(13,38,33,.05)}
-.mock-card .mh{font-size:15.7px;font-weight:700;margin-bottom:3px;letter-spacing:-0.02em}
-.mock-card .ms{font-size:14px;color:var(--text-3);margin-bottom:28px;line-height:1.5}
-.mock-card .ms b{color:var(--coral)}
-.mock-card .prow{background:#fff;border:1px solid var(--border);border-radius:12px;padding:9px 12px;margin-bottom:11px;
-  transform:translateZ(calc(var(--pz,0)*1px));box-shadow:0 14px 26px rgba(13,38,33,.12);
-  transition:background .25s,border-color .25s,box-shadow .25s}
-.mock-card .prow:hover{background:#fdf0ec;border-color:#edb6a7;
-  box-shadow:0 0 0 1.5px rgba(224,147,127,.5),0 14px 32px rgba(196,88,74,.22)}
-.prow .pt{display:flex;justify-content:space-between;font-size:14.6px;margin-bottom:6px}
-.prow .pt .nm{font-weight:600}.prow .pt .nm i{color:var(--text-3);font-style:normal;font-weight:500}
-.prow .pt .vl{color:var(--coral);font-weight:700;opacity:0;transform:translateX(-8px);transition:opacity .5s,transform .5s var(--ease-spring)}
-.prow .pt .vl b{font-size:16.2px;letter-spacing:-0.02em}
-.prow .pt .vl small{font-size:11.8px;color:var(--text-3);font-weight:600;margin-left:4px}
-.prow .ptrack{height:9px;background:var(--surface-3);border-radius:999px;overflow:hidden}
-.prow .ptrack i{display:block;height:100%;border-radius:999px;
-  background:linear-gradient(90deg,#e0937f,#cf7468 70%,#c4584a);
-  transform:scaleX(0);transform-origin:left;transition:transform 1.25s var(--ease-spring)}
-.spot-3d.in .ptrack i{transform:scaleX(1)}
-.spot-3d.in .vl{opacity:1;transform:none}
-.spot-3d.in .prow:nth-child(3) .ptrack i,.spot-3d.in .prow:nth-child(3) .vl{transition-delay:.1s}
-.spot-3d.in .prow:nth-child(4) .ptrack i,.spot-3d.in .prow:nth-child(4) .vl{transition-delay:.28s}
-.spot-3d.in .prow:nth-child(5) .ptrack i,.spot-3d.in .prow:nth-child(5) .vl{transition-delay:.46s}
-.spot-3d.in .prow:nth-child(6) .ptrack i,.spot-3d.in .prow:nth-child(6) .vl{transition-delay:.64s}
-.spot-3d.in .prow:nth-child(7) .ptrack i,.spot-3d.in .prow:nth-child(7) .vl{transition-delay:.82s}
 
 /* ============ HUB ============ */
 .spot{padding:88px 0;background:radial-gradient(600px 380px at 15% 30%, rgba(238,241,248,.8), transparent 70%)}
@@ -1030,22 +937,7 @@ body::before{background:
 .fgroup-t::after{content:'';flex:1;height:1px;background:var(--border-strong);opacity:.5}
 .fgrid+.fgroup .fgroup-t{margin-top:52px}
 
-/* ── 분석 섹션 재배치: 3열 압축 → 2행 ──
-   [1행] 절차 5단계 | 실점 집중도 카드   [2행] 분석의 근거 3열 배너 */
-.an-cols{grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 .evidence{margin-top:44px;grid-column:1/-1}
-.ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.ev-item{padding-left:16px}
-.ev-foot{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
-  margin-top:22px;padding-top:18px;border-top:1px dashed var(--border-strong)}
-.ev-tags,.ev-note{margin-top:0}
-.spot-3d{margin-top:0}
-.mock-card{max-width:none}
-/* 절차 카드 — 여백 회복 */
-.pipe{margin-top:0}
-.pstep{padding:14px 0}
-.pstep b{font-size:19px}
-.pstep span{font-size:16px}
 
 /* ── 히어로: 중앙 쏠림 해소 — 무대를 넓게 쓴다 ── */
 .hero .wrap{max-width:1320px}
@@ -1075,11 +967,6 @@ body::before{background:
   /* 카드 줄(980px)이 grid 칸의 min-content 폭을 밀어 올려 페이지가 옆으로 넘치고 폰이 화면 밖으로 밀렸다 */
   .hero-grid>*{min-width:0}
   .web3d{display:none}
-  /* 분석 섹션 1열 (3열 유지 시 글자가 세로로 깨짐) */
-  .an-cols,.analysis .an-cols{grid-template-columns:1fr;gap:36px}
-  .ev-grid,.analysis .ev-grid{grid-template-columns:1fr;gap:18px}
-  .ev-head{flex-wrap:wrap}
-  .ev-badge{margin-left:0}
 }
 /* 우측 열 — 폰 첫 화면이 '배움터'로 바뀌어 합격선·오늘의 학습이 폰 안에서
    사라졌다. 중복이 아니게 됐으므로 다시 띄운다(앱 학습보고서·오늘의 학습 형태).
@@ -1138,127 +1025,17 @@ body::before{background:
   .foot-desc{font-size:13.8px;max-width:none;flex-basis:100%}
 }
 
-/* 분석 방법론 표 — 논문 방법론 섹션의 형식을 빌려 근거를 드러낸다 */
-.mth-intro{font-size:15.6px;color:#a8bfb8;line-height:1.7;margin:14px 0 20px;max-width:760px}
-.mth{width:100%;border-collapse:collapse;font-size:15px}
-.mth th{text-align:left;font-size:12.4px;font-weight:800;letter-spacing:.06em;color:#7f9a92;
-  text-transform:uppercase;padding:0 0 10px;border-bottom:1px solid rgba(255,255,255,.12)}
-.mth td{padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
-.mth tr:last-child td{border-bottom:0}
-.mth-n{width:42px;font-family:'Outfit',sans-serif;font-weight:700;font-size:13.5px;color:#63d6bd;padding-right:8px!important}
-.mth-t{width:34%;padding-right:20px!important}
-.mth-t b{display:block;font-size:16.4px;font-weight:700;color:#eef7f4;letter-spacing:-0.01em;margin-bottom:3px}
-.mth-t span{display:block;font-size:13.2px;color:#8fa8a1;font-variant-numeric:tabular-nums}
-.mth-d{color:#bfd4ce;line-height:1.62}
-.mth-d b{color:#eef7f4;font-weight:700}
-@media (max-width:720px){
-  .mth thead{display:none}
-  .mth tr{display:grid;grid-template-columns:34px 1fr;gap:0 10px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07)}
-  .mth td{border:0;padding:0}
-  .mth-t{width:auto;padding-right:0!important}
-  .mth-d{grid-column:2;margin-top:6px}
-}
-
-/* 분석 파이프라인 — 입력 → 3단계 → 출력. 아래 상세가 위 단계와 같은 격자에 떨어진다.
-   색은 2계열 고정: 앰버(#dfba85)=관측(기록에서 사실을 집계) / 틸=판단(사실에서 순서를 결정) */
 /* 4페이지는 한 화면 고정이라 박스가 남는 높이를 나눠 갖게 한다(2026-09-07 대표 지시).
    예전엔 글씨만 작고 아래위로 빈 칸이 남아 허전했다. */
 .analysis .evidence{padding:20px 30px 16px;position:relative;overflow:visible;
   display:flex;flex-direction:column;gap:5px}
-/* 표제를 테두리 위에 걸친다(fieldset legend 처럼). 배경은 섹션 색으로 덮어
-   선이 글자를 관통하지 않게 한다(2026-09-07 대표 지시). */
-/* 뒤의 '.evidence>*:not(.pipe-math){position:relative}' 가 같은 우선순위로 이걸 덮어
-   제목이 테두리 아래로 내려앉았다(2026-09-20 대표 지적) → 선택자를 겹쳐 우선순위를 올린다 */
-.analysis .evidence>.ev-head.ev-head{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);z-index:2;
-  /* 글자 폭에 맞춘다 — 안 그러면 상자가 카드 폭(322px)까지 늘어나 가운데로 옮겨도
-     글자는 왼쪽에 붙어 보인다(2026-09-12 실측). */
-  width:max-content;max-width:calc(100% - 32px);flex-wrap:nowrap;
-  margin:0;padding:0 12px;line-height:1;
-  /* 테두리 선이 지나는 띠만 가린다. ★절대배치 기준은 패딩 박스라 2px 테두리는 이 요소의
-     중심보다 2px '위'에 있다 — 띠를 중심 아래로만 깔면 선이 글자를 그대로 통과한다
-     (2026-09-20 실측). 중심 -6px~+4px 만 칠하고 나머지는 투명이라 패치가 안 보인다. */
-  background:linear-gradient(180deg,transparent calc(50% - 2px),
-    #0d1917 calc(50% - 2px),#0d1917 calc(50% - 1px),
-    var(--surface) calc(50% - 1px),var(--surface) 50%,
-    transparent 50%)}
-/* 배경 수식은 카드 밖으로 새면 안 되므로 자기 상자에서 자른다 */
-.analysis .pipe-math{overflow:hidden;border-radius:14px}
-/* 배경 수식 — 통계·분석 지면이라는 인상만 남기고 읽히지는 않게 */
-.pipe-math{position:absolute;inset:0;pointer-events:none;user-select:none;z-index:0}
-.pipe-math span{position:absolute;font-family:'Times New Roman',Georgia,serif;font-style:italic;
-  color:rgba(120,214,192,.075);white-space:nowrap;line-height:1}
 .analysis .evidence>*:not(.pipe-math){position:relative;z-index:1}
-/* 칸 높이를 내용에 맞춘다(2026-09-11 대표 지시) — 예전엔 셋이 같은 높이로 늘어나
-   기법이 둘뿐인 STEP 2·3 아래에 빈 칸이 크게 남았다. 화살표만 가운데에 맞춰 둔다. */
-.pipe-lane{display:grid;grid-template-columns:1fr 52px 1fr 52px 1fr;gap:0 14px;align-items:start}
-.pipe-arrow{align-self:center}
-/* 흐름 화살표 — 15px 실선 꺾쇠는 눈에 안 띄어 세 칸이 그냥 나열처럼 보였다.
-   점선 꼬리 + 큰 촉으로 바꾸고 브랜드 색을 준다. */
-.pipe-arrow{display:flex;align-items:center;justify-content:center;color:#63d6bd}
-.pipe-arrow svg{width:44px;height:24px}
-.pipe-vsep{display:flex;justify-content:center;padding:4px 0;color:#63d6bd}
-.pipe-vsep svg{width:22px;height:30px}
-.pipe-intro{display:flex;align-items:flex-end;gap:36px;margin-bottom:16px}
-.pipe-intro>p{flex:1;margin:0;max-width:880px;font-size:16.4px;line-height:1.72;color:#a8bfb8;word-break:keep-all}
-.pipe-legend{margin-left:auto;flex-shrink:0;display:flex;flex-direction:column;gap:9px;padding-bottom:2px}
-.pipe-legend div{display:flex;align-items:center;gap:9px;font-size:14px;color:#8aa8a0;white-space:nowrap}
-.pipe-legend i{width:11px;height:11px;border-radius:3px;flex-shrink:0}
-.pipe-legend b{font-weight:700}
-/* INPUT·OUTPUT 은 한 줄로 가운데 모은다. 칸을 화면 폭 끝까지 늘리면
-   글자만 가운데 있고 테두리가 멀어 따로 논다 — 폭도 함께 줄인다(2026-09-07 대표 지시). */
-.pipe-io{display:flex;align-items:center;justify-content:center;gap:16px;border-radius:12px;
-  padding:13px 26px;align-self:center;width:auto;max-width:100%}
-.pipe-io .io-l{font-family:'Outfit',sans-serif;font-size:15.4px;font-weight:700;letter-spacing:.1em;flex-shrink:0}
-.pipe-io .io-bar{width:1px;height:18px;background:rgba(255,255,255,.13);flex-shrink:0}
-.pipe-io>b{font-size:20px;font-weight:700;color:#eef7f4;letter-spacing:-.01em;flex-shrink:0}
-.pipe-io .io-chips{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
-.pipe-in{background:#101d1a;border:1px dashed rgba(214,178,120,.34)}
-.pipe-in .io-l{color:#dfba85}
-.pipe-out{background:rgba(78,207,180,.09);border:1px solid rgba(78,207,180,.35)}
-.pipe-out .io-l{color:#4ecfb4}
-.chip{font-size:15.6px;font-weight:500;padding:7px 14px;border-radius:8px;white-space:nowrap}
-.chip-w{color:#cdbb9c;background:rgba(214,178,120,.11);border:1px solid rgba(214,178,120,.20)}
-.chip-t{color:#a9c9c0;background:rgba(78,207,180,.10);border:1px solid rgba(78,207,180,.20)}
-/* 가운데 정렬 + 아래 여백 축소(2026-09-11 대표 지시). 기법 이름 앞 번호(01·04…)도 뺐다 —
-   순서를 뜻하지 않는 식별번호라 읽는 데 방해만 됐다. */
-.pipe-step{display:flex;flex-direction:column;align-items:center;text-align:center;
-  background:var(--surface-2);border-radius:12px;padding:13px 14px 10px}
-/* 스텝마다 색을 달리한다(2026-09-20 대표 지시): 1 앰버 · 2 틸 · 3 라벤더. 값은 변수로만 든다 */
-.pipe-step.s1{--sc:#dfba85;--stx:#e2d3b8;--sbg:rgba(214,178,120,.13);--sbd:rgba(214,178,120,.24);--sln:rgba(214,178,120,.26)}
-.pipe-step.s2{--sc:#63d6bd;--stx:#cfe3dd;--sbg:rgba(78,207,180,.11);--sbd:rgba(78,207,180,.22);--sln:rgba(78,207,180,.24)}
-.pipe-step.s3{--sc:#b9a6e6;--stx:#dcd3f2;--sbg:rgba(160,140,220,.13);--sbd:rgba(160,140,220,.26);--sln:rgba(160,140,220,.26)}
-.pipe-step{border:1px solid var(--sln);border-top:3px solid var(--sc)}
-.pipe-step .st{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:3px}
-.pipe-step .st i{font-family:'Outfit',sans-serif;font-style:normal;font-size:15.2px;font-weight:700;letter-spacing:.08em}
-.pipe-step .st i,.pipe-step .yield i{color:var(--sc)}
-.pipe-col.warm>.chd i,.pipe-m.warm>.n{color:#dfba85}
-.pipe-col.cool>.chd i,.pipe-m.cool>.n{color:#63d6bd}
-.pipe-step .st span{font-size:19.6px;font-weight:800;color:#eef7f4;letter-spacing:-.02em}
-.pipe-step .q{margin:0 0 8px;font-size:15.8px;line-height:1.5;color:#93aca5;word-break:keep-all}
-.pipe-step .tags{display:flex;flex-wrap:nowrap;justify-content:center;gap:6px;align-content:flex-start;max-width:100%}
-.pipe-step .tags span{font-family:'Outfit',sans-serif;font-size:14.6px;font-weight:600;padding:6px 11px;border-radius:8px;white-space:nowrap}
-.pipe-step .tags span{color:var(--stx);background:var(--sbg);border:1px solid var(--sbd)}
-.pipe-step .yield{margin-top:auto;padding-top:7px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;color:#89a49c}
-.pipe-step .yield i{font-style:normal;font-weight:700}
-.pipe-detail{margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12)}
-.pipe-detail>.lbl{font-size:12.4px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7f9a92;margin-bottom:18px}
-.pipe-col{display:flex;flex-direction:column;gap:14px}
-.pipe-col>.chd{display:flex;align-items:baseline;gap:8px;padding-bottom:12px;margin-bottom:2px;border-bottom:1px solid rgba(255,255,255,.08)}
-.pipe-col>.chd i{font-family:'Outfit',sans-serif;font-style:normal;font-size:11.4px;font-weight:700;letter-spacing:.1em}
-.pipe-col>.chd span{font-size:13.6px;font-weight:700;color:#cfe3dd}
-.pipe-m{display:grid;grid-template-columns:32px 1fr;gap:0 10px}
-.pipe-m>.n{font-family:'Outfit',sans-serif;font-size:13.4px;font-weight:700;padding-top:2px}
-.pipe-m b{display:block;font-size:15.2px;font-weight:700;color:#eef7f4;letter-spacing:-.01em}
-.pipe-m p{margin:4px 0 7px;font-size:13.5px;line-height:1.6;color:#bfd4ce;word-break:keep-all}
-.pipe-m p b{display:inline;font-size:inherit}
-.pipe-m .out{display:inline-block;font-family:'Outfit',sans-serif;font-size:12.2px;font-weight:600;color:#9dbdb4;
-  background:var(--surface-3);border:1px solid rgba(255,255,255,.08);padding:4px 9px;border-radius:6px}
 .pipe-why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:2px;padding-top:14px;
   border-top:1px dashed rgba(255,255,255,.16)}
 .pipe-why>div{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 17px}
 .pipe-why b{display:block;font-size:16.6px;font-weight:700;color:#eef7f4;margin-bottom:5px;letter-spacing:-.01em}
 .pipe-why span{display:block;font-size:15px;line-height:1.6;color:#8fa8a1;word-break:keep-all}
-/* 위 단계 그림을 뺀 뒤(2026-11-12)엔 상자 맨 위라 구분 점선이 필요 없다 */
+/* 상자 맨 위라 구분 점선이 필요 없다(2026-11-12) */
 .analysis .pipe-why:first-child{border-top:0;padding-top:0}
 .pipe-fine{margin:2px 0 0;font-size:14.4px;color:#7f9a92}
 .pipe-fine b{color:#a8bfb8;font-weight:700}
@@ -1267,35 +1044,12 @@ body::before{background:
 .foot-cta .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#dbeae6}
 .foot-cta .btn.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
 @media (max-width:1000px){
-  /* 한 줄로 쌓이면 칸끼리 높이를 맞출 이유가 없다 — 비워 둔 칩 자리를 없앤다 */
   .analysis .evidence{padding:20px 18px 18px;gap:10px}
-  .pipe-step .tags{min-height:0}
   .pipe-why{grid-template-columns:1fr;gap:10px;margin-top:0;padding-top:12px}
-  .pipe-lane{grid-template-columns:1fr;gap:12px}
-  .pipe-gap{display:none}
-  .pipe-arrow{transform:rotate(90deg);padding:2px 0}
-  .pipe-intro{flex-direction:column;align-items:flex-start;gap:18px}
-  .pipe-legend{margin-left:0}
 }
 @media (max-width:720px){
-  .pipe-io{flex-wrap:wrap;gap:10px 14px}
-  .pipe-note{grid-template-columns:1fr;gap:13px}
-  /* 폰에서 파이프라인 한 칸이 1,510px 이라 스크롤이 길었다 — 글자 크기는 두고
-     칸 안팎의 위아래 여백만 깎는다(2026-09-12 대표 지시). */
+  /* 폰에서는 글자 크기는 두고 칸 안팎의 위아래 여백만 깎는다(2026-09-12 대표 지시). */
   .analysis .evidence{padding:16px 14px 14px;gap:6px}
-  .pipe-io{padding:9px 16px}
-  .pipe-io>b{font-size:18px}
-  .chip{padding:5px 11px}
-  .pipe-vsep{padding:0}
-  .pipe-vsep svg{height:22px}
-  .pipe-lane{gap:9px}
-  .pipe-step{padding:11px 12px 9px}
-  .pipe-step .st{margin-bottom:4px}
-  .pipe-step .q{margin:0 0 7px}
-  .pipe-step .tags{gap:6px}
-  .pipe-step .tags span{padding:5px 8px;font-size:clamp(11.5px,3.4vw,13.5px)}
-  .pipe-step .tags{gap:5px}
-  .pipe-step .yield{padding-top:6px}
   .pipe-why{gap:9px;padding-top:10px}
   .pipe-why>div{padding:10px 13px}
   .pipe-why b{margin-bottom:3px}
@@ -1440,16 +1194,9 @@ body::before{background:
   /* 2026-09-24 개편: .stage{order:-1} 삭제 — 375 첫 화면에 h1 이 보인다 */
   .fgrid,.price-grid{grid-template-columns:1fr 1fr}
   .fgrid{gap:20px;padding:0}
-  /* 분석 번들 — 모바일은 카드 위에 가로 칩으로 펼침 */
-  .spot-3d{flex-direction:column;align-items:stretch}
-  .feed{transform:none;margin-right:0;margin-bottom:18px}
-  .mchips{flex-direction:row;flex-wrap:wrap;gap:8px}
-  .mchips span{width:auto;margin-left:0!important}
-  .mock-card{max-width:none;transform:none;margin-left:0}
   .flow{grid-template-columns:1fr;padding:0;gap:12px}
   .strip-grid{grid-template-columns:1fr 1fr;gap:26px}
   .foot-grid{grid-template-columns:1fr 1fr}
-  .mock-card{transform:none}
 }
 @media (max-width:560px){
   .nav-top{height:72px;justify-content:flex-start;padding:0 14px}  .nav-top .brand-wm{font-size:min(42px,10.4vw)!important}
@@ -1492,10 +1239,6 @@ body::before{background:
   .hubitem{padding:16px 15px}
   .hubitem b{font-size:16.8px}
   .hubitem span{font-size:13.4px}
-  /* 파이프라인 */
-  .pstep b{font-size:17.9px}
-  .pstep span{font-size:15.1px}
-  .pstep{padding-right:0}
   /* 비용 비교 표 — 좁은 화면 보정 */
   .cost-compare{padding:18px 16px}
   .cc-row{grid-template-columns:64px 1fr 88px;gap:10px}
@@ -1806,15 +1549,6 @@ body{background:#0d1917}
 .features .fgroup-t::after{background:rgba(255,255,255,.14)}
 .features .app-meta{color:#8fa8a1}
 
-/* 근거 배너는 다크존에서도 3열 유지 (좁은 화면은 1열 — 아래 미디어쿼리) */
-@media (min-width:1100px){
-  .analysis .ev-grid{grid-template-columns:repeat(3,1fr)}
-}
-@media (max-width:1099px){
-  .analysis .ev-grid{grid-template-columns:1fr}
-  .analysis .an-cols{grid-template-columns:1fr}
-}
-
 /* 좌우 비대칭 — 중앙 정렬 일변도 탈피 */
 .analysis .sec-head h2.h{font-size:clamp(32px,3.6vw,50px);line-height:1.2}
 /* 3페이지와 같은 1열 가운데 정렬 (2026-09-07 대표 지시) */
@@ -1822,8 +1556,6 @@ body{background:#0d1917}
 .analysis .w-green{color:#63d6bd}
 .analysis .w-amber{color:#dfba85}
 .analysis .sec-head .lead{margin:10px 0 0;max-width:860px;font-size:16.4px}
-.an-cols{grid-template-columns:1.02fr 1fr;gap:58px}
-.spot-3d{margin-top:0}
 .features .sec-head{text-align:left;max-width:820px;margin:0 auto 56px 0}
 .features .sec-head .lead{margin:16px 0 0;max-width:700px}
 .features .stores-hero{justify-content:flex-start}
@@ -1832,14 +1564,8 @@ body{background:#0d1917}
 .strip .s{align-items:flex-start}
 
 /* 밝은 배경이 하드코딩된 요소 오버라이드 */
-.analysis .pnum{background:var(--surface-3);color:var(--accent-strong)}
 .analysis .evidence{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--accent-grad) border-box;
   box-shadow:0 14px 40px rgba(0,0,0,.42)}
-.analysis .mock-card{background:var(--surface);box-shadow:32px 44px 80px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3)}
-.analysis .spot-3d:hover .mock-card{box-shadow:16px 24px 56px rgba(0,0,0,.46),0 2px 8px rgba(0,0,0,.3)}
-.analysis .mock-card .prow{background:var(--surface-2);box-shadow:0 14px 26px rgba(0,0,0,.32)}
-.analysis .mock-card .prow:hover{background:rgba(234,164,141,.14);border-color:rgba(234,164,141,.45);
-  box-shadow:0 0 0 1.5px rgba(234,164,141,.32),0 14px 32px rgba(0,0,0,.36)}
 .features .flow li{background:var(--surface)}
 .features .fcard{background:var(--surface);box-shadow:0 2px 12px rgba(0,0,0,.28)}
 .features .fcard:hover{background:#22352f;border-color:rgba(255,255,255,.2);box-shadow:0 14px 38px rgba(0,0,0,.42)}
@@ -1848,8 +1574,6 @@ body{background:#0d1917}
 .features .lead .pen{color:#eaf6f2;background:linear-gradient(transparent 60%,rgba(99,214,189,.32) 60%,rgba(99,214,189,.32) 92%,transparent 92%)}
 
 @media(max-width:900px){
-  .an-cols{grid-template-columns:1fr}
-  .spot-3d{margin-top:8px}
   .features .sec-head{margin:0 0 48px}
   .analysis::before,.features::before{width:760px}
 }
@@ -2058,14 +1782,6 @@ body{word-break:keep-all;overflow-wrap:break-word}
 .float-chip .fr{gap:10px}
 .float-chip .fr span,.float-chip .fr b{white-space:nowrap}
 @media (max-width:1099px){ .hcm-strip .float-chip{width:auto;min-width:186px} }
-/* 분석 STEP 3칸 — 1001~1099px 에서 태그 줄이 한 줄로 고정돼 셋째 칸이 화면 밖으로 나갔다(1024px 에서 +11px).
-   그 구간만 칸이 폭을 나눠 갖고 태그는 칩 단위로 다음 줄로 넘긴다. 1100px 이상은 지금 그대로. */
-@media (min-width:1001px) and (max-width:1099px){
-  .pipe-lane{grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr) 52px minmax(0,1fr)}
-  .pipe-step .tags{flex-wrap:wrap}
-}
-/* 폰 1열에서 큰 글꼴(안드 130%)이면 태그 세 개가 한 줄을 넘어 칸 밖으로 나갔다 — 칩 단위로 넘긴다 */
-@media (max-width:1000px){ .pipe-step .tags{flex-wrap:wrap} }
 </style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};window.va('beforeSend',function(e){if(navigator.globalPrivacyControl||navigator.doNotTrack==='1')return null;var u=new URL(e.url);u.search='';u.hash='';return Object.assign({},e,{url:u.toString()})});</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -2432,7 +2148,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
               </div>
             </div></div>
 
-            <!-- floating layer: 합격선 마진 (우측 공백, 대시보드 풀카드) -->
+            <!-- floating layer: 학습 성적표 (우측 공백, 대시보드 풀카드) -->
             <div class="layer l-pass"><div class="lf">
               <div class="mini-card pass-card">
                 <div class="mc-title">학습 성적표 <span style="float:right;font-weight:500;color:var(--text-3);font-size:12.3px">26년 2회차 대비</span></div>
@@ -2448,7 +2164,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
               </div>
             </div></div>
 
-            <!-- floating layer: 오늘의 학습 플랜 (합격선 마진 아래) -->
+            <!-- floating layer: 오늘의 학습 플랜 (학습 성적표 아래) -->
             <div class="layer l-plan"><div class="lf">
               <div class="mini-card">
                 <div class="mc-title">오늘의 학습<span class="ai-tag" style="background:#5878a0">데이터 기반</span></div>
@@ -2490,11 +2206,11 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <div class="net-col net-in">
         <div class="nw"><div class="node" id="nA" style="--nc:var(--s-blue);--np:rgba(88,120,160,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><span class="nn">기출 풀이</span><div class="tip"><b>기출 풀이</b><span class="tip-d">회차별 기출을 앱에서 풀면 문항 단위로 풀이 기록이 남습니다. CBT 모드로 실전처럼.</span></div></div>
         <div class="nw"><div class="node" id="nB" style="--nc:var(--s-teal);--np:rgba(47,145,131,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="9" cy="8.5" r="1.6"/><circle cx="9" cy="15" r="1.6"/><path d="M13 8.5h4M13 15h4"/></svg></div><span class="nn">OMR 채점</span><div class="tip"><b>OMR 자동채점</b><span class="tip-d">풀고 나면 OMR로 즉시 채점.</span></div></div>
-        <div class="nw"><div class="node" id="nC" style="--nc:var(--s-coral);--np:rgba(197,130,110,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div><span class="nn">오답 DB화</span><div class="tip"><b>실점 정량화</b><span class="tip-d">오답을 단원별로 모아, 그 사람이 어디서 얼마나 점수를 잃는지 집중도를 수치화합니다.</span></div></div>
+        <div class="nw"><div class="node" id="nC" style="--nc:var(--s-coral);--np:rgba(197,130,110,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div><span class="nn">오답 DB화</span><div class="tip"><b>실점 정량화</b></div></div>
         <div class="nw"><div class="node" id="nG" style="--nc:var(--s-olive);--np:rgba(154,166,116,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M16 2v4M8 2v4M4 10h16"/><path d="m9.5 15 1.6 1.6 3.4-3.4"/></svg></div><span class="nn">시험 기록</span><div class="tip"><b>시험 기록 아카이브</b><span class="tip-d">회차별 성적과 응시 기록이 쌓여 점수 추이 그래프의 근거가 됩니다.</span></div></div>
       </div>
       <div class="net-core">
-        <div class="nw"><div class="node node-lg" id="core"><span class="core-ring"></span><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></div><span class="nn core-nn">배움터닝</span><div class="tip"><b>우선순위 산출</b><span class="tip-d">모인 기록을 배움터닝 자체 로직으로 분석해, 그 학생의 점수가 가장 크게 오를 단원부터 순서를 정합니다.</span></div></div>
+        <div class="nw"><div class="node node-lg" id="core"><span class="core-ring"></span><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></div><span class="nn core-nn">배움터닝</span></div>
       </div>
       <div class="net-col net-out">
         <div class="nw"><div class="node" id="nD" style="--nc:var(--s-purple);--np:rgba(143,127,170,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 3-4 3 2.5 4.5-6"/></svg></div><span class="nn">성적 분석</span><div class="tip"><b>근거기반 성적 분석</b><div class="tip-g"><div class="tg-h">실점 집중도 <span>상위 단원</span></div><div class="tg-r"><span>영어 · 문법/어휘</span><b>12%</b><i style="--w:100%"></i></div><div class="tg-r"><span>수학 · 도형의 방정식</span><b>9%</b><i style="--w:70%"></i></div><div class="tg-r"><span>수학 · 다항식</span><b>8%</b><i style="--w:63%"></i></div></div></div></div>
