@@ -1258,6 +1258,8 @@ body::before{background:
 .pipe-why>div{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 17px}
 .pipe-why b{display:block;font-size:16.6px;font-weight:700;color:#eef7f4;margin-bottom:5px;letter-spacing:-.01em}
 .pipe-why span{display:block;font-size:15px;line-height:1.6;color:#8fa8a1;word-break:keep-all}
+/* 위 단계 그림을 뺀 뒤(2026-11-12)엔 상자 맨 위라 구분 점선이 필요 없다 */
+.analysis .pipe-why:first-child{border-top:0;padding-top:0}
 .pipe-fine{margin:2px 0 0;font-size:14.4px;color:#7f9a92}
 .pipe-fine b{color:#a8bfb8;font-weight:700}
 /* 푸터 닫는 CTA */
@@ -2487,7 +2489,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <svg class="beams" id="beams" aria-hidden="true"></svg>
       <div class="net-col net-in">
         <div class="nw"><div class="node" id="nA" style="--nc:var(--s-blue);--np:rgba(88,120,160,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><span class="nn">기출 풀이</span><div class="tip"><b>기출 풀이</b><span class="tip-d">회차별 기출을 앱에서 풀면 문항 단위로 풀이 기록이 남습니다. CBT 모드로 실전처럼.</span></div></div>
-        <div class="nw"><div class="node" id="nB" style="--nc:var(--s-teal);--np:rgba(47,145,131,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="9" cy="8.5" r="1.6"/><circle cx="9" cy="15" r="1.6"/><path d="M13 8.5h4M13 15h4"/></svg></div><span class="nn">OMR 채점</span><div class="tip"><b>OMR 자동채점</b><span class="tip-d">풀고 나면 OMR로 즉시 채점. 어떤 문항을 왜 틀렸는지까지 데이터로 기록됩니다.</span></div></div>
+        <div class="nw"><div class="node" id="nB" style="--nc:var(--s-teal);--np:rgba(47,145,131,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="9" cy="8.5" r="1.6"/><circle cx="9" cy="15" r="1.6"/><path d="M13 8.5h4M13 15h4"/></svg></div><span class="nn">OMR 채점</span><div class="tip"><b>OMR 자동채점</b><span class="tip-d">풀고 나면 OMR로 즉시 채점.</span></div></div>
         <div class="nw"><div class="node" id="nC" style="--nc:var(--s-coral);--np:rgba(197,130,110,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div><span class="nn">오답 DB화</span><div class="tip"><b>실점 정량화</b><span class="tip-d">오답을 단원별로 모아, 그 사람이 어디서 얼마나 점수를 잃는지 집중도를 수치화합니다.</span></div></div>
         <div class="nw"><div class="node" id="nG" style="--nc:var(--s-olive);--np:rgba(154,166,116,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M16 2v4M8 2v4M4 10h16"/><path d="m9.5 15 1.6 1.6 3.4-3.4"/></svg></div><span class="nn">시험 기록</span><div class="tip"><b>시험 기록 아카이브</b><span class="tip-d">회차별 성적과 응시 기록이 쌓여 점수 추이 그래프의 근거가 됩니다.</span></div></div>
       </div>
@@ -2495,7 +2497,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
         <div class="nw"><div class="node node-lg" id="core"><span class="core-ring"></span><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></div><span class="nn core-nn">배움터닝</span><div class="tip"><b>우선순위 산출</b><span class="tip-d">모인 기록을 배움터닝 자체 로직으로 분석해, 그 학생의 점수가 가장 크게 오를 단원부터 순서를 정합니다.</span></div></div>
       </div>
       <div class="net-col net-out">
-        <div class="nw"><div class="node" id="nD" style="--nc:var(--s-purple);--np:rgba(143,127,170,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 3-4 3 2.5 4.5-6"/></svg></div><span class="nn">성적 분석</span><div class="tip"><b>근거기반 성적 분석</b><span class="tip-d">실점 집중도·합격선 위치·오답 패턴 등 7가지 기법으로, 그 학생의 약점만 숫자로 정량화합니다.</span><div class="tip-g"><div class="tg-h">실점 집중도 <span>상위 단원</span></div><div class="tg-r"><span>영어 · 문법/어휘</span><b>12%</b><i style="--w:100%"></i></div><div class="tg-r"><span>수학 · 도형의 방정식</span><b>9%</b><i style="--w:70%"></i></div><div class="tg-r"><span>수학 · 다항식</span><b>8%</b><i style="--w:63%"></i></div></div></div></div>
+        <div class="nw"><div class="node" id="nD" style="--nc:var(--s-purple);--np:rgba(143,127,170,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 3-4 3 2.5 4.5-6"/></svg></div><span class="nn">성적 분석</span><div class="tip"><b>근거기반 성적 분석</b><div class="tip-g"><div class="tg-h">실점 집중도 <span>상위 단원</span></div><div class="tg-r"><span>영어 · 문법/어휘</span><b>12%</b><i style="--w:100%"></i></div><div class="tg-r"><span>수학 · 도형의 방정식</span><b>9%</b><i style="--w:70%"></i></div><div class="tg-r"><span>수학 · 다항식</span><b>8%</b><i style="--w:63%"></i></div></div></div></div>
         <div class="nw"><div class="node" id="nE" style="--nc:var(--accent-mid);--np:rgba(154,215,205,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="m3 6 1.2 1.2L6.5 5M3 12l1.2 1.2L6.5 11M3 18l1.2 1.2L6.5 17"/></svg></div><span class="nn">오늘의 학습</span><div class="tip"><b>오늘의 학습</b><span class="tip-d">오늘 풀 문제를 자동 배치합니다. 복습과 새 문제를 하루 한 과정으로.</span></div></div>
         <div class="nw"><div class="node" id="nF" style="--nc:var(--s-amber);--np:rgba(175,144,105,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><span class="nn">D-day 알림</span><div class="tip"><b>시험 일정 · D-day 알림</b><span class="tip-d">접수일·시험일 D-day를 보여 주고, 시험이 다가오면 알림으로 알려 드립니다.</span></div></div>
         <div class="nw"><div class="node" id="nH" style="--nc:var(--s-slate);--np:rgba(130,163,176,.16)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8.2v3.4M11 14.1h.01"/></svg></div><span class="nn">취약단원</span><div class="tip"><b>취약단원 진단</b><span class="tip-d">자주 틀리는 단원을 자동 수집해, 막연한 불안 대신 보완할 지점을 짚어줍니다.</span></div></div>
@@ -2509,68 +2511,12 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="sec-head reveal">
       <h2 class="h">나의 <span class="w-green">데이터</span>로<br>나를 위한 학습 <span class="w-amber">계획</span></h2>
     </div>
-    <!-- 채점 기록이 리포트가 되는 경로 — 관측(앰버) → 판단(틸) 2계열로 색을 고정 -->
+    <!-- 2026-11-12 대표 지시 — 분석 방식 설명은 내부 정보라 삭제했다 -->
     <div class="evidence reveal">
-      <!-- 배경 수식 — 장식일 뿐이라 읽히지 않게 흐리게 깐다(스크린리더 제외) -->
-      <div class="pipe-math" aria-hidden="true">
-        <span style="left:4%;top:7%;font-size:44px">&Sigma;</span>
-        <span style="left:22%;top:30%;font-size:26px">x&#772; = &Sigma;x / n</span>
-        <span style="left:70%;top:5%;font-size:30px">&sigma;&sup2;</span>
-        <span style="left:86%;top:26%;font-size:24px">p &lt; .05</span>
-        <span style="left:8%;top:56%;font-size:26px">R&sup2;</span>
-        <span style="left:38%;top:70%;font-size:23px">&radic;(&Sigma;(x&minus;x&#772;)&sup2;/n)</span>
-        <span style="left:64%;top:52%;font-size:38px">&int;</span>
-        <span style="left:88%;top:66%;font-size:30px">&lambda;</span>
-        <span style="left:16%;top:88%;font-size:24px">&chi;&sup2;</span>
-        <span style="left:52%;top:92%;font-size:23px">&Delta;p / &Delta;t</span>
-        <span style="left:78%;top:86%;font-size:26px">&mu;</span>
-      </div>
-      <div class="ev-head"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4ecfb4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>분석 파이프라인</div>
-
-      <div class="pipe-io pipe-in">
-        <span class="io-l">INPUT</span><span class="io-bar"></span><b>풀이 · 채점 기록</b>
-        <div class="io-chips"><span class="chip chip-w">문항 단위 정오답</span><span class="chip chip-w">응시 회차</span><span class="chip chip-w">소요 시간</span></div>
-      </div>
-
-      <div class="pipe-vsep"><svg viewBox="0 0 24 44" fill="none" aria-hidden="true"><path d="m5 8 7 7 7-7" stroke="currentColor" stroke-opacity=".35" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m5 18 7 7 7-7" stroke="currentColor" stroke-opacity=".65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m5 28 7 7 7-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="pipe-lane">
-        <div class="pipe-step s1">
-          <div class="st"><i>STEP 1</i><span>맞춤 진단</span></div>
-          <p class="q">무엇이 점수를 깎고 있지?</p>
-          <div class="tags"><span>파레토 분석</span><span>오답 패턴 분석</span><span>학습량 보정</span></div>
-          <div class="yield"><i>&raquo;</i>취약 단원 목록</div>
-        </div>
-        <div class="pipe-arrow" style="color:#63d6bd"><svg viewBox="0 0 44 24" fill="none" aria-hidden="true"><path d="m8 5 7 7-7 7" stroke="currentColor" stroke-opacity=".35" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m18 5 7 7-7 7" stroke="currentColor" stroke-opacity=".65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m28 5 7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="pipe-step s2">
-          <div class="st"><i>STEP 2</i><span>정밀 분석</span></div>
-          <p class="q">지금 어디쯤 와 있지?</p>
-          <div class="tags"><span>추세 분석</span><span>합격선 마진</span></div>
-          <div class="yield"><i>&raquo;</i>합격선 기준 위치</div>
-        </div>
-        <div class="pipe-arrow" style="color:#b9a6e6"><svg viewBox="0 0 44 24" fill="none" aria-hidden="true"><path d="m8 5 7 7-7 7" stroke="currentColor" stroke-opacity=".35" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m18 5 7 7-7 7" stroke="currentColor" stroke-opacity=".65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m28 5 7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="pipe-step s3">
-          <div class="st"><i>STEP 3</i><span>개인별 학습 계획</span></div>
-          <p class="q">무엇부터, 언제 다시 공부하지?</p>
-          <div class="tags"><span>우선순위 매트릭스</span><span>간격 반복</span></div>
-          <div class="yield"><i>&raquo;</i>오늘 풀 순서</div>
-        </div>
-      </div>
-
-      <div class="pipe-vsep"><svg viewBox="0 0 24 44" fill="none" aria-hidden="true"><path d="m5 8 7 7 7-7" stroke="currentColor" stroke-opacity=".35" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m5 18 7 7 7-7" stroke="currentColor" stroke-opacity=".65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m5 28 7 7 7-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="pipe-io pipe-out">
-        <span class="io-l">OUTPUT</span><span class="io-bar"></span><b>학습 리포트</b>
-        <div class="io-chips"><span class="chip chip-t">취약 단원</span><span class="chip chip-t">합격선 위치</span><span class="chip chip-t">오늘 풀 순서</span></div>
-      </div>
-
-
       <div class="pipe-why">
         <!-- 2026-10-15 대표 지시 — 히어로에서 뺀 회차·문항·대학 수치는 검색에 걸려야 해서 여기로 옮겼다 -->
         <div><b>고졸 검정고시 기출 12회차 2,640문항</b><span>2021년 1회부터 2026년 2회까지 전 문항을 단원·유형별로 분류하고 해설을 붙였습니다</span></div>
         <div><b>대학이 공개한 기준으로 내신 환산</b><span>전국 306곳 대학 입시 기준을 수록하고, 그중 258곳은 대학이 공개한 검정고시 성적 환산 기준을 담았습니다</span></div>
-        <div><b>출제 비중에 따른 문제 가중치 계산</b><span>기출 문제 출제 비율을 반영하여 중요도와 우선순위 배분</span></div>
-        <div><b>개인별 임계값 보정</b><span>오답률·연속 오답·재방문 간격으로 복습 시점을 잡고, 표본이 적은 단원은 배움터닝 로직으로 보정</span></div>
       </div>
       <p class="pipe-fine">합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.</p>
   </div>
