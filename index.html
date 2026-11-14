@@ -1583,6 +1583,54 @@ body{background:#0d1917}
 }
 
 
+
+/* ── 나의 데이터로 나를 위한 학습 계획 — 성적 분석 그래프 세 장(2026-11-15 대표 지시: 글 대신 레이더·막대·꺾은선) ── */
+.analysis .an-panel{display:block;padding:22px 24px 16px}
+.an-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.an-card{margin:0;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px 14px 6px;min-width:0}
+.an-card figcaption{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:0 2px 2px}
+.an-card figcaption b{font-size:17px;color:#eaf6f2;font-weight:800}
+.an-card figcaption span{font-size:13px;color:#8fa8a1}
+.an-card svg{display:block;width:100%;height:auto}
+.an-card .an-lab{font-size:11.5px;fill:#a9bdb7;font-weight:600}
+.an-card .an-tick{font-size:10px;fill:#6f8781}
+.an-card .an-val{font-size:11px;font-weight:800}
+.an-card .an-pass{font-size:10.5px;fill:#ff7b72;font-weight:700}
+.an-key{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 16px;margin:12px 0 0;font-size:12.5px;color:#8fa8a1}
+.an-key i{display:inline-block;width:14px;height:8px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.an-key .k-red{height:0;border-top:2px dashed #ff7b72;border-radius:0}
+.an-key .k-teal{background:#63d6bd}
+.an-key .k-rd{background:#ff7b72}
+.an-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 4px}
+.an-stats>div{display:flex;flex-direction:column;align-items:center;text-align:center;padding:10px 6px;border-top:1px solid rgba(255,255,255,.1)}
+.an-stats b{font-size:clamp(24px,2.6vw,34px);font-weight:900;color:#eaf6f2;letter-spacing:-.02em;line-height:1.1}
+.an-stats b small{font-size:.5em;font-weight:700;color:#63d6bd;margin-left:3px}
+.an-stats span{font-size:12.8px;color:#8fa8a1;margin-top:4px;word-break:keep-all}
+.analysis .an-panel .pipe-fine{text-align:center;margin-top:8px}
+.an-ex{color:#6f8781;margin-left:4px}
+/* 나타날 때 한 번 — 레이더 펼치기·막대 자라기·선 긋기 */
+.an-panel .an-grow{transform:scale(.2);opacity:0}
+.an-panel .an-bars rect{transform:scaleY(0);transform-box:fill-box;transform-origin:50% 100%}
+.an-panel .an-draw{stroke-dasharray:1;stroke-dashoffset:1}
+.an-panel .an-fade,.an-panel .an-bars text{opacity:0}
+.an-panel.in .an-grow{transform:none;opacity:1;transition:transform 1s var(--ease-out) .2s,opacity .6s .2s}
+.an-panel.in .an-bars rect{transform:none;transition:transform .9s var(--ease-out) .3s}
+.an-panel.in .an-draw{stroke-dashoffset:0;transition:stroke-dashoffset 1.4s var(--ease-out) .4s}
+.an-panel.in .an-fade,.an-panel.in .an-bars text{opacity:1;transition:opacity .6s 1s}
+@media(prefers-reduced-motion:reduce){
+  .an-panel .an-grow,.an-panel .an-bars rect,.an-panel .an-draw,.an-panel .an-fade,.an-panel .an-bars text{transform:none!important;opacity:1!important;stroke-dashoffset:0!important;transition:none!important}
+}
+@media(max-width:900px){
+  /* 폰·태블릿: 세 장을 옆으로 밀어 본다(세로로 쌓으면 섹션이 세 배로 길어진다) — 다음 장 끝이 보여 밀 수 있음을 알린다 */
+  .an-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    margin:0 -14px;padding:0 14px 6px;scrollbar-width:none}
+  .an-grid::-webkit-scrollbar{display:none}
+  .an-card{flex:0 0 84%;max-width:380px;scroll-snap-align:center}
+  .analysis .an-panel{padding:16px 14px 12px}
+  .an-stats{gap:6px}
+  .an-stats span{font-size:11.8px}
+}
+
 /* ── 줄바꿈 품질 (2026-08-17 전 페이지 적용) ──
    balance: 제목이 마지막 줄에 한두 글자만 남지 않게 균등 분배
    pretty : 본문 끝줄 고아 단어 방지. keep-all 은 한국어 어절 중간 끊김 방지 */
@@ -2228,13 +2276,21 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <h2 class="h">나의 <span class="w-green">데이터</span>로<br>나를 위한 학습 <span class="w-amber">계획</span></h2>
     </div>
     <!-- 2026-11-12 대표 지시 — 분석 방식 설명은 내부 정보라 삭제했다 -->
-    <div class="evidence reveal">
-      <div class="pipe-why">
-        <!-- 2026-10-15 대표 지시 — 히어로에서 뺀 회차·문항·대학 수치는 검색에 걸려야 해서 여기로 옮겼다 -->
-        <div><b>고졸 검정고시 기출 12회차 2,640문항</b><span>2021년 1회부터 2026년 2회까지 전 문항을 단원·유형별로 분류하고 해설을 붙였습니다</span></div>
-        <div><b>대학이 공개한 기준으로 내신 환산</b><span>전국 306곳 대학 입시 기준을 수록하고, 그중 258곳은 대학이 공개한 검정고시 성적 환산 기준을 담았습니다</span></div>
+    <!-- 2026-11-15 대표 지시 — 글 카드 대신 성적 분석 그래프(레이더·막대·꺾은선)로 분석하는 느낌을 준다. 값은 예시 학생(실제 회원 기록 아님).
+         검색에 걸려야 하는 회차·문항·대학 수(10-15 지시)는 아래 숫자 줄에 남긴다. 고지 문장(pipe-fine)은 법무 확정선 D 라 문구 그대로 -->
+    <div class="evidence an-panel reveal">
+      <div class="an-grid">
+        <figure class="an-card"><figcaption><b>과목 균형</b><span>과목별 점수를 한눈에</span></figcaption><svg viewBox="0 0 320 244" role="img" aria-label="과목별 점수 레이더 그래프 예시 — 빨간 점선이 합격선 60"><polygon points="160.0,104.8 173.4,111.3 176.8,125.8 167.5,137.5 152.5,137.5 143.2,125.8 146.6,111.3" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="1"/><polygon points="160.0,87.6 186.9,100.6 193.5,129.7 174.9,153.0 145.1,153.0 126.5,129.7 133.1,100.6" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="1"/><polygon points="160.0,53.2 213.8,79.1 227.1,137.3 189.9,184.0 130.1,184.0 92.9,137.3 106.2,79.1" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="1"/><polygon points="160.0,36.0 227.2,68.4 243.8,141.1 197.3,199.5 122.7,199.5 76.2,141.1 92.8,68.4" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="1"/><line x1="160" y1="122" x2="160.0" y2="36.0" stroke="rgba(255,255,255,.09)" stroke-width="1"/><line x1="160" y1="122" x2="227.2" y2="68.4" stroke="rgba(255,255,255,.09)" stroke-width="1"/><line x1="160" y1="122" x2="243.8" y2="141.1" stroke="rgba(255,255,255,.09)" stroke-width="1"/><line x1="160" y1="122" x2="197.3" y2="199.5" stroke="rgba(255,255,255,.09)" stroke-width="1"/><line x1="160" y1="122" x2="122.7" y2="199.5" stroke="rgba(255,255,255,.09)" stroke-width="1"/><line x1="160" y1="122" x2="76.2" y2="141.1" stroke="rgba(255,255,255,.09)" stroke-width="1"/><line x1="160" y1="122" x2="92.8" y2="68.4" stroke="rgba(255,255,255,.09)" stroke-width="1"/><polygon points="160.0,70.4 200.3,89.8 210.3,133.5 182.4,168.5 137.6,168.5 109.7,133.5 119.7,89.8" fill="none" stroke="#ff7b72" stroke-width="1.4" stroke-dasharray="4 3" opacity=".9"/><g class="an-grow" style="transform-origin:160px 122px"><polygon points="160.0,60.1 192.3,96.3 206.1,132.5 189.1,182.4 136.1,171.6 91.2,137.7 108.9,81.2" fill="rgba(99,214,189,.22)" stroke="#63d6bd" stroke-width="2" stroke-linejoin="round"/><circle cx="160.0" cy="60.1" r="3.2" fill="#63d6bd"/><circle cx="192.3" cy="96.3" r="3.2" fill="#63d6bd"/><circle cx="206.1" cy="132.5" r="3.2" fill="#63d6bd"/><circle cx="189.1" cy="182.4" r="3.2" fill="#63d6bd"/><circle cx="136.1" cy="171.6" r="3.2" fill="#63d6bd"/><circle cx="91.2" cy="137.7" r="3.2" fill="#63d6bd"/><circle cx="108.9" cy="81.2" r="3.2" fill="#63d6bd"/></g><text x="160.0" y="24.0" text-anchor="middle" class="an-lab">국어</text><text x="239.7" y="62.4" text-anchor="start" class="an-lab">수학</text><text x="259.4" y="148.7" text-anchor="start" class="an-lab">영어</text><text x="204.3" y="217.9" text-anchor="start" class="an-lab">사회</text><text x="115.7" y="217.9" text-anchor="end" class="an-lab">과학</text><text x="60.6" y="148.7" text-anchor="end" class="an-lab">한국사</text><text x="80.3" y="62.4" text-anchor="end" class="an-lab">도덕</text></svg></figure>
+        <figure class="an-card"><figcaption><b>합격선까지</b><span>60점 아래 과목이 먼저 보여요</span></figcaption><svg viewBox="0 0 320 244" role="img" aria-label="과목별 점수 막대 그래프 예시 — 빨간 점선이 합격선 60, 60점 미만 과목은 빨강"><line x1="34" y1="171.6" x2="306" y2="171.6" stroke="rgba(255,255,255,.09)" stroke-width="1"/><text x="28" y="175.6" text-anchor="end" class="an-tick">20</text><line x1="34" y1="137.2" x2="306" y2="137.2" stroke="rgba(255,255,255,.09)" stroke-width="1"/><text x="28" y="141.2" text-anchor="end" class="an-tick">40</text><text x="28" y="106.8" text-anchor="end" class="an-tick">60</text><line x1="34" y1="68.4" x2="306" y2="68.4" stroke="rgba(255,255,255,.09)" stroke-width="1"/><text x="28" y="72.4" text-anchor="end" class="an-tick">80</text><line x1="34" y1="34.0" x2="306" y2="34.0" stroke="rgba(255,255,255,.09)" stroke-width="1"/><text x="28" y="38.0" text-anchor="end" class="an-tick">100</text><line x1="34" y1="102.8" x2="306" y2="102.8" stroke="#ff7b72" stroke-width="1.6" stroke-dasharray="5 4"/><g class="an-bars"><rect x="42.5" y="82.2" width="21.8" height="123.8" rx="2" fill="#63d6bd" opacity="1"/><text x="53.4" y="96.2" text-anchor="middle" class="an-val" fill="#0d1917">72</text><text x="53.4" y="222" text-anchor="middle" class="an-lab">국어</text><rect x="81.4" y="123.4" width="21.8" height="82.6" rx="2" fill="#ff7b72" opacity="0.88"/><text x="92.3" y="137.4" text-anchor="middle" class="an-val" fill="#0d1917">48</text><text x="92.3" y="222" text-anchor="middle" class="an-lab">수학</text><rect x="120.3" y="111.4" width="21.8" height="94.6" rx="2" fill="#ff7b72" opacity="0.88"/><text x="131.1" y="125.4" text-anchor="middle" class="an-val" fill="#0d1917">55</text><text x="131.1" y="222" text-anchor="middle" class="an-lab">영어</text><rect x="159.1" y="71.8" width="21.8" height="134.2" rx="2" fill="#63d6bd" opacity="1"/><text x="170.0" y="85.8" text-anchor="middle" class="an-val" fill="#0d1917">78</text><text x="170.0" y="222" text-anchor="middle" class="an-lab">사회</text><rect x="198.0" y="95.9" width="21.8" height="110.1" rx="2" fill="#63d6bd" opacity="1"/><text x="208.9" y="109.9" text-anchor="middle" class="an-val" fill="#0d1917">64</text><text x="208.9" y="222" text-anchor="middle" class="an-lab">과학</text><rect x="236.8" y="65.0" width="21.8" height="141.0" rx="2" fill="#63d6bd" opacity="1"/><text x="247.7" y="79.0" text-anchor="middle" class="an-val" fill="#0d1917">82</text><text x="247.7" y="222" text-anchor="middle" class="an-lab">한국사</text><rect x="275.7" y="75.3" width="21.8" height="130.7" rx="2" fill="#63d6bd" opacity="1"/><text x="286.6" y="89.3" text-anchor="middle" class="an-val" fill="#0d1917">76</text><text x="286.6" y="222" text-anchor="middle" class="an-lab">도덕</text></g><line x1="34" y1="206" x2="306" y2="206" stroke="rgba(255,255,255,.22)" stroke-width="1"/></svg></figure>
+        <figure class="an-card"><figcaption><b>점수 흐름</b><span>회차마다 평균이 어떻게 변했는지</span></figcaption><svg viewBox="0 0 320 244" role="img" aria-label="회차별 평균 점수 꺾은선 그래프 예시 — 빨간 점선이 합격선 60"><defs><linearGradient id="anArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfba85" stop-opacity=".28"/><stop offset="1" stop-color="#dfba85" stop-opacity="0"/></linearGradient></defs><line x1="38" y1="206.0" x2="300" y2="206.0" stroke="rgba(255,255,255,.09)" stroke-width="1"/><text x="30" y="210.0" text-anchor="end" class="an-tick">40</text><line x1="38" y1="164.5" x2="300" y2="164.5" stroke="rgba(255,255,255,.09)" stroke-width="1"/><text x="30" y="168.5" text-anchor="end" class="an-tick">50</text><text x="30" y="127.0" text-anchor="end" class="an-tick">60</text><line x1="38" y1="81.5" x2="300" y2="81.5" stroke="rgba(255,255,255,.09)" stroke-width="1"/><text x="30" y="85.5" text-anchor="end" class="an-tick">70</text><line x1="38" y1="40.0" x2="300" y2="40.0" stroke="rgba(255,255,255,.09)" stroke-width="1"/><text x="30" y="44.0" text-anchor="end" class="an-tick">80</text><line x1="38" y1="123.0" x2="300" y2="123.0" stroke="#ff7b72" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M38.0,156.2 L38.0,156.2 L103.5,135.4 L169.0,118.8 L234.5,106.4 L300.0,89.8 L300.0,206 L38.0,206 Z" fill="url(#anArea)" class="an-fade"/><path d="M38.0,156.2 L103.5,135.4 L169.0,118.8 L234.5,106.4 L300.0,89.8" fill="none" stroke="#dfba85" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" pathLength="1" class="an-draw"/><circle cx="38.0" cy="156.2" r="3.4" fill="#0d1917" stroke="#dfba85" stroke-width="2" class="an-fade"/><text x="38.0" y="222" text-anchor="middle" class="an-lab">24-1</text><circle cx="103.5" cy="135.4" r="3.4" fill="#0d1917" stroke="#dfba85" stroke-width="2" class="an-fade"/><text x="103.5" y="222" text-anchor="middle" class="an-lab">24-2</text><circle cx="169.0" cy="118.8" r="3.4" fill="#0d1917" stroke="#dfba85" stroke-width="2" class="an-fade"/><text x="169.0" y="222" text-anchor="middle" class="an-lab">25-1</text><circle cx="234.5" cy="106.4" r="3.4" fill="#0d1917" stroke="#dfba85" stroke-width="2" class="an-fade"/><text x="234.5" y="222" text-anchor="middle" class="an-lab">25-2</text><circle cx="300.0" cy="89.8" r="5" fill="#dfba85" stroke="#dfba85" stroke-width="2" class="an-fade"/><text x="300.0" y="222" text-anchor="middle" class="an-lab">26-1</text><text x="300.0" y="78.8" text-anchor="middle" class="an-val an-fade" fill="#dfba85">68</text></svg></figure>
       </div>
-      <p class="pipe-fine">합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다.</p>
+      <div class="an-key"><span><i class="k-red"></i>합격선 60</span><span><i class="k-teal"></i>60점 이상</span><span><i class="k-rd"></i>60점 미만</span></div>
+      <div class="an-stats">
+        <div><b>12<small>회차</small></b><span>고졸 검정고시 기출 2021년 1회~2026년 2회</span></div>
+        <div><b>2,640<small>문항</small></b><span>단원·유형 분류와 해설</span></div>
+        <div><b>306<small>곳</small></b><span>대학 입시 기준 · 258곳 검정고시 환산</span></div>
+      </div>
+      <p class="pipe-fine">합격 가능성은 단정적 확률이 아니라 <b>합격선 기준 위치와 구간</b>으로 표시합니다. <span class="an-ex">그래프는 예시 화면입니다.</span></p>
   </div>
 </section>
 
