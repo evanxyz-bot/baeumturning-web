@@ -237,6 +237,8 @@ h1,h2,h3,h4,.h{font-family:'GmarketSans','Pretendard Variable',Pretendard,sans-s
 .tl-badges{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:8px}
 .tl-badges img{height:40px;width:auto;display:block}
 .tl-badges span{font-size:14px;color:var(--text-3)}
+/* Google Play 공식 배지 PNG 는 위아래 투명 여백이 '여백 규정'이라 자르지 않는다 — 52px 로 키우고 -6px 로 당겨 App Store 배지(40px)와 보이는 높이를 맞춘다(홈 .badge-gp 와 같은 250/192 배) */
+.tl-badges img.gp{height:52px;margin:-6px 0}
 .tl-note{text-align:center;font-size:14.6px;color:var(--text-3);margin-top:20px}
 
 /* ── PARTNERS ── */
@@ -541,9 +543,14 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div class="tl-card reveal">
       <div class="tl">
         <div class="tl-item now">
+          <div class="tl-date">2026. 11. 15</div>
+          <h4>배움터닝 안드로이드 출시</h4>
+          <div class="tl-badges"><a href="https://play.google.com/store/apps/details?id=com.baeumturning.app" target="_blank" rel="noopener"><img class="gp" src="brand/badges/googleplay-ko.png" alt="Google Play에서 다운로드" width="135" height="52"></a></div>
+        </div>
+        <div class="tl-item">
           <div class="tl-date">2026. 09. 17</div>
-          <h4>배움터닝 앱 출시</h4>
-          <div class="tl-badges"><a href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener"><img src="brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="130" height="40"></a><span>Google Play 출시 준비 중</span></div>
+          <h4>배움터닝 앱 출시 (iOS)</h4>
+          <div class="tl-badges"><a href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener"><img src="brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="130" height="40"></a></div>
         </div>
         <div class="tl-item">
           <div class="tl-date">2026. 05</div>
