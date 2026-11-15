@@ -65,10 +65,18 @@ h3{font-family:'GmarketSans','Pretendard Variable',sans-serif}
 .nav-app-ic svg{width:32px;height:32px;color:var(--accent)}
 .nav-app-nm{font-weight:800;font-size:17px;color:var(--text);letter-spacing:-.01em}
 .nav-app-badge{display:block;height:40px;width:auto}
+/* 구글 배지 PNG 는 둘레 여백이 있어 250/192 배로 키워 앱스토어 배지와 글자 크기를 맞춘다 (2026-11-15) */
+.nav-app-badge.gp{height:52px;margin:-6px 0}
+html.ua-and .st-as,html.ua-ios .st-gp{display:none}
+/* PC 는 배지 둘 — 가운데 워드마크와 안 닿게 폭이 줄면 앱 이름 → 아이콘 → 플레이 배지 순으로 뺀다 (2026-11-15 폭별 실측) */
+@media (max-width:1439px){html:not(.ua-and):not(.ua-ios) .nav-app-nm{display:none}}
+@media (max-width:1099px){html:not(.ua-and):not(.ua-ios) .nav-app-ic{display:none}}
+@media (max-width:900px){html:not(.ua-and):not(.ua-ios) .nav-app{gap:6px}html:not(.ua-and):not(.ua-ios) .nav-app-badge{height:32px}html:not(.ua-and):not(.ua-ios) .nav-app-badge.gp{height:41.6px;margin:-4.8px 0}}
+@media (max-width:519px){html:not(.ua-and):not(.ua-ios) .st-gp{display:none}}
 @media (max-width:1339px){.nav-app-nm{display:none}}
 @media (max-width:767px){.nav-top{justify-content:flex-start;padding:0 14px}.nav-top .brand-wm{font-size:min(65px,10.4vw)!important}}
 @media (max-width:860px){.nav-app-ic{display:none}}
-@media (max-width:560px){.nav-app{right:12px;gap:6px}.nav-app-badge{height:32px}}
+@media (max-width:560px){.nav-app{right:12px;gap:6px}.nav-app-badge{height:32px}.nav-app-badge.gp{height:41.6px;margin:-4.8px 0}}
 @media (max-width:359px){.nav-top .brand-wm .wm-ko{display:none}}
 .navlinks{position:relative;display:flex;gap:15px;font-size:20.9px;font-weight:700}
 .navlinks a{position:relative;z-index:1;color:var(--text-2);padding:10px 22px;border-radius:var(--r-md);
@@ -1000,6 +1008,7 @@ h1{font-size:30px;margin:0 0 10px}
 </script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};window.va('beforeSend',function(e){if(navigator.globalPrivacyControl||navigator.doNotTrack==='1')return null;var u=new URL(e.url);u.search='';u.hash='';return Object.assign({},e,{url:u.toString()})});</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script>/* 폰 기종에 맞는 스토어 배지만 보이게 — 안드로이드는 Google Play, 아이폰·아이패드는 App Store, 그 밖(PC)은 둘 다 (2026-11-15) */(function(){var u=navigator.userAgent,d=document.documentElement;if(/Android/i.test(u)){d.className+=' ua-and';}else if(/iPhone|iPad|iPod/i.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)){d.className+=' ua-ios';}})();</script>
 </head>
 <body>
 
@@ -1027,7 +1036,7 @@ h1{font-size:30px;margin:0 0 10px}
     <span class="nav-app">
       <span class="nav-app-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg></span>
       <span class="nav-app-nm">검정고시 학습 앱 배움터닝</span>
-      <a href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="배움터닝 App Store 에서 내려받기"><img class="nav-app-badge" src="/brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="104" height="32" loading="lazy"></a>
+      <a class="st-as" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="배움터닝 App Store 에서 내려받기"><img class="nav-app-badge" src="/brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="104" height="32" loading="lazy"></a><a class="st-gp" href="https://play.google.com/store/apps/details?id=com.baeumturning.app" target="_blank" rel="noopener" aria-label="배움터닝 Google Play 에서 내려받기"><img class="nav-app-badge gp" src="/brand/badges/googleplay-ko.png" alt="Google Play에서 다운로드" width="135" height="52" loading="lazy"></a>
     </span>
   </div>
   <div class="nav-bot">
@@ -1179,7 +1188,7 @@ h1{font-size:30px;margin:0 0 10px}
     <p>과목 점수를 한 번 넣어 두면 전국 대학의 환산 결과를 한 화면에서 비교하고 정렬해 볼 수 있습니다. 앱에 기록한 과목별 최근 점수를 그대로 불러와 계산하며, 검정고시 기출 풀이·오답 복습·성적 그래프와 함께 쓸 수 있습니다.</p>
     <!-- 애플 공식 배지(brand/badges/appstore-ko.svg, 129.7×40 원본) — 비율·색·테두리 변형 금지.
          텍스트 버튼은 눈에 안 띈다는 2026-09-20 대표 지시로 배지로 교체. 폰에서도 같은 크기. -->
-    <a class="badge-dl" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="App Store에서 배움터닝 받기"><img src="../brand/badges/appstore-ko.svg" alt="App Store에서 다운로드하기" width="182" height="56"></a>
+    <span class="badge-row"><a class="badge-dl st-as" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="App Store에서 배움터닝 받기"><img src="../brand/badges/appstore-ko.svg" alt="App Store에서 다운로드하기" width="182" height="56"></a><a class="badge-dl gp st-gp" href="https://play.google.com/store/apps/details?id=com.baeumturning.app" target="_blank" rel="noopener" aria-label="Google Play에서 배움터닝 받기"><img src="../brand/badges/googleplay-ko.png" alt="Google Play에서 다운로드하기" width="189" height="73"></a></span>
   </aside>
   </div><!-- /.prose -->
 

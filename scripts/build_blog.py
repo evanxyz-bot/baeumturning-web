@@ -27,6 +27,12 @@ PUBLISHED = False
 # 결정 중립 원칙(company/content/가이드/01_재료수집.md §8)과 부딪혔다. CTA 는 12/1 이후에도 무료인 것(기출·채점·해설)만 말한다.
 SOURCE_NOTE_DEFAULT = "이 글은 공개된 제도 정보와 공식 발표 자료를 바탕으로 작성했습니다."
 APP_STORE_URL = "https://apps.apple.com/kr/app/id6807482640"
+PLAY_URL = "https://play.google.com/store/apps/details?id=com.baeumturning.app"
+# 폰 기종에 맞는 스토어만 보이게(상단바 .st-as/.st-gp 와 같은 규칙, 2026-11-15) — qna.html 껍데기엔 head 스크립트가 안 따라와서 여기서 넣는다
+UA_JS = ("<script>/* 폰 기종에 맞는 스토어 배지만 보이게 — 안드로이드는 Google Play, 아이폰·아이패드는 App Store, 그 밖(PC)은 둘 다 (2026-11-15) */"
+         "(function(){var u=navigator.userAgent,d=document.documentElement;"
+         "if(/Android/i.test(u)){d.className+=' ua-and';}"
+         "else if(/iPhone|iPad|iPod/i.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)){d.className+=' ua-ios';}})();</script>")
 
 
 def foot_cta(kind):
@@ -42,9 +48,10 @@ def foot_cta(kind):
     return ('<div class="bl-cta">\n'
             '        <div class="t"><b>기출로 지금 점수부터 확인해 보세요</b>\n'
             '          <p>고졸 검정고시 기출을 실제 시험처럼 풀고 바로 채점해요. 전 문항에 해설이 있어요. '
-            '(만 14세 이상 가입 · iOS)</p></div>\n'
-            '        <a href="%s">App Store에서 보기</a>\n'
-            '      </div>' % APP_STORE_URL)
+            '(만 14세 이상 가입 · iOS·Android)</p></div>\n'
+            '        <a class="st-as" href="%s">App Store에서 보기</a>\n'
+            '        <a class="st-gp" href="%s">Google Play에서 보기</a>\n'
+            '      </div>' % (APP_STORE_URL, PLAY_URL))
 
 
 # ───────────────────────────────── 껍데기 추출 ─────────────────────────────────
@@ -293,7 +300,7 @@ BLOG_CSS = """
 
 
 def head(title, desc, url, extra_ld=""):
-    return """<!DOCTYPE html>
+    return ("""<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -309,13 +316,14 @@ def head(title, desc, url, extra_ld=""):
 <meta name="robots" content="%s">
 <meta name="theme-color" content="#0b7a6a">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+""" + UA_JS + """
 %s
 %s
 %s
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};window.va('beforeSend',function(e){if(navigator.globalPrivacyControl||navigator.doNotTrack==='1')return null;var u=new URL(e.url);u.search='';u.hash='';return Object.assign({},e,{url:u.toString()})});</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
-""" % (html.escape(title), html.escape(desc), url, html.escape(title), html.escape(desc),
+""") % (html.escape(title), html.escape(desc), url, html.escape(title), html.escape(desc),
        BASE, "index,follow" if PUBLISHED else "noindex,nofollow",
        SHELL["fonts"], SHELL["css"], BLOG_CSS + extra_ld)
 
