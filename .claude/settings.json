@@ -1,6 +1,6 @@
 {
   "permissions": {
-    "defaultMode": "acceptEdits",
+    "defaultMode": "bypassPermissions",
     "allow": [
       "WebSearch",
       "WebFetch",
@@ -21,6 +21,12 @@
       "TaskCreate",
       "TaskUpdate",
       "SendMessage",
+      "PushNotification",
+      "CronCreate",
+      "CronList",
+      "CronDelete",
+      "ScheduleWakeup",
+      "Monitor",
       "mcp__github__*",
       "mcp__Notion__*",
       "mcp__Gmail__*",
