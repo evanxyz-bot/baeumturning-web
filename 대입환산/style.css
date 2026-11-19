@@ -307,3 +307,12 @@ p,li{text-wrap:pretty}
 .t td,.t th{overflow-wrap:normal}
 /* 숫자+단위('70%컷')가 줄 끝에서 '70%' / '컷' 으로 갈리지 않게 */
 .nw{white-space:nowrap}
+/* 대학 페이지 맨 위 계산기 바로가기(대표 11-19) — 현재 위치 줄 바로 아래, 제목 위 */
+.calc-go{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;
+  margin:2px 0 18px;padding:12px 20px;border-radius:var(--r-md);background:var(--accent);color:#fff;
+  font-size:15.5px;font-weight:700;line-height:1.3;text-decoration:none;box-shadow:var(--shadow-sm);
+  transition:background .15s var(--ease-spring)}
+.calc-go:hover{background:var(--accent-strong)}
+.calc-go:focus-visible{outline:3px solid var(--accent-mid);outline-offset:2px}
+.calc-go svg{width:18px;height:18px;flex:none}
+@media (max-width:560px){.calc-go{display:flex;width:100%}}
