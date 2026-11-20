@@ -54,6 +54,7 @@
 
 - [홈](https://outfocus.co.kr/): 회사와 서비스 개요
 - [대입 환산 계산기](https://outfocus.co.kr/대입환산/): 검정고시 과목 점수를 대학이 공개한 기준으로 환산하는 계산기(전국 306곳 기준 수록, 그중 258곳 환산 기준 확보). 수록 범위는 문서 안에 정리해 두었습니다.
+- [검정고시 점수별 대학 환산 등급 비교](https://outfocus.co.kr/대입환산/점수별비교.html): 전 과목이 100·95·90·85점일 때 대학마다 환산 등급이 어떻게 갈리는지 4년제 82곳·전문대 101곳을 계산기와 같은 엔진으로 견준 표입니다.
 - [자주 묻는 질문](https://outfocus.co.kr/qna.html): 검정고시 기본 문답(정의·시행 횟수·합격 기준·시험 과목)과 배움터닝 이용 문답
 - [회사 소개](https://outfocus.co.kr/company.html): 미션과 팀
 - [연혁](https://outfocus.co.kr/history.html)
@@ -64,8 +65,8 @@
 
 ## 기계 판독용 파일
 
-- [사이트맵](https://outfocus.co.kr/sitemap.xml): 공개 페이지 288개의 주소와 최종 수정일
-- [RSS 피드](https://outfocus.co.kr/rss.xml): 위 288개를 제목·설명과 함께 담은 RSS 2.0 피드
+- [사이트맵](https://outfocus.co.kr/sitemap.xml): 공개 페이지 289개의 주소와 최종 수정일
+- [RSS 피드](https://outfocus.co.kr/rss.xml): 위 289개를 제목·설명과 함께 담은 RSS 2.0 피드
 
 ## 참고
 
