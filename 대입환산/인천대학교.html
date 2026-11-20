@@ -81,7 +81,10 @@
     "@id": "https://outfocus.co.kr/#app",
     "name": "배움터닝",
     "applicationCategory": "EducationalApplication",
-    "downloadUrl": ["https://apps.apple.com/kr/app/id6807482640", "https://play.google.com/store/apps/details?id=com.baeumturning.app"]
+    "downloadUrl": [
+     "https://apps.apple.com/kr/app/id6807482640",
+     "https://play.google.com/store/apps/details?id=com.baeumturning.app"
+    ]
    },
    "isPartOf": {
     "@id": "https://outfocus.co.kr/#website"
@@ -117,9 +120,9 @@
    "@type": "Dataset",
    "@id": "https://outfocus.co.kr/%EB%8C%80%EC%9E%85%ED%99%98%EC%82%B0/%EC%9D%B8%EC%B2%9C%EB%8C%80%ED%95%99%EA%B5%90.html#%EC%9E%85%EC%8B%9C%EA%B2%B0%EA%B3%BC",
    "name": "인천대학교 2026학년도 입시결과(합격선)",
-   "description": "인천대학교 입학처가 공개한 2026학년도 입시결과를 그대로 옮긴 표입니다. 검정고시 출신자가 지원할 수 있는 전형 1개의 모집단위별 70%컷 · 합격자 평균을 담았습니다. 단위는 등급이며 추정으로 채운 값은 없습니다.",
+   "description": "인천대학교 입학처가 공개한 2026학년도 학생부교과(교과성적우수자전형) 입시결과를 그대로 옮긴 표입니다. 검정고시 출신자가 지원할 수 있는 이 전형의 모집단위 55곳에 대해 모집인원·경쟁률·최초합격 평균·최종등록 평균·최종 70%컷·예비순위를 담았습니다. 추정으로 채운 값은 없습니다.",
    "temporalCoverage": "2026학년도",
-   "dateModified": "2026-09-24",
+   "dateModified": "2026-11-21",
    "isAccessibleForFree": true,
    "license": "https://outfocus.co.kr/terms.html",
    "inLanguage": "ko",
@@ -132,17 +135,100 @@
     "name": "인천대학교 입학처"
    },
    "measurementTechnique": "최종등록자",
-   "citation": "인천대학교 입학처 공개 입시결과(2026학년도) · 2027학년도 모집요강 · 확인일 2026-09-21·2026-09-24",
+   "citation": "인천대학교 입학처 「2026학년도 수시 입학전형 결과」 · 「2027학년도 수시모집요강」 · 확인일 2026-09-24·2026-11-20",
    "variableMeasured": [
     {
      "@type": "PropertyValue",
-     "name": "70%컷",
+     "name": "모집인원",
+     "unitText": "명"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "경쟁률",
+     "unitText": "대 1"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "최초합격 평균",
      "unitText": "등급"
     },
     {
      "@type": "PropertyValue",
-     "name": "합격자 평균",
+     "name": "최종등록 평균",
      "unitText": "등급"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "최종 70%컷",
+     "unitText": "등급"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "예비순위",
+     "unitText": "순위"
+    }
+   ],
+   "isPartOf": {
+    "@id": "https://outfocus.co.kr/#website"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "@id": "https://outfocus.co.kr/#organization",
+    "name": "아웃포커스",
+    "url": "https://outfocus.co.kr/"
+   }
+  },
+  {
+   "@type": "Dataset",
+   "@id": "https://outfocus.co.kr/%EB%8C%80%EC%9E%85%ED%99%98%EC%82%B0/%EC%9D%B8%EC%B2%9C%EB%8C%80%ED%95%99%EA%B5%90.html#%EC%A0%95%EC%8B%9C",
+   "name": "인천대학교 2026학년도 정시 일반학생전형 과목별 성적",
+   "description": "인천대학교 입학처가 공개한 2026학년도 정시 일반학생전형 최종등록자 과목별 평균을 그대로 옮긴 표입니다. 모집단위 56곳(실기 반영 5곳 제외)의 모집인원·경쟁률·국어·수학·탐구 백분위·영어 등급·평균 백분위를 담았습니다. 추정으로 채운 값은 없습니다.",
+   "temporalCoverage": "2026학년도",
+   "dateModified": "2026-11-21",
+   "isAccessibleForFree": true,
+   "license": "https://outfocus.co.kr/terms.html",
+   "inLanguage": "ko",
+   "creator": {
+    "@type": "Organization",
+    "name": "인천대학교"
+   },
+   "sourceOrganization": {
+    "@type": "CollegeOrUniversity",
+    "name": "인천대학교 입학처"
+   },
+   "measurementTechnique": "공개 입시결과",
+   "citation": "인천대학교 입학처 「2026학년도 정시모집 일반학생전형 결과」(2026.4.1) · 「2027학년도 정시모집요강」 · 확인일 2026-11-20",
+   "variableMeasured": [
+    {
+     "@type": "PropertyValue",
+     "name": "모집인원",
+     "unitText": "명"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "경쟁률",
+     "unitText": "대 1"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "국어 백분위"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "수학 백분위"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "탐구 백분위"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "영어 등급",
+     "unitText": "등급"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "평균 백분위"
     }
    ],
    "isPartOf": {
