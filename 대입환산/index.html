@@ -1773,7 +1773,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   });
   document.getElementById('searchForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    q = document.getElementById('q').value.replace(/\s/g, '');
+    q = norm(document.getElementById('q').value);   // 공백 빼고 소문자로 — 'AI'·'IT' 도 찾게(이름 쪽은 norm 을 타는데 검색어만 대문자로 남던 것, 11-25)
     if (q) { loadDepts(); }   // 학과·태그로 찾으려면 검색 색인이 필요하다
     shown = STEP; render();
   });
@@ -3005,6 +3005,12 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       r._m = q ? m : null;
       rows.push(r);
     });
+    // '…대학교·…대학·…대'로 찾으면 대학을 찾는 것 — 이름이 맞는 대학이 있으면 그 대학만 남긴다. 학과 이름의 단과대학
+    // ('자유전공학부(과학기술대학)')이 걸려 다른 대학이 섞이던 것(대표 11-25 '필터링이 제대로 안되는거같다').
+    // 이름이 맞는 대학이 없으면('사범대학') 예전처럼 학과로 찾은 대학을 보인다.
+    if (q && /(대학교|대학|대)$/.test(q) && rows.some(function (r) { return r._m.name; })) {
+      rows = rows.filter(function (r) { return r._m.name; });
+    }
     // 판정으로 거르거나 줄 세우려면 목록에 오른 대학 입결이 전부 있어야 한다 — 없으면 먼저 받는다.
     // 받는 동안(cutLoading)에는 가나다순 그대로 두고 아무것도 거르지 않는다. 다 받은 뒤 적용한다.
     var cutLoading = (bandFilterOn() || sortMode !== 'name' || !showOther) ? bulkCuts(rows) : null;
@@ -3019,7 +3025,12 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
     // 정렬 — 가나다(기본)·상향순·하향순 셋뿐이고, 판정 가능·불가·미수집을 그룹으로
     // 나누지 않는다(2026-09-24 대표 지시로 '적정에 가까운 순'과 그룹 머리글을 없앴다).
     var byName = function (a, b) { return a.univ.name.localeCompare(b.univ.name, 'ko'); };
-    rows.sort((cutLoading || sortMode === 'name') ? byName : function (a, b) {
+    // 가나다순일 때 — 대학 이름·지역이 맞은 곳을 먼저, 학과로만 걸린 곳을 뒤에
+    var byHit = function (a, b) {
+      var c = q ? (a._m.name ? 0 : 1) - (b._m.name ? 0 : 1) : 0;
+      return c || byName(a, b);
+    };
+    rows.sort((cutLoading || sortMode === 'name') ? byHit : function (a, b) {
       var c = bandCmp(sortMode,
         a._ub.kind === 'ok' ? BAND_VAL[a._ub.band] : null,
         b._ub.kind === 'ok' ? BAND_VAL[b._ub.band] : null);
