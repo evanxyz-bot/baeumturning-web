@@ -235,7 +235,8 @@ html.ua-and .st-as,html.ua-ios .st-gp{display:none}
 .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
 .hero h1{font-size:60.5px;line-height:1.12;font-weight:700;letter-spacing:-0.035em}
 .hero h1 .g{background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.sub{font-size:19.6px;color:var(--text-2);line-height:1.7;margin-top:22px;max-width:520px}
+/* 굵기 600 — 2026-11-25 대표 '조금 더 굵게'(두 문장으로 줄이면서) */
+.hero p.sub{font-size:19.6px;font-weight:600;color:var(--text-2);line-height:1.7;margin-top:22px;max-width:520px}
 .hero p.sub b{color:var(--accent-strong)}
 .uniq{display:inline-flex;align-items:center;gap:9px;font-size:16.8px;font-weight:800;color:var(--accent-strong);
   background:linear-gradient(#fff,#fff) padding-box,var(--accent-grad) border-box;border:2px solid transparent;
@@ -746,8 +747,9 @@ body::before{background:
 }
 
 /* 초점 — 브랜드 컬러 강조 */
-.apfx-light .t .fx{font-style:normal;color:inherit}
-.apfx-in .tt .fx{font-style:normal;color:inherit}
+/* 2026-11-25 대표 지시 — '초점' 두 곳을 아래쪽 제목 강조와 같은 진분홍(.netsec .w-pink)으로. '데이터'는 아래 초록 그대로 */
+.apfx-light .t .fx{font-style:normal;color:#f4649e}
+.apfx-in .tt .fx{font-style:normal;color:#f4649e}
 /* 2026-10-19 대표 지시 — 2페이지 '데이터'에 브랜드색. 어두운 바탕이라 같은 구간 마크(.apfx-in .mk)와 같은 밝은 브랜드 초록 */
 .apfx-in .tt .fx.dt{color:#4ecfb4}
 
@@ -1175,6 +1177,9 @@ body::before{background:
 @media (max-width:1099px) and (max-height:720px){ .s3d-scale{transform:scale(.54)} .scene{height:336px} }
 /* 플로팅 레이어 자리(기존 고정 210px)도 폭에 따라 줄인다 */
 @media (min-width:1100px){ .stage{padding-left:clamp(120px,14vw,210px);padding-right:clamp(120px,14vw,210px)} }
+/* 2026-11-25 대표 지시 — 설명글을 줄이고 다운로드 버튼을 빼 왼쪽 아래가 비어, 글 묶음을 3D 장면의 세로 가운데로(두 칸일 때만) */
+/* 가운데보다 48px 위로 — 2026-11-25 대표 '중앙보다 위로 올리자' (아래 여백을 글 묶음에 붙여 중심을 올린다) */
+@media (min-width:1100px){ .hero-grid>div:first-child{align-self:center;padding-bottom:96px} }
 
 /* 네트워크 — 1000 -> 520 급락을 연속 축소로 */
 .net{max-width:min(1000px, 94vw)}
@@ -1266,6 +1271,11 @@ body::before{background:
 .cat-slide.on{opacity:1;transform:none;pointer-events:auto}
 .cat-slide.prev{transform:translateX(-44px) scale(.97)}
 .cat-body{flex:1;padding:11px 12px 6px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+/* 배움터 슬라이드 = 지금 앱 화면 사진(2026-11-25). D-day 줄은 앱 모양 — 흰 바탕·점선 아랫줄·초록 알약 왼쪽 */
+.cat-slide .ddaybar.app{background:#fff;justify-content:flex-start;gap:6px;padding:8px 12px 7px;border-bottom:1px dashed var(--border);font-size:13px}
+.cat-slide .ddaybar.app .dchip{font-size:13px;padding:2px 10px;border-radius:999px;background:#0b7a6a;color:#fff}
+.cat-slide .ddaybar.app .dd{color:var(--text-3)}
+.hub-shot{display:block;width:100%;flex:1;min-height:0;object-fit:cover;object-position:top;background:#fff}
 .cat-head{display:flex;align-items:center;gap:8px;font-size:16.8px;font-weight:800;color:var(--text-2);letter-spacing:-0.02em}
 /* 섹션 카드용 .ci(padding:16px·border)가 상속돼 아이콘이 찌그러지던 것 차단 */
 .cat-head .ci{width:21px;height:21px;border-radius:7px;display:grid;place-items:center;color:#fff;flex-shrink:0;
@@ -1914,24 +1924,9 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <div>
       <!-- 2026-09-24 대표 지시 — 히어로 위 작은 글씨(.uniq) 삭제 -->
       <h1><span class="g">배움</span>, 마침표가 아닌<br><span class="g">터닝포인트</span>로</h1>
-      <p class="sub">아웃포커스는 교육 사각지대를 해소하는 솔루션을 만듭니다.<br>배움터닝은 검정고시 기출문제를 실제 시험처럼 풀고 <span style="white-space:nowrap">OMR로 바로 채점하는</span> 앱 서비스입니다.<br>풀이 기록을 통계로 분석해 복습할 순서를 맞춤 추천하고 <span style="white-space:nowrap">AI 학습 보고서로</span> 자가진단이 가능하게 합니다.<br>검정고시 점수 대입 환산기를 제공해 <b style="white-space:nowrap">검정고시부터 대입까지 한 번에</b> 잇습니다.</p>
-      <div class="cta-zone">
-        <!-- 스토어별로 나눈 다운로드 버튼(2026-09-11 대표 지시).
-             App Store 는 2026-09-17 출시돼 애플 공식 배지(brand/badges/appstore-ko.svg, 수정 금지·최소 40px)로
-             스토어에 연결. Google Play 도 구글 공식 배지(brand/badges/googleplay-ko.png, 원본 PNG 그대로 —
-             위아래 투명 여백 29px 이 배지의 '여백 규정'이라 자르지 않고 CSS 로 250/192 배 키워 보이는 높이를
-             애플 배지와 맞춘다). 2026-11 Play 공개 — 두 배지 모두 스토어로 바로 간다(예전 '출시 준비 중' 팝업은 뺐다).
-             사과·플레이 아이콘을 직접 그려 넣는 건 양쪽 브랜드 가이드라인 위반이라 뺐다(2026-09-17).
-             아래에 있던 'App Store · Google Play' 안내 줄은 버튼이 그 말을 하므로 뺐다. -->
-        <div class="cta-row">
-          <a href="https://play.google.com/store/apps/details?id=com.baeumturning.app" id="appDownloadBtn" class="badge-dl badge-gp" target="_blank" rel="noopener" aria-label="Google Play에서 다운로드">
-            <img src="brand/badges/googleplay-ko.png" alt="Google Play에서 다운로드" width="202" height="78">
-          </a>
-          <a href="https://apps.apple.com/kr/app/id6807482640" id="appDownloadBtnIos" class="badge-dl" target="_blank" rel="noopener">
-            <img src="brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="195" height="60">
-          </a>
-        </div>
-      </div>
+      <!-- 2026-11-25 대표 지시 — 설명글을 두 문장으로(예전: 기출·OMR 채점·복습 추천·AI 보고서·대입 환산 네 줄) -->
+      <p class="sub">아웃포커스는 교육 사각지대를 해소하는 솔루션을 만듭니다.<br>메인 서비스 배움터닝은 <span style="white-space:nowrap">검정고시 AI 학습 관리 앱</span>입니다.</p>
+      <!-- 2026-11-25 대표 지시 "메인화면 다운로드 버튼 두개 삭제 — 우측 상단에 있으므로": 본문 앱 배지 두 개(Google Play·App Store)를 뺐다. 헤더 오른쪽 위 배지(.nav-app)는 폰 폭에서도 보인다 -->
     </div>
 
     <div class="stage">
@@ -1975,19 +1970,14 @@ body{word-break:keep-all;overflow-wrap:break-word}
                 <div class="statusbar"><span class="tnum">9:41</span><span class="dots"><i></i><i></i><i></i></span></div>
                 <div class="cat-stage" id="catStage">
 
-                  <!-- 카테고리 1: 배움터 (앱의 첫 화면 — 대시보드는 2026-08 폐지) -->
+                  <!-- 카테고리 1: 배움터 (앱의 첫 화면 — 대시보드는 2026-08 폐지).
+                       2026-11-25 대표 "홈페이지 3D 목업도 고쳐" — 손으로 그린 옛 배움터(색 띠 다섯 줄)를 지금 앱 화면 사진으로 바꿨다
+                       (가상 서버 시험 계정, 스토어 첫 장과 같은 원본 — 디자인/스토어 스샷 2026-11-25 전체). 사진에서는 앱의 D-day 줄·하단 탭을 뺐다:
+                       D-day 줄은 앱 모양(초록 알약 왼쪽 + 회차·날짜)으로 여기서 그려 날짜를 스스로 세고(아래 'D-day 자동 계산'), 탭은 이 폰의 .screen-dock. -->
                   <div class="cat-slide on" data-cat="hub">
-                    <div class="ddaybar"><span>다음 시험</span> <b>27년 1회차</b> <span>(4월 3일 예정)</span> <span class="dchip" id="ddayChip">D-213</span></div>
-                    <div class="cat-body">
-                      <div class="cat-head"><span class="ci" style="background:#2f9183"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>배움터</div>
-                      <div style="display:flex;flex-direction:column;gap:7px">
-                        <div style="position:relative;overflow:hidden;background:#4a5d8f;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">검정고시 기출문제</b><span style="font-size:10.8px;opacity:.84;position:relative">실전처럼 회차별로 풀고 바로 채점</span></div>
-                        <div style="position:relative;overflow:hidden;background:#34477a;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><path d="m12 3 1.9 5.3L19 10l-5.1 1.7L12 17l-1.9-5.3L5 10l5.1-1.7Z"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">학습 보고서 만들기</b><span style="font-size:10.8px;opacity:.84;position:relative">새 학습 데이터가 쌓였어요</span></div>
-                        <div style="position:relative;overflow:hidden;background:#b0605c;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">취약 단원</b><span style="font-size:10.8px;opacity:.84;position:relative">내가 자꾸 틀리는 단원만 모아서</span></div>
-                        <div style="position:relative;overflow:hidden;background:#a0863c;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">문제은행</b><span style="font-size:10.8px;opacity:.84;position:relative">과목·단원별로 골라 풀기</span></div>
-                        <div style="position:relative;overflow:hidden;background:#5f8a7d;border-radius:12px;padding:9px 11px;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-7px;top:50%;transform:translateY(-50%) rotate(-8deg);width:40px;height:40px;opacity:.17" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><b style="font-size:13px;display:block;line-height:1.25;position:relative">내 기록</b><span style="font-size:10.8px;opacity:.84;position:relative">점수 추이·시험지·지난 보고서</span></div>
-                      </div>
-                    </div>
+                    <div class="ddaybar app"><span class="dchip" id="ddayChip">D-129</span><b>27년 1회차</b><span class="dd">(4월 3일 예정)</span></div>
+                    <img class="hub-shot" src="brand/app-hub-2026-11.webp" width="600" height="994" decoding="async"
+                         alt="배움터닝 배움터 화면 — 공지·알림, 검정고시 기출, 학습 보고서, 취약 단원, 문제은행, 내 기록">
                   </div>
 
                   <!-- 카테고리 2: 학습달력 -->
@@ -2102,26 +2092,27 @@ body{word-break:keep-all;overflow-wrap:break-word}
                   </div>
 
                 </div>
+                <!-- 하단 탭 = 지금 앱 5칸(2026-11-20~ 설정이 맨 오른쪽, 공지는 배움터 안 공지·알림 띠로 — 11-25 현행화) -->
                 <div class="dock screen-dock">
                   <div class="dock-item">
                     <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
                     <span>학습달력</span>
                   </div>
                   <div class="dock-item">
-                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5 15.5 8.5"/></svg></span>
+                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 12 4l9 6"/><path d="M5.5 10v8M10 10v8M14 10v8M18.5 10v8"/><path d="M3 20h18"/></svg></span>
                     <span>대입</span>
                   </div>
                   <div class="dock-item active">
-                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13 7 4 4"/></svg></span>
                     <span>배움터</span>
-                  </div>
-                  <div class="dock-item">
-                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
-                    <span>공지사항</span>
                   </div>
                   <div class="dock-item">
                     <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></span>
                     <span>내 정보</span>
+                  </div>
+                  <div class="dock-item">
+                    <span class="di-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+                    <span>설정</span>
                   </div>
                 </div>
               </div>
@@ -2458,15 +2449,15 @@ document.querySelectorAll('.hubitem').forEach(function(item){
   var dockItems=[].slice.call(scene.querySelectorAll('.dock-item'));
   var ghost=document.getElementById('absorbGhost');
   if(slides.length<2) return;
-  /* 슬라이드 → 탭 매핑. 앱 탭은 5개(학습달력·대입·배움터·공지사항·내 정보)이고
-     취약 단원은 배움터 안쪽 화면이라 같은 탭(2)을 가리킨다. */
+  /* 슬라이드 → 탭 매핑. 앱 탭은 5개(학습달력·대입·배움터·내 정보·설정 — 2026-11-25 현행화)이고
+     취약 단원·공지사항은 배움터 안쪽 화면(공지는 배움터의 공지·알림 띠)이라 같은 탭(2)을 가리킨다. */
   var meta=[
     {dock:2,label:'배움터',gx:'4px',gy:'-150px'},
     {dock:0,label:'학습달력',gx:'-150px',gy:'46px'},
     {dock:2,label:'취약 단원',gx:'150px',gy:'88px'},
     {dock:1,label:'내신 환산',gx:'150px',gy:'-46px'},
-    {dock:3,label:'공지사항',gx:'-150px',gy:'-66px'},
-    {dock:4,label:'내 정보',gx:'150px',gy:'-150px'}
+    {dock:2,label:'공지사항',gx:'-150px',gy:'-66px'},
+    {dock:3,label:'내 정보',gx:'150px',gy:'-150px'}
   ];
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   /* 자동 전환에 태우는 화면 순서 — 배움터 > 학습달력 > 대입 > 공지사항 (2026-09-06 대표 지시).
