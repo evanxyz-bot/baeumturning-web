@@ -331,11 +331,10 @@ h1{font-size:30px;margin:0 0 10px}
 .persub li b{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
 .persub li b i{font-style:normal;color:var(--text-3)}
 /* 구간표는 style.css 의 세로표(.btwrap/.bt)를 그대로 쓴다 — 정적 대학 페이지와 같은 형식.
-   2026-09-20 대표 지시로 가로에서 세로로 되돌렸다. 카드 펼침 패널은 폭이 좁아 글자만 한 단계 줄인다.
-   구간이 많은 대학(대구보건대 121행)만 패널 안에서 세로 스크롤로 자른다 —
-   9행짜리(203곳 중 117곳)까지 자르면 멀쩡한 표가 잘린 것처럼 보인다. */
+   2026-09-20 대표 지시로 가로에서 세로로 되돌렸다. 카드 펼침 패널은 폭이 좁아 글자만 한 단계 줄인다. */
 .detail .btwrap{border-radius:var(--r-md);max-width:100%}
-.detail .btwrap.long{max-height:380px;overflow-y:auto}
+/* 구간이 많아도 패널 안 세로 스크롤로 자르지 않는다 — 스크롤 안에 스크롤이라 불편(2026-11-27 대표 '이미지 한 장처럼').
+   표는 끝까지 펼치고, 넘기는 건 바깥(패널·페이지) 스크롤 하나로. */
 .detail .bt{font-size:12px}
 /* 수학 조판처럼 — 미지수는 이탤릭으로 키우고, 부등호는 앞뒤 여백을 준다.
    U+1D465 기호 대신 마크업이라 글리프 없는 기기가 없다(정적 페이지 style.css 와 같은 규칙). */
@@ -445,7 +444,7 @@ h1{font-size:30px;margin:0 0 10px}
   .colL>section:first-of-type>h2{margin-top:0}
   /* 제목('지역')과 카드를 걷어내 지도만 남겼다 — 지도 윗선이 h1 윗선과 같은 줄에 온다
      (2026-09-22 대표 지시). h1 의 위 광학 여백만큼만 내려 맞춘다. */
-  .panes .pane-map{margin-top:0}
+  .panes .pane-map{margin-top:0;position:relative;left:clamp(0px,calc((100vw - 1280px) / 2),65px)}   /* 대표 11-27 '더 오른쪽 여백으로' → '현재(110)와 전(24)의 중간' 65px — 바깥 여백만큼(최대 65px), 좁은 창은 안 밀어 가로 넘침 없음 */   /* 대표 11-27 '지도 살짝 오른쪽으로' — 자리(격자)는 그대로, 그림만 민다 */
   /* 제목 '검정고시 대입 환산' 은 좌열 안에서 가운데 (폰은 기본 규칙의 왼쪽 정렬 그대로).
      그냥 center 로 두면 오른쪽 ? 버튼(28px)+gap(10px)까지 포함해 가운데를 잡아서
      글자 중심이 19px 왼쪽으로 밀린다(실측) → 왼쪽에 같은 폭의 빈 칸을 세워 상쇄한다. */
@@ -578,7 +577,7 @@ h1{font-size:30px;margin:0 0 10px}
 .uc-val .big{font-size:30px;font-weight:700;line-height:1.05;color:var(--sc-fg);
   letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .uc-val .big i{font-style:normal;font-size:12px;font-weight:600;color:var(--sc-mutedfg)}
-.uc-val .sub{font-size:11.5px;font-weight:500;color:var(--sc-mutedfg);margin-top:2px;
+.uc-val .sub{font-size:13px;font-weight:700;color:var(--sc-fg);margin-top:2px;
   font-variant-numeric:tabular-nums}
 .uc-bot{margin-top:auto;padding-top:11px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .uc-cnt{font-size:12px;font-weight:500;color:var(--sc-mutedfg);font-variant-numeric:tabular-nums}
@@ -603,7 +602,7 @@ h1{font-size:30px;margin:0 0 10px}
 .dh-val .big{font-size:46px;font-weight:700;line-height:1;color:var(--sc-fg);letter-spacing:-.03em;
   font-variant-numeric:tabular-nums;white-space:nowrap}
 .dh-val .big i{font-style:normal;font-size:16px;font-weight:600;color:var(--sc-mutedfg)}
-.dh-val .lbl{font-size:12px;font-weight:500;color:var(--sc-mutedfg);margin-top:5px}
+.dh-val .lbl{font-size:14px;font-weight:700;color:var(--sc-fg);margin-top:5px}
 .dh-badges{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
 .dh-conv{margin:10px 0 0;font-size:12.5px;line-height:1.65;color:var(--sc-mutedfg);word-break:keep-all}
 .dh-conv b{color:var(--sc-fg);font-weight:600}
@@ -1871,8 +1870,7 @@ window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
       (hasGrade ? '<th>등급 상당</th>' : '') + '</tr></thead><tbody>' + rows + '</tbody></table>';
     // 읽는 방향 설명은 뺐다 (2026-09-22 대표 지시) — 표가 길 때의 안내만 남긴다
     var cap = (bands.length > BAND_CHUNK ? '구간이 ' + bands.length + '개라 표가 깁니다.' : '');
-    return (cap ? '<p class="btcap">' + cap + '</p>' : '') + '<div class="btwrap' +
-      (bands.length > 12 ? ' long' : '') + '" style="--sw:' +
+    return (cap ? '<p class="btcap">' + cap + '</p>' : '') + '<div class="btwrap" style="--sw:' +
       Math.round(bw) + 'px">' + html + '</div>';
   }
 
