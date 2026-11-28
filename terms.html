@@ -79,7 +79,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;ba
 a{color:inherit;text-decoration:none}
 .tnum{font-variant-numeric:tabular-nums}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-section{scroll-margin-top:150px}
+section{scroll-margin-top:calc(150px + var(--nav-grow,0px))}
 
 .sec-focus{opacity:0;transform:translateY(54px);filter:blur(7px);
   transition:opacity .85s var(--ease-out),transform .85s var(--ease-out),filter .85s var(--ease-out)}
@@ -549,7 +549,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 .rev-scroll table{min-width:640px;margin:0}
 #rev-diff .rev-scroll table{min-width:760px}
 /* 위에 붙어 있는 내비(폰 129px·PC 145px)에 이동한 곳의 제목이 가리지 않게 */
-#rev-next,#rev-prev,#rev-diff{scroll-margin-top:160px}
+#rev-next,#rev-prev,#rev-diff{scroll-margin-top:calc(160px + var(--nav-grow,0px))}
 #rev-diff .rev-scroll td:first-child{white-space:nowrap}
 @media (max-width:700px){
   /* 방침 제6조 6칸 표가 폰(360·390)에서 640px 로 넓어 오른쪽 칸이 잘렸다(10/24 이전부터 있던 것, body overflow-x:hidden).
@@ -558,7 +558,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 }
 </style>
 <script>/* 폰 기종에 맞는 스토어 배지만 보이게 — 안드로이드는 Google Play, 아이폰·아이패드는 App Store, 그 밖(PC)은 둘 다 (2026-11-15) */(function(){var u=navigator.userAgent,d=document.documentElement;if(/Android/i.test(u)){d.className+=' ua-and';}else if(/iPhone|iPad|iPod/i.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)){d.className+=' ua-ios';}})();</script>
-</head>
+<style id="wm-2026">/* 확정 로고(2026-11-27) — 조리개 마크 + OUTFOCUS. 조리개 실제 원 높이 = 글자 높이(원 둘레 여백 보정 1.12배, 대표 11-27 키워라) */.brand-wm{align-items:center}.brand-wm .ap{display:none}.brand-wm .wm-img{display:block;height:.66em;width:auto}.brand-wm .wm-ko{align-self:flex-end;margin-left:.4em;margin-bottom:-.14em}/* 대표 11-27: 머리말 로고 4px 아래로 + 띠 안 전체(로고·앱 묶음) 2px 더 아래로, 한글은 로고 바닥 쪽으로 */.nav-top .brand-wm{position:relative;top:6px}.nav-top .nav-app{top:calc(50% + 2px)}.nav-app-ic{overflow:hidden;padding:0;background:none}.nav-app-ic img{display:block;width:100%;height:100%}.navlinks{gap:0}.navlinks>:is(a,.nav-drop)~:is(a,.nav-drop){background:linear-gradient(var(--border-strong),var(--border-strong)) left center/1px 46% no-repeat}.navlinks .nav-drop>a .chev{font-size:.72em;margin-left:6px;vertical-align:.06em}/* 대표 11-27: 머리말 띠 20% 키움(88→106px, PC 폭). 머리말 높이에 묶인 값은 --nav-grow 로 같이 움직인다 */:root{--nav-grow:0px}@media (min-width:768px){:root{--nav-grow:18px}.nav-top{height:106px}}@media (max-width:767px){.nav-top .brand-wm{top:0}.nav-top .nav-app{top:50%}.brand-wm .wm-img{height:.56em}.nav-top .wm-ko{display:none}.navlinks .nav-drop>a .chev{margin-left:3px}}</style></head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -579,11 +579,11 @@ body{word-break:keep-all;overflow-wrap:break-word}
   <div class="nav-top">
     <a href="/" aria-label="OutFocus 홈">
       <span class="brand-wm" style="font-size:65px">
-        <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span>
+        <span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><img class="wm-img" src="/brand/outfocus-wordmark-2026.svg" alt="OUTFOCUS" width="426" height="53"><span class="wm-ko">아웃포커스</span>
       </span>
     </a>
     <span class="nav-app">
-      <span class="nav-app-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#aperture"/></svg></span>
+      <span class="nav-app-ic"><img src="/brand/app-icon-baeumturning.png" alt="" width="44" height="44"></span>
       <span class="nav-app-nm">검정고시 학습 앱 배움터닝</span>
       <a class="st-as" href="https://apps.apple.com/kr/app/id6807482640" target="_blank" rel="noopener" aria-label="배움터닝 App Store 에서 내려받기"><img class="nav-app-badge" src="/brand/badges/appstore-ko.svg" alt="App Store에서 다운로드" width="104" height="32" loading="lazy"></a><a class="st-gp" href="https://play.google.com/store/apps/details?id=com.baeumturning.app" target="_blank" rel="noopener" aria-label="배움터닝 Google Play 에서 내려받기"><img class="nav-app-badge gp" src="/brand/badges/googleplay-ko.png" alt="Google Play에서 다운로드" width="135" height="52" loading="lazy"></a>
     </span>
@@ -897,7 +897,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 <footer class="foot">
   <div class="wrap">
     <div class="foot-top">
-      <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><span class="wm-tx">ut<span class="wm-f">F</span>ocus</span><span class="wm-ko">아웃포커스</span></span>
+      <span class="brand-wm" style="font-size:24.6px"><span class="ap"><svg viewBox="0 0 200 200"><use href="#aperture"/></svg></span><img class="wm-img" src="/brand/outfocus-wordmark-2026.svg" alt="OUTFOCUS" width="426" height="53"><span class="wm-ko">아웃포커스</span></span>
       <p class="desc">교육 사각지대 해소를 목표로 하는 솔루션 컴퍼니.</p>
     </div>
     <div class="foot-bottom">
@@ -997,7 +997,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     if(a.width&&k.width&&k.right>a.left-2){ top.classList.add('wm-tight'); }
   }
   fit();
-  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-tx')||ko); }
+  if(window.ResizeObserver){ var ro=new ResizeObserver(fit); ro.observe(top); ro.observe(top.querySelector('.wm-img')||ko); }
   else{ window.addEventListener('resize',fit); }
   if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(fit); }
 })();
