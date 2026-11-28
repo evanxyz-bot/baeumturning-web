@@ -116,7 +116,7 @@ a:hover .brand-wm{transform:scale(1.03)}
 /* ── 본문 ── */
 .wrap{padding-top:26px}
 h1{font-size:30px;margin:0 0 10px}
-.lead{font-size:16.5px;color:var(--text-2);margin:0 0 14px}
+.lead{font-size:16.5px;color:var(--text);margin:0 0 14px}.lead .src{font-size:.86em;color:inherit;display:inline;margin:0}
 /* 상단 안내 — 계산기보다 먼저 읽히게 (2026-09-18 대표 지시) */
 /* 2026-09-24 개편 — 문구·위치는 그대로 두고 시각 무게만 낮춘다(색 콜아웃이 첫 화면
    절반을 먹어 계산기가 밀렸다). 접거나 팝업으로 숨기지 않고, 본문과 구분되는 블록으로 남긴다. */
@@ -1017,7 +1017,7 @@ h1{font-size:30px;margin:0 0 10px}
 .madeby .tm b:last-child{font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;font-size:21px}
 .madeby .by{font-size:14px;line-height:1.6;color:var(--text-2)}
 </style>
-<style id="wm-2026">/* 확정 로고(2026-11-27) — 조리개 마크 + OUTFOCUS. 조리개 실제 원 높이 = 글자 높이(원 둘레 여백 보정 1.12배, 대표 11-27 키워라) */.brand-wm{align-items:center}.brand-wm .ap{display:none}.brand-wm .wm-img{display:block;height:.66em;width:auto}.brand-wm .wm-ko{align-self:flex-end;margin-left:.4em;margin-bottom:-.14em}/* 대표 11-27: 머리말 로고 4px 아래로 + 띠 안 전체(로고·앱 묶음) 2px 더 아래로, 한글은 로고 바닥 쪽으로 */.nav-top .brand-wm{position:relative;top:6px}.nav-top .nav-app{top:calc(50% + 2px)}.nav-app-ic{overflow:hidden;padding:0;background:none}.nav-app-ic img{display:block;width:100%;height:100%}.navlinks{gap:0}.navlinks>:is(a,.nav-drop)~:is(a,.nav-drop){background:linear-gradient(var(--border-strong),var(--border-strong)) left center/1px 46% no-repeat}.navlinks .nav-drop>a .chev{font-size:.72em;margin-left:6px;vertical-align:.06em}/* 대표 11-27: 머리말 띠 20% 키움(88→106px, PC 폭). 머리말 높이에 묶인 값은 --nav-grow 로 같이 움직인다 */:root{--nav-grow:0px}@media (min-width:768px){:root{--nav-grow:18px}.nav-top{height:106px}}@media (max-width:767px){.nav-top .brand-wm{top:0}.nav-top .nav-app{top:50%}.brand-wm .wm-img{height:.56em}.nav-top .wm-ko{display:none}.navlinks .nav-drop>a .chev{margin-left:3px}}</style></head>
+<style id="wm-2026">/* 확정 로고(2026-11-27) — 조리개 마크 + OUTFOCUS. 조리개 실제 원 높이 = 글자 높이(원 둘레 여백 보정 1.12배, 대표 11-27 키워라) */.brand-wm{align-items:center}.brand-wm .ap{display:none}.brand-wm .wm-img{display:block;height:.66em;width:auto}.brand-wm .wm-ko{align-self:flex-end;margin-left:.4em;margin-bottom:-.14em}/* 대표 11-27: 머리말 로고 4px 아래로 + 띠 안 전체(로고·앱 묶음) 2px 더 아래로, 한글은 로고 바닥 쪽으로 */.nav-top .brand-wm{position:relative;top:6px}.nav-top .nav-app{top:calc(50% + 2px)}.nav-app-ic{overflow:hidden;padding:0;background:none}.nav-app-ic img{display:block;width:100%;height:100%}.navlinks{gap:0}.navlinks>:is(a,.nav-drop)~:is(a,.nav-drop){background:linear-gradient(var(--border-strong),var(--border-strong)) left center/1px 46% no-repeat}.navlinks .nav-drop>a .chev{font-size:.72em;margin-left:6px;vertical-align:.06em}/* 대표 11-27: 머리말 띠 20% 키움(88→106px, PC 폭). 머리말 높이에 묶인 값은 --nav-grow 로 같이 움직인다 */:root{--nav-grow:0px}@media (min-width:768px){:root{--nav-grow:18px}.nav-top{height:106px}}@media (max-width:767px){.nav-top .brand-wm{top:0}.nav-top .nav-app{top:50%}/* 대표 11-28: 폰에서도 스토어 배지 둘 다 — 위 App Store·아래 Google Play 두 줄(기종에 맞는 것만 보이던 것을 머리말에서는 푼다). 앞의 html:not() 둘은 기존 규칙보다 앞서게 하려고 붙인 것 */html:not(.x1):not(.x2) .nav-top .nav-app{flex-direction:column;align-items:flex-end;gap:6px}html:not(.x1):not(.x2) .nav-top .nav-app>a{display:block;padding:3px 0;margin:-3px 0}html:not(.x1):not(.x2) .nav-top .nav-app-badge{height:28px}html:not(.x1):not(.x2) .nav-top .nav-app-badge.gp{height:36.4px;margin:-4.2px 0}.brand-wm .wm-img{height:.56em}.nav-top .wm-ko{display:none}.navlinks .nav-drop>a .chev{margin-left:3px}}</style></head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1082,7 +1082,7 @@ h1{font-size:30px;margin:0 0 10px}
        폰에서는 .panes 가 block 이라 h1 → 안내 → 점수 → 조건 순서가 예전 그대로다. -->
   <div class="intro">
   <h1><span>검정고시 대입 환산</span><button type="button" class="help" id="helpBtn" aria-label="검정고시 대입 환산이란" aria-haspopup="dialog">?</button></h1>
-  <p class="lead">과목 점수를 넣으면 대학별 환산 결과를 한 번에 봅니다(전국 306곳 수록·258곳 환산). 대학 공개 자료 기준.</p>
+  <p class="lead">검정고시 점수를 입력하면 대학별 환산 점수가 자동으로 계산됩니다. (전국 대학 306개, 258개 대학 환산 가능) <span class="src">(출처 : 대학 공개 자료)</span></p>
   <p class="topwarn">※ 위 환산 결과는 각 대학이 공개한 자료를 옮긴 참고 자료이며, <b>지원과 합격을 보장하지 않습니다.</b> 입시 기준은 해마다 바뀌고 전형·모집단위에 따라서도 달라집니다. 최종 반영 방식은 지원하려는 대학 입학처의 해당 학년도 모집요강을 기준으로 하며, 모집요강과 다를 경우 모집요강이 우선합니다. 이 정보를 바탕으로 한 지원 결정과 그 결과는 지원자 본인의 책임입니다.</p>
   </div>
 
